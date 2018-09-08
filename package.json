@@ -5,7 +5,8 @@
   "author": "Henry Nguyen <hiep.nguyen@dcvnps.org>",
   "description": "This based on nodejs mysql lesson",
   "scripts": {
-    "start": "nodemon ./server/bin/www"
+    "start": "node ./server/bin/www",
+    "debug":"nodemon --inpect ./server/bin/wwww"
   },
   "dependencies": {
     "bcrypt": "^3.0.0",

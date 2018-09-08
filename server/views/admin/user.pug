@@ -20,11 +20,11 @@ block content
             each user in users
               tr
                 td
-                  a(href='/admin/user/impersonate/' + user.id)=user.email
+                  a(href='/admin/user/impersonate/' + user.userId)=user.email
                 td
-                  a.m-1.btn.btn-primary(href='/admin/user/' + user.id, role='button')
+                  a.m-1.btn.btn-primary(href='/admin/user/' + user.userId, role='button')
                     | Edit User
-                  a.m-1.btn.btn-danger(href='/admin/user/delete/' + user.id, role='button')
+                  a.m-1.btn.btn-danger(href='/admin/user/delete/' + user.userId, role='button')
                     | Delete User  
       else
         p.lead
@@ -41,7 +41,7 @@ block content
 
         .card-block
           form(method='POST', action='/admin/user' autocomplete='off')
-            input(type='hidden', name='userId', value=user ? user.id : '')
+            input(type='hidden', name='userId', value=user ? user.userId : '')
             .form-group
               label.form-control-label(for='email')
                 | Email Address:

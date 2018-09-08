@@ -21,11 +21,16 @@ module.exports = (config) => {
       // The optional userId param was passed
       if (req.params.userId) {
         user = await userService.getOne(req.params.userId);
+        // return res.status(200).send(JSON.stringify(user));
       }
+      // else{
+      //   return res.status(200).send(JSON.stringify(users));
+      // }
       return res.render('admin/user', {
         users,
         user,
       });
+
     } catch (err) {
       return next(err);
     }
@@ -47,7 +52,7 @@ module.exports = (config) => {
     try {
       // If there was no existing user we now want to create a new user object
       if (!req.body.userId) {
-        await userService.create({ email, password, status: 'A' });
+        await userService.create({ email, password, status });
       } else {
         const userData = {
           email,

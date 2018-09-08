@@ -1,11 +1,13 @@
 const bunyan = require('bunyan');
 
 
-const appname = 'Shopsy';
+const appname = 'Dcvnps';
 
+const log = bunyan.createLogger({ name: appname });
 module.exports = {
   applicationName: appname,
-  logger: bunyan.createLogger({ name: appname }),
+  logger:log,
+  logLevel:'info',
   // mongodb: {
   //   name: 'Node Learner',
   //   dsn: 'mongodb://nodelearner:Ind!vidual1@ds149309.mlab.com:49309/learnnode',
@@ -17,15 +19,16 @@ module.exports = {
     url: 'redis://192.168.2.43:6379'
   },
   mysql: {
-    options: {
+    database: 'dcvnps',
+    username: 'dcvnps',
+    password: 'VnpsR0cks!',
+  options: {
       host: '192.168.2.43',
       port: '3306',
-      database: 'dcvnps',
       dialect: 'mysql',
-      username: 'dcvnps',
-      password: 'VnpsR0cks!',
       freezeTableName: true,
-      operatorsAliases: false
+      operatorsAliases: false,
+      logging:(msg)=>{log.info(msg);}
     }
   },
 };

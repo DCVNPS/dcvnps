@@ -11,10 +11,13 @@ const UserService = require('../services/userService');
 
 const log = config.logger;
 
-const sequelize = new Sequelize(config.mysql.options);
+log.level(config.logLevel);
+
+const sequelize = new Sequelize(config.mysql.database, config.mysql.username, config.mysql.password, config.mysql.options);
+// add logging framework to sequelize's options
 sequelize.authenticate()
 .then(()=>{
-  log.info(`Successfully connect to MySQL. ${config.mysql.options.database}`);
+  log.info(`Successfully connect to MySQL Database: ${config.mysql.database.toUpperCase()}`);
 })
 .catch((err)=>{
   log.fatal(err);
@@ -70,7 +73,7 @@ function onListening() {
     ? `pipe ${addr}`
     : `port ${addr.port}`;
 
-  log.info(`${config.applicationName} listening on ${bind}`);
+  log.info(`${config.applicationName.toUpperCase()} listening on ${bind}`);
 }
 server.listen(port);
 server.on('error', onError);
