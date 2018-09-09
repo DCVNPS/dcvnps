@@ -16,35 +16,37 @@ async function inTransaction(work) {
 }
 
 async function getAll() {
-  return models.User.findAll({ where: {}});
+  return models.User.findAll({ where: {} });
 }
 
-async function getOne(userId){
-  return models.User.findOne({ where:{userId: userId}});
+async function getOne(userId) {
+  return models.User.findOne({ where: { userId } });
 }
 
-async function create(data,t) {
+async function create(data, t) {
   const order = await models.User.create({
     email: data.email,
     password: data.password,
     status: data.status,
-  },{ transaction: t });
+  }, { transaction: t });
   return order;
 }
 
 async function update(userId, data, t) {
-  //This 
+  const individualHook = (data.password && data.password.length > 0);
   return models.User.update(
-    data, 
-    { where: { userId: userId } , individualHooks: (data.password && data.password.length > 0) ? true:false},
-    { transaction: t });
+    data,
+    { where: { userId }, individualHooks: individualHook },
+    { transaction: t },
+  );
 }
 
-async function remove(userId, t){
-  return models.User.destroy({where: {userId:userId}},{ transaction:  t});
+async function remove(userId, t) {
+  return models.User.destroy({ where: { userId } }, { transaction: t });
 }
 
 module.exports = (_client) => {
+  if (!_client) throw new Error('Missing sequelize client object');
   client = _client;
   models = Models(client);
 

@@ -4,7 +4,6 @@ const UserService = require('../../../services/userService');
 module.exports = (config) => {
   const router = express.Router();
   const userService = UserService(config.mysql.client);
-
   const log = config.logger;
 
   // Do you see the keyword 'async' here?
@@ -61,7 +60,7 @@ module.exports = (config) => {
         if (password) {
           userData.password = password;
         }
-        if(status){
+        if (status) {
           userData.status = status;
         }
         await userService.update(req.body.userId, userData);

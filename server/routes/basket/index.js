@@ -1,23 +1,23 @@
 const express = require('express');
-const itemService = require('../../services/itemService');
-const basketService = require('../../services/basketService');
-const userService = require('../../services/userService');
-const orderService = require('../../services/orderService');
+const ItemService = require('../../services/itemService');
+const BasketService = require('../../services/basketService');
+const OrderService = require('../../services/orderService');
 
 module.exports = (config) => {
   const router = express.Router();
   const log = config.logger;
-
-  const basket = basketService(config.redis.client);
-  const order = orderService(config.mysql.client);
+  // const basket = basketService(config.redis.client);
+  const basketService = BasketService(config.mysql.client);
+  const orderService = OrderService(config.mysql.client);
+  const itemService = ItemService(config.mysql.client);
 
   router.get('/', async (req, res) => {
-    const basketItems = await basket.getAll(res.locals.currentUser.id);
+    const basketItems = await basketService.getAll(res.locals.currentUser.userId);
     let items = [];
     if (basketItems) {
       items = await Promise.all(Object.keys(basketItems).map(async (key) => {
-        const item = await itemService.getOne(key);
-        item.quantity = basketItems[key];
+        const item = await itemService.getOne(basketItems[key].itemId);
+        item.quantity = basketItems[key].quantity;
         return item;
       }));
     }
@@ -34,7 +34,7 @@ module.exports = (config) => {
     }
 
     try {
-      await basket.remove(req.params.itemId, res.locals.currentUser.id);
+      await basketService.remove(req.params.itemId, res.locals.currentUser.id);
       req.session.messages.push({
         type: 'success',
         text: 'The item was removed from the the basket',
@@ -52,13 +52,11 @@ module.exports = (config) => {
   });
 
   router.get('/buy', async (req, res) => {
-
     try {
-      const userId = res.locals.currentUser.id;
       const user = res.locals.currentUser;
-
+      const { userId } = user;
       // Get all basket items for a user
-      const basketItems = await basket.getAll(userId);
+      const basketItems = await basketService.getAll(userId);
 
       // be defensive
       if (!basketItems) {
@@ -68,18 +66,18 @@ module.exports = (config) => {
       // Find the item for each basket entry and add the quantity to it
       // Return a new array with items plus quantity as new field
       const items = await Promise.all(Object.keys(basketItems).map(async (key) => {
-        const item = await itemService.getOne(key);
-        item.quantity = basketItems[key];
+        const item = await itemService.getOne(basketItems[key].itemId);
+        item.quantity = basketItems[key].quantity;
         return item;
       }));
 
       // Run this in a sequelize transaction
-      await order.inTransaction(async (t) => {
+      await orderService.inTransaction(async (t) => {
         // Create a new order and add all items
-        await order.create(user, items, t);
+        await orderService.create(user, items, t);
         // Clear the users basket
         await Promise.all(Object.keys(basketItems).map(async (key) => {
-          await basket.remove(key, userId);
+          await basketService.remove(userId, basketItems[key].itemId);
         }));
       });
 
@@ -87,17 +85,15 @@ module.exports = (config) => {
         type: 'success',
         text: 'Thank you for your business',
       });
-
       return res.redirect('/basket');
     } catch (err) {
       req.session.messages.push({
         type: 'danger',
         text: 'There was an error finishing your order',
       });
-      log.fatal(err);
+      log.debug(err);
       return res.redirect('/basket');
     }
- 
   });
 
   return router;

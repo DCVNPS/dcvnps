@@ -28,7 +28,7 @@ module.exports = {
       dialect: 'mysql',
       freezeTableName: true,
       operatorsAliases: false,
-      logging:(msg)=>{log.info(msg);}
+      sync: false,
     }
   },
 };

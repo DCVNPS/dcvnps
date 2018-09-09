@@ -28,9 +28,9 @@ block content
                 td=item.name
                 td=item.price
                 td
-                  a.m-1.btn.btn-primary(href='/admin/item/' + item.id, role='button')
+                  a.m-1.btn.btn-primary(href='/admin/item/' + item.itemId, role='button')
                     | Edit item
-                  a.m-1.btn.btn-danger(href='/admin/item/delete/' + item.id, role='button')
+                  a.m-1.btn.btn-danger(href='/admin/item/delete/' + item.itemId, role='button')
                     | Delete item  
       else
         p.lead
@@ -46,7 +46,7 @@ block content
 
         .card-block
           form(method='POST', action='/admin/item' autocomplete='off')
-            input(type='hidden', name='itemId', value=item ? item.id : '')
+            input(type='hidden', name='itemId', value=item ? item.itemId : '')
 
             .form-group
               label.form-control-label(for='sku')

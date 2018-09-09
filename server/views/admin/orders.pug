@@ -31,7 +31,7 @@ block content
       tbody
         each order in orders
           tr
-            td=order.id
+            td=order.orderId
             td=order.status
             td=order.email
             td=order.createdAt
@@ -57,10 +57,10 @@ block content
 
             td
               if order.status !== 'Shipped'
-                a.m-1.btn.btn-danger(href='/admin/orders/setshipped/' + order.id, role='button')
+                a.m-1.btn.btn-danger(href='/admin/orders/setshipped/' + order.orderId, role='button')
                   | Set Shipped
               else
-                a.m-1.btn.btn-danger.disabled(href='/admin/orders/setshipped/' + order.id, role='button')
+                a.m-1.btn.btn-danger.disabled(href='/admin/orders/setshipped/' + order.orderId, role='button')
                   | Order Shipped
 
    

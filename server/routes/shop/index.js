@@ -1,13 +1,13 @@
 const express = require('express');
-const itemService = require('../../services/itemService');
+const ItemService = require('../../services/itemService');
 const basketService = require('../../services/basketService');
 
 module.exports = (config) => {
   const router = express.Router();
   const log = config.logger;
-
-  const basket = basketService(config.redis.client);
-
+  // const basket = basketService(config.redis.client);
+  const basket = basketService(config.mysql.client);
+  const itemService = ItemService(config.mysql.client);
   router.get('/', async (req, res) => {
     const items = await itemService.getAll();
     return res.render('shop', { items });
@@ -23,7 +23,7 @@ module.exports = (config) => {
     }
 
     try {
-      await basket.add(req.params.itemId, res.locals.currentUser.id);
+      await basket.add(res.locals.currentUser.userId, req.params.itemId );
       req.session.messages.push({
         type: 'success',
         text: 'The item was added to the basket',

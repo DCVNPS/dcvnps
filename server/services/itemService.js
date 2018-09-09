@@ -1,37 +1,3 @@
-// const ItemModel = require('../models/mongoose/Item');
-
-// async function getAll() {
-//   return ItemModel.find({}).sort({ createdAt: -1 });
-// }
-
-// async function getOne(itemId) {
-//   return ItemModel.findOne({ _id: itemId });
-// }
-
-// async function create(data) {
-//   const item = new ItemModel(data);
-//   return item.save();
-// }
-
-// async function update(itemId, data) {
-//     const item = await getOne(itemId);
-//     if( !item ) throw new Error(`Could not find item: ${itemId}`);
-//     Object.keys(data).forEach((key)=>{
-//             item[key] = data[key];
-//     });
-//     return item.save();
-// };
-// async function remove(query) {
-//     const result = ItemModel.remove(query);
-//     return result.result.n;
-// }
-// module.exports = {
-//   getAll,
-//   getOne,
-//   create,
-//   update,
-//   remove,
-// }
 const Models = require('../models/sequelize');
 
 let client = null;
@@ -54,7 +20,7 @@ async function getAll() {
 }
 
 async function getOne(itemId) {
-  return models.Item.findOne({ where: { id: itemId } });
+  return models.Item.findOne({ where: { itemId } });
 }
 
 async function create(data, t) {
@@ -67,18 +33,21 @@ async function create(data, t) {
 }
 
 async function update(itemId, data, t) {
-  //This 
+  const item = await getOne(itemId);
+  if (!item) throw new Error('Could not find requested item');
   return models.Item.update(
     data,
-    { where: { id: itemId }},
-    { transaction: t });
+    { where: { itemId } },
+    { transaction: t },
+  );
 }
 
 async function remove(itemId, t) {
-  return models.Item.destroy({ where: { id: itemId } }, { transaction: t });
+  return models.Item.destroy({ where: { itemId } }, { transaction: t });
 }
 
 module.exports = (_client) => {
+  if (!_client) throw new Error('Missing sequelize client object');
   client = _client;
   models = Models(client);
 

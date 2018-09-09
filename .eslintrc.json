@@ -2,6 +2,6 @@
     "extends": "airbnb-base",
     "rules": {
         "linebreak-style":"off",
-        "indent": [4, 4, {"indetSwitchCase": true}]
+        "indent": 0
     }
 }
