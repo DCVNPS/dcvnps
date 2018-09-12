@@ -16,11 +16,25 @@ async function inTransaction(work) {
 }
 
 async function getAll() {
-  return models.User.findAll({ where: {} });
+  return models.User.findAll({ where: {} }, {
+    include: [{
+      model: models.Post,
+      include: [{
+        model: models.Comment,
+      }],
+    }],
+  });
 }
 
 async function getOne(userId) {
-  return models.User.findOne({ where: { userId } });
+  return models.User.findOne({ where: { userId } }, {
+    include: [{
+      model: models.Post,
+      include: [{
+        model: models.Comment,
+      }],
+    }],
+  });
 }
 
 async function create(data, t) {

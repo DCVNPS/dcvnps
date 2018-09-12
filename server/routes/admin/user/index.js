@@ -13,23 +13,39 @@ module.exports = (config) => {
   // lets you basically use asynchronous functions as if they were synchronous.
   router.get('/:userId?', async (req, res, next) => {
     try {
-      const users = await userService.getAll();
-
-      let user = null;
+      let users = null;
 
       // The optional userId param was passed
       if (req.params.userId) {
-        user = await userService.getOne(req.params.userId);
-        // return res.status(200).send(JSON.stringify(user));
+        users = await userService.getOne(req.params.userId);
+      } else {
+        users = await userService.getAll();
+        users = users.map((user) => {
+          return Object.assign({}, {
+            user_id: user.user_id,
+            email: user.email,
+            role: user.role,
+            status: user.status,
+            posts: user.posts.map((post) => {
+              return Object.assign({}, {
+                post_id: post.post_id,
+                user_id: post.user_id,
+                content: post.content,
+                comments: post.comments.map((comment) => {
+                  return Object.assign({}, {
+                    comment_id: comment.comment_id,
+                    post_id: comment.post_id,
+                    commenter: comment.commenter_username,
+                    commenter_email: comment.commenter_email,
+                    content: comment.content,
+                  })
+                })
+              })
+            })
+          })
+        });
       }
-      // else{
-      //   return res.status(200).send(JSON.stringify(users));
-      // }
-      return res.render('admin/user', {
-        users,
-        user,
-      });
-
+      return res.status(200).send(JSON.stringify(users));
     } catch (err) {
       return next(err);
     }

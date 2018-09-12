@@ -2,29 +2,22 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-// const RedisStore = require('connect-redis')(session);
 const routeHandler = require('./routes');
 const UserService = require('./services/userService');
-const basketService = require('./services/basketService');
 
-module.exports = (config) => {
+module.exports = (config, db) => {
   const app = express();
-  // const basket = basketService(config.redis.client);
-  const basket = basketService(config.mysql.client);
   const userService = UserService(config.mysql.client);
 
   // view engine setup
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'pug');
+  // app.set('views', path.join(__dirname, 'views'));
+  // app.set('view engine', 'pug');
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
   app.set('trust proxy', 1); // trust first proxy
   app.use(session({
-    // store: new RedisStore({
-    //   url: config.redis.url,
-    // }),
     secret: 'very secret secret to encyrpt session',
     resave: false,
     saveUninitialized: false,
@@ -51,14 +44,6 @@ module.exports = (config) => {
     try {
       if (req.session.userId) {
         res.locals.currentUser = await userService.getOne(req.session.userId);
-        const basketContents = await basket.getAll(req.session.userId);
-        let count = 0;
-        if (basketContents) {
-          Object.keys(basketContents).forEach((key) => {
-            count += parseInt(basketContents[key].quantity, 10);
-          });
-        }
-        res.locals.basketCount = count;
       }
     } catch (err) {
       return next(err);

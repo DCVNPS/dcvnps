@@ -2,40 +2,31 @@
 
 // Dependencies
 const http = require('http');
-// const mongoose = require('mongoose');
 const config = require('../config');
 const App = require('../app');
-// const redis = require('redis');
 const Sequelize = require('sequelize');
 
 const log = config.logger;
 
 log.level(config.logLevel);
 
-const sequelize = new Sequelize(config.mysql.database, config.mysql.username, config.mysql.password, config.mysql.options);
+const sequelize = new Sequelize(
+  config.mysql.database,
+  config.mysql.username,
+  config.mysql.password,
+  config.mysql.options,
+);
 // add logging framework to sequelize's options
 sequelize.authenticate()
-.then( () => {
-  log.info(`Successfully connect to MySQL Database: ${config.mysql.database.toUpperCase()}`);
-})
-.catch((err)=>{
-  log.fatal(err);
-  process.exit(1);
-});
+  .then(() => {
+    log.info(`Successfully connect to MySQL Database: ${config.mysql.database.toUpperCase()}`);
+  })
+  .catch((err) => {
+    log.fatal(err);
+    process.exit(1);
+  });
 // put the sequelize object in the mysql client configuration.
 config.mysql.client = sequelize;
-
-// mongoose.set('useCreateIndex', true);
-// mongoose.connect(config.mongodb.dsn, config.mongodb.options)
-//   .then(() => {
-//     log.info(`Successfully connect to MongoDb: ${config.mongodb.name}`);
-// });
-
-// const redisClient = redis.createClient(config.redis.url);
-// redisClient.on('ready',()=>{
-//   log.info('Successfully Connected to Redis.');
-// })
-// config.redis.client = redisClient;
 
 /* Logic to start the application */
 const app = App(config);
