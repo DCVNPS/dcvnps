@@ -1,0 +1,26 @@
+[
+    {
+        "galleryId":"5bb6beaabb4eee3e10bdf5c0",
+        "gallery": "home",
+        "year":"2018",
+        "photo": "dafda.jpg",
+        "createdDate": null,
+        "updatedDate": null
+    },
+    {
+        "galleryId":"5bb6beaabb4eee3e10bdf5c1",
+        "gallery": "member",
+        "year":"2018",
+        "photo": "dafda.jpg",
+        "createdDate": null,
+        "updatedDate": null
+    },
+    {
+        "galleryId":"5bb6beaabb4eee3e10bdf5c1",
+        "gallery": "member",
+        "year":"2017",
+        "photo": "dafda.jpg",
+        "createdDate": null,
+        "updatedDate": null
+    }
+]
