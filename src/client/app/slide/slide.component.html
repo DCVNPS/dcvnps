@@ -1,3 +1,15 @@
 <div [hidden]="!isActive">
     <ng-content></ng-content>
+    <div style="vertical-align:middle; z-index:1001;">
+        <div class="slide-button-prev">
+            <a href="#" (click)="prevSlide();">
+                <i class="icon chevron circle left huge"></i>
+            </a>
+        </div>
+        <div class="slide-button-next">
+            <a href="#" (click)="nextSlide();">
+                <i class="icon chevron circle right huge"></i>
+            </a>
+        </div>
+    </div>
 </div>

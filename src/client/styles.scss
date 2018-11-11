@@ -7,3 +7,20 @@
     width: 800px;
     height: 600px;
 }
+
+
+.slide-button-prev{
+    opacity: 0.4; 
+    position: relative; 
+    float: left;
+}
+
+.slide-button-next{
+    opacity: 0.4; 
+    position: relative;
+    float: right;
+}
+
+.slide-start-stop{
+    display: flex; justify-content: space-around;
+}

@@ -1,7 +1,11 @@
-<div id="homecarousel" *ngIf="photos.length > 0" class="text-center">
-    <app-carousel [delay]="2000">
-        <app-slide *ngFor="let photo of photos">
-            <img [src]="photo.imgsrc" alt=""  class="slide-medium">
-        </app-slide>
-    </app-carousel>
+<div id="homecarousel" *ngIf="photos.length > 0" class="ui grid">
+    <div class="four wide column"></div>
+    <div class="eight wide column">
+        <app-carousel [delay]="2000">
+            <app-slide *ngFor="let photo of photos">
+                <img [src]="photo.imgsrc" alt="" class="ui fluid image">
+            </app-slide>
+        </app-carousel>
+    </div>
+    <div class="four wide column"></div>
 </div>

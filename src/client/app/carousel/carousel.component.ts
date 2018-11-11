@@ -51,6 +51,7 @@ export class CarouselComponent implements OnInit, AfterContentInit {
         const i = count % max;
         this.carouselSlides.forEach(slide => slide.isActive = false);
         this.carouselSlides[i].isActive = true;
+        this.currentSlide = this.carouselSlides[i];
         count += 1;
       }, this.delay);
     }
