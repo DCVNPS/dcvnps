@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../shared/api.service';
+import { Slide } from '../shared/slide.model';
 
 @Component({
   selector: 'app-home',
@@ -7,21 +8,23 @@ import { ApiService } from '../shared/api.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public photos: Array<any> = []
+  public slides: Slide[] = [];
   constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.api.get('/galleryphotosbyname/home')
       .subscribe(data => {
+        let cnt = 0;
         data.forEach(item => {
-          const photo = {
-            'id': item._id,
-            'galleryId': item.galleryId,
-            'imgsrc': `galleries/${item.gallery}/${item.year}/${item.photo}`
-          };
-          this.photos.push(photo);
+          this.slides.push(new Slide(item._id,
+            item.galleryId,
+            'dummy note',
+            cnt,
+            `galleries/${item.gallery}/${item.year}/${item.photo}`,
+            true));
+          cnt += 1;
         });
-        console.log(this.photos);
+        console.log(this.slides);
       })
   }
 

@@ -1,16 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Slide } from '../shared/slide.model';
 
 @Component({
   selector: 'app-slide',
   templateUrl: './slide.component.html',
   styleUrls: ['./slide.component.scss']
 })
-export class SlideComponent {
-  isActive = false;
-  @Input() public width: 800;
-  @Input() public heigh: 600;
+export class SlideComponent implements OnInit{
+  @Input() slide: Slide;
   constructor() {
-    this.isActive = false;
   }
-
+  ngOnInit(){
+    console.log(this.slide);
+  }
 }
