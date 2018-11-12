@@ -1,15 +1,20 @@
 <div [hidden]="slide.hidden" *ngIf="slide" style="position: relative;">
     <img [src]="slide.imgsrc" class="ui fluid image">
-    <div style="z-index: 1500; position: absolute; width:100%; top: 50%; opacity: 0.3;">
-        <div style="float: left;">
-            <a href="#" (click)="prevSlide()">
-                <i class="icon chevron circle left huge"></i>
-            </a>
+    <div class="prev-next-btns">
+        <div class="prev-btn">
+            <div class="ui basic button" (click)="prevSlide()">
+                <i class="chevron circle left icon huge"></i>
+            </div>
         </div>
-        <div style="float: right;">
-            <a href="#" (click)="prevSlide()">
-                <i class="icon chevron circle right huge"></i>
-            </a>
+        <div class="next-btn">
+            <div class="ui basic button" (click)="nextSlide()">
+                <i class="chevron circle right icon huge"></i>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <div class="ui blue basic button" (click)="startStopSlideShow();">
+            {{startStopBtnLabel}}
         </div>
     </div>
 </div>

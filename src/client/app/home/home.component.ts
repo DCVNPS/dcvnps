@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
             true));
           cnt += 1;
         });
-        console.log(this.slides);
+        // console.log(this.slides);
       })
   }
 

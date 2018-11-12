@@ -5,7 +5,6 @@ export class Slide {
     public photoIndex: number;
     public imgsrc: string;
     public hidden: boolean;
-
     constructor(id: string,
         galleryId: string,
         galleryNote: string,
@@ -19,7 +18,8 @@ export class Slide {
         this.imgsrc = imgsrc;
         this.hidden = hidden;
     }
-    toggle(){
+    toggle() {
         this.hidden = !this.hidden;
     }
+
 }

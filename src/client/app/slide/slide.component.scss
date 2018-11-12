@@ -1,8 +1,15 @@
-@mixin v-align($position: absolute){
-    position: $position;  top: 50%;  
-    transform: translateY(-50%);
-    -ms-transform:translateY(-50%); /* IE */
-    -moz-transform:translateY(-50%); /* Firefox */
-    -webkit-transform:translateY(-50%); /* Safari and Chrome */
-    -o-transform:translateY(-50%);
+.prev-next-btns {
+    z-index: 1500; 
+    position: absolute; 
+    width:100%; 
+    top: 45%; 
+    opacity: 0.3;
+}
+
+.prev-btn{
+    float: left;
+}
+
+.next-btn {
+    float: right;
 }

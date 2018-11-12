@@ -1,9 +1,12 @@
-<div>
-    <div *ngFor="let slide of slides">
-        <div [hidden]="slide.hidden">{{slide.imgsrc}}</div>
-    </div>
-    <app-slide *ngFor="let slide of slides" [slide]="slide"></app-slide>
-    <div class="slide-start-stop">
-        <button (click)="startStopSlideShow();">{{startStopBtnLabel}}</button>
+<div class="ui fluid">
+    <div class="ui centered align">
+        <!-- <div *ngFor="let slide of slides">
+            <div [hidden]="slide.hidden">{{slide.imgsrc}}</div>
+        </div> -->
+        <app-slide *ngFor="let slide of slides" 
+            [slide]="slide" 
+            [isPlaying]="isPlaying"
+            (slideClicked)="onSlideClicked($event)">
+        </app-slide>
     </div>
 </div>
