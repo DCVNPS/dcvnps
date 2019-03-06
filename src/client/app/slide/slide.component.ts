@@ -17,11 +17,12 @@ export class SlideComponent implements OnInit {
     this.playing = true;
   }
   ngOnInit() {
+    this.playing = this.isPlaying;
     this.startStopBtnLabel = this.playing ? 'Stop Slide Show' : 'Start Slide Show';
   }
   startStopSlideShow() {
     this.playing = !this.playing;
-    this.startStopBtnLabel = this.playing ? 'Stop Slide Show' : 'Start Slide Show';
+    this.startStopBtnLabel = this.isPlaying ? 'Stop Slide Show' : 'Start Slide Show';
     this.slideClicked.emit(new SlideEventArg(Direction.STARTSTOP, this.slide.photoIndex, this.playing));
     // console.log(`Currently Playing ${this.playing} Button Clicked START-STOP`);
   }

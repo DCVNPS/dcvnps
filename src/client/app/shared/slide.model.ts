@@ -4,6 +4,7 @@ export class Slide {
     public galleryNote: string;
     public photoIndex: number;
     public imgsrc: string;
+    public imgalt: string;
     public hidden: boolean;
     constructor(id: string,
         galleryId: string,
@@ -16,6 +17,7 @@ export class Slide {
         this.galleryNote = galleryNote;
         this.photoIndex = photoIndex;
         this.imgsrc = imgsrc;
+        this.imgalt = imgsrc.replace(/\.jpg$|\.bmp$/i, '');
         this.hidden = hidden;
     }
     toggle() {

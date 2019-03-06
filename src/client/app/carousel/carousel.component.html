@@ -1,12 +1,9 @@
-<div class="ui fluid">
-    <div class="ui centered align">
-        <!-- <div *ngFor="let slide of slides">
-            <div [hidden]="slide.hidden">{{slide.imgsrc}}</div>
-        </div> -->
-        <app-slide *ngFor="let slide of slides" 
-            [slide]="slide" 
-            [isPlaying]="isPlaying"
-            (slideClicked)="onSlideClicked($event)">
-        </app-slide>
+<div>
+    <ng-content></ng-content>
+    <div class="carousel-control-button">
+        <button type="button" (click)="PrevSlide();">Previous Slide</button>
+        <button (click)="StopSlide();" [hidden]="!isRunning">Stop Slide Show</button>
+        <button (click)="StartSlide();" [hidden]="isRunning">Start Slide Show</button>
+        <button type="button" (click)="NextSlide();">Next Slide</button>
     </div>
 </div>

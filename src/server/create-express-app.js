@@ -10,6 +10,7 @@ function createExpressApp(database) {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use('/profiles', express.static(path.join(__dirname, 'profiles')));
     app.use('/galleries', express.static(path.join(__dirname, 'galleries')));
+    app.use('/siteimages', express.static(path.join(__dirname, 'siteimages')));
     app.use('/api',apiRouter(database));
     // This routing part is to let Angular handles the client side routing.
     app.use('*', (req, res) => {

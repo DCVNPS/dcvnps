@@ -1,7 +1,29 @@
 <div id="homecarousel" *ngIf="slides.length > 0" class="ui grid">
-    <div class="four wide column"></div>
+    <div class="four wide column">
+        <div class="ui raised padded text container segment home side">
+            <div class="ui header">About VNPS</div>
+            <p>
+                The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
+                Vietnamese
+                photographers community, conserving
+                the Vietnamese photography art & culture, and promoting the arts and science of
+                photography.
+            </p>
+            <p>It is supported by membership and donation.</p>
+        </div>
+        <div class="ui raised padded text container segment  home side">
+            <div class="ui header">Connect with Us</div>
+            <div>
+                <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
+                    <img src="profiles/site/vnpsicon.png" />
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="eight wide column">
-        <app-carousel [delay]="2000" [slides]="slides"> </app-carousel>
+        <div class="ui container">
+            <app-carouselsave [delay]="2000" [slides]="slides"> </app-carouselsave>
+        </div>
     </div>
     <div class="four wide column"></div>
 </div>
