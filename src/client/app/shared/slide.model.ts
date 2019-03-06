@@ -11,13 +11,14 @@ export class Slide {
         galleryNote: string,
         photoIndex: number,
         imgsrc: string,
+        imgalt: string,
         hidden: boolean) {
         this.id = id;
         this.galleryId = galleryId;
         this.galleryNote = galleryNote;
         this.photoIndex = photoIndex;
         this.imgsrc = imgsrc;
-        this.imgalt = imgsrc.replace(/\.jpg$|\.bmp$/i, '');
+        this.imgalt = imgalt;
         this.hidden = hidden;
     }
     toggle() {

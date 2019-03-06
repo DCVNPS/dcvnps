@@ -15,9 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { CarouselComponent } from './carousel/carousel.component';
 import { HomeComponent } from './home/home.component';
-import { SlideComponent } from './slide/slide.component';
 import { FooterComponent } from './footer/footer.component';
-import { CarouselsaveComponent } from './carouselsave/carouselsave.component';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 
 @NgModule({
@@ -30,9 +28,7 @@ import { CarouselItemComponent } from './carousel-item/carousel-item.component';
     LoginComponent,
     CarouselComponent,
     HomeComponent,
-    SlideComponent,
     FooterComponent,
-    CarouselsaveComponent,
     CarouselItemComponent,
 
   ],

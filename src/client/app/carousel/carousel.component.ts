@@ -21,8 +21,8 @@ export class CarouselComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     this.childItems = this.carouselItems.toArray();
-    // console.log(`Carousel - AfterContentInit delay miliseconds: ${this.delay}
-    // ChildItems Count : ${this.childItems.length}`);
+    console.log(`Carousel - AfterContentInit delay miliseconds: ${this.delay}
+    ChildItems Count : ${this.childItems.length}`);
     this.count = 0;
     this.max = this.childItems.length;
     this.StartSlide();

@@ -1,9 +1,21 @@
 <div>
     <ng-content></ng-content>
-    <div class="carousel-control-button">
-        <button type="button" (click)="PrevSlide();">Previous Slide</button>
-        <button (click)="StopSlide();" [hidden]="!isRunning">Stop Slide Show</button>
-        <button (click)="StartSlide();" [hidden]="isRunning">Start Slide Show</button>
-        <button type="button" (click)="NextSlide();">Next Slide</button>
+    <!-- <div class="prev-next-btns">
+        <div class="prev-btn">
+            <div class="ui basic button" (click)="PrevSlide();">
+                <i class="chevron circle left icon huge"></i>
+            </div>
+        </div>
+        <div class="next-btn">
+            <div class="ui basic button" (click)="NextSlide()">
+                <i class="chevron circle right icon huge"></i>
+            </div>
+        </div>
+    </div> -->
+    <div class="text-center">
+        <button type="button" (click)="PrevSlide();" class="ui blue basic button">Previous Slide</button>
+        <button (click)="StopSlide();" [hidden]="!isRunning" class="ui blue basic button">Stop Slide Show</button>
+        <button (click)="StartSlide();" [hidden]="isRunning" class="ui blue basic button">Start Slide Show</button>
+        <button type="button" (click)="NextSlide();" class="ui blue basic button">Next Slide</button>
     </div>
 </div>

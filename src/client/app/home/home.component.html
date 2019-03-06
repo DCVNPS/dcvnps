@@ -22,8 +22,20 @@
     </div>
     <div class="eight wide column">
         <div class="ui container">
-            <app-carouselsave [delay]="2000" [slides]="slides"> </app-carouselsave>
+            <app-carousel [delay]="2000">
+                <div class="ui fluid">
+                    <div class="ui centered align">
+                        <app-carousel-item *ngFor="let slide of slides">
+                            <img [src]="slide.imgsrc" [alt]="slide.imgalt"  class="ui fluid image">
+                        </app-carousel-item>
+                    </div>
+                </div>
+            </app-carousel>
         </div>
-    </div>
+        <!-- <hr style="height: 0px; border-top: 2px solid;">
+        <div class="ui container">
+                <app-carouselsave [delay]="2000" [slides]="slides"> </app-carouselsave>
+            </div>
+        </div> -->
     <div class="four wide column"></div>
 </div>
