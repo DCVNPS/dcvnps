@@ -1,6 +1,6 @@
-# Angular + Node Contact Manager
+# Angular + Node DCVNPS Application
 
-## Exercise files for Lynda.com course: Angular API Communication and Authentication
+## Based on Alayout of Exercise files from Lynda.com course: Angular API Communication and Authentication
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.2.
 
