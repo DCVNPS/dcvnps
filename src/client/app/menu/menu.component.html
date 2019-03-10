@@ -1,6 +1,11 @@
 <div class="ui menu header">
   <div class="ui container">
     <div class="item">
+      <a [routerLink]="['/home']" aria-label="Home">
+        <img src="profiles/site/vnpslogo.png" alt="vnpslogo">
+      </a>
+    </div>
+    <div class="item">
       <a [routerLink]="['/contacts']" aria-label="Contacts">
         <i class="icon users large blue"></i>
       </a>
@@ -15,7 +20,7 @@
       </button>
     </div>
     <div class="right menu" *ngIf="auth.isLogin()">
-        <button class="ui primary button logout" (click)="logout()" >Logout</button>
+      <button class="ui primary button logout" (click)="logout()">Logout</button>
     </div>
   </div>
 </div>

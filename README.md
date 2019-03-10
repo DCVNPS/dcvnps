@@ -1,8 +1,10 @@
 # Angular + Node DCVNPS Application
 
-## Based on Alayout of Exercise files from Lynda.com course: Angular API Communication and Authentication
+## Base on Exercise files for Lynda.com course: Angular API Communication and Authentication
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.2.
+#Repsitory: https://dcvnps.visualstudio.com/dcvnps/_git/dcvnps
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.4.
 
 ## Using the files
 
@@ -21,9 +23,9 @@ Different `npm` scripts for your workflow:
   * `npm run sample`: this will seed your database with initial contacts and users.
 
 ## Technologies used
-  * Angular v4.1.1
-  * Angluar CLI v1.0.2
-  * Node v6.10.0
+  * Angular v7.2.7
+  * Angluar CLI v7.3.4
+  * Node v10.7.0
   * Express v4.x
   * MongoDB
   * JSON Web Tokens
