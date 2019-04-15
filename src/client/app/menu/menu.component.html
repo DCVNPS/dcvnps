@@ -1,26 +1,36 @@
-<div class="ui menu header">
-  <div class="ui container">
-    <div class="item">
-      <a [routerLink]="['/home']" aria-label="Home">
-        <img src="profiles/site/vnpslogo.png" alt="vnpslogo">
-      </a>
+<div class="ui top attached">
+  <div class="ui grid">
+    <div class="center aligned four wide column">
+      <div class="ui tiny image">
+        <img src="/profiles/site/vnpslogo.png" alt="vnpslogo">
+      </div>
     </div>
-    <div class="item">
-      <a [routerLink]="['/contacts']" aria-label="Contacts">
-        <i class="icon users large blue"></i>
-      </a>
+    <div class="eight wide column">
+      <div class="ui image">
+          <img src="/profiles/site/vnpscenter1.png" alt="vnpscenter1">
+      </div>
     </div>
-    <div class="header item">
-      <h1>Contact Manager</h1>
+    <div class="four wide column"></div>
+  </div>
+</div>
+<div class="ui inverted stackable menu">
+  <div class="header item">DC Vnps</div>
+  <a class="item" [routerLink]="['/home']" aria-label="Home">Home</a>
+  <a class="item" [routerLink]="['/announcements']" aria-label="Announcements">Announcements</a>
+  <a class="item" [routerLink]="['/programs']" aria-label="programs">Programs</a>
+  <a class="item" [routerLink]="['/galleries']" aria-label="galleries">Galleries</a>
+  <div class="right menu">
+    <div class="item" *ngIf="auth.isLogin()">
+        <button [routerLink]="['/new']" class="ui primary button">
+          <i class="add user icon" aria-hidden="true"></i>
+          Add Contact
+        </button>      
     </div>
     <div class="item" *ngIf="auth.isLogin()">
-      <button [routerLink]="['/new']" class="ui basic button">
-        <i class="add user icon" aria-hidden="true"></i>
-        Add Contact
-      </button>
+        <button class="ui primary button" (click)="logout()">Logout</button>
     </div>
-    <div class="right menu" *ngIf="auth.isLogin()">
-      <button class="ui primary button logout" (click)="logout()">Logout</button>
+    <div class="item">
+        <a [routerLink]="['/aboutus']" aria-label="aboutus">About Us</a>
     </div>
   </div>
 </div>

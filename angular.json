@@ -22,7 +22,6 @@
             ],
             "styles": [
               "src/client/styles.scss",
-              "src/client/assets/bootstrap.min.css",
               "src/client/assets/semantic.min.css",
               "src/client/assets/semantic.grid.min.css"
             ],
@@ -75,7 +74,6 @@
             "scripts": [],
             "styles": [
               "src/client/styles.scss",
-              "src/client/assets/bootstrap.min.css",
               "src/client/assets/semantic.min.css",
               "src/client/assets/semantic.grid.min.css"
             ],

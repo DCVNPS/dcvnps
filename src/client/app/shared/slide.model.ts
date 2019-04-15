@@ -6,12 +6,14 @@ export class Slide {
     public imgsrc: string;
     public imgalt: string;
     public hidden: boolean;
+    public portrait: boolean;
     constructor(id: string,
         galleryId: string,
         galleryNote: string,
         photoIndex: number,
         imgsrc: string,
         imgalt: string,
+        portrait: boolean,
         hidden: boolean) {
         this.id = id;
         this.galleryId = galleryId;
@@ -19,6 +21,7 @@ export class Slide {
         this.photoIndex = photoIndex;
         this.imgsrc = imgsrc;
         this.imgalt = imgalt;
+        this.portrait = portrait;
         this.hidden = hidden;
     }
     toggle() {

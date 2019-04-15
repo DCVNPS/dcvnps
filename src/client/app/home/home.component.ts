@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
             cnt,
             `galleries/${item.gallery}/${item.year}/${item.photo}`,
             `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
+            item.portrait === 'true' ? true : false,
             true));
           cnt += 1;
         });

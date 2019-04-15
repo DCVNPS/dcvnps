@@ -1,0 +1,35 @@
+$size : 600px;
+$height: 400px;
+.card{
+  width:$size !important;
+}
+
+.card .image{
+  background: black !important;
+  width: $size; 
+  height: $height;
+  
+  &.icon{
+    text-align:center;
+    line-height:$height;
+    i{
+      display: inline-block;
+      vertical-align: middle;   
+    }
+  }
+  
+  &.portrait img{
+    border-radius: 0 !important;
+    height:$height !important;
+    width:auto !important;
+    margin:auto;
+  }
+  
+  &.landscape img{
+    border-radius: 0 !important;
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
+  }
+}
