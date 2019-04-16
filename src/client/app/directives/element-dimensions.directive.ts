@@ -10,8 +10,8 @@ export class ElementDimensionsDirective {
     'height': 200
   };
 
-  // @HostBinding('width') private elementWidth: number;
-  // @HostBinding('height') private elementHeight: Number;
+  @HostBinding('width') private elementWidth: number;
+  @HostBinding('height') private elementHeight: Number;
   constructor(private el: ElementRef) {
   }
 

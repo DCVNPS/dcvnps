@@ -17,6 +17,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
+import { ElementDimensionsDirective } from './directives/element-dimensions.directive'
+import { ImageRolloverDirective } from './directives/image-rollover.directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { CarouselItemComponent } from './carousel-item/carousel-item.component';
     HomeComponent,
     FooterComponent,
     CarouselItemComponent,
-
+    ElementDimensionsDirective,
+    ImageRolloverDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,13 @@
-$size : 600px;
-$height: 400px;
+$size : 540px;
+$height: 360px;
 .card{
   width:$size !important;
 }
 
 .card .image{
   background: black !important;
-  width: $size; 
-  height: $height;
+  width: $size!important; 
+  height: $height!important;
   
   &.icon{
     text-align:center;
@@ -21,7 +21,7 @@ $height: 400px;
   &.portrait img{
     border-radius: 0 !important;
     height:$height !important;
-    width:auto !important;
+    width: auto!important;
     margin:auto;
   }
   

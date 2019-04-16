@@ -1,5 +1,5 @@
-import { Component, OnInit, ContentChild, ElementRef, AfterContentInit } from '@angular/core';
-import { isNullOrUndefined } from 'util';
+import { Component, OnInit, ContentChild, ElementRef, AfterContentInit, Input } from '@angular/core';
+import { Slide } from '../shared/slide.model';
 
 @Component({
   selector: 'app-carousel-item',
@@ -7,6 +7,10 @@ import { isNullOrUndefined } from 'util';
   styleUrls: ['./carousel-item.component.scss']
 })
 export class CarouselItemComponent implements OnInit, AfterContentInit {
+  // tslint:disable-next-line:no-input-rename
+  @Input('slide') data: Slide;
+  // tslint:disable-next-line:no-inferrable-types
+  @Input() isPortrait = false;
   public isActive = false;
   // @ContentChild('carouselImg') imgElement: ElementRef;
   constructor() { }
@@ -15,8 +19,5 @@ export class CarouselItemComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    // const carouselImage: HTMLImageElement = this.imgElement.nativeElement;
-    // console.log(`CarouselItem - AfterContentInit ${carouselImage} `);
-    // console.log(carouselImage);
   }
 }

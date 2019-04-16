@@ -22,7 +22,7 @@ export class CarouselComponent implements AfterContentInit {
   ngAfterContentInit() {
     this.childItems = this.carouselItems.toArray();
     console.log(`Carousel - AfterContentInit delay miliseconds: ${this.delay}
-    ChildItems Count : ${this.childItems.length}`);
+    ChildItems Count : ${this.childItems.length} --  Is Running: ${this.isRunning}`);
     this.count = 0;
     this.max = this.childItems.length;
     this.StartSlide();
@@ -45,6 +45,7 @@ export class CarouselComponent implements AfterContentInit {
         this.RunSlide();
       }, 1);
     }
+    // console.log(`Start slide  --  Is Running: ${this.isRunning}`);
   }
   RunSlide() {
     if (this.max > 0) {
@@ -62,6 +63,7 @@ export class CarouselComponent implements AfterContentInit {
   StopSlide() {
     this.isRunning = false;
     clearInterval(this.intervalID);
+    // console.log(`Stop slide  --  Is Running: ${this.isRunning}`);
   }
   NextSlide() {
     clearInterval(this.intervalID);

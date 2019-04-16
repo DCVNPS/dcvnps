@@ -1,44 +1,58 @@
-<div id="homecarousel" *ngIf="slides.length > 0" class="ui grid">
-    <div class="four wide column">
-        <div class="ui raised padded text container segment home side">
-            <div class="ui header">About VNPS</div>
-            <p>
-                The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
-                Vietnamese
-                photographers community, conserving
-                the Vietnamese photography art & culture, and promoting the arts and science of
-                photography.
-            </p>
-            <p>It is supported by membership and donation.</p>
+<div class="ui sizer segment">
+    <div class="ui huge center aligned header">
+        WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+    </div>
+    <p class="ui medium center aligned header">
+        Of Washington Metropolitan
+    </p>
+    <p class="ui medium center aligned header">
+        Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
+    </p>
+
+    <div *ngIf="slides.length > 0" class="ui grid">
+        <div class="four wide column">
+            <div class="ui raised padded text segment">
+                <div class="ui header">About VNPS</div>
+                <p>
+                    The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
+                    Vietnamese
+                    photographers community, conserving
+                    the Vietnamese photography art & culture, and promoting the arts and science of
+                    photography.
+                </p>
+                <p>It is supported by membership and donation.</p>
+            </div>
+            <div class="ui raised padded text segment">
+                <div class="ui header">Connect with Us</div>
+                <div>
+                    <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
+                        <img src="profiles/site/vnpsicon.png" />
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="ui raised padded text container segment  home side">
-            <div class="ui header">Connect with Us</div>
-            <div>
-                <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
-                    <img src="profiles/site/vnpsicon.png" />
+        <div class="eight wide center aligned column">
+            <app-carousel [delay]="2000">
+                <app-carousel-item *ngFor="let slide of slides" [slide]="slide" [isPortrait]="slide.portrait"></app-carousel-item>
+            </app-carousel>
+        </div>
+        <div class="four wide column">
+            <div class="ui text raised segment">
+                <div class="ui header">Sponsor Us</div>
+                <p>
+                    To help VNPS running and serving our community, you can donate to Vietnamese Photographic Society,
+                    <br /> a 501(C)(3) organization! by either shopping , or donating directly to VNPS via Paypal.
+                </p>
+                <a href="http://www.bhphotovideo.com/bnh/controller/home?KW=&amp;img=bh_145x300-TGCOLOR.gif&amp;BI=7627&amp;KBID=8145"
+                    target="_blank">
+                    <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif" class="ui small image"/>
                 </a>
+                <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
+                    <img src="profiles/site/SupportUs_AmzSmile.png" class="ui small image"/>
+                </a>
+                <!-- <paypal-button env="opts.env" client="opts.client" style="opts.style" payment="opts.payment"
+                commit="opts.commit" on-authorize="opts.onAuthorize"></paypal-button> -->
             </div>
         </div>
     </div>
-    <div class="eight wide column">
-        <div class="ui container">
-            <app-carousel [delay]="2000">
-                <!-- <div class="ui fluid">
-                    <div class="ui centered align">
-                        <app-carousel-item *ngFor="let slide of slides">
-                            <img [src]="slide.imgsrc" [alt]="slide.imgalt"  class="ui fluid image">
-                        </app-carousel-item>
-                    </div>
-                </div> -->
-                <app-carousel-item *ngFor="let slide of slides">
-                    
-                </app-carousel-item>
-            </app-carousel>
-        </div>
-        <!-- <hr style="height: 0px; border-top: 2px solid;">
-        <div class="ui container">
-                <app-carouselsave [delay]="2000" [slides]="slides"> </app-carouselsave>
-            </div>
-        </div> -->
-    <div class="four wide column"></div>
 </div>

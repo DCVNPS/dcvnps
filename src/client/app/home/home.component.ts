@@ -22,11 +22,11 @@ export class HomeComponent implements OnInit {
             cnt,
             `galleries/${item.gallery}/${item.year}/${item.photo}`,
             `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
-            item.portrait === 'true' ? true : false,
+            item.portrait,
             true));
           cnt += 1;
         });
-        console.log(this.slides);
+        // console.log(this.slides);
       })
   }
 

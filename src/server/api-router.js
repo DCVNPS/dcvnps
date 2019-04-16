@@ -66,7 +66,7 @@ function apiRouter(database) {
         }
         contactsCollection.find(
             criteria,
-            {galleryId: 1, gallery: 1, year: 1, photo: 1 }).toArray((err, docs) => {
+            {galleryId: 1, gallery: 1, year: 1, photo: 1, portrait: 1 }).toArray((err, docs) => {
             return res.json(docs);
         });    
     });
@@ -82,7 +82,7 @@ function apiRouter(database) {
         }
         galleryCollection.find(
             criteria,
-            {galleryId: 1, gallery: 1, year: 1, photo: 1 }).toArray(async (err, docs) => {
+            {galleryId: 1, gallery: 1, year: 1, photo: 1, portrait: 1}).toArray(async (err, docs) => {
             return await res.json(docs);
         });    
     });
