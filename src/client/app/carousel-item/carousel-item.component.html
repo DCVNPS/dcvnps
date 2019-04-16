@@ -1,11 +1,3 @@
 <div [hidden]="!isActive">
-  <!-- <ng-content></ng-content> -->
-  <div class="ui card">
-    <!-- <div class="content">
-      <div class="description">{{data.imgsrc}}</div>
-    </div> -->
-    <div class="image" [class.portrait]="isPortrait" [class.landscape]="!isPortrait">
-      <img [src]="data?.imgsrc" alt="data?.imgalt">
-    </div>
-  </div>
+  <ng-content></ng-content>
 </div>

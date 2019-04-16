@@ -10,7 +10,7 @@ import { isNullOrUndefined } from 'util';
 export class CarouselComponent implements AfterContentInit {
   @ContentChildren(CarouselItemComponent) carouselItems: QueryList<CarouselItemComponent>;
   @Input() delay = 500;
-  private intervalID: number = undefined;
+  private intervalID: any;
   public isRunning = true;
   private isPrev = false;
   private childItems: CarouselItemComponent[];
