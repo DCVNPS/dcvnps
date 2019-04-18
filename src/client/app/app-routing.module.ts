@@ -5,6 +5,8 @@ import { AddContactComponent } from './add-contact/add-contact.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard} from './auth.guard';
+import { GalleriesComponent } from './galleries/galleries.component';
+import { ProgramsComponent } from './programs/programs.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,14 @@ const routes: Routes = [
     path: 'new',
     component: AddContactComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'galleries',
+    component: GalleriesComponent
+  },
+  {
+    path: 'programs',
+    component: ProgramsComponent
   },
   {
     path: 'login',

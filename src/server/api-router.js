@@ -7,7 +7,7 @@ function apiRouter(database) {
 
     const router = express.Router();
 
-    // This code is good for application that require login from begining.
+// This code is good for application that require login from begining.
 //     router.use(
 //         checkJwt({secret:process.env.JWT_SECRET})
 //         .unless( {path:
@@ -49,8 +49,8 @@ function apiRouter(database) {
 
     router.get('/galleries', (req, res) => {
         const contactsCollection = database.collection('galleries');
-        contactsCollection.find({},
-            {gallery: 1, year: 1, profilePhoto: 1}).toArray((err, docs) => {
+        contactsCollection.find({gallery:{$ne: 'home'}},
+            {_id: 1, gallery: 1, year: 1, profilePhoto: 1, createdDate: 1, updatedDate: 1}).toArray((err, docs) => {
             return res.json(docs);
         });
     });

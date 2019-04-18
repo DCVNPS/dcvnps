@@ -19,6 +19,9 @@ import { FooterComponent } from './footer/footer.component';
 import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 import { ElementDimensionsDirective } from './directives/element-dimensions.directive'
 import { ImageRolloverDirective } from './directives/image-rollover.directive';
+import { SiteHeaderComponent } from './site-header/site-header.component';
+import { GalleriesComponent } from './galleries/galleries.component';
+import { ProgramsComponent } from './programs/programs.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { ImageRolloverDirective } from './directives/image-rollover.directive';
     CarouselItemComponent,
     ElementDimensionsDirective,
     ImageRolloverDirective,
+    SiteHeaderComponent,
+    GalleriesComponent,
+    ProgramsComponent,
   ],
   imports: [
     BrowserModule,

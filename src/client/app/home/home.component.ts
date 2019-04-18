@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
           cnt += 1;
         });
         console.log(this.slides);
-      })
-  }
+      });
+    }
 
 }

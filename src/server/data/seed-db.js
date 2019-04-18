@@ -8,14 +8,14 @@ const galleryphotos = require('./gallery.photos');
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
 
-async function seedCollection(collectName,initialRecords){
+async function seedCollection(collectionName,initialRecords){
     MongoClient.connect(process.env.DB_CONN, (err, db) =>{
         if(err) {
             console.error(err);
         }
         console.log('connected to mongo db...');
 
-        const collection = db.collection(collectName);
+        const collection = db.collection(collectionName);
         collection.remove();
 
         initialRecords.forEach((item) => {

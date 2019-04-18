@@ -1,0 +1,13 @@
+<div class="ui segment min-page-height">
+  <div class="ui four cards" *ngIf="_galleries">
+    <a class="card" *ngFor="let g of _galleries">
+      <div class="content">
+        <div class="header">{{g.gallery| titlecase}}</div>
+        <div class="meta">{{g.year}}</div>
+      </div>
+      <div class="image">
+        <img [src]="g?.profilePhoto">
+      </div>
+    </a>
+  </div>
+</div>
