@@ -22,6 +22,8 @@ import { ImageRolloverDirective } from './directives/image-rollover.directive';
 import { SiteHeaderComponent } from './site-header/site-header.component';
 import { GalleriesComponent } from './galleries/galleries.component';
 import { ProgramsComponent } from './programs/programs.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { ProgramsComponent } from './programs/programs.component';
     SiteHeaderComponent,
     GalleriesComponent,
     ProgramsComponent,
+    AnnouncementsComponent,
+    AboutusComponent,
   ],
   imports: [
     BrowserModule,

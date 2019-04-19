@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard} from './auth.guard';
 import { GalleriesComponent } from './galleries/galleries.component';
 import { ProgramsComponent } from './programs/programs.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
 
 const routes: Routes = [
   {
@@ -36,9 +38,17 @@ const routes: Routes = [
     path: 'programs',
     component: ProgramsComponent
   },
+  { 
+    path: 'announcements',
+    component: AnnouncementsComponent
+  },
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'aboutus',
+    component: AboutusComponent
   },
   {
     path: '**',

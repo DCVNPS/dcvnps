@@ -30,9 +30,15 @@
     {
         "gallery": "level3",
         "year": "2017",
-        "profilePhoto": "level-2017.jpg",
+        "profilePhoto": "level3-2017.jpg",
+        "createdDate": null,
+        "updatedDate": null
+    },
+    {
+        "gallery": "about",
+        "year": "2019",
+        "profilePhoto": "",
         "createdDate": null,
         "updatedDate": null
     }
-
 ]

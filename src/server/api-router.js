@@ -49,7 +49,7 @@ function apiRouter(database) {
 
     router.get('/galleries', (req, res) => {
         const contactsCollection = database.collection('galleries');
-        contactsCollection.find({gallery:{$ne: 'home'}},
+        contactsCollection.find({gallery:{$nin: ['home','about']}},
             {_id: 1, gallery: 1, year: 1, profilePhoto: 1, createdDate: 1, updatedDate: 1}).toArray((err, docs) => {
             return res.json(docs);
         });

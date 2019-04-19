@@ -34,7 +34,7 @@ async function seedCollection(collectionName,initialRecords){
     })
 }
 
-seedCollection('users',users);
-seedCollection('contacts', contacts);
-seedCollection('galleries', galleries);
+// seedCollection('users',users);
+// seedCollection('contacts', contacts);
+// seedCollection('galleries', galleries);
 seedCollection('galleryphotos', galleryphotos );
