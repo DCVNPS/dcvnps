@@ -1,4 +1,4 @@
-<div class="ui segment min-page-height">
+<div class="ui padded grid min-page-height" id="pagebody">
   <div class="ui huge center aligned header">
     VNPS Photography Programs
   </div>
@@ -19,13 +19,13 @@
   </p>
   <div class="ui top attached tabular menu">
     <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showLevel1Program();">
-      Basic Photograpy (Level 1)
+      <h3 class="header">Basic Photograpy (Level 1)</h3>
     </a>
     <a class="item" #lvl2Anchor [class.active]="showLevel2"  (click)="showLevel2Program();">
-      Mid-Level Photography (Level 2)
+      <h3 class="header">Mid-Level Photography (Level 2)</h3>
     </a>
     <a class="item" #lvl3Anchor [class.active]="showLevel3"  (click)="showLevel3Program();">
-      Advance Photography (Level 3)
+      <h3 class="header">Advance Photography (Level 3)</h3>
     </a>
   </div>
   <div class="ui bottom attached piled segment" [hidden]="!showLevel1">

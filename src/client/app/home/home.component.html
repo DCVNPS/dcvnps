@@ -1,14 +1,15 @@
-<div class="ui sizer segment">
-    <div class="ui huge center aligned header">
-        WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+<div id="pagebody">
+    <div class="ui raised segment">
+        <div class="ui huge center aligned header">
+            WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+        </div>
+        <p class="ui medium center aligned header">
+            Of Washington Metropolitan
+        </p>
+        <p class="ui medium center aligned header">
+            Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
+        </p>
     </div>
-    <p class="ui medium center aligned header">
-        Of Washington Metropolitan
-    </p>
-    <p class="ui medium center aligned header">
-        Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
-    </p>
-
     <div *ngIf="slides.length > 0" class="ui grid">
         <div class="four wide column">
             <div class="ui raised padded text segment">
@@ -38,10 +39,11 @@
                         <!-- <div class="content">
                           <div class="description">{{slide.imgsrc}}</div>
                         </div> -->
-                        <div class="image" [class.portrait]="slide.portrait==='true'" [class.landscape]="slide.portrait !=='true'">
-                          <img [src]="slide?.imgsrc" alt="slide?.imgalt">
+                        <div class="image" [class.portrait]="slide.portrait==='true'"
+                            [class.landscape]="slide.portrait !=='true'">
+                            <img [src]="slide?.imgsrc" alt="slide?.imgalt">
                         </div>
-                      </div>
+                    </div>
                 </app-carousel-item>
             </app-carousel>
         </div>
@@ -54,10 +56,11 @@
                 </p>
                 <a href="http://www.bhphotovideo.com/bnh/controller/home?KW=&amp;img=bh_145x300-TGCOLOR.gif&amp;BI=7627&amp;KBID=8145"
                     target="_blank">
-                    <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif" class="ui small image"/>
+                    <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif"
+                        class="ui small image" />
                 </a>
                 <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
-                    <img src="profiles/site/SupportUs_AmzSmile.png" class="ui small image"/>
+                    <img src="profiles/site/SupportUs_AmzSmile.png" class="ui small image" />
                 </a>
                 <!-- <paypal-button env="opts.env" client="opts.client" style="opts.style" payment="opts.payment"
                 commit="opts.commit" on-authorize="opts.onAuthorize"></paypal-button> -->

@@ -1,5 +1,6 @@
-<div class="ui segment min-page-height">
-  <div class="ui four cards" *ngIf="_galleries">
+<div class="min-page-height" id="pagebody">
+<div class="ui padded grid"  *ngIf="_galleries">
+  <div class="ui four cards">
     <a class="card" *ngFor="let g of _galleries">
       <div class="content">
         <div class="header">{{g.gallery| titlecase}}</div>
@@ -10,4 +11,5 @@
       </div>
     </a>
   </div>
+</div>
 </div>

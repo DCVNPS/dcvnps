@@ -1,4 +1,4 @@
-<div class="ui grid">
+<div class="ui grid" id="pagebody">
   <div class="seven wide column">
     <div class="ui segment">
       <img src="galleries/site/about/about_timeline.jpg" alt="timeline" class="ui image">
@@ -18,10 +18,10 @@
   </div>
   <div class="nine wide column">
     <div class="ui segments">
-      <div class="ui center aligned inverted blue segment">
+      <div class="ui center aligned segment">
         <h1 class="header">Vietnamese Photographic Society</h1>
       </div>
-      <div class="ui left aligned secondary inverted blue segment">
+      <div class="ui left aligned segment">
         <p>
           &nbsp;&nbsp;&nbsp;Vietnamese Art Photographers Association was founded in 1992 by Mr. Dzung L. Do. Mr. Do was
           a prisoner of the Vietnam War
@@ -69,7 +69,7 @@
           <li>Participate in photographic activities with other photographic organizations in the US and the world</li>
         </ul>
       </div>
-      <div class="ui left aligned tertiary inverted blue segment">
+      <div class="ui left aligned segment">
         <h4 class="header">Footnotes:</h4>
         <ol>
           <li>Do, Linh-Dung (Founder)</li>
@@ -91,4 +91,20 @@
       </div>
     </div>
   </div>
+  <div>
+    <h1>About Testing Modal</h1>
+    <p>{{bodyText}}</p>
+    <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
+    <button (click)="openModal('custom-modal-2')">Open Modal 2</button>
+  </div>
 </div>
+<jw-modal id="custom-modal-1">
+  <h1>A Custom Modal!</h1>
+  <p>Home page text: <input type="text" [(ngModel)]="bodyText" /></p>
+  <button (click)="closeModal('custom-modal-1');">Close</button>
+</jw-modal>
+
+<jw-modal id="custom-modal-2">
+  <h1 style="height:1000px">A Tall Custom Modal!</h1>
+  <button (click)="closeModal('custom-modal-2');">Close</button>
+</jw-modal>

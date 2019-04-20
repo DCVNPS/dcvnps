@@ -2,31 +2,60 @@
   <div class="header item">DC Vnps</div>
   <a class="item" [routerLink]="['/home']" aria-label="Home">
     <i class="home icon"></i>
-    <p>Home</p></a>
+    <p>Home</p>
+  </a>
   <a class="item" [routerLink]="['/announcements']" aria-label="Announcements">
     <i class="bullhorn icon"></i>
     <p>Announcements</p>
   </a>
-  <a class="item" [routerLink]="['/programs']" aria-label="programs">
+  <!-- <a class="item" [routerLink]="['/programs']" aria-label="programs">
     <i class="book icon"></i>
     <p>Programs</p>
-  </a>
-  <a class="item" [routerLink]="['/galleries']" aria-label="galleries">
-    <i class="image icon"></i>
-    <p>Galleries</p>
-  </a>
+  </a> -->
+  <div class="item">
+    <div class="ui simple dropdown">
+      <i class="book icon"></i>
+      <div class="text">Programs</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+          <a class="item" [routerLink]="['programs']" aria-label="programs">
+            All Programs
+          </a>
+        <a class="item" *ngFor="let p of mPrograms" [routerLink]="['programs',p.link]">{{p.ariatext}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="item" *ngIf="mGalleries">
+      <div class="ui simple dropdown">
+          <i class="image icon"></i>  
+          <div class="text">Galleries</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" [routerLink]="['galleries']">All Galleries</a>
+            <a class="item" *ngFor="let g of mGalleries" [routerLink]="['galleries',g]">{{g}}</a>
+            <!-- <div class="header">Categories</div>
+            <div class="item">Clothing</div>
+            <div class="item">Home Goods</div>
+            <div class="item">Bedroom</div>
+            <div class="divider"></div>
+            <div class="header">Order</div>
+            <div class="item">Status</div>
+            <div class="item">Cancellations</div> -->
+          </div>
+        </div>   
+  </div>
   <a class="item" [routerLink]="['/aboutus']" aria-label="aboutus">
     <i class="comments icon"></i>
     About Us</a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
-        <button [routerLink]="['/new']" class="ui primary button">
-          <i class="add user icon" aria-hidden="true"></i>
-          Add Contact
-        </button>      
+      <button [routerLink]="['/new']" class="ui primary button">
+        <i class="add user icon" aria-hidden="true"></i>
+        Add Contact
+      </button>
     </div>
     <div class="item" *ngIf="auth.isLogin()">
-        <button class="ui primary button" (click)="logout()">Logout</button>
+      <button class="ui primary button" (click)="logout()">Logout</button>
     </div>
     <!-- <div class="item">
         <a [routerLink]="['/aboutus']" aria-label="aboutus">About Us</a>

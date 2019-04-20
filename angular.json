@@ -25,7 +25,10 @@
               "src/client/assets/semantic.min.css",
               "src/client/assets/semantic.grid.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/client/assets/jquery-3.1.1.min.js",
+              "src/client/assets/semantic.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -71,7 +74,10 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/client/polyfills.ts",
             "tsConfig": "src/client/tsconfig.spec.json",
-            "scripts": [],
+            "scripts": [
+              "src/client/assets/jquery-3.1.1.min.js",
+              "src/client/assets/semantic.min.js"
+            ],
             "styles": [
               "src/client/styles.scss",
               "src/client/assets/semantic.min.css",

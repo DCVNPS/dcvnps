@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import {Http, Response } from '@angular/http';
 // import { map } from 'rxjs/operators';
 import { Contact } from '../shared/contact.model';
-import { ApiService } from '../shared/api.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-contact-list',

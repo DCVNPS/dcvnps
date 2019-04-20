@@ -24,6 +24,7 @@ import { GalleriesComponent } from './galleries/galleries.component';
 import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
     ProgramsComponent,
     AnnouncementsComponent,
     AboutusComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,10 @@ import { AboutusComponent } from './aboutus/aboutus.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ApiService, AuthService, AuthGuard],
+  providers: [
+    ApiService,
+    AuthService,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

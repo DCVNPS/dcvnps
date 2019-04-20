@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgramsComponent implements OnInit {
 
-  private showLevel1: boolean;
-  private showLevel2: boolean;
-  private showLevel3: boolean;
+  public showLevel1: boolean;
+  public showLevel2: boolean;
+  public showLevel3: boolean;
   constructor() {
     this.showLevel1 = true;
     this.showLevel2 = false;
