@@ -3,7 +3,7 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { Contact } from '../shared/contact.model';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../shared/api.service';
 
 @Component({
   selector: 'app-add-contact',

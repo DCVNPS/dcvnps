@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Slide } from '../shared/slide.model';
 import { ApiService } from '../shared/api.service';
-import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-aboutus',
@@ -11,8 +10,7 @@ import { ModalService } from '../services/modal.service';
 export class AboutusComponent implements OnInit {
   public slides: Slide[] = [];
   public bodyText: string;
-  constructor(private api: ApiService,
-    private modalService: ModalService) {
+  constructor(private api: ApiService) {
     this.api.get('/galleryphotosbyname/about')
       .subscribe(data => {
         let cnt = 0;
@@ -32,13 +30,5 @@ export class AboutusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bodyText = 'This text can be updated in modal 1';
-  }
-  openModal(id: string) {
-    this.modalService.open(id);
-  }
-
-  closeModal(id: string) {
-    this.modalService.close(id);
   }
 }

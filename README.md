@@ -10,8 +10,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Exercise files for each video can be found in the `exercise-files` folder, which contains the code files at the start state and end state for each video. If at any point you wish to jump in to a specific video's exercise files, be sure to run `npm install` to install your dependencies. Please note that not every video will have exercise files.
 
-I recommend you start with the `start-here` folder (go ahead and rename it), and make changes in that directory as you work through each video. The completed app is in `completed-app`.
-
 **Note**
 Always make sure you make a copy of `.env.sample`, rename it to `.env`, and add in the necessary environemtn variables for both the JWT secret and the MongoDB connection string.
 
@@ -29,3 +27,12 @@ Different `npm` scripts for your workflow:
   * Express v4.x
   * MongoDB
   * JSON Web Tokens
+## Issues
+  * popup component give error
+   Uncaught TypeError: Failed to construct 'HTMLElement': Please use the 'new' operator, this DOM object constructor cannot be called as a function.
+    Two options to fix the issue:
+      1- Add in index.html
+      <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/custom-elements-es5-adapter.js"></script>
+      2- run npm install --save import @webcomponents/webcomponentsjs
+        add to the end of polyfills.ts
+        import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
-  constructor(private auth: AuthService,
+  constructor(public auth: AuthService,
     private api: ApiService,
     private router: Router) {
     this.mGalleries = [];

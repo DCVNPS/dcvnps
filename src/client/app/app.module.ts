@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -24,7 +25,9 @@ import { GalleriesComponent } from './galleries/galleries.component';
 import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
-import { ModalComponent } from './modal/modal.component';
+import { QuickTestComponent } from './quick-test/quick-test.component';
+import { PopupComponent } from './popup/popup.component';
+import { PopupService } from './services/popup.service';
 
 @NgModule({
   declarations: [
@@ -45,10 +48,12 @@ import { ModalComponent } from './modal/modal.component';
     ProgramsComponent,
     AnnouncementsComponent,
     AboutusComponent,
-    ModalComponent,
+    QuickTestComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AppRoutingModule
@@ -56,7 +61,9 @@ import { ModalComponent } from './modal/modal.component';
   providers: [
     ApiService,
     AuthService,
-    AuthGuard],
-  bootstrap: [AppComponent]
+    AuthGuard,
+    PopupService],
+  bootstrap: [AppComponent],
+  entryComponents: [PopupComponent]
 })
 export class AppModule { }
