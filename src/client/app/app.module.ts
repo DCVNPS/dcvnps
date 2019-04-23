@@ -26,8 +26,9 @@ import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
-import { PopupComponent } from './popup/popup.component';
-import { PopupService } from './services/popup.service';
+import { ModalComponent } from './modal/modal.component';
+import { DomService } from './services/dom.service';
+import { ModalService } from './services/modal.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { PopupService } from './services/popup.service';
     AnnouncementsComponent,
     AboutusComponent,
     QuickTestComponent,
-    PopupComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,8 +63,9 @@ import { PopupService } from './services/popup.service';
     ApiService,
     AuthService,
     AuthGuard,
-    PopupService],
+    DomService,
+    ModalService],
   bootstrap: [AppComponent],
-  entryComponents: [PopupComponent]
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

@@ -1,7 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { createCustomElement } from '@angular/elements';
-import { PopupService } from '../services/popup.service';
-import { PopupComponent } from '../popup/popup.component';
+import { Component, OnInit } from '@angular/core';
+import { ModalService } from '../services/modal.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-quick-test',
@@ -9,13 +8,16 @@ import { PopupComponent } from '../popup/popup.component';
   styleUrls: ['./quick-test.component.scss']
 })
 export class QuickTestComponent implements OnInit {
-  constructor(injector: Injector, public popup: PopupService) {
-    // Convert `PopupComponent` to a custom element.
-    const PopupElement = createCustomElement(PopupComponent, {injector});
-    // Register the custom element with the browser.
-    customElements.define('popup-element', PopupElement);
+  constructor(private modalService: ModalService) {
   }
   ngOnInit(){
     
   }
+  showModal() {
+    let inputs = {
+      isMobile: false
+    }
+    this.modalService.init(ModalComponent, inputs, {});
+  }
+
 }

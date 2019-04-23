@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>DcVnps</title>
@@ -9,7 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
   <app-root>Loading...</app-root>
+  <!-- Custom modal setup -->
+  <div id="modal-container" class="hidden"></div>
+  <div id="overlay" (click)="removeModal()" class="hidden"></div>
+
 </body>
+
 </html>
