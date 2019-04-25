@@ -9,6 +9,11 @@ import { ApiService } from '../shared/api.service';
 })
 export class AboutusComponent implements OnInit {
   public slides: Slide[] = [];
+  public chair: {};
+  public viceChair: {};
+  public generalSec: {};
+  public treasury: {};
+  public auditor: {};
   public bodyText: string;
   constructor(private api: ApiService) {
     this.api.get('/galleryphotosbyname/about')
@@ -27,6 +32,11 @@ export class AboutusComponent implements OnInit {
         });
         console.log(this.slides);
       });
+      this.chair =  {name:{last:'Do', first:'Dung', middle:'Linh'}, rank:'chairman'};
+      this.viceChair = {name:{last:'Tran', first:'Dinh', middle:'Thuy'}, rank:'vice chairman'};
+      this.generalSec =  {name:{last:'Nguyen', first:'Lan', middle:'Kieu'}, rank:'general secretary'};
+      this.treasury =  {name:{last:'Hoang', first:'Ly', middle:'Truc'}, rank:'treasury'};
+      this.auditor =  {name:{last:'Long', first:'Vuong', middle:''}, rank:'auditor'};
   }
 
   ngOnInit() {

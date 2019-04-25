@@ -1,6 +1,8 @@
 <div class="ui middle aligned grid">
-    <div class="two wide column" (click)="PrevSlide();">
+    <div class="two wide column">
+        <a (click)="PrevSlide();">
         <i class="huge chevron left icon"></i>
+        </a>
     </div>
     <div class="twelve wide column">
             <div (click)="toggleSlideshow();">
@@ -14,7 +16,9 @@
             <button type="button" (click)="NextSlide();" class="ui blue basic button">Next Slide</button>
         </div> -->
     </div>
-    <div class="two wide column" (click)="NextSlide();">
+    <div class="two wide column">
+        <a (click)="NextSlide();">
         <i class="huge chevron right icon"></i>
+        </a>
     </div>
 </div>

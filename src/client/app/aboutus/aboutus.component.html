@@ -1,11 +1,13 @@
 <div class="ui grid" id="pagebody">
-  <div class="seven wide column">
+  <div class="eight wide column">
     <div class="ui segment">
       <img src="galleries/site/about/about_timeline.jpg" alt="timeline" class="ui image">
     </div>
+    <div class="ui center aligned segment about-header">
+        <h1 class="ui header">First VNPS Members</h1>
+    </div>
     <div class="ui center aligned segment">
       <a href="#">
-        <h1 class="ui header">First VNPS Members</h1>
         <div class="ui three stackable cards">
           <div class="card" *ngFor="let s of slides">
             <div class="image">
@@ -16,9 +18,9 @@
       </a>
     </div>
   </div>
-  <div class="nine wide column">
+  <div class="eight wide column">
     <div class="ui segments">
-      <div class="ui center aligned segment">
+      <div class="ui center aligned segment about-header">
         <h1 class="header">Vietnamese Photographic Society</h1>
       </div>
       <div class="ui left aligned segment">
@@ -69,8 +71,10 @@
           <li>Participate in photographic activities with other photographic organizations in the US and the world</li>
         </ul>
       </div>
-      <div class="ui left aligned segment">
+      <div class="ui left aligned segment about-header">
         <h4 class="header">Footnotes:</h4>
+      </div>
+      <div class="ui left aligned segment">
         <ol>
           <li>Do, Linh-Dung (Founder)</li>
           <li>Tran, Thuy-Dinh</li>
@@ -88,6 +92,66 @@
           <li>Hung Ha (Houston, Texas)</li>
           <li>Tran, Buu-Khanh (War Reporter)</li>
         </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui five column grid">
+  <div class="centered row">
+    <div class="ui raise card">
+      <div class="content">
+      <h2 class="header">Board of Directors</h2>
+      <div class="meta"></div>
+    </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised card">
+      <div class="content">
+        <div class="header">
+          {{chair.name.last|titlecase}}, {{chair.name.middle|titlecase}}-{{chair.name.first| titlecase}}
+        </div>
+        <div class="meta">{{chair.rank| titlecase}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised card">
+      <div class="content">
+        <div class="header">
+          {{viceChair.name.last|titlecase}}, {{viceChair.name.middle|titlecase}}-{{viceChair.name.first| titlecase}}
+        </div>
+        <div class="meta">{{viceChair.rank| titlecase}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised card">
+      <div class="content">
+        <div class="header">
+          {{chair.name.last|titlecase}}, {{generalSec.name.middle|titlecase}}-{{chair.name.first| titlecase}}
+          <div class="meta">{{chair.rank| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised card">
+      <div class="content">
+        <div class="header">
+          {{treasury.name.last|titlecase}}, {{treasury.name.middle|titlecase}}-{{treasury.name.first| titlecase}}
+        </div>
+        <div class="meta">{{treasury.rank| titlecase}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui raised card">
+      <div class="content">
+        <div class="header">
+          {{auditor.name.last|titlecase}}, {{auditor.name.middle|titlecase}}-{{auditor.name.first| titlecase}}
+        </div>
+        <div class="meta">{{auditor.rank| titlecase}}</div>
       </div>
     </div>
   </div>
