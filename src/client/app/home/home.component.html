@@ -32,20 +32,20 @@
                 </div>
             </div>
         </div>
-        <div class="eight wide center aligned column">
-            <app-carousel [delay]="2000">
-                <app-carousel-item *ngFor="let slide of slides">
-                    <div class="ui card borderless">
-                        <!-- <div class="content">
-                          <div class="description">{{slide.imgsrc}}</div>
-                        </div> -->
-                        <div class="image" [class.portrait]="slide.portrait==='true'"
-                            [class.landscape]="slide.portrait !=='true'">
-                            <img [src]="slide?.imgsrc" alt="slide?.imgalt">
+        <div class="eight wide column">
+                  <app-carousel [delay]="2000">
+                    <app-carousel-item *ngFor="let slide of slides">
+                        <div class="ui middle aligned fluid card borderless">
+                            <!-- <div class="content">
+                            <div class="description">{{slide.imgsrc}}</div>
+                            </div> -->
+                            <div class="image" [class.portrait]="slide.portrait==='true'"
+                                [class.landscape]="slide.portrait !=='true'">
+                                <img [src]="slide?.imgsrc" alt="slide?.imgalt">
+                            </div>
                         </div>
-                    </div>
-                </app-carousel-item>
-            </app-carousel>
+                    </app-carousel-item>
+                </app-carousel>
         </div>
         <div class="four wide column">
             <div class="ui text raised segment">

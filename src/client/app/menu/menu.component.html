@@ -47,6 +47,9 @@
   <a class="item" [routerLink]="['/aboutus']" aria-label="aboutus">
     <i class="comments icon"></i>
     About Us</a>
+  <a class="item" [routerLink]="['/quicktest']" aria-label="quicktest">
+  <i class="shipping fast icon"></i>Quicktest
+  </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
       <button [routerLink]="['/new']" class="ui primary button">

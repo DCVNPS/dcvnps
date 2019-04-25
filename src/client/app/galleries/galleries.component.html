@@ -1,7 +1,7 @@
 <div class="min-page-height" id="pagebody">
 <div class="ui padded grid"  *ngIf="_galleries">
   <div class="ui four cards">
-    <a class="card" *ngFor="let g of _galleries">
+    <a class="card" *ngFor="let g of _galleries" [routerLink]="'/gallery/'+g?.gallery">
       <div class="content">
         <div class="header">{{g.gallery| titlecase}}</div>
         <div class="meta">{{g.year}}</div>

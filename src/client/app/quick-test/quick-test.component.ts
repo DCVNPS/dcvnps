@@ -8,6 +8,7 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrls: ['./quick-test.component.scss']
 })
 export class QuickTestComponent implements OnInit {
+  imgSrc: string = "profiles/member/2018/member-2018.jpg";
   constructor(private modalService: ModalService) {
   }
   ngOnInit(){
@@ -15,7 +16,8 @@ export class QuickTestComponent implements OnInit {
   }
   showModal() {
     let inputs = {
-      isMobile: false
+      isMobile: false,
+      imgSrc:"profiles/member/2018/member-2018.jpg"
     }
     this.modalService.init(ModalComponent, inputs, {});
   }

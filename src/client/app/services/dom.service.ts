@@ -20,7 +20,7 @@ export class DomService {
 
     // Attach the config to the child (inputs and outputs)
     this.attachConfig(childConfig, childComponentRef);
-
+    console.log(childComponentRef);
     this.childComponentRef = childComponentRef;
     // Attach component to the appRef so that it's inside the ng component tree
     this.appRef.attachView(childComponentRef.hostView);

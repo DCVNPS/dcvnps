@@ -29,6 +29,8 @@ import { QuickTestComponent } from './quick-test/quick-test.component';
 import { ModalComponent } from './modal/modal.component';
 import { DomService } from './services/dom.service';
 import { ModalService } from './services/modal.service';
+import { GalleryComponent } from './gallery/gallery.component';
+import { PopupComponent } from './popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { ModalService } from './services/modal.service';
     AboutusComponent,
     QuickTestComponent,
     ModalComponent,
+    GalleryComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,

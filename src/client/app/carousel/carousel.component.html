@@ -1,18 +1,7 @@
-    <!-- <div class="one wide column middle aligned">
-        <a class="ui basic small button" (click)="PrevSlide();">
-            <i class="chevron left icon"></i>
-        </a>
-
-    </div> -->
-    <ng-content></ng-content>
-    <div class="text-center">
-        <button type="button" (click)="PrevSlide();" class="ui blue basic button">Previous Slide</button>
-        <button (click)="StopSlide();" *ngIf="isRunning" class="ui blue basic button">Stop Slide Show</button>
-        <button (click)="StartSlide();" *ngIf="!isRunning" class="ui blue basic button">Start Slide Show</button>
-        <button type="button" (click)="NextSlide();" class="ui blue basic button">Next Slide</button>
-    </div>
-    <!-- <div class="one wide column middle aligned">
-        <a class="ui basic small button" (click)="NextSlide()">
-            <i class="chevron right icon"></i>
-        </a>
-    </div> -->
+<ng-content></ng-content>
+<div class="text-center">
+    <button type="button" (click)="PrevSlide();" class="ui blue basic button">Previous Slide</button>
+    <button (click)="StopSlide();" *ngIf="isRunning" class="ui blue basic button">Stop Slide Show</button>
+    <button (click)="StartSlide();" *ngIf="!isRunning" class="ui blue basic button">Start Slide Show</button>
+    <button type="button" (click)="NextSlide();" class="ui blue basic button">Next Slide</button>
+</div>

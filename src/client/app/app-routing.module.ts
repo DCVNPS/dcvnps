@@ -10,6 +10,7 @@ import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'galleries',
     component: GalleriesComponent
+  },
+  {
+    path: 'gallery/:level?',
+    component: GalleryComponent
   },
   {
     path: 'programs',

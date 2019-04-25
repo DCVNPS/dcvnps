@@ -1,5 +1,31 @@
 <div class="min-page-height" id="pagebody">
   <div class="ui padded grid">
+    <div class="row">
       <button (click)='showModal()'>Load Modal</button>
+    </div>
+      <div class="row middle">
+          <button (click)="showDialog = !showDialog" class="btn">Open Popup Modal</button>
+
+          <app-popup [(visible)]="showDialog">
+            <!-- <h1>Hello World</h1> -->
+            <div class="middle aligned ui grid">
+              <div class="two wide column">
+                <i class="huge middle chevron left icon"></i>
+              </div>
+              <div class="twelve wide column">
+                <div class="ui fluid card">
+                  <div class="image">
+                    <img [src]=imgSrc>
+                  </div>
+                </div>
+              </div>
+              <div class="two wide column">
+                <i class="huge chevron right icon"></i>
+              </div>
+            </div>
+            <!-- <button (click)="showDialog = !showDialog" class="btn">Close</button> -->
+          </app-popup>
+      </div>
   </div>
 </div>
+

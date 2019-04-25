@@ -2,7 +2,7 @@
   border-radius: 0!important;
 }
 //******************* Carousel CSS *******************
-$size : 500px;
+$size : 550px;
 .ui.card{
   width:$size !important;
   box-shadow: none!important;
@@ -38,3 +38,9 @@ $size : 500px;
   }
 }
 //************** Carousle ***********************
+.imgCenter{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
