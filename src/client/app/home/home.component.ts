@@ -16,15 +16,17 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         let cnt = 0;
         data.forEach(item => {
-          this.slides.push(new Slide(item._id,
-            item.galleryId,
-            'dummy note',
-            cnt,
-            `galleries/${item.gallery}/${item.year}/${item.photo}`,
-            `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
-            item.portrait,
-            true));
-          cnt += 1;
+          if(item.portrait !=="true"){
+            this.slides.push(new Slide(item._id,
+              item.galleryId,
+              'dummy note',
+              cnt,
+              `galleries/${item.gallery}/${item.year}/${item.photo}`,
+              `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
+              item.portrait,
+              true));
+            cnt += 1;  
+          }
         });
         // console.log(this.slides);
       });

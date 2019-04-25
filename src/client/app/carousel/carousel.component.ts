@@ -28,7 +28,6 @@ export class CarouselComponent implements AfterContentInit {
     this.StartSlide();
   }
   StartSlide() {
-    this.isRunning = true;
     if (this.max > 0) {
     // this trick is to load the carousel fast at startup (1 milisecond)
     // then change to call RunSlide() with delay interval.
@@ -60,8 +59,15 @@ export class CarouselComponent implements AfterContentInit {
       }, this.delay);
     }
   }
+  toggleSlideshow(){
+    this.isRunning = !this.isRunning;
+    if(this.isRunning){
+      this.StartSlide();
+    } else {
+      this.StopSlide();
+    }
+  }
   StopSlide() {
-    this.isRunning = false;
     clearInterval(this.intervalID);
     // console.log(`Stop slide  --  Is Running: ${this.isRunning}`);
   }
