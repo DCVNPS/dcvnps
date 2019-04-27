@@ -5,7 +5,7 @@
   <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog-close-btn">X</button>
   <div class="ui grid">
     <div class="middle aligned two wide column">
-      <a class="ui basic button" (click)="prevImage();">
+      <a (click)="prevImage();">
         <i class="huge middle chevron left icon"></i>
       </a>
     </div>
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="middle aligned two wide column">
-      <a class="ui basic button" (click)="nextImage();">
+      <a (click)="nextImage();">
         <i class="huge chevron right icon"></i>
       </a>
     </div>
