@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../services/modal.service';
-import { ModalComponent } from '../modal/modal.component';
+import { Slide } from '../shared/slide.model';
 
 @Component({
   selector: 'app-quick-test',
@@ -8,18 +7,20 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrls: ['./quick-test.component.scss']
 })
 export class QuickTestComponent implements OnInit {
-  imgSrc: string = "profiles/member/2018/member-2018.jpg";
-  constructor(private modalService: ModalService) {
+  imgSrc = 'profiles/member/2018/member-2018.jpg';
+  private popupInput: Slide[];
+  constructor() {
+    this.popupInput = [new Slide(
+      '12345',
+      '45678',
+      'Testing image',
+       1,
+      'profiles/member/2018/member-2018.jpg',
+      'alternative',
+      false,
+      false)];
   }
-  ngOnInit(){
-    
-  }
-  showModal() {
-    let inputs = {
-      isMobile: false,
-      imgSrc:"profiles/member/2018/member-2018.jpg"
-    }
-    this.modalService.init(ModalComponent, inputs, {});
+  ngOnInit() {
   }
 
 }

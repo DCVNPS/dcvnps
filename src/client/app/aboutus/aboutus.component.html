@@ -7,15 +7,13 @@
         <h1 class="ui header">First VNPS Members</h1>
     </div>
     <div class="ui center aligned segment">
-      <a href="#">
-        <div class="ui three stackable cards">
-          <div class="card" *ngFor="let s of slides">
+        <div class="ui four stackable cards">
+          <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
             <div class="image">
               <img [src]="s.imgsrc">
             </div>
-          </div>
+          </a>
         </div>
-      </a>
     </div>
   </div>
   <div class="eight wide column">
@@ -156,3 +154,6 @@
     </div>
   </div>
 </div>
+
+<!-- Popup slide show -->
+<app-popup [(visible)]="showDialog"[data]="slides"></app-popup>

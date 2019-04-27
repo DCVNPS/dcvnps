@@ -26,7 +26,6 @@ import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
-import { ModalComponent } from './modal/modal.component';
 import { DomService } from './services/dom.service';
 import { ModalService } from './services/modal.service';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -52,7 +51,6 @@ import { PopupComponent } from './popup/popup.component';
     AnnouncementsComponent,
     AboutusComponent,
     QuickTestComponent,
-    ModalComponent,
     GalleryComponent,
     PopupComponent,
   ],
@@ -70,6 +68,6 @@ import { PopupComponent } from './popup/popup.component';
     DomService,
     ModalService],
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent]
+  entryComponents: []
 })
 export class AppModule { }

@@ -33,6 +33,6 @@ Different `npm` scripts for your workflow:
     Two options to fix the issue:
       1- Add in index.html
       <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/custom-elements-es5-adapter.js"></script>
-      2- run npm install --save import @webcomponents/webcomponentsjs
+      2- run npm install --save @webcomponents/webcomponentsjs
         add to the end of polyfills.ts
         import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';

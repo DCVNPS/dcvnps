@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { Slide } from '../shared/slide.model';
 
 @Component({
   selector: 'app-popup',
@@ -18,16 +19,45 @@ import { trigger, style, animate, transition } from '@angular/animations';
   ]
 })
 export class PopupComponent implements OnInit {
-  @Input() closable = true;
+  public closable = true;
+  private max: number;
+  @Input() data: Slide[];
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
+  }
+
+  prevImage() {
+    this.max = this.data.length;
+    const curImg = this.data.find(i => !i.hidden);
+    // console.log('Current Photo', curImg);
+    let nextPhotoIndx = curImg.photoIndex - 1;
+    if (nextPhotoIndx < 0) {
+      nextPhotoIndx = this.max - 1;
+    }
+    this.data[curImg.photoIndex].hidden = true;
+    this.data[nextPhotoIndx].hidden = false;
+    // console.log('Previous Photo ', this.data[nextPhotoIndx]);
+  }
+
+  nextImage() {
+    this.max = this.data.length;
+    const curImg = this.data.find(i => !i.hidden);
+    // console.log('Current Photo', curImg);
+    let nextPhotoIndx = curImg.photoIndex + 1;
+    if (nextPhotoIndx >= this.max) {
+      nextPhotoIndx = 0;
+    }
+    this.data[curImg.photoIndex].hidden = true;
+    this.data[nextPhotoIndx].hidden = false;
+    // console.log('Nex Photo ', this.data[nextPhotoIndx]);
   }
 }

@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         let cnt = 0;
         data.forEach(item => {
-          if(item.portrait !=="true"){
+          if (item.portrait !== 'true') {
             this.slides.push(new Slide(item._id,
               item.galleryId,
               'dummy note',
@@ -25,11 +25,11 @@ export class HomeComponent implements OnInit {
               `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
               item.portrait,
               true));
-            cnt += 1;  
+            cnt += 1;
           }
         });
         // console.log(this.slides);
       });
-    }
+  }
 
 }
