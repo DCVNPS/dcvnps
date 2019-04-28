@@ -37,12 +37,17 @@ const routes: Routes = [
     component: GalleriesComponent
   },
   {
-    path: 'gallery/:level?',
+    path: 'gallery/:level',
     component: GalleryComponent
   },
   {
-    path: 'programs',
-    component: ProgramsComponent
+    path: 'gallery/:level/:year',
+    component: GalleryComponent
+  },
+  {
+    path: 'programs/:level',
+    component: ProgramsComponent,
+    
   },
   { 
     path: 'announcements',

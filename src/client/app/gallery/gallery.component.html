@@ -1,3 +1,11 @@
-<p>
-  gallery works!
-</p>
+<h1 class="header">{{level | titlecase}}</h1>
+<div class="ui four stackable cards">
+  <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
+    <div class="image">
+      <img [src]="s.imgsrc">
+    </div>
+  </a>
+</div>
+
+<!-- Popup slide show -->
+<app-popup [(visible)]="showDialog"[data]="slides"></app-popup>

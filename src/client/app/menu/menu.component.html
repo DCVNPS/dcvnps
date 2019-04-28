@@ -1,10 +1,10 @@
 <div class="ui inverted stackable menu">
   <div class="header item">DC Vnps</div>
-  <a class="item" [routerLink]="['/home']" aria-label="Home">
+  <a class="item" [routerLink]="['/home']" [routerLinkActive]="['active']" aria-label="Home">
     <i class="home icon"></i>
     <p>Home</p>
   </a>
-  <a class="item" [routerLink]="['/announcements']" aria-label="Announcements">
+  <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
     <i class="bullhorn icon"></i>
     <p>Announcements</p>
   </a>
@@ -12,43 +12,36 @@
     <i class="book icon"></i>
     <p>Programs</p>
   </a> -->
-  <div class="item">
+  <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <i class="book icon"></i>
-      <div class="text">Programs</div>
-      <i class="dropdown icon"></i>
+      <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
+        <i class="book icon"></i>
+        <div class="text">Programs</div>
+        <i class="dropdown icon"></i>
+      </a>
       <div class="menu">
-          <a class="item" [routerLink]="['programs']" aria-label="programs">
-            All Programs
-          </a>
-        <a class="item" *ngFor="let p of mPrograms" [routerLink]="['programs',p.link]">{{p.ariatext}}</a>
+        <a class="item" *ngFor="let p of mPrograms" [routerLink]="['programs',p.level]">{{p.ariatext}}</a>
       </div>
     </div>
   </div>
-  <div class="item" *ngIf="mGalleries">
-      <div class="ui simple dropdown">
-          <i class="image icon"></i>  
-          <div class="text">Galleries</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            <a class="item" [routerLink]="['galleries']">All Galleries</a>
-            <a class="item" *ngFor="let g of mGalleries" [routerLink]="['galleries',g]">{{g}}</a>
-            <!-- <div class="header">Categories</div>
-            <div class="item">Clothing</div>
-            <div class="item">Home Goods</div>
-            <div class="item">Bedroom</div>
-            <div class="divider"></div>
-            <div class="header">Order</div>
-            <div class="item">Status</div>
-            <div class="item">Cancellations</div> -->
-          </div>
-        </div>   
+  <div class="item"  [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item" [routerLink]="['galleries']">
+        <i class="image icon"></i>
+        <div class="text">Galleries</div>
+        <i class="dropdown icon"></i>
+      </a>
+      <div class="menu">
+        <!-- <a class="item" [routerLink]="['galleries']">All Galleries</a> -->
+        <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery',g]">{{g}}</a>
+      </div>
+    </div>
   </div>
-  <a class="item" [routerLink]="['/aboutus']" aria-label="aboutus">
+  <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
     <i class="comments icon"></i>
     About Us</a>
   <a class="item" [routerLink]="['/quicktest']" aria-label="quicktest">
-  <i class="shipping fast icon"></i>Quicktest
+    <i class="shipping fast icon"></i>Quicktest
   </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">

@@ -17,9 +17,9 @@ export class MenuComponent implements OnInit {
     private router: Router) {
     this.mGalleries = [];
     this.mPrograms = [
-      {link:'level1', ariatext:'Basic Photography'},
-      {link:'level2',ariatext:'Mid-Level Photography'},
-      {link:'level3',ariatext:'Advance Photography'}
+      {level:'level1', ariatext:'Basic Photography'},
+      {level:'level2',ariatext:'Mid-Level Photography'},
+      {level:'level3',ariatext:'Advance Photography'}
     ];
   }
 

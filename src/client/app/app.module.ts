@@ -30,6 +30,7 @@ import { DomService } from './services/dom.service';
 import { ModalService } from './services/modal.service';
 import { GalleryComponent } from './gallery/gallery.component';
 import { PopupComponent } from './popup/popup.component';
+import { RouterLinkActive } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { PopupComponent } from './popup/popup.component';
     AppRoutingModule
   ],
   providers: [
+    RouterLinkActive,
     ApiService,
     AuthService,
     AuthGuard,
