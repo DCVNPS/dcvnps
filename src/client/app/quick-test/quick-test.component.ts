@@ -8,7 +8,8 @@ import { Slide } from '../shared/slide.model';
 })
 export class QuickTestComponent implements OnInit {
   imgSrc = 'profiles/member/2018/member-2018.jpg';
-  private popupInput: Slide[];
+  public popupInput: Slide[];
+  public showDialog: boolean;
   constructor() {
     this.popupInput = [new Slide(
       '12345',

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Slide } from '../shared/slide.model';
 import { ApiService } from '../shared/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { Person } from '../shared/person.model';
 
 @Component({
   selector: 'app-aboutus',
@@ -10,11 +11,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AboutusComponent implements OnInit {
   public slides: Slide[] = [];
-  public chair: {};
-  public viceChair: {};
-  public generalSec: {};
-  public treasury: {};
-  public auditor: {};
+  public chair: Person;
+  public viceChair: Person;
+  public generalSec: Person;
+  public treasury: Person;
+  public auditor: Person;
   public bodyText: string;
   public showDialog: boolean;
   constructor(private api: ApiService,
@@ -36,11 +37,11 @@ export class AboutusComponent implements OnInit {
         });
         console.log(this.slides);
       });
-    this.chair = { name: { last: 'Do', first: 'Dung', middle: 'Linh' }, rank: 'chairman' };
-    this.viceChair = { name: { last: 'Tran', first: 'Dinh', middle: 'Thuy' }, rank: 'vice chairman' };
-    this.generalSec = { name: { last: 'Nguyen', first: 'Lan', middle: 'Kieu' }, rank: 'general secretary' };
-    this.treasury = { name: { last: 'Hoang', first: 'Ly', middle: 'Truc' }, rank: 'treasury' };
-    this.auditor = { name: { last: 'Long', first: 'Vuong', middle: '' }, rank: 'auditor' };
+    this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh' , tittle: 'chairman' };
+    this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
+    this.generalSec = { lastName: 'Nguyen', firstName: 'Lan', middleName: 'Kieu', tittle: 'general secretary' };
+    this.treasury = { lastName: 'Hoang', firstName: 'Ly', middleName: 'Truc', tittle: 'treasury' };
+    this.auditor = { lastName: 'Long', firstName: 'Vuong', middleName: '' , tittle: 'auditor' };
   }
 
   ngOnInit() {
