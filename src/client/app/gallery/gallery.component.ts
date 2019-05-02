@@ -18,33 +18,30 @@ export class GalleryComponent implements OnInit {
   constructor(
     private api: ApiService,
     private route: ActivatedRoute) {
-    this.years = [];
-    this.slides = [];
-    this.selectedSlides = [];
     this.route.params.subscribe(params => {
       this.level = params['level'];
-      // this.year = params['year'];
-      if (this.level) {
+      this.years = [];
+      this.slides = [];
+      this.selectedSlides = [];
         this.api.get(`/galleryphotosbyname/${this.level}`)
-          .subscribe(data => {
-            let cnt = 0;
-            data.forEach(item => {
-              this.selectedSlides.push(new Slide(item._id,
-                item.galleryId,
-                item.year,
-                'dummy note',
-                cnt++,
-                `galleries/${item.gallery}/${item.year}/${item.photo}`,
-                `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
-                item.portrait,
-                true));
-              if (this.years.indexOf(item.year) < 0) {
-                this.years.push(item.year);
-              }
-            });
-            this.slides = this.selectedSlides;
+        .subscribe(data => {
+          let cnt = 0;
+          data.forEach(item => {
+            this.selectedSlides.push(new Slide(item._id,
+              item.galleryId,
+              item.year,
+              'dummy note',
+              cnt++,
+              `galleries/${item.gallery}/${item.year}/${item.photo}`,
+              `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
+              item.portrait,
+              true));
+            if (this.years.indexOf(item.year) < 0) {
+              this.years.push(item.year);
+            }
           });
-      }
+          this.slides = this.selectedSlides;
+        });
     });
   }
 
@@ -54,12 +51,12 @@ export class GalleryComponent implements OnInit {
   onFilterYear(year: string) {
     let cnt: number = 0;
     // console.log('selected slides',this.selectedSlides);
-    if(year){
+    if (year) {
       this.slides = this.selectedSlides.filter(s => s.year === year);
-      } else {
-        this.slides = this.selectedSlides;
-      }
-      this.slides.forEach(s => s.photoIndex = cnt++);
+    } else {
+      this.slides = this.selectedSlides;
+    }
+    this.slides.forEach(s => s.photoIndex = cnt++);
   }
 
   showPopup(sIndex: number) {
