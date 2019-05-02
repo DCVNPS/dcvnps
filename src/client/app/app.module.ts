@@ -31,6 +31,7 @@ import { ModalService } from './services/modal.service';
 import { GalleryComponent } from './gallery/gallery.component';
 import { PopupComponent } from './popup/popup.component';
 import { RouterLinkActive } from '@angular/router';
+import { SortDescPipe } from './pipes/sort.desc.pipe';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { RouterLinkActive } from '@angular/router';
     QuickTestComponent,
     GalleryComponent,
     PopupComponent,
+    SortDescPipe,
   ],
   imports: [
     BrowserModule,

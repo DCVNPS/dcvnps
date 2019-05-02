@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
           if (item.portrait !== 'true') {
             this.slides.push(new Slide(item._id,
               item.galleryId,
+              item.year,
               'dummy note',
               cnt,
               `galleries/${item.gallery}/${item.year}/${item.photo}`,

@@ -1,22 +1,13 @@
 [
     {
         "gallery": "home",
-        "year": "2018",
         "profilePhoto": null,
         "createdDate": null,
         "updatedDate": null
     },
     {
         "gallery": "member",
-        "year": "2018",
         "profilePhoto": "member-2018.jpg",
-        "createdDate": null,
-        "updatedDate": null
-    },
-    {
-        "gallery": "member",
-        "year": "2017",
-        "profilePhoto": "member-2017.jpg",
         "createdDate": null,
         "updatedDate": null
     },
@@ -28,9 +19,14 @@
         "updatedDate": null
     },
     {
-        "gallery": "level3",
-        "year": "2017",
-        "profilePhoto": "level3-2017.jpg",
+        "gallery": "level2",
+        "profilePhoto": "level2-2018.jpg",
+        "createdDate": null,
+        "updatedDate": null
+    },
+    {
+        "gallery": "level1",
+        "profilePhoto": "level1-2018.jpg",
         "createdDate": null,
         "updatedDate": null
     },

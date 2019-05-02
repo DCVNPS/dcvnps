@@ -32,17 +32,17 @@ const routes: Routes = [
     component: AddContactComponent,
     canActivate: [AuthGuard]
   },
+  // {
+  //   path: 'gallery/:level/:year',
+  //   component: GalleryComponent
+  // },
+  {
+    path: 'gallery/:level',
+    component: GalleryComponent
+  },
   {
     path: 'galleries',
     component: GalleriesComponent
-  },
-  {
-    path: 'galleries/:level',
-    component: GalleryComponent
-  },
-  {
-    path: 'galleries/:level/:year',
-    component: GalleryComponent
   },
   {
     path: 'programs/:level',

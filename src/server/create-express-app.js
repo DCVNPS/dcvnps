@@ -7,7 +7,7 @@ function createExpressApp(database) {
     const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname,'public')));
     app.use('/profiles', express.static(path.join(__dirname, 'profiles')));
     app.use('/galleries', express.static(path.join(__dirname, 'galleries')));
     app.use('/images', express.static(path.join(__dirname, 'images')));

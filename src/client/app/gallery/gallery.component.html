@@ -1,4 +1,8 @@
-<h1 class="header">{{level | titlecase}}</h1>
+<div class="ui secondary menu">
+<button class="item" (click)="onFilterYear();">{{level|uppercase}}</button>
+<!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
+<button class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</button>
+</div>
 <div class="ui four stackable cards">
   <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
     <div class="image">

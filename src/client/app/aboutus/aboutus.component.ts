@@ -27,15 +27,16 @@ export class AboutusComponent implements OnInit {
         data.forEach(item => {
           this.slides.push(new Slide(item._id,
             item.galleryId,
+            item.year,
             'dummy note',
             cnt,
             `galleries/site/${item.gallery}/${item.photo}`,
             `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
             item.portrait,
             true));
-          cnt += 1;
         });
         console.log(this.slides);
+        this.slides.forEach(s => s.photoIndex = cnt++);
       });
     this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh' , tittle: 'chairman' };
     this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
@@ -51,7 +52,7 @@ export class AboutusComponent implements OnInit {
     if (currentSlide) {
       this.showDialog = true;
       this.slides.forEach(s => s.hidden = true);
-      this.slides[sIndex].hidden = false;
+      currentSlide.hidden = false;
     }
   }
 }

@@ -13,6 +13,7 @@ export class QuickTestComponent implements OnInit {
   constructor() {
     this.popupInput = [new Slide(
       '12345',
+      '2017',
       '45678',
       'Testing image',
        1,
