@@ -23,25 +23,30 @@ export class GalleryComponent implements OnInit {
       this.years = [];
       this.slides = [];
       this.selectedSlides = [];
-        this.api.get(`/galleryphotosbyname/${this.level}`)
+      this.api.get(`/galleryphotosbyname/${this.level}`)
         .subscribe(data => {
           let cnt = 0;
-          data.forEach(item => {
-            this.selectedSlides.push(new Slide(item._id,
-              item.galleryId,
-              item.year,
-              'dummy note',
-              cnt++,
-              `galleries/${item.gallery}/${item.year}/${item.photo}`,
-              `${item.photo.replace(/\.jpg$|\.bmp$/i, '')}`,
-              item.portrait,
-              true));
-            if (this.years.indexOf(item.year) < 0) {
-              this.years.push(item.year);
-            }
+          data.forEach((item) => {
+            this.years.push(item.year);
+            item.photos.forEach((photo) => {
+              // console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
+              if (photo.portrait !== 1) {
+                this.selectedSlides.push(new Slide(photo.galleryPhotoId,
+                  photo.galleryId,
+                  item.year,
+                  'dummy note',
+                  cnt,
+                  `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
+                  `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
+                  item.portrait === 1,
+                  true));
+              }
+              cnt += 1;
+            });
           });
-          this.slides = this.selectedSlides;
         });
+      this.slides = this.selectedSlides;
+      console.log(this.selectedSlides);
     });
   }
 

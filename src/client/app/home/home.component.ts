@@ -18,22 +18,22 @@ export class HomeComponent implements OnInit {
         let cnt = 0;
         data.forEach((item) => {
           item.photos.forEach((photo) => {
-            console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
+            // console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
             if (photo.portrait !== 1) {
               this.slides.push(new Slide(photo.galleryPhotoId,
                 photo.galleryId,
                 item.year,
                 'dummy note',
                 cnt,
-                photo.photoUrl,
-                `${photo.photoUrl.replace(/\.jpg$|\.bmp$/i, '')}`,
-                item.portrait,
+                `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
+                `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
+                item.portrait===1,
                 true));
             }
             cnt += 1;
           });
         });
-        console.log(this.slides);
+        // console.log(this.slides);
       });
   }
 

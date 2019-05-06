@@ -125,23 +125,23 @@
                     throw err;
                 });
         },
-        getContacts(){
+        getContacts() {
             return knex('contacts')
-            .select()
-            .then((contacts) => {return contacts})
-            .catch((err)=>{throw err})
+                .select()
+                .then((contacts) => { return contacts })
+                .catch((err) => { throw err })
         },
-        saveContacts(contact){
+        saveContacts(contact) {
             //contact:{name, address, phone, photoUrl, updateUser}
             return knex('contacts').insert(contact)
-            .then(()=> {
-                knex('contacts')
-                .select()
-                .where({name:contact.name, address: contact.address})
-                .then((c) => { return c;})
-                .catch((err) => { throw err})
-            })
-            .catch((err)=> {throw err});
+                .then(() => {
+                    knex('contacts')
+                        .select()
+                        .where({ name: contact.name, address: contact.address })
+                        .then((c) => { return c; })
+                        .catch((err) => { throw err })
+                })
+                .catch((err) => { throw err });
         },
         // saveImage(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
         //     var response;
@@ -266,10 +266,24 @@
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
                             let jsonEl = { "year": item.year, "photos": [] };
-                            jsonEl.photos.push({ "src": `galleries/${item.gallery}/${item.year}/${item.photo}`, "author": item.author, "portrait": item.portrait });
+                            jsonEl.photos.push({
+                                "galleryPhotoId": item.galleryPhotoId,
+                                "galleryId": item.galleryId,
+                                "gallery": item.gallery,
+                                "photoImg": item.photo,
+                                "author": item.author,
+                                "portrait": item.portrait
+                            });
                             result.push(jsonEl);
                         } else {
-                            sr.photos.push({ "src": `galleries/${item.gallery}/${item.year}/${item.photo}`, "author": item.author, "portrait": item.portrait });
+                            sr.photos.push({
+                                "galleryPhotoId": item.galleryPhotoId,
+                                "galleryId": item.galleryId,
+                                "gallery": item.gallery,
+                                "photoImg": item.photo,
+                                "author": item.author,
+                                "portrait": item.portrait
+                            });
                         }
                     });
                     return JSON.stringify(result);
@@ -295,16 +309,24 @@
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
                             let jsonEl = { "year": item.year, "photos": [] };
-                            jsonEl.photos.push({"galleryPhotoId":item.galleryPhotoId, "galleryId":item.galleryId, 
-                                "photoUrl": `galleries/${item.gallery}/${item.year}/${item.photo}`, 
+                            jsonEl.photos.push({
+                                "galleryPhotoId": item.galleryPhotoId,
+                                "galleryId": item.galleryId,
+                                "gallery": item.gallery,
+                                "photoImg": item.photo,
                                 "author": item.author,
-                                 "portrait": item.portrait });
+                                "portrait": item.portrait
+                            });
                             result.push(jsonEl);
                         } else {
-                            sr.photos.push({"galleryPhotoId":item.galleryPhotoId, "galleryId":item.galleryId, 
-                            "photoUrl": `galleries/${item.gallery}/${item.year}/${item.photo}`, 
-                            "author": item.author,
-                             "portrait": item.portrait });
+                            sr.photos.push({
+                                "galleryPhotoId": item.galleryPhotoId,
+                                "galleryId": item.galleryId,
+                                "gallery": item.gallery,
+                                "photoImg": item.photo,
+                                "author": item.author,
+                                "portrait": item.portrait
+                            });
                         }
                     });
                     return result;
