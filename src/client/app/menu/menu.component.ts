@@ -24,11 +24,13 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.get('/galleries')
+    this.api.get('galleries')
       .subscribe(data => {
         data.forEach(item => {
           if (!this.mGalleries.some(i => i === item.gallery)) {
-            this.mGalleries.push(item.gallery);
+            if(item.gallery !== 'home' && item.gallery !== 'about'){
+              this.mGalleries.push(item.gallery);
+            }
           }
         });
         console.log(this.mGalleries);

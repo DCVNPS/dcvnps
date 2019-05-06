@@ -1,0 +1,6 @@
+[
+    { "userName": "admin", "roleCode": "SITADM", "password": "Pt4bvZSSI4KN4g" },
+    { "userName": "level3admin", "roleCode": "LVL3ADM", "password": "ANz75xWo3n2J3Y" },
+    { "userName": "vnpsuser", "roleCode": "SITUSR", "password": "ANz75xWo3n2J3Y" },
+    { "userName": "memberadmin", "roleCode": "MBMADM", "password": "ANz75xWo3n2J3Y" }
+  ]

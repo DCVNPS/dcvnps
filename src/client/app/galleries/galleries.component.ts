@@ -16,11 +16,11 @@ export class GalleriesComponent implements OnInit {
       .subscribe(data => {
         data.forEach(item => {
           const g = this.galleries.find(i => i.gallery === item.gallery);
-          if (!g) {
+          if (!g && item.gallery !== 'home' && item.gallery !== 'about') {
             this.galleries.push(new Gallery(
               item._id,
               item.gallery,
-              `profiles/${item.gallery}/${item.year}/${item.profilePhoto}`,
+              `galleries/${item.gallery}/profile/${item.profilePhoto}`,
               item.createdDate,
               item.updatedDate))
           }
