@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
             }
           }
         });
-        console.log(this.mGalleries);
+        // console.log(this.mGalleries);
       });
   }
 

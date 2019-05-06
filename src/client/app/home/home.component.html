@@ -54,6 +54,19 @@
                     <img [src]="slide?.imgsrc" alt="slide?.imgalt">
                 </app-carousel-item>
             </app-carousel>
+            <div class="four wide column grid">
+                <div class="ui centered four cards">
+                    <a class="card" *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
+                        <!-- <div class="content">
+                            <div class="header">{{g.gallery| titlecase}}</div>
+                            <div class="meta">{{g.year}}</div>
+                        </div> -->
+                        <div class="image">
+                            <img [src]="g?.profilePhoto">
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="three wide column">
             <div class="ui  raised padded text segments">

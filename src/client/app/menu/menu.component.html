@@ -1,11 +1,11 @@
 <div class="ui inverted stackable menu">
   <div class="header item">DC Vnps</div>
   <a class="item" [routerLink]="['/home']" [routerLinkActive]="['active']" aria-label="Home">
-    <i class="home icon"></i>
+    <i class="big home icon"></i>
     <p>Home</p>
   </a>
   <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
-    <i class="bullhorn icon"></i>
+    <i class="big bullhorn icon"></i>
     <p>Announcements</p>
   </a>
   <!-- <a class="item" [routerLink]="['/programs']" aria-label="programs">
@@ -15,7 +15,7 @@
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
       <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
-        <i class="book icon"></i>
+        <i class="big book icon"></i>
         <div class="text">Programs</div>
         <i class="dropdown icon"></i>
       </a>
@@ -38,10 +38,10 @@
     </div>
   </div>
   <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
-    <i class="comments icon"></i>
+    <i class="big comments icon"></i>
     About Us</a>
   <a class="item" [routerLink]="['/quicktest']" aria-label="quicktest">
-    <i class="shipping fast icon"></i>Quicktest
+    <i class="big money icon"></i>Sponsor
   </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
