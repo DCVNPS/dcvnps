@@ -1,4 +1,4 @@
-<div id="pagebody">
+<div #pagebody class="slide-height">
     <div class="ui raised segment">
         <div class="ui huge center aligned header">
             WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
@@ -42,31 +42,10 @@
         </div>
         <div class="ten wide column">
             <app-carousel [delay]="2000">
-                <!-- <app-carousel-item *ngFor="let slide of slides">
-                        <div class="ui middle aligned fluid card borderless">
-                            <div class="image" [class.portrait]="slide.portrait==='true'"
-                                [class.landscape]="slide.portrait !=='true'">
-                                <img [src]="slide?.imgsrc" alt="slide?.imgalt">
-                            </div>
-                        </div>
-                    </app-carousel-item> -->
                 <app-carousel-item *ngFor="let slide of slides">
                     <img [src]="slide?.imgsrc" alt="slide?.imgalt">
                 </app-carousel-item>
             </app-carousel>
-            <div class="four wide column grid">
-                <div class="ui centered four cards">
-                    <a class="card" *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
-                        <!-- <div class="content">
-                            <div class="header">{{g.gallery| titlecase}}</div>
-                            <div class="meta">{{g.year}}</div>
-                        </div> -->
-                        <div class="image">
-                            <img [src]="g?.profilePhoto">
-                        </div>
-                    </a>
-                </div>
-            </div>
         </div>
         <div class="three wide column">
             <div class="ui  raised padded text segments">

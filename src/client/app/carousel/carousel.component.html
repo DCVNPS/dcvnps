@@ -8,13 +8,6 @@
             <div (click)="toggleSlideshow();">
                 <ng-content></ng-content>
             </div>
-        <!-- <div>
-            <button type="button" (click)="PrevSlide();" class="ui blue basic button">Previous Slide</button>
-            <button (click)="StopSlide();" *ngIf="isRunning" class="ui blue basic button">Stop Slide Show</button>
-            <button (click)="StartSlide();" *ngIf="!isRunning" class="ui blue basic button">Start Slide
-                Show</button>
-            <button type="button" (click)="NextSlide();" class="ui blue basic button">Next Slide</button>
-        </div> -->
     </div>
     <div class="two wide column">
         <a (click)="NextSlide();">

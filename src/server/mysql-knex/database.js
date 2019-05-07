@@ -131,7 +131,7 @@
                 .then((contacts) => { return contacts })
                 .catch((err) => { throw err })
         },
-        saveContacts(contact) {
+        insertContacts(contact) {
             //contact:{name, address, phone, photoUrl, updateUser}
             return knex('contacts').insert(contact)
                 .then(() => {
@@ -142,6 +142,32 @@
                         .catch((err) => { throw err })
                 })
                 .catch((err) => { throw err });
+        },
+        insertGallery({
+            gallery,
+            profilePhoto,
+            updateUser
+        }){
+            const createdDate = new Date();
+            const updatedDate = new Date();
+            knex('galleries')
+            .insert({
+                gallery: gallery,
+                profilePhoto: profilePhoto,
+                updateUser: updateUser,
+                createdDate: createdDate,
+                updatedDate: updatedDate
+            })
+            .then( async()=>{
+                return await knex('galleries')
+                .where({gallery})
+                .select()
+                .then((data) => {
+                    return data;
+                })
+                .catch((err) =>{ throw err});
+            })
+            .catch((error) => { throw error});
         },
         // saveImage(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
         //     var response;
@@ -229,21 +255,6 @@
         //             result.success = false;
         //             result.message = er.message;
         //             return result;
-        //         });
-        // },
-        // getGalleryImages(iGallery) {
-        //     return knex('vw_gallery_images').where({
-        //         gallery: iGallery
-        //     })
-        //         // .select('gallery_image_id','image_id','image_filename','image_filetype','image_path','author','upload_year')
-        //         .select(`src`, `filename as desc`, `author`)
-        //         .orderBy(`image_id`)
-        //         .then(function (data) {
-        //             return data;
-        //         })
-        //         .catch(function (err) {
-        //             console.log(err);
-        //             throw err;
         //         });
         // },
         // // Get the list of galleries that will be used in Galleries/Gallery page show

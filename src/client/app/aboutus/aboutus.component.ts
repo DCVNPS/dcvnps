@@ -36,7 +36,6 @@ export class AboutusComponent implements OnInit {
               `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
               item.portrait===1,
               true));
-            cnt += 1;
           });
         });
         console.log(this.slides);
