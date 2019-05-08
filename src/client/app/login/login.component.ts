@@ -29,8 +29,9 @@ export class LoginComponent implements OnInit {
     };
 
     this.api.post('authenticate', payload)
-    .subscribe(data => {
-      this.auth.setToken(data.token);
+    .subscribe(async (data) => {
+      const authToken = await data.token;
+      this.auth.setToken(authToken);
       this.router.navigate(['/contacts']);
     });
   }

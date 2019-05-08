@@ -97,9 +97,7 @@
                         };
                     return response;
                 })
-                .catch(function (err) {
-                    throw err;
-                });
+                .catch(function (err) { throw err; });
         },
         getUserByName(userName) {
             return knex('users').where({
@@ -131,17 +129,31 @@
                 .then((contacts) => { return contacts })
                 .catch((err) => { throw err })
         },
-        insertContacts(contact) {
-            //contact:{name, address, phone, photoUrl, updateUser}
-            return knex('contacts').insert(contact)
-                .then(() => {
+        async insertContacts(contact) {
+            //contact:{name, address, phone, photoUrl, updateUser, createdDate, updatedDate}
+                return knex('contacts').insert(contact)
+                .then(() =>{
                     knex('contacts')
-                        .select()
-                        .where({ name: contact.name, address: contact.address })
-                        .then((c) => { return c; })
-                        .catch((err) => { throw err })
+                    .select()
+                    .where({ name: contact.name, address: contact.address })
+                    .then((c) => { return c; })
+                    .catch((err) => { throw err; });
                 })
-                .catch((err) => { throw err });
+                .catch ((err_1) => {  throw err_1; })
+        },
+        updateContact(contact){
+            return knex('contacts')
+            .where({contactId:contact.contactId})
+            .update({
+                name:contact.name,
+                address: contact.address,
+                phone: contact.phone,
+                photoUrl: contact.photoUrl,
+                updateUser: contact.updateUser,
+                updatedDate: contact.updatedDate
+            })
+            .then(() => { return {"updated":true};})
+            .catch((err) => { throw err;})
         },
         insertGallery({
             gallery,
@@ -150,7 +162,7 @@
         }){
             const createdDate = new Date();
             const updatedDate = new Date();
-            knex('galleries')
+            return knex('galleries')
             .insert({
                 gallery: gallery,
                 profilePhoto: profilePhoto,
@@ -162,12 +174,39 @@
                 return await knex('galleries')
                 .where({gallery})
                 .select()
-                .then((data) => {
-                    return data;
-                })
+                .then((data) => { return data; })
                 .catch((err) =>{ throw err});
             })
             .catch((error) => { throw error});
+        },
+        updateGallery(gly){
+            if(gly){
+                gly.updatedDate = new Date();
+                return knex('galleries')
+                .where({galleryId: gly.galleryId})
+                .update({
+                    gallery:gly.gallery,
+                    profilePhoto: gly.profilePhoto,
+                    updateUser: gly.updateUser,
+                    updatedDate: gly.updatedDate
+                })
+                .then(() => {return {"Updated": true};})
+                .catch((err) => { throw err;})
+            }
+            else{
+                throw new error("No gallery data.");
+            }
+        },
+        getGalleries() {
+            return knex('galleries')
+                .select('galleryId', 'gallery', 'profilePhoto')
+                .orderBy('createdDate')
+                .then((data) => {
+                    return data;
+                })
+                .catch(function (err) {
+                    throw err;
+                });
         },
         // saveImage(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
         //     var response;
@@ -345,17 +384,6 @@
                 .catch((error) => { console.log(error); throw error; });
         },
         // Get the list of galleries will be used in the uploadimages page.
-        getGalleries() {
-            return knex('galleries')
-                .select('galleryId', 'gallery', 'profilePhoto')
-                .orderBy('createdDate')
-                .then((data) => {
-                    return data;
-                })
-                .catch(function (err) {
-                    throw err;
-                });
-        }
         // ,
         // selExtGallery(reqData) {
         //     //    console.log(
@@ -375,8 +403,7 @@
         //         .catch(function (err) {
         //             throw err;
         //         });
-        // }
-        ,
+        // },
         destroy() {
             knex.destroy();
         }
