@@ -32,6 +32,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { PopupComponent } from './popup/popup.component';
 import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SortDescPipe } from './pipes/sort.desc.pipe';
     GalleryComponent,
     PopupComponent,
     SortDescPipe,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,

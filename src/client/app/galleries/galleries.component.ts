@@ -10,8 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GalleriesComponent implements OnInit {
   public galleries: Gallery[] = [];
-  constructor(private api: ApiService,
-    private activatedRoute: ActivatedRoute) {
+  constructor(private api: ApiService) {
     this.api.get('/galleries')
       .subscribe(data => {
         data.forEach(item => {

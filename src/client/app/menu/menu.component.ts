@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
-import { Gallery } from '../shared/gallery.model';
 import { ApiService } from '../shared/api.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -13,8 +11,7 @@ export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
   constructor(public auth: AuthService,
-    private api: ApiService,
-    private router: Router) {
+    private api: ApiService) {
     this.mGalleries = [];
     this.mPrograms = [
       {level:'level1', ariatext:'Basic Photography'},
@@ -33,7 +30,6 @@ export class MenuComponent implements OnInit {
             }
           }
         });
-        // console.log(this.mGalleries);
       });
   }
 

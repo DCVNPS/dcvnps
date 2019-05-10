@@ -8,10 +8,6 @@
     <i class="big bullhorn icon"></i>
     <p>Announcements</p>
   </a>
-  <!-- <a class="item" [routerLink]="['/programs']" aria-label="programs">
-    <i class="book icon"></i>
-    <p>Programs</p>
-  </a> -->
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
       <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
@@ -45,19 +41,21 @@
   </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
-      <button [routerLink]="['/new']" class="ui primary button">
+      <button [routerLink]="['/newcontact']" class="ui primary button">
         <i class="add user icon" aria-hidden="true"></i>
         Add Contact
       </button>
     </div>
-    <div class="item" *ngIf="auth.isLogin()">
-      <button class="ui primary button" (click)="logout()">Logout</button>
-    </div>
     <div class="item">
       <button class="ui primary button" [routerLink]="['/login']">
         <i class="large sign in icon"></i>
-        Login
+        Sing in
       </button>
     </div>
-  </div>
+    <div class="item" *ngIf="auth.isLogin()">
+        <button class="ui primary button" (click)="logout()">
+            <i class="large sign out icon"></i>Sign out
+        </button>
+      </div>
+    </div>
 </div>

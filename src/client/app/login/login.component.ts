@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { ApiService } from '../shared/api.service';
-import { Router } from '@angular/router';
-import { NgForm, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +10,24 @@ import { NgForm, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  backUrl: string;
   constructor(private api: ApiService,
               private auth: AuthService,
-              private router: Router) { }
+              private routeStat : ActivatedRoute,
+              private router: Router) {
+    this.routeStat.params.subscribe(async (params) =>{
+      this.backUrl = await params['backUrl'];
+      console.log(this.backUrl);
+    });
+}
 
   ngOnInit() {
     if (this.auth.isLogin()) {
-      this.router.navigate(['/contacts']);
+      if(this.backUrl){
+        this.router.navigate([this.backUrl]);
+      } else {
+        this.router.navigate(['/home']);
+      }
     }
   }
 
@@ -30,9 +40,12 @@ export class LoginComponent implements OnInit {
 
     this.api.post('authenticate', payload)
     .subscribe(async (data) => {
-      const authToken = await data.token;
-      this.auth.setToken(authToken);
-      this.router.navigate(['/contacts']);
+      this.auth.setToken(data.token);
+      if(this.backUrl){
+        this.router.navigate([this.backUrl]);
+      } else {
+        this.router.navigate(['/home']);
+      }
     });
   }
 }
