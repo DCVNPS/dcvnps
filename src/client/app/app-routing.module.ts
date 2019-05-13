@@ -11,6 +11,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 const routes: Routes = [
   {
@@ -32,10 +33,10 @@ const routes: Routes = [
     component: AddContactComponent,
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'gallery/:level/:year',
-  //   component: GalleryComponent
-  // },
+  {
+    path: 'fileupload',
+    component: FileUploadComponent
+  },
   {
     path: 'gallery/:level',
     component: GalleryComponent

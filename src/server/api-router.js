@@ -63,6 +63,16 @@ function apiRouter(database) {
         }
     });
 
+    router.post('/upload/:gallery', (req, res) => {
+        const gallery = req.params['gallery'];
+        console.log(req.body);
+        if (req.files) {
+            const files = req.files;
+            console.log(files);
+        }
+        return res.status(200).json('Upload reach server.');
+    });
+
     router.get('/galleries', (req, res) => {
         database.getGalleries()
             .then((data) => {
@@ -105,7 +115,7 @@ function apiRouter(database) {
                     const payload = {
                         userid: result.authuser.userId,
                         username: result.authuser.userName,
-                        admin: `${admRole[0]==="ADM"}`
+                        admin: `${admRole[0] === "ADM"}`
                     };
 
                     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h' });

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ import { PopupComponent } from './popup/popup.component';
 import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { HttpClient } from 'selenium-webdriver/http';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [

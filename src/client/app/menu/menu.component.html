@@ -36,8 +36,11 @@
   <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
     <i class="big comments icon"></i>
     About Us</a>
-  <a class="item" [routerLink]="['/quicktest']" aria-label="quicktest">
+  <a class="item" [routerLink]="['/quicktest']" [routerLinkActive]="['active']" aria-label="quicktest">
     <i class="big money icon"></i>Sponsor
+  </a>
+  <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+    <i class="big upload icon"></i>Upload Image
   </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
