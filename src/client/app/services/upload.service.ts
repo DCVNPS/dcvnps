@@ -11,13 +11,13 @@ export class UploadService {
   private baseUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
   
-  public upload(file:File, gallery:string):Observable<boolean>{
-    let uploadURL = `${this.baseUrl}/upload/${gallery}`;
-    console.log(file);
+  public upload(file:File, upldGallery:string,upldYear:string):Observable<boolean>{
+    let uploadURL = `${this.baseUrl}/upload/${upldGallery}/${upldYear}`;
+    // console.log(file);
     const formData = new FormData();
     formData.append('file',file);
     return this.httpClient.post<any>(uploadURL, formData, {
-      headers: {'filename':file.name,'enctype': 'multipart/form-data'},
+      headers: {'enctype': 'multipart/form-data'},
       reportProgress: true,
       observe: 'events'
     }).pipe(map((event) => {

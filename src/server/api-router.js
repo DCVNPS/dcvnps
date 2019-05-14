@@ -63,9 +63,10 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/upload/:gallery', (req, res) => {
-        const gallery = req.params['gallery'];
-        console.log(req.body);
+    router.post('/upload/:gallery/:year', (req, res) => {
+        const upldGallery = req.params['gallery'];
+        const upldYear = req.params['year'];
+        console.log({"gallery": upldGallery, "year": upldYear});
         if (req.files) {
             const files = req.files;
             console.log(files);

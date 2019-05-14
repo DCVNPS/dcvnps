@@ -49,7 +49,15 @@
         Add Contact
       </button>
     </div>
-    <div class="item">
+    <a class="item" (click)="logout()">
+      <i class="large sign out icon"></i>
+        Sign Out
+    </a>
+    <a class="item" [routerLink]="['/login']">
+      <i class="large sign in icon"></i>
+        Sign in
+    </a>
+    <!-- <div class="item">
       <button class="ui primary button" [routerLink]="['/login']">
         <i class="large sign in icon"></i>
         Sing in
@@ -60,5 +68,5 @@
             <i class="large sign out icon"></i>Sign out
         </button>
       </div>
-    </div>
+    </div> -->
 </div>
