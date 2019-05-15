@@ -33,8 +33,8 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { PopupComponent } from './popup/popup.component';
 import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
-import { FileUploadComponent } from './file-upload/file-upload.component';
-import { HttpClient } from 'selenium-webdriver/http';
+import { DropzoneComponent } from './dropzone/dropzone.component';
+import { DndDirective } from './dropzone/dnd.directive';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,8 @@ import { HttpClient } from 'selenium-webdriver/http';
     GalleryComponent,
     PopupComponent,
     SortDescPipe,
-    FileUploadComponent,
+    DropzoneComponent,
+    DndDirective,
   ],
   imports: [
     BrowserModule,

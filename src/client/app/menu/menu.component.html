@@ -1,17 +1,17 @@
 <div class="ui inverted stackable menu">
   <div class="header item">DC Vnps</div>
   <a class="item" [routerLink]="['/home']" [routerLinkActive]="['active']" aria-label="Home">
-    <i class="big home icon"></i>
+    <i class="small home icon"></i>
     <p>Home</p>
   </a>
   <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
-    <i class="big bullhorn icon"></i>
+    <i class="small bullhorn icon"></i>
     <p>Announcements</p>
   </a>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
       <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
-        <i class="big book icon"></i>
+        <i class="small book icon"></i>
         <div class="text">Programs</div>
         <i class="dropdown icon"></i>
       </a>
@@ -34,13 +34,13 @@
     </div>
   </div>
   <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
-    <i class="big comments icon"></i>
+    <i class="small comments icon"></i>
     About Us</a>
   <a class="item" [routerLink]="['/quicktest']" [routerLinkActive]="['active']" aria-label="quicktest">
-    <i class="big money icon"></i>Sponsor
+    <i class="small money icon"></i>Sponsor
   </a>
   <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
-    <i class="big upload icon"></i>Upload Image
+    <i class="small upload icon"></i>Upload Image
   </a>
   <div class="right menu">
     <div class="item" *ngIf="auth.isLogin()">
@@ -50,11 +50,11 @@
       </button>
     </div>
     <a class="item" (click)="logout()">
-      <i class="large sign out icon"></i>
+      <i class="small sign out icon"></i>
         Sign Out
     </a>
     <a class="item" [routerLink]="['/login']">
-      <i class="large sign in icon"></i>
+      <i class="small sign in icon"></i>
         Sign in
     </a>
     <!-- <div class="item">

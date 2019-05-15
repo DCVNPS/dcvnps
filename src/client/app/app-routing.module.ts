@@ -11,7 +11,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import { DropzoneComponent } from './dropzone/dropzone.component';
 
 const routes: Routes = [
   {
@@ -35,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'fileupload',
-    component: FileUploadComponent
+    component: DropzoneComponent
   },
   {
     path: 'gallery/:level',

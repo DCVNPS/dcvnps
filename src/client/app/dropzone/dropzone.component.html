@@ -1,0 +1,59 @@
+<div class="ui centered grid">
+  <div class="ten wide column">
+    <form [formGroup]="uploadForm" class="ui form">
+      <div class="inline field">
+        <label>Select Gallery to Upload</label>
+        <select formControlName="upldGallery" class="menu">
+          <option *ngFor="let g of galleries" [value]="g" class="item">{{g|titlecase}}</option>
+        </select>
+      </div>
+      <div class="dropzone" appDnd (filesChangeEmitter)="onFileChange($event)"
+        (filesInvalidEmitter)="onInvalidFileChange($event)" [allowed_extensions]="['png', 'jpg', 'bmp', 'ico']">
+        <div class="text-wrapper">
+          <div class="centered">Drop your file here!</div>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="invalidFileArray.length !== 0 || fileArray.length !== 0">
+      <div class="header" *ngIf="fileArray.length !== 0">File To Upload</div>
+      <div class="ui divided items" *ngIf="fileArray.length !== 0">
+        <div class="item" *ngFor="let url of reviewUrl; let i=index">
+          <div class="ui tiny image">
+            <img [src]="url">
+          </div>
+          <div class="middle aligned content">
+            <div class="description">{{fileArray[i].name}}</div>
+            <div class="meta"><span>Image detail</span>
+              <div class="description">File Size: {{fileArray[i].size}}</div>
+            </div>
+            <div>
+              <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
+              <button class=" mini ui positive basic button" (click)="uploadFile(i)">Upload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header" *ngIf="invalidFileArray.length !== 0">Invalid Image File Extension</div>
+      <div class="ui divided items" *ngIf="invalidFileArray.length !== 0">
+        <div class="item" *ngFor="let file of invalidFileArray; let i=index">
+          <div class="ui small image">
+            <i class="large file icon"></i>
+          </div>
+          <div class="middle aligned content">
+            <div class="description">{{file.name}}</div>
+            <div class="meta"><span>Image detail</span>
+              <div class="description">File Size: {{file.size}}</div>
+            </div>
+            <div>
+              <button class=" mini ui negative basic button" (click)="removeInvalidFile(i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="large ui negative button" (click)="removeAllFiles()">Remove All</button>
+      <button class="large ui positive button" (click)="uploadAllFiles()">Upload
+        All</button>
+    </div>
+  </div>
+</div>
