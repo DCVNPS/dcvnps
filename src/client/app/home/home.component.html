@@ -1,58 +1,52 @@
-<div #pagebody class="slide-height">
-    <div class="ui raised segment">
-        <div class="ui huge center aligned header">
-            WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+<div #pagebody class="container-fluid">
+    <div class="row border border-primay shadow-sm p-3 mx-0">
+        <div class="col align-self-center text-center">
+            <div class="">
+                WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+            </div>
+            <div class="display-8">
+                Of Washington Metropolitan
+            </div>
+            <div class="display-8">
+                Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
+            </div>
         </div>
-        <p class="ui medium center aligned header">
-            Of Washington Metropolitan
-        </p>
-        <p class="ui medium center aligned header">
-            Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
-        </p>
     </div>
-    <div *ngIf="slides.length > 0" class="ui grid">
-        <div class="three wide column">
-            <div class="ui raised padded text segments">
-                <div class="ui segment vnps-header">
-                    <div class="ui header">About VNPS</div>
-                </div>
-                <div class="ui segment">
-                    <p>
-                        The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
-                        Vietnamese
-                        photographers community, conserving
-                        the Vietnamese photography art & culture, and promoting the arts and science of
-                        photography.
-                    </p>
-                    <p>It is supported by membership and donation.</p>
-                </div>
+    <div class="row border w-100 px-0 mx-0">
+        <div class="col-3 px-0">
+            <div class="vnps-header">
+                <div class="">About VNPS</div>
             </div>
-            <div class="ui raised padded text segments">
-                <div class="ui segment vnps-header">
-                    <div class="ui header">Connect with Us</div>
-                </div>
-                <div class="ui segment">
-                    <div>
-                        <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
-                            <img src="profiles/site/vnpsicon.png" />
-                        </a>
-                    </div>
+            <div class="px-3">
+                <p>
+                    The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
+                    Vietnamese
+                    photographers community, conserving
+                    the Vietnamese photography art & culture, and promoting the arts and science of
+                    photography.
+                </p>
+                <p>It is supported by membership and donation.</p>
+            </div>
+            <div class="vnps-header">
+                <div class="ui header">Connect with Us</div>
+            </div>
+            <div class="px-3">
+                <div>
+                    <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
+                        <img src="profiles/site/vnpsicon.png" />
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="ten wide column">
-            <app-carousel [delay]="2000">
-                <app-carousel-item *ngFor="let slide of slides">
-                    <img [src]="slide?.imgsrc" alt="slide?.imgalt">
-                </app-carousel-item>
-            </app-carousel>
+        <div class="col-6 px-0">
+            <app-bstcarousel [slides]="slides"></app-bstcarousel>
         </div>
-        <div class="three wide column">
-            <div class="ui  raised padded text segments">
-                <div class="ui segment vnps-header">
+        <div class="col-3 px-0 w-100">
+            <div class="px-0">
+                <div class="vnps-header">
                     <div class="ui header">Sponsor Us</div>
                 </div>
-                <div class="ui segment">
+                <div class="px-3">
                     <p>
                         To help VNPS running and serving our community, you can donate to Vietnamese Photographic
                         Society,
@@ -66,8 +60,6 @@
                     <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
                         <img src="profiles/site/SupportUs_AmzSmile.png" class="ui tiny image" />
                     </a>
-                    <!-- <paypal-button env="opts.env" client="opts.client" style="opts.style" payment="opts.payment"
-                commit="opts.commit" on-authorize="opts.onAuthorize"></paypal-button> -->
                 </div>
             </div>
         </div>

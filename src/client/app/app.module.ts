@@ -35,6 +35,7 @@ import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
+import { BstcarouselComponent } from './bstcarousel/bstcarousel.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { DndDirective } from './dropzone/dnd.directive';
     SortDescPipe,
     DropzoneComponent,
     DndDirective,
+    BstcarouselComponent,
   ],
   imports: [
     BrowserModule,

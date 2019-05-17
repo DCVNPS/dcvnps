@@ -22,12 +22,11 @@
             ],
             "styles": [
               "src/client/styles.scss",
-              "src/client/assets/semantic.min.css",
-              "src/client/assets/semantic.grid.min.css"
+              "src/client/assets/css/bootstrap.min.css"
             ],
             "scripts": [
-              "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js"
+              "src/client/assets/js/jquery.min.js",
+              "src/client/assets/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -74,18 +73,17 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/client/polyfills.ts",
             "tsConfig": "src/client/tsconfig.spec.json",
-            "scripts": [
-              "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js"
-            ],
-            "styles": [
-              "src/client/styles.scss",
-              "src/client/assets/semantic.min.css",
-              "src/client/assets/semantic.grid.min.css"
-            ],
             "assets": [
               "src/client/assets",
               "src/client/favicon.ico"
+            ],
+            "styles": [
+              "src/client/styles.scss",
+              "src/client/assets/css/bootstrap.min.css"
+            ],
+            "scripts": [
+              "src/client/assets/js/jquery.min.js",
+              "src/client/assets/js/bootstrap.min.js"
             ]
           }
         },

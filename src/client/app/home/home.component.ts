@@ -11,11 +11,14 @@ import { Gallery } from '../shared/gallery.model';
 export class HomeComponent implements OnInit {
   public slides: Array<Slide> = [];
   public galleries: Array<Gallery> = [];
-  constructor(private api: ApiService) { }
-
-  ngOnInit() {
+  constructor(private api: ApiService) {
     this.getHomePhotos();
     this.getGalleries();
+   }
+
+  ngOnInit() {
+    // this.getHomePhotos();
+    // this.getGalleries();
   }
   
   getHomePhotos(){
@@ -40,7 +43,7 @@ export class HomeComponent implements OnInit {
           cnt += 1;
         });
       });
-      // console.log(this.slides);
+      console.log(this.slides);
     });
   }
   getGalleries(){
