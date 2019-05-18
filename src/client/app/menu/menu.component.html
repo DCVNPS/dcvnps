@@ -1,0 +1,72 @@
+<div class="ui inverted stackable menu">
+  <div class="header item">DC Vnps</div>
+  <a class="item" [routerLink]="['/home']" [routerLinkActive]="['active']" aria-label="Home">
+    <i class="small home icon"></i>
+    <p>Home</p>
+  </a>
+  <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
+    <i class="small bullhorn icon"></i>
+    <p>Announcements</p>
+  </a>
+  <div class="item" [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
+        <i class="small book icon"></i>
+        <div class="text">Programs</div>
+        <i class="dropdown icon"></i>
+      </a>
+      <div class="menu">
+        <a class="item" *ngFor="let p of mPrograms" [routerLink]="['programs',p.level]">{{p.ariatext}}</a>
+      </div>
+    </div>
+  </div>
+  <div class="item" [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item" [routerLink]="['galleries']">
+        <i class="image icon"></i>
+        <div class="text">Galleries</div>
+        <i class="dropdown icon"></i>
+      </a>
+      <div class="menu">
+        <!-- <a class="item" [routerLink]="['galleries']">All Galleries</a> -->
+        <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery',g]">{{g}}</a>
+      </div>
+    </div>
+  </div>
+  <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
+    <i class="small comments icon"></i>
+    About Us</a>
+  <a class="item" [routerLink]="['/quicktest']" [routerLinkActive]="['active']" aria-label="quicktest">
+    <i class="small money icon"></i>Sponsor
+  </a>
+  <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+    <i class="small upload icon"></i>Upload Image
+  </a>
+  <div class="right menu">
+    <div class="item" *ngIf="auth.isLogin()">
+      <button [routerLink]="['/newcontact']" class="ui primary button">
+        <i class="add user icon" aria-hidden="true"></i>
+        Add Contact
+      </button>
+    </div>
+    <a class="item" (click)="logout()">
+      <i class="small sign out icon"></i>
+        Sign Out
+    </a>
+    <a class="item" [routerLink]="['/login']">
+      <i class="small sign in icon"></i>
+        Sign in
+    </a>
+    <!-- <div class="item">
+      <button class="ui primary button" [routerLink]="['/login']">
+        <i class="large sign in icon"></i>
+        Sing in
+      </button>
+    </div>
+    <div class="item" *ngIf="auth.isLogin()">
+        <button class="ui primary button" (click)="logout()">
+            <i class="large sign out icon"></i>Sign out
+        </button>
+      </div>
+    </div> -->
+</div>
