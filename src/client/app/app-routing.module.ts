@@ -64,7 +64,7 @@ const routes: Routes = [
   },
   {
     path: 'quicktest',
-    component: QuickTestComponent
+    component: QuickTestComponent,
   },
   {
     path: '**',

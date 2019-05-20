@@ -1,6 +1,6 @@
 <div class="min-page-height">
   <div class="ui secondary menu">
-    <button class="item" (click)="onFilterYear();">{{level|uppercase}}</button>
+    <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
     <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
     <button class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</button>
   </div>

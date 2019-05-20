@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../shared/api.service';
+import { ApiService } from '../services/api.service';
 import { Slide } from '../shared/slide.model';
 
 @Component({

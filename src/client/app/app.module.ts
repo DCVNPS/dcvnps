@@ -11,8 +11,8 @@ import { MenuComponent } from './menu/menu.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactComponent } from './contact/contact.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
-import { ApiService } from './shared/api.service';
-import { AuthService } from './shared/auth.service';
+import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { CarouselComponent } from './carousel/carousel.component';
@@ -35,6 +35,7 @@ import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
+import { VnpscarouselComponent } from './vnpscarousel/vnpscarousel.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { DndDirective } from './dropzone/dnd.directive';
     SortDescPipe,
     DropzoneComponent,
     DndDirective,
+    VnpscarouselComponent,
   ],
   imports: [
     BrowserModule,

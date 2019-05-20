@@ -1,4 +1,5 @@
-<div class="min-page-height" id="pagebody">
-  <button (click)="showDialog = !showDialog" class="btn">Open Popup Modal</button>
-  <app-popup [(visible)]="showDialog"[data]="popupInput"> </app-popup>
+<div class="ui container" style="margin-top: 50px;">
+<div *ngIf="slides.length > 0">
+<vnps-carousel [data]="slides" [delay]="3000" ></vnps-carousel>
+</div>
 </div>

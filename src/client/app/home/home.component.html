@@ -1,4 +1,4 @@
-<div #pagebody class="slide-height">
+<div #pagebody>
     <div class="ui raised segment">
         <div class="ui huge center aligned header">
             WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
@@ -41,11 +41,14 @@
             </div>
         </div>
         <div class="ten wide column">
-            <app-carousel [delay]="2000">
+            <!-- <app-carousel [delay]="2000">
                 <app-carousel-item *ngFor="let slide of slides">
                     <img [src]="slide?.imgsrc" alt="slide?.imgalt">
                 </app-carousel-item>
-            </app-carousel>
+            </app-carousel> -->
+            <div class="segment borderless" style="margin-top:50px;">
+                <vnps-carousel [data]="slides" [delay]="3000"></vnps-carousel>
+            </div>
         </div>
         <div class="three wide column">
             <div class="ui  raised padded text segments">

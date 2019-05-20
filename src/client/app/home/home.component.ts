@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../shared/api.service';
+import { ApiService } from '../services/api.service';
 import { Slide } from '../shared/slide.model';
 import { Gallery } from '../shared/gallery.model';
 

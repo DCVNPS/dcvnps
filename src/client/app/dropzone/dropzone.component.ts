@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ApiService } from '../shared/api.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-dropzone',
@@ -10,15 +10,15 @@ import { ApiService } from '../shared/api.service';
 })
 export class DropzoneComponent implements OnInit {
 
-  private fileArray: Array<File> = [];
-  private invalidFileArray: Array<File> = [];
-  private reviewUrl: Array<any> = [];
-  private reviewInvalidUrl: Array<any> = [];
-  private uploadResponse: Object = { status: '', message: '', filePath: '' };
-  private error: string;
-  private galleries: Array<string> = [];
-  private upldGallery: FormControl;
-  private uploadForm: FormGroup;
+  public fileArray: Array<File> = [];
+  public invalidFileArray: Array<File> = [];
+  public reviewUrl: Array<any> = [];
+  public reviewInvalidUrl: Array<any> = [];
+  public uploadResponse: Object = { status: '', message: '', filePath: '' };
+  public error: string;
+  public galleries: Array<string> = [];
+  public upldGallery: FormControl;
+  public uploadForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
     private api: ApiService) { 

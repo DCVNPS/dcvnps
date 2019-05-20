@@ -1,0 +1,20 @@
+<div class="ui centered grid">
+  <div #vnpscarousel class="ui cart">
+    <div *ngFor="let s of data" (click)="toggleSlideshow();">
+      <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" [width]="cWidth" [height]="cHeight">
+    </div>
+    <!-- <div class="ui secondary menu" style="position: relative; top:-50%;"> -->
+    <div class="ui secondary menu corousel-arrows">
+      <div class="left menu">
+        <a (click)="PrevSlide();">
+          <i class="huge chevron left icon"></i>
+        </a>
+      </div>
+      <div class="right menu">
+        <a (click)="NextSlide();">
+          <i class="huge chevron right icon"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
