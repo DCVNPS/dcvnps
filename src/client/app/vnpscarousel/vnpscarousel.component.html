@@ -4,17 +4,20 @@
       <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" [width]="cWidth" [height]="cHeight">
     </div>
     <!-- <div class="ui secondary menu" style="position: relative; top:-50%;"> -->
-    <div class="ui secondary menu corousel-arrows">
+    <div class="ui secondary menu carousel-arrows">
       <div class="left menu">
         <a (click)="PrevSlide();">
-          <i class="huge chevron left icon"></i>
+          <i class="big chevron left icon"></i>
         </a>
       </div>
       <div class="right menu">
         <a (click)="NextSlide();">
-          <i class="huge chevron right icon"></i>
+          <i class="big chevron right icon"></i>
         </a>
       </div>
+    </div>
+    <div class="centered row carousel-indicators">
+      <a *ngFor="let s of data" class="item" [class.active]="!s.hidden"><i class="orange circle outline icon"></i></a>
     </div>
   </div>
 </div>

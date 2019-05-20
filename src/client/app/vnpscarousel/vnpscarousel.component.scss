@@ -1,4 +1,12 @@
-.corousel-arrows{
+.carousel-arrows{
     position: relative!important;
     top: -50%!important;
+}
+
+.carousel-indicators{
+    position: relative!important;
+    top: -30%!important;
+}
+.active.item{
+    border-radius: 50%;
 }
