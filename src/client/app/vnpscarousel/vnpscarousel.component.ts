@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Slide } from '../shared/slide.model';
 
 @Component({
@@ -19,8 +19,14 @@ export class VnpscarouselComponent implements OnInit {
   private curIdx: number;
   private count: number;
   private max: number;
-
+  
+  @HostListener('window:resize',['$event']) onResize(event?){
+    this.cWidth = Math.round(0.9*10/16*window.innerWidth);
+    this.cHeight = Math.round(2/3*this.cWidth);
+    console.log({'carousel width':this.cWidth, 'carousel height': this.cHeight});
+  }
   constructor() {
+    this.onResize();
   }
 
   ngOnInit() {
