@@ -1,4 +1,4 @@
-<div #pagebody>
+<div #pagebody class="borderless">
     <div class="ui raised segment">
         <div class="ui huge center aligned header">
             WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
@@ -11,66 +11,69 @@
         </p>
     </div>
     <div *ngIf="slides.length > 0" class="ui grid">
-        <div class="three wide column">
-            <div class="ui raised padded text segments">
-                <div class="ui segment vnps-header">
-                    <div class="ui header">About VNPS</div>
+        <div class="row" matchHeight className="column">
+            <div class="four wide column">
+                <div class="ui raised padded text segments">
+                    <div class="ui segment vnps-header">
+                        <div class="ui header">About VNPS</div>
+                    </div>
+                    <div class="ui segment">
+                        <p>
+                            The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
+                            Vietnamese
+                            photographers community, conserving
+                            the Vietnamese photography art & culture, and promoting the arts and science of
+                            photography.
+                        </p>
+                        <p>It is supported by membership and donation.</p>
+                    </div>
                 </div>
-                <div class="ui segment">
-                    <p>
-                        The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
-                        Vietnamese
-                        photographers community, conserving
-                        the Vietnamese photography art & culture, and promoting the arts and science of
-                        photography.
-                    </p>
-                    <p>It is supported by membership and donation.</p>
-                </div>
-            </div>
-            <div class="ui raised padded text segments">
-                <div class="ui segment vnps-header">
-                    <div class="ui header">Connect with Us</div>
-                </div>
-                <div class="ui segment">
-                    <div>
-                        <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
-                            <img src="profiles/site/vnpsicon.png" />
-                        </a>
+                <div class="ui raised padded text segments">
+                    <div class="ui segment vnps-header">
+                        <div class="ui header">Connect with Us</div>
+                    </div>
+                    <div class="ui segment">
+                        <div>
+                            <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
+                                <img src="profiles/site/vnpsicon.png" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="ten wide column">
-            <!-- <app-carousel [delay]="2000">
+            <div class="eight wide column">
+                <!-- <app-carousel [delay]="2000">
                 <app-carousel-item *ngFor="let slide of slides">
                     <img [src]="slide?.imgsrc" alt="slide?.imgalt">
                 </app-carousel-item>
             </app-carousel> -->
-            <div class="segment borderless" style="margin-top:50px;">
-                <vnps-carousel [data]="slides" [delay]="3000"></vnps-carousel>
-            </div>
-        </div>
-        <div class="three wide column">
-            <div class="ui  raised padded text segments">
-                <div class="ui segment vnps-header">
-                    <div class="ui header">Sponsor Us</div>
+                <div class="segment borderless" style="margin-top:10px;">
+                    <vnps-carousel [data]="slides" [config] = "{'delay':3000, 'wRatio':0.5}" ></vnps-carousel>
                 </div>
-                <div class="ui segment">
-                    <p>
-                        To help VNPS running and serving our community, you can donate to Vietnamese Photographic
-                        Society,
-                        <br /> a 501(C)(3) organization! by either shopping , or donating directly to VNPS via Paypal.
-                    </p>
-                    <a href="http://www.bhphotovideo.com/bnh/controller/home?KW=&amp;img=bh_145x300-TGCOLOR.gif&amp;BI=7627&amp;KBID=8145"
-                        target="_blank">
-                        <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif"
-                            class="ui tiny image" />
-                    </a>
-                    <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
-                        <img src="profiles/site/SupportUs_AmzSmile.png" class="ui tiny image" />
-                    </a>
-                    <!-- <paypal-button env="opts.env" client="opts.client" style="opts.style" payment="opts.payment"
+            </div>
+            <div class="four wide column">
+                <div class="ui  raised padded text segments">
+                    <div class="ui segment vnps-header">
+                        <div class="ui header">Sponsor Us</div>
+                    </div>
+                    <div class="ui segment">
+                        <p>
+                            To help VNPS running and serving our community, you can donate to Vietnamese Photographic
+                            Society,
+                            <br /> a 501(C)(3) organization! by either shopping , or donating directly to VNPS via
+                            Paypal.
+                        </p>
+                        <a href="http://www.bhphotovideo.com/bnh/controller/home?KW=&amp;img=bh_145x300-TGCOLOR.gif&amp;BI=7627&amp;KBID=8145"
+                            target="_blank">
+                            <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif"
+                                class="ui tiny image" />
+                        </a>
+                        <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
+                            <img src="profiles/site/SupportUs_AmzSmile.png" class="ui tiny image" />
+                        </a>
+                        <!-- <paypal-button env="opts.env" client="opts.client" style="opts.style" payment="opts.payment"
                 commit="opts.commit" on-authorize="opts.onAuthorize"></paypal-button> -->
+                    </div>
                 </div>
             </div>
         </div>
