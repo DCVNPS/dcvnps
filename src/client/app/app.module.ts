@@ -36,6 +36,7 @@ import { SortDescPipe } from './pipes/sort.desc.pipe';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
 import { VnpscarouselComponent } from './vnpscarousel/vnpscarousel.component';
+import { MatchHeightDirective } from './directives/matchheight.directive';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { VnpscarouselComponent } from './vnpscarousel/vnpscarousel.component';
     DropzoneComponent,
     DndDirective,
     VnpscarouselComponent,
+    MatchHeightDirective,
   ],
   imports: [
     BrowserModule,

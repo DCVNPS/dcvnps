@@ -3,7 +3,6 @@
     <div *ngFor="let s of data" (click)="toggleSlideshow();">
       <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" [height]="cHeight" [width]="cWidth">
     </div>
-    <!-- <div class="ui secondary menu" style="position: relative; top:-50%;"> -->
     <div class="ui secondary menu carousel-arrows">
       <div class="left menu">
         <a (click)="PrevSlide();">
@@ -17,7 +16,7 @@
       </div>
     </div>
     <div class="centered row carousel-indicators">
-      <a *ngFor="let s of data" class="item" [class.active]="!s.hidden"><i class="orange circle outline icon"></i></a>
+      <a *ngFor="let s of data" class="item" [class.active]="!s.hidden"><i class="blue outline circle icon"></i></a>
     </div>
   </div>
 </div>

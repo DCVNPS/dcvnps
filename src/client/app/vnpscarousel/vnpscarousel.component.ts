@@ -9,8 +9,11 @@ import { Slide } from '../shared/slide.model';
 export class VnpscarouselComponent implements OnInit {
 
   @Input() data: Array<Slide>;
-  @Input() delay = 500;
-  @Input() carouselSize: Object;
+  // @Input() delay = 500;
+  @Input() config: any = { 'delay': 3000, 'wRatio': 0.5};
+
+  private delay: number;
+  private wRatio: number;
   public isRunning = true;
   public cWidth: number = 600;
   public cHeight: number = 400;
@@ -20,12 +23,14 @@ export class VnpscarouselComponent implements OnInit {
   private count: number;
   private max: number;
   
-  @HostListener('window:resize',['$event']) onResize(event?){
-    this.cWidth = Math.round(0.9*10/16*window.innerWidth);
+  @HostListener('window:resize',['$event']) onResize(){
+    this.cWidth = Math.round(this.wRatio * window.innerWidth);
     this.cHeight = Math.round(2/3*this.cWidth);
     console.log({'carousel width':this.cWidth, 'carousel height': this.cHeight});
   }
   constructor() {
+    this.delay = this.config.delay||3000;
+    this.wRatio = this.config.wRatio||0.5;
     this.onResize();
   }
 

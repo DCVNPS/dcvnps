@@ -7,6 +7,17 @@
     position: relative!important;
     top: -30%!important;
 }
+.carousel-indicators a{
+    padding-left: 3px;
+}
 .active.item{
-    border-radius: 50%;
+    background-color: default;
+}
+
+.left.menu{
+    padding-left: 3%;
+}
+
+.right.menu{
+    padding-right: 3%;
 }
