@@ -17,8 +17,10 @@ export class DropzoneComponent implements OnInit {
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
   public error: string;
   public galleries: Array<string> = [];
-  public upldGallery: FormControl;
-  public uploadForm: FormGroup;
+  private upldGallery: FormControl;
+  private upldYear : FormControl;
+  private uploadForm: FormGroup;
+  private years: Array<number>;
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
     private api: ApiService) { 
@@ -29,12 +31,15 @@ export class DropzoneComponent implements OnInit {
           this.galleries.push(item.gallery);
         })
       });
+      this.years=[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020];
     }
 
   ngOnInit() {
     this.upldGallery = new FormControl();
+    this.upldYear = new FormControl();
     this.uploadForm = this.formBuilder.group({
-      upldGallery: this.upldGallery
+      upldGallery: this.upldGallery,
+      yearPicker: this.upldYear
     })
   }
 
@@ -53,6 +58,7 @@ export class DropzoneComponent implements OnInit {
             // this.reviewUrl.push(event.target.result);
             // Workaround
             // console.log(reader.result);
+            // Think about resize the image!!!
             this.reviewUrl.push(reader.result);
           }
           reader.readAsDataURL(files[i]);
@@ -90,7 +96,8 @@ export class DropzoneComponent implements OnInit {
 
   uploadFile(index: number) {
     const gallery = this.uploadForm.controls.upldGallery.value;
-    this.uplder.upload(this.fileArray[index], gallery, '2019')
+    const gYear = this.uploadForm.controls.yearPicker.value;
+    this.uplder.upload(this.fileArray[index], gallery, gYear)
       .subscribe(
         (res) => { this.uploadResponse = res; },
         (err) => { this.error = err;}
