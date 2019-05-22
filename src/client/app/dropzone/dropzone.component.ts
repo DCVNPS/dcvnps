@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { Gallery } from '../shared/gallery.model';
 
 @Component({
   selector: 'app-dropzone',
@@ -16,7 +17,7 @@ export class DropzoneComponent implements OnInit {
   public reviewInvalidUrl: Array<any> = [];
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
   public error: string;
-  public galleries: Array<string> = [];
+  public galleries: Array<Gallery> = [];
   private upldGallery: FormControl;
   private upldYear : FormControl;
   private uploadForm: FormGroup;
@@ -26,10 +27,12 @@ export class DropzoneComponent implements OnInit {
     private api: ApiService) { 
       // Get the galleries list from database
       api.get('/galleries')
-      .subscribe((data) => {
-        data.forEach((item) => {
-          this.galleries.push(item.gallery);
-        })
+      .subscribe(async (data) => {
+        // data.forEach((item) => {
+        //   this.galleries.push(item);
+        // });
+        this.galleries = await Array.from(data);
+        console.log(this.galleries);
       });
       this.years=[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020];
     }
@@ -95,7 +98,8 @@ export class DropzoneComponent implements OnInit {
   }
 
   uploadFile(index: number) {
-    const gallery = this.uploadForm.controls.upldGallery.value;
+    const upldGalVal = this.uploadForm.controls.upldGallery.value;
+    const gallery = this.galleries.find( g => g.galleryId === upldGalVal);
     const gYear = this.uploadForm.controls.yearPicker.value;
     this.uplder.upload(this.fileArray[index], gallery, gYear)
       .subscribe(

@@ -66,7 +66,8 @@ function apiRouter(database) {
     router.post('/upload/:gallery/:year', (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
-        console.log({"gallery": upldGallery, "year": upldYear});
+        const galleryId = req.body.galleryId;
+        console.log({"galleryId":galleryId, "gallery": upldGallery, "year": upldYear});
         if (req.files) {
             const files = req.files;
             console.log(files);

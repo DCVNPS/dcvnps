@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
+import { Gallery } from '../shared/gallery.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,12 @@ export class UploadService {
   private baseUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
   
-  public upload(file:File, upldGallery:string,upldYear:string):Observable<boolean>{
-    let uploadURL = `${this.baseUrl}/upload/${upldGallery}/${upldYear}`;
+  public upload(file:File, upldGallery:Gallery,upldYear:string):Observable<boolean>{
+    let uploadURL = `${this.baseUrl}/upload/${upldGallery.gallery}/${upldYear}`;
     // console.log(file);
     const formData = new FormData();
     formData.append('file',file);
+    formData.append('galleryId', upldGallery.galleryId);
     return this.httpClient.post<any>(uploadURL, formData, {
       headers: {'enctype': 'multipart/form-data'},
       reportProgress: true,

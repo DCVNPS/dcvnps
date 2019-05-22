@@ -1,5 +1,5 @@
 export class Gallery {
-    public id: string;
+    public galleryId: string;
     public gallery: string;
     public profilePhoto: string;
     public createdDate: Date;
@@ -11,7 +11,7 @@ export class Gallery {
         createdDate: Date,
         updatedDate: Date)
     {
-        this.id = id;
+        this.galleryId = id;
         this.gallery = gallery;
         this.profilePhoto = profilePhoto;
         this.createdDate = createdDate;

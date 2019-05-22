@@ -4,7 +4,7 @@
       <div class="inline field">
         <label>Select Gallery to Upload</label>
         <select formControlName="upldGallery" class="menu">
-          <option *ngFor="let g of galleries" [value]="g" class="item">{{g|titlecase}}</option>
+          <option *ngFor="let g of galleries" [value]="g.galleryId" class="item">{{g.gallery|titlecase}}</option>
         </select>
         <label>Select Year</label>
         <select formControlName="yearPicker" class="menu">
