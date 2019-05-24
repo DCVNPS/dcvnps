@@ -1,9 +1,12 @@
+.pt-10{
+  padding-top: 10px;
+}
 .dropzone {
     margin-top: 20px;
-    min-height: 200px;
+    min-height: 150px;
     min-width: 200px;
     display: table;
-    width: 75%;
+    width: 100%;
     background-color: #eee;
     border: dotted 1px #aaa;
   }

@@ -68,10 +68,11 @@ function apiRouter(database) {
         const upldYear = req.params['year'];
         const galleryId = req.body.galleryId;
         console.log({"galleryId":galleryId, "gallery": upldGallery, "year": upldYear});
-        if (req.files) {
-            const files = req.files;
-            console.log(files);
+        if (!req.files) {
+            return res.status(400).send('No file uploaded');
         }
+        const file = req.files.file;
+        console.log(file);
         return res.status(200).json('Upload reach server.');
     });
 
