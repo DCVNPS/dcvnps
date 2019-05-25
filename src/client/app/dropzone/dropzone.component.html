@@ -12,22 +12,24 @@
         </select>
       </div>
       <div class="dropzone" appDnd (filesChangeEmitter)="onFileChange($event)"
-        (filesInvalidEmitter)="onInvalidFileChange($event)" [allowed_extensions]="['png', 'jpg', 'bmp', 'ico']">
+        (filesInvalidEmitter)="onInvalidFileChange($event)" [allowed_extensions]="allowed_ext">
         <div class="text-wrapper">
           <div class="centered">Drop your file here!</div>
         </div>
       </div>
     </form>
 
-    <div *ngIf="invalidFileArray.length !== 0 || fileArray.length !== 0">
+    <div class="pt-10" *ngIf="invalidFileArray.length !== 0 || fileArray.length !== 0">
       <!-- <div class="header" *ngIf="fileArray.length !== 0">File To Upload</div> -->
-      <div class="ui grid" *ngIf="fileArray.length !== 0">
+      <div class="ui grid">
         <div class="row">
           <div class="three wide column">Image</div>
           <div class="seven wide column">Name</div>
-          <div class="two wide column">Size</div>
+          <div class="two wide column">Size(KB)</div>
           <div class="four wide column center aligned">Actions</div>
         </div>
+      </div>
+      <div class="ui grid" *ngIf="fileArray.length !== 0">
         <div class="row" *ngFor="let url of reviewUrl; let i=index">
           <div class="three wide column">
             <div class="ui tiny image">
@@ -38,30 +40,40 @@
             <div class="description">{{fileArray[i].name}}</div>
           </div>
           <div class="two wide column">
-            <div class="description">{{fileArray[i].size}}</div>
+            <div class="description">{{fileArray[i].size/1024|number:'.2-2'}}</div>
           </div>
           <div class="four wide column right aligned">
             <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
             <button class=" mini ui positive basic button" (click)="uploadFile(i)">Upload</button>
           </div>
         </div>
-        <div class="row" *ngFor="let file of invalidFileArray; let i=index">
+      </div>
+      <div class="ui grid" *ngIf="invalidFileArray.length > 0">
+        <div class="row" *ngFor="let url of reviewInvalidUrl; let i=index">
           <div class="three wide column">
-            <div class="ui small image">
+            <div class="ui small image" *ngIf="!url">
               <i class="large file icon"></i>
+            </div>
+            <div class="ui tiny image" *ngIf="url">
+              <img [src]="url">
             </div>
           </div>
           <div class="seven wide column">
-            <div class="description">{{file.name}}</div>
+            <div class="description">
+              <div class="red text" *ngIf="!isValidFileName(invalidFileArray[i].name)">Invalid File Name Format: </div>
+              <div>{{invalidFileArray[i].name}}</div>
+            </div>
           </div>
           <div class="two wide column">
-            <div class="description">{{file.size}}</div>
+            <div class="description">{{invalidFileArray[i].size/1024|number:'.2-2'}}</div>
           </div>
-          <div class="four wide column">
+          <div class="four wide column right aligned">
             <button class=" mini ui negative basic button" (click)="removeInvalidFile(i)">Remove</button>
           </div>
         </div>
-        <div class="row">
+      </div>
+      <div class="ui grid">
+        <div class="inline">
           <button class="large ui negative button" (click)="removeAllFiles()">Remove All</button>
           <button class="large ui positive button" (click)="uploadAllFiles()">Upload All</button>
         </div>

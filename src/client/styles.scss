@@ -1,3 +1,10 @@
+$text-colors: blue, green, orange, pink, purple, red, teal, yellow, black, grey, white;
+@each $tc in $text-colors{
+  .#{$tc}.text{
+    color: #{$tc};
+  }
+}
+
 .slide-medium{
     width: 800px;
     height: 600px;

@@ -3,6 +3,7 @@ import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { Gallery } from '../shared/gallery.model';
+import { RegexService } from '../services/regex.service';
 
 @Component({
   selector: 'app-dropzone',
@@ -16,26 +17,26 @@ export class DropzoneComponent implements OnInit {
   public reviewUrl: Array<any> = [];
   public reviewInvalidUrl: Array<any> = [];
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
+  public allowed_ext: Array<string> = ['png', 'jpg', 'bmp', 'ico'];
   public error: string;
   public galleries: Array<Gallery> = [];
   private upldGallery: FormControl;
-  private upldYear : FormControl;
+  private upldYear: FormControl;
   private uploadForm: FormGroup;
   private years: Array<number>;
+  private fileNamePattern:string = "^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$";
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
-    private api: ApiService) { 
-      // Get the galleries list from database
-      api.get('/galleries')
+    private api: ApiService,
+    private regexSrvc: RegexService) {
+    // Get the galleries list from database
+    api.get('/galleries')
       .subscribe(async (data) => {
-        // data.forEach((item) => {
-        //   this.galleries.push(item);
-        // });
         this.galleries = await Array.from(data);
         console.log(this.galleries);
       });
-      this.years=[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020];
-    }
+    this.years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
+  }
 
   ngOnInit() {
     this.upldGallery = new FormControl();
@@ -74,9 +75,19 @@ export class DropzoneComponent implements OnInit {
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
         // don't add duplicate image.
-        const curFile = this.invalidFileArray.find((f) => f.name === files[i].name);
+        let curFile = this.invalidFileArray.find((f) => f.name === files[i].name);
         if (!curFile) {
           this.invalidFileArray.push(files[i]);
+          const allowedExt = this.regexSrvc.isAllowedExt(files[i].name,this.allowed_ext);
+          if(allowedExt){
+            let reader = new FileReader();
+            reader.onload = (event) => {
+              this.reviewInvalidUrl.push(reader.result);
+            }
+            reader.readAsDataURL(files[i]);            
+          } else {
+            this.reviewInvalidUrl.push(null);
+          }
         }
       }
     }
@@ -89,22 +100,27 @@ export class DropzoneComponent implements OnInit {
 
   removeInvalidFile(index: number) {
     this.invalidFileArray.splice(index, 1);
+    this.reviewInvalidUrl.splice(index, 1);
   }
 
   removeAllFiles() {
     this.fileArray = [];
     this.reviewUrl = [];
     this.invalidFileArray = [];
+    this.reviewInvalidUrl = [];
   }
 
   uploadFile(index: number) {
     const upldGalVal = this.uploadForm.controls.upldGallery.value;
-    const gallery = this.galleries.find( g => g.galleryId === upldGalVal);
+    const gallery = this.galleries.find(g => g.galleryId === upldGalVal);
     const gYear = this.uploadForm.controls.yearPicker.value;
     this.uplder.upload(this.fileArray[index], gallery, gYear)
       .subscribe(
         (res) => { this.uploadResponse = res; },
-        (err) => { this.error = err;}
+        (err) => { this.error = err; }
       );
+  }
+  isValidFileName(fileName:string):boolean{
+    return this.regexSrvc.validFileName(fileName,this.fileNamePattern);
   }
 }
