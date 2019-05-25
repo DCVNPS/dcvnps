@@ -2,11 +2,11 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Slide } from '../shared/slide.model';
 
 @Component({
-  selector: 'vnps-carousel',
-  templateUrl: './vnpscarousel.component.html',
-  styleUrls: ['./vnpscarousel.component.scss']
+  selector: 'hvn-carousel',
+  templateUrl: './hvncarousel.component.html',
+  styleUrls: ['./hvncarousel.component.scss']
 })
-export class VnpscarouselComponent implements OnInit {
+export class HvncarouselComponent implements OnInit {
 
   @Input() data: Array<Slide>;
   // @Input() delay = 500;

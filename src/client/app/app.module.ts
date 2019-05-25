@@ -15,10 +15,8 @@ import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-import { CarouselComponent } from './carousel/carousel.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
-import { CarouselItemComponent } from './carousel-item/carousel-item.component';
 import { ElementDimensionsDirective } from './directives/element-dimensions.directive'
 import { ImageRolloverDirective } from './directives/image-rollover.directive';
 import { SiteHeaderComponent } from './site-header/site-header.component';
@@ -35,7 +33,7 @@ import { RouterLinkActive } from '@angular/router';
 import { SortDescPipe } from './pipes/sort.desc.pipe';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
-import { VnpscarouselComponent } from './vnpscarousel/vnpscarousel.component';
+import { HvncarouselComponent } from './hvncarousel/hvncarousel.component';
 import { MatchHeightDirective } from './directives/matchheight.directive';
 
 @NgModule({
@@ -46,10 +44,8 @@ import { MatchHeightDirective } from './directives/matchheight.directive';
     ContactComponent,
     AddContactComponent,
     LoginComponent,
-    CarouselComponent,
     HomeComponent,
     FooterComponent,
-    CarouselItemComponent,
     ElementDimensionsDirective,
     ImageRolloverDirective,
     SiteHeaderComponent,
@@ -63,7 +59,7 @@ import { MatchHeightDirective } from './directives/matchheight.directive';
     SortDescPipe,
     DropzoneComponent,
     DndDirective,
-    VnpscarouselComponent,
+    HvncarouselComponent,
     MatchHeightDirective,
   ],
   imports: [
