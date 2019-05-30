@@ -1,8 +1,10 @@
 export interface GalleryPhoto {
     galleryId: string,
-    level: string,
-    year: string,
     photo: string,
+    portrait: boolean,
+    author: string,
+    year: string,
+    updateUser: string,
     createdDate: Date,
     updatedDate: Date
 }

@@ -197,9 +197,15 @@
                 throw new error("No gallery data.");
             }
         },
-        getGalleries() {
+        getGalleries(galleryId) {
+            // console.log(knex('galleries')
+            // .select('galleryId', 'gallery', 'profilePhoto')
+            // .whereRaw('galleryId = IFNULL(?,galleryId)',[galId])
+            // .orderBy('createdDate')
+            // .toString());
             return knex('galleries')
                 .select('galleryId', 'gallery', 'profilePhoto')
+                .whereRaw('galleryId = IFNULL(?,galleryId)',[galleryId])
                 .orderBy('createdDate')
                 .then((data) => {
                     return data;
@@ -208,28 +214,28 @@
                     throw err;
                 });
         },
-        // saveImage(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
-        //     var response;
-        //     return knex('vnps_images').insert({
-        //         image_filename: fileName,
-        //         image_filetype: fileType,
-        //         image_src: imgSrc,
-        //         image_path: filePath,
-        //         image_size: fileSize,
-        //         author: author,
-        //         upload_year: uploadYear
-        //     })
-        //         .then(([imageId]) => {
-        //             response = {
-        //                 success: true,
-        //                 imageId: imageId
-        //             };
-        //             return response;
-        //         })
-        //         .catch(function (err) {
-        //             throw err;
-        //         });
-        // },
+        insertGalleryPhoto(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
+            var response;
+            return knex('vnps_images').insert({
+                image_filename: fileName,
+                image_filetype: fileType,
+                image_src: imgSrc,
+                image_path: filePath,
+                image_size: fileSize,
+                author: author,
+                upload_year: uploadYear
+            })
+                .then(([imageId]) => {
+                    response = {
+                        success: true,
+                        imageId: imageId
+                    };
+                    return response;
+                })
+                .catch(function (err) {
+                    throw err;
+                });
+        },
         // saveExtGallery(extGallery) {
         //     var response;
         //     return knex('vnps_ext_galleries').insert({

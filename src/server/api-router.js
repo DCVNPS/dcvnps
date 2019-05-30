@@ -63,21 +63,23 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/upload/:gallery/:year', (req, res) => {
+    router.post('/upload/:gallery/:year',  checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
         const galleryId = req.body.galleryId;
-        console.log({"galleryId":galleryId, "gallery": upldGallery, "year": upldYear});
+        const portraitInd = JSON.parse(req.body.portraitInd);
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
+        console.log({"galleryId":galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portraitInd});
         const file = req.files.file;
-        console.log(file);
+        // console.log(file);
         return res.status(200).json('Upload reach server.');
     });
 
-    router.get('/galleries', (req, res) => {
-        database.getGalleries()
+    router.get('/galleries/:galleryId?', (req, res) => {
+        const galleryId = req.params.galleryId||null;
+        database.getGalleries(galleryId)
             .then((data) => {
                 return res.json(data);
             })
@@ -85,7 +87,7 @@ function apiRouter(database) {
     });
 
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
-
+        const galleryId = req.params.galleryId;
         database.getPhotoByGalleryId(galleryId)
             .then((data) => {
                 return res.json(data);

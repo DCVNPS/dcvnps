@@ -1,13 +1,19 @@
+<!-- /*
+  This nice dropzone based on Luis Moncaris's Tutorial title
+  How to create a Drag and Drop file directive in angular2 with angular-cli
+  URL: https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-1
+    https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-2
+*/ -->
 <div class="ui centered grid pt-10">
   <div class="ten wide column">
     <form [formGroup]="uploadForm" class="ui form">
       <div class="inline field">
         <label>Select Gallery to Upload</label>
-        <select formControlName="upldGallery" class="menu">
+        <select formControlName="upldGallery" class="menu" required>
           <option *ngFor="let g of galleries" [value]="g.galleryId" class="item">{{g.gallery|titlecase}}</option>
         </select>
         <label>Select Year</label>
-        <select formControlName="yearPicker" class="menu">
+        <select formControlName="yearPicker" class="menu" required>
           <option class="item" *ngFor="let y of years" [value]="y">{{y}}</option>
         </select>
       </div>
@@ -44,7 +50,7 @@
           </div>
           <div class="four wide column right aligned">
             <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
-            <button class=" mini ui positive basic button" (click)="uploadFile(i)">Upload</button>
+            <button class=" mini ui positive basic button" (click)="uploadFile(i)" [disabled]="!uploadForm.valid">Upload</button>
           </div>
         </div>
       </div>
@@ -75,7 +81,7 @@
       <div class="ui grid">
         <div class="inline">
           <button class="large ui negative button" (click)="removeAllFiles()">Remove All</button>
-          <button class="large ui positive button" (click)="uploadAllFiles()">Upload All</button>
+          <button class="large ui positive button" (click)="uploadAllFiles()" [disabled]="!uploadForm.valid">Upload All</button>
         </div>
       </div>
     </div>

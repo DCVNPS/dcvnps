@@ -17,11 +17,11 @@ export class HomeComponent implements OnInit {
     this.getHomePhotos();
     this.getGalleries();
   }
-  
-  getHomePhotos(){
+
+  getHomePhotos() {
     this.api.get('galleryphotosbyname/home')
     .subscribe(data => {
-      console.log(data);
+      // console.log(data);
       let cnt = 0;
       data.forEach((item) => {
         item.photos.forEach((photo) => {
@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit {
       // console.log(this.slides);
     });
   }
-  getGalleries(){
-    this.api.get('/galleries')
+  getGalleries() {
+    this.api.get('galleries')
       .subscribe(data => {
         data.forEach(item => {
           const g = this.galleries.find(i => i.gallery === item.gallery);
@@ -58,6 +58,6 @@ export class HomeComponent implements OnInit {
           }
         });
         // console.log(this.galleries);
-      });    
+      });
   }
 }

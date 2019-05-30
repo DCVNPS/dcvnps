@@ -20,14 +20,6 @@ export class ElementDimensionsDirective {
     const natHeight = this.el.nativeElement.naturalHeight;
     const configWidth = this.config['width'];
     const configHeight = this.config['height'];
-    // const newHeight = configHeight;
-    // let newWidth = Math.round(natWidth * configHeight / natHeight);
-    // if (newWidth !== configWidth) {
-    //   newWidth = configWidth;
-    // }
-    // if (natWidth < natHeight) {
-    //   newWidth = Math.round(newHeight * natWidth / natHeight);
-    // }
     console.log({ naturalWidth: natWidth, naturalHeight: natHeight });
     console.log({ configWidth: configWidth, configHeight: configHeight });
     console.log({clientWidth: this.el.nativeElement.clientWidth, clientHeight: this.el.nativeElement.clientHeight});

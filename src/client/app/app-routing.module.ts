@@ -35,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'fileupload',
-    component: DropzoneComponent
+    component: DropzoneComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gallery/:level',
