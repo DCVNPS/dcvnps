@@ -1,7 +1,9 @@
-require("dotenv").config();
-const bcrypt = require('bcrypt');
+const path = require('path');
+const envPath = path.normalize(__dirname + '/../../.env');
+require('dotenv').config({path:envPath});
 const config = JSON.parse(process.env.MYSQL2);
 const database = require("knex")(config);
+const bcrypt = require('bcrypt');
 
 // database.raw("select version()")
 // .then((version)=>{console.log(version[0][0]);})
@@ -45,8 +47,8 @@ async function dbConnectOK(db) {
 }
 
 // Uncomment the below to Create Initial Application Data
-// createSeedData('users', users);
-createSeedData('contacts', contacts);
+createSeedData('users', users);
+// createSeedData('contacts', contacts);
 // createSeedData('roles', roles);
 // createSeedData('galleries',galleries);
 // createSeedData('galleryphotos',galleryphotos);

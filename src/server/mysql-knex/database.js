@@ -1,8 +1,8 @@
 'use strict';
 (function () {
-    require('dotenv').config();
     const path = require('path');
-    const apiPath = path.normalize(__dirname + '/../');
+    const envPath = path.normalize(__dirname + '/../../.env');
+    require('dotenv').config({path:envPath});
     const config = JSON.parse(process.env.MYSQL2);
     const knex = require('knex')(config);
     // var Promise = require('bluebird');
