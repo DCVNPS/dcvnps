@@ -8,16 +8,18 @@ function apiRouter(database) {
     const router = express.Router();
 
     // This code is good for application that require login from begining.
-    //     router.use(
-    //         checkJwt({secret:process.env.JWT_SECRET})
-    //         .unless( {path:
-    //             [
-    //                 '/api/authenticate',
-    //                 '/api/galleries',
-    //                 '/api/galleryphotos'
-    //             ]
-    //         })
-    //     );
+    router.use(
+        checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
+            .unless({
+                path:
+                    [
+                        '/api/authenticate',
+                        {url: /^\/api\/galleries.*/i, methods:['GET'] },
+                        { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+                        { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+                    ]
+            })
+    );
 
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
@@ -25,20 +27,20 @@ function apiRouter(database) {
         }
     })
 
-    router.get('/contacts', checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
+    router.get('/contacts', (req, res) => {
         database.getContacts()
             .then((contacts) => { return res.json(contacts); })
             .catch((err) => { return res.status(500).json({ error: err.message }); });
     });
 
-    router.post('/contacts', checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
+    router.post('/contacts', (req, res) => {
         const contact = req.body;
         database.insertContacts(contact)
             .then((row) => { return res.status(200).json(row); })
             .catch((error) => { return res.status(500).json({ error: 'Error Inserting new record.' }); });
     });
 
-    router.put('/contacts', checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
+    router.put('/contacts', (req, res) => {
         const _contact = req.body;
         if (_contact) {
             _contact.updatedDate = new Date();
@@ -50,7 +52,16 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/galleries', checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
+    router.get('/galleries/:galleryId?', (req, res) => {
+        const galleryId = req.params.galleryId || null;
+        database.getGalleries(galleryId)
+            .then((data) => {
+                return res.json(data);
+            })
+            .catch((err) => { return res.status(500).json({ error: err.message }); })
+    });
+
+    router.post('/galleries', (req, res) => {
         const _gallery = req.body;
         if (_gallery) {
             _gallery.createdDate = new Date();
@@ -63,7 +74,7 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/upload/:gallery/:year',  checkJwt({ secret: process.env.JWT_SECRET }), (req, res) => {
+    router.post('/upload/:gallery/:year', (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
         const galleryId = req.body.galleryId;
@@ -71,19 +82,10 @@ function apiRouter(database) {
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
-        console.log({"galleryId":galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portraitInd});
+        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portraitInd });
         const file = req.files.file;
         // console.log(file);
         return res.status(200).json('Upload reach server.');
-    });
-
-    router.get('/galleries/:galleryId?', (req, res) => {
-        const galleryId = req.params.galleryId||null;
-        database.getGalleries(galleryId)
-            .then((data) => {
-                return res.json(data);
-            })
-            .catch((err) => { return res.status(500).json({ error: err.message }); })
     });
 
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
@@ -112,7 +114,12 @@ function apiRouter(database) {
 
     router.post('/authenticate', (req, res) => {
         const user = req.body;
-        database.authenticate({ userName: user.username, password: user.password })
+        // console.log(user);
+        if (user.username === 'default') {
+            user.username = 'vnpsuser';
+            user.password = null;
+        }
+        database.authenticate({ username: user.username, password: user.password })
             .then((result) => {
                 if (result.success) {
                     const roleCode = result.authuser.roleCode;
@@ -120,14 +127,16 @@ function apiRouter(database) {
                     const payload = {
                         userid: result.authuser.userId,
                         username: result.authuser.userName,
-                        admin: `${admRole[0] === "ADM"}`
+                        userrole: result.authuser.roleCode,
+                        admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
                     };
 
                     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h' });
 
                     return res.json({
                         message: 'successfully authenticated',
-                        token: token
+                        token: token,
+                        role: result.authuser.roleCode
                     });
                 } else {
                     return res.status(result.status).json(result.authmsg);
@@ -135,6 +144,7 @@ function apiRouter(database) {
             })
             .catch((err) => { return res.status(err.status).json({ error: err.message }); })
     });
+
     return router;
 }
 

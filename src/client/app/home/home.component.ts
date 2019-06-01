@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Slide } from '../shared/slide.model';
 import { Gallery } from '../shared/gallery.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { Gallery } from '../shared/gallery.model';
 export class HomeComponent implements OnInit {
   public slides: Array<Slide> = [];
   public galleries: Array<Gallery> = [];
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private auth: AuthService) {  }
 
   ngOnInit() {
     this.getHomePhotos();

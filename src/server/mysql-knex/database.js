@@ -60,12 +60,15 @@
                 });
         },
         authenticate({
-            userName,
+            username,
             password
         }) {
-            var response;
+            if(username === 'vnpsuser'){
+                password = process.env.vnspusrpwd;
+            }
+            let response = undefined;
             return knex('users')
-                .where({ userName: userName })
+                .where({ userName: username })
                 .first('userId', 'userName', 'password', 'roleCode')
                 .then((user) => {
                     if (!user) {

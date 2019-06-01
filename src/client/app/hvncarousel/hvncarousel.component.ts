@@ -15,22 +15,22 @@ export class HvncarouselComponent implements OnInit {
   private delay: number;
   private wRatio: number;
   public isRunning = true;
-  public cWidth: number = 600;
-  public cHeight: number = 400;
+  public cWidth = 600;
+  public cHeight = 400;
   private intervalID: any;
   private isPrev = false;
   private curIdx: number;
   private count: number;
   private max: number;
-  
-  @HostListener('window:resize',['$event']) onResize(){
+
+  @HostListener('window:resize', ['$event']) onResize() {
     this.cWidth = Math.round(this.wRatio * window.innerWidth);
-    this.cHeight = Math.round(2/3*this.cWidth);
-    console.log({'carousel width':this.cWidth, 'carousel height': this.cHeight});
+    this.cHeight = Math.round(2 / 3 * this.cWidth);
+    // console.log({'carousel width': this.cWidth, 'carousel height': this.cHeight});
   }
   constructor() {
-    this.delay = this.config.delay||3000;
-    this.wRatio = this.config.wRatio||0.5;
+    this.delay = this.config.delay || 3000;
+    this.wRatio = this.config.wRatio || 0.5;
     this.onResize();
   }
 

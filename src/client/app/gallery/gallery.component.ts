@@ -46,7 +46,7 @@ export class GalleryComponent implements OnInit {
           });
         });
       this.slides = this.selectedSlides;
-      console.log(this.selectedSlides);
+      // console.log(this.selectedSlides);
     });
   }
 
@@ -54,7 +54,7 @@ export class GalleryComponent implements OnInit {
   }
 
   onFilterYear(year: string) {
-    let cnt: number = 0;
+    let cnt = 0;
     // console.log('selected slides',this.selectedSlides);
     if (year) {
       this.slides = this.selectedSlides.filter(s => s.year === year);

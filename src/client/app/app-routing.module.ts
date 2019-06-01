@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
+    component: HomeComponent
   },
   {
     path: 'contacts',
@@ -49,9 +49,8 @@ const routes: Routes = [
   {
     path: 'programs/:level',
     component: ProgramsComponent,
-    
   },
-  { 
+  {
     path: 'announcements',
     component: AnnouncementsComponent
   },

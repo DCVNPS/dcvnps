@@ -13,9 +13,9 @@ export class LoginComponent implements OnInit {
   backUrl: string;
   constructor(private api: ApiService,
               private auth: AuthService,
-              private routeStat : ActivatedRoute,
+              private routeStat: ActivatedRoute,
               private router: Router) {
-    this.routeStat.params.subscribe(async (params) =>{
+    this.routeStat.params.subscribe(async (params) => {
       this.backUrl = await params['backUrl'];
       console.log(this.backUrl);
     });
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.isLogin()) {
-      if(this.backUrl){
+      if (this.backUrl) {
         this.router.navigate([this.backUrl]);
       } else {
         this.router.navigate(['/home']);
@@ -39,9 +39,10 @@ export class LoginComponent implements OnInit {
     };
 
     this.api.post('authenticate', payload)
-    .subscribe(async (data) => {
-      this.auth.setToken(data.token);
-      if(this.backUrl){
+    .subscribe((data) => {
+      this.auth.removeToken();
+      this.auth.setToken({token: data.token, role: data.role});
+      if (this.backUrl) {
         this.router.navigate([this.backUrl]);
       } else {
         this.router.navigate(['/home']);

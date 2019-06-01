@@ -7,7 +7,7 @@
 */
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../services/upload.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { Gallery } from '../shared/gallery.model';
 import { RegexService } from '../services/regex.service';
@@ -47,8 +47,8 @@ export class DropzoneComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.upldGallery = new FormControl();
-    this.upldYear = new FormControl();
+    this.upldGallery = new FormControl(null, Validators.required);
+    this.upldYear = new FormControl(null, Validators.required);
     this.uploadForm = this.formBuilder.group({
       upldGallery: this.upldGallery,
       yearPicker: this.upldYear
