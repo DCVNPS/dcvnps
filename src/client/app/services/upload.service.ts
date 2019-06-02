@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Gallery } from '../shared/gallery.model';
+import { ImageInfo } from '../shared/image.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -13,12 +14,14 @@ export class UploadService {
   private baseUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
-  public upload(file: File, upldGallery: Gallery, upldYear: string, portraitInd: boolean): Observable<boolean> {
-    const uploadURL = `${this.baseUrl}/upload/${upldGallery.gallery}/${upldYear}`;
+  public upload(file: File, imageInfo: ImageInfo): Observable<boolean> {
+    const uploadURL = `${this.baseUrl}/upload/${imageInfo.gallery}/${imageInfo.year}`;
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('galleryId', upldGallery.galleryId);
-    formData.append('portraitInd', portraitInd.toString());
+    formData.append('galleryId', imageInfo.galleryid);
+    formData.append('author', imageInfo.author);
+    formData.append('size',imageInfo.size.toString());
+    formData.append('portrait', imageInfo.portrait.toString());
     return this.httpClient.post<any>(uploadURL, formData, {
       headers: new HttpHeaders({'enctype': 'multipart/form-data',
       'Authorization': `Bearer ${this.auth.getToken()}`}),

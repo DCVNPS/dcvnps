@@ -1,12 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
+const fs = require('fs');
+const path = require('path');
+const serverRoot = path.normalize(__dirname);
+
 
 function apiRouter(database) {
-
+    const galleryBaseDir = path.join(serverRoot,"galleries");
     const router = express.Router();
-
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
@@ -77,15 +79,45 @@ function apiRouter(database) {
     router.post('/upload/:gallery/:year', (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
-        const galleryId = req.body.galleryId;
-        const portraitInd = JSON.parse(req.body.portraitInd);
+        const { galleryId, author, size, portrait } = req.body;
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
-        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portraitInd });
+        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author });
         const file = req.files.file;
         // console.log(file);
-        return res.status(200).json('Upload reach server.');
+        // move the file place before insert into galleryphotos.
+        // in the insertion failed, rollback by unlink the file.
+        const upldDir = path.join(galleryBaseDir,`${upldGallery}/${upldYear}`);
+        try{
+            fs.mkdirSync(upldDir);
+        } catch(err) {
+            if(err.code !== 'EEXIST'){
+                return res.status(err.code).json(err.message);
+            }
+        }
+        const updateUser='Temporary';
+        const createdDate = new Date();
+        const updatedDate = new Date();
+        const fileName = file.name.split('_')[1];
+        const destFile = path.join(upldDir, fileName);
+        console.log(req.auth);
+        file.mv(destFile, err => {
+            if (err) {
+                console.log('photoupload-Move file', err.message)
+                return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
+            }
+            // insertGalleryPhoto(galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate)
+            database.insertGalleryPhoto(galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
+            .then( result => {
+                console.log(result);
+                return res.status(200).json('Upload reach server.');
+            })
+            .catch( err => {
+                console.log('insert gallery error ',err);
+                return res.status(err.status).json(err.message);
+            });
+        });
     });
 
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
