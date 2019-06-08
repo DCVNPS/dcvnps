@@ -11,7 +11,7 @@ export class RegexService {
   }
 
   regexpMatch(source: string, pattern: string): string {
-    console.log(pattern);
+    // console.log(pattern);
     const re = new RegExp(pattern, 'ig');
     // const found = re.exec(source);
     const found = source.match(re);
@@ -22,8 +22,9 @@ export class RegexService {
   isAllowedExt(fileName: string, allowedExt: Array<string>): boolean {
     let isAllowed = false;
     const fileExt = this.fileExtension(fileName);
-    if (allowedExt.indexOf(fileExt) !== -1) {
+    if (allowedExt.indexOf(fileExt.toLowerCase()) !== -1) {
       isAllowed = true;
+      // console.log(`file name: ${fileName} allowed extension: ${fileExt}`)
     }
     return isAllowed;
   }

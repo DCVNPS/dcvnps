@@ -30,17 +30,9 @@ export class AuthService {
     localStorage.removeItem(this.roleKey);
   }
 
-  // setRole(role: string) {
-  //   localStorage.setItem(this.roleKey, role);
-  // }
-
   getRole() {
     return localStorage.getItem(this.roleKey);
   }
-
-  // removeRole() {
-  //   localStorage.removeItem(this.roleKey);
-  // }
 
   isAdmin() {
     const roleStr = this.getRole();

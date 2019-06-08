@@ -217,21 +217,22 @@
                     throw err;
                 });
         },
-        insertGalleryPhoto(fileName, fileType, imgSrc, filePath, fileSize, author, uploadYear) {
+        insertGalleryPhoto(galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate) {
             var response;
-            return knex('vnps_images').insert({
-                image_filename: fileName,
-                image_filetype: fileType,
-                image_src: imgSrc,
-                image_path: filePath,
-                image_size: fileSize,
-                author: author,
-                upload_year: uploadYear
+            return knex('galleryphotos').insert({
+                galleryId,
+                photo,
+                portrait,
+                author,
+                year,
+                updateUser,
+                createdDate,
+                updatedDate
             })
-                .then(([imageId]) => {
+                .then(([galleryPhotoId]) => {
                     response = {
                         success: true,
-                        imageId: imageId
+                        galleryPhotoId: galleryPhotoId
                     };
                     return response;
                 })
