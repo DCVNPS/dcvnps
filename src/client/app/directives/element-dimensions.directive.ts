@@ -5,7 +5,8 @@ import { Directive, Input, HostBinding, ElementRef, HostListener } from '@angula
   selector: '[elementDimensions]'
 })
 export class ElementDimensionsDirective {
-  @Input('elementDimensions') config: Object = {
+// tslint:disable-next-line: no-input-rename
+  @Input('dimensions') config: Object = {
     'width': 300,
     'height': 200
   };
@@ -21,7 +22,7 @@ export class ElementDimensionsDirective {
     const configWidth = this.config['width'];
     const configHeight = this.config['height'];
     console.log({ naturalWidth: natWidth, naturalHeight: natHeight });
-    console.log({ configWidth: configWidth, configHeight: configHeight });
+    // console.log({ configWidth: configWidth, configHeight: configHeight });
     console.log({clientWidth: this.el.nativeElement.clientWidth, clientHeight: this.el.nativeElement.clientHeight});
     // console.log({ elementWidth: newWidth, elementHeight: newHeight });
     // this.elementWidth = this.config['width'];

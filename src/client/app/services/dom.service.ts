@@ -12,8 +12,9 @@ export class DomService {
     private appRef: ApplicationRef,
     private injector: Injector
   ) { }
+
   public appendComponentTo(parentId: string, child: any, childConfig?: childConfig) {
-    // Create a component reference from the component 
+    // Create a component reference from the component
     const childComponentRef = this.componentFactoryResolver
       .resolveComponentFactory(child)
       .create(this.injector);

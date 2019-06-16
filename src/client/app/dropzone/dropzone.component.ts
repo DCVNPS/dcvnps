@@ -22,20 +22,18 @@ export class DropzoneComponent implements OnInit {
 
   public reviewUrl: Array<any> = [];
   public reviewInvalidUrl: Array<any> = [];
-  public validImageInfos: Array<ImageInfo> = [];
-  public invalidImageInfos: Array<ImageInfo> = [];
+  public validImages: Array<ImageInfo> = [];
+  public invalidImages: Array<ImageInfo> = [];
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
   public allowed_ext: Array<string> = ['png', 'jpg', 'bmp', 'ico'];
   public error: string;
   public galleries: Array<Gallery> = [];
-  private portraitInd: Array<boolean> = [];
   private upldGallery: FormControl;
   private upldYear: FormControl;
   private uploadForm: FormGroup;
   private years: Array<number>;
-  private fileArray: Array<File> = [];
-  private invalidFileArray: Array<File> = [];
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
+
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
     private api: ApiService,
@@ -62,11 +60,15 @@ export class DropzoneComponent implements OnInit {
     if (files.length > 0) {
       // this.fileArray = files;
       for (let i = 0; i < files.length; i++) {
-        const curFile = this.fileArray.find((f) => f.name === files[i].name);
-        if (!curFile) {
+        const [author, filename] = (files[i].name).split('_');
+        const curImage = this.validImages.find((img) => img.imgFile.name === files[i].name);
+        if (!curImage) {
           const imgInfo = new ImageInfo();
+          imgInfo.imgFile = files[i];
+          imgInfo.filename = filename;
+          imgInfo.author = author;
+          imgInfo.size = files[i].size;
           const reader = new FileReader();
-          let isPortrait = false;
           reader.onload = (event) => {
             // below code is invalid due to EventTarget interface 
             // does not have result.
@@ -74,24 +76,17 @@ export class DropzoneComponent implements OnInit {
             // Workaround
             // console.log(reader.result);
             // Think about resize the image!!!
-            this.reviewUrl.push(reader.result);
+            imgInfo.reviewUrl = reader.result;
             const img = new Image();
-            img.src = this.reviewUrl[this.reviewUrl.length - 1];
+            img.src = imgInfo.reviewUrl;
             img.onload = () => {
               // alert(`width: ${img.width} height: ${img.height}`);
-              isPortrait = img.width < img.height;
+              imgInfo.portrait = img.width < img.height;
               // this.portraitInd.push(isPortrait);
             };
           }
           reader.readAsDataURL(files[i]);
-
-          this.fileArray.push(files[i]);
-          const [author, filename] = (files[i].name).split('_');
-          imgInfo.filename = files[i].name;
-          imgInfo.author = author;
-          imgInfo.size = files[i].size;
-          imgInfo.portrait = isPortrait;
-          this.validImageInfos.push(imgInfo);
+          this.validImages.push(imgInfo);
         }
       }
       // console.log(this.portraitInd);
@@ -102,26 +97,28 @@ export class DropzoneComponent implements OnInit {
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
         // don't add duplicate image.
-        const curFile = this.invalidFileArray.find((f) => f.name === files[i].name);
-        if (!curFile) {
+        const curImage = this.invalidImages.find((img) => img.imgFile.name === files[i].name);
+        if (!curImage) {
           const imgInfo = new ImageInfo();
+          imgInfo.imgFile = files[i];
           imgInfo.filename = files[i].name;
           imgInfo.size = files[i].size;
-          this.invalidFileArray.push(files[i]);
           const allowedExt = this.regexSrvc.isAllowedExt(files[i].name, this.allowed_ext);
           if (allowedExt) {
             const reader = new FileReader();
             reader.onload = (event) => {
-              this.reviewInvalidUrl.push(reader.result);
+              imgInfo.reviewUrl = reader.result;
             }
             reader.readAsDataURL(files[i]);
           } else {
-            this.reviewInvalidUrl.push(null);
-            if(this.isValidFileName(files[i].name)){
-              imgInfo.author = files[i].name.split('_')[1];
+            imgInfo.reviewUrl = null;
+            if (this.isValidFileName(files[i].name)) {
+              const [author, filename] = (files[i].name).split('_');
+              imgInfo.author = author;
+              imgInfo.filename = filename;
             }
           }
-          this.invalidImageInfos.push(imgInfo);
+          this.invalidImages.push(imgInfo);
         }
       }
     }
@@ -131,41 +128,45 @@ export class DropzoneComponent implements OnInit {
     const galleryid = event.target.value;
     const gallery = event.target.options[event.target.selectedIndex].text.toLowerCase();
     console.log(`galleryId: ${galleryid} --- gallery: ${gallery}`);
-    this.validImageInfos.forEach( item => { item.galleryid = galleryid; item.gallery = gallery});
-    console.log(this.validImageInfos);
+    this.validImages.forEach( item => { item.galleryid = galleryid; item.gallery = gallery});
+    console.log(this.validImages);
   }
 
   onYearSelectChanged(event){
     const year = event.target.value;
-    this.validImageInfos.forEach( item => item.year = year);
-    console.log(this.validImageInfos);
+    this.validImages.forEach( item => item.year = year);
+    console.log(this.validImages);
   }
 
   removeFile(index: number) {
-    this.fileArray.splice(index, 1);
-    this.reviewUrl.splice(index, 1);
+    // this.fileArray.splice(index, 1);
+    // this.reviewUrl.splice(index, 1);
+    this.validImages.splice(index, 1);
   }
 
   removeInvalidFile(index: number) {
-    this.invalidFileArray.splice(index, 1);
-    this.reviewInvalidUrl.splice(index, 1);
+    // this.invalidFileArray.splice(index, 1);
+    // this.reviewInvalidUrl.splice(index, 1);
+    this.invalidImages.splice(index, 1);
   }
 
   removeAllFiles() {
-    this.fileArray = [];
-    this.reviewUrl = [];
-    this.invalidFileArray = [];
-    this.reviewInvalidUrl = [];
+    // this.fileArray = [];
+    // this.reviewUrl = [];
+    // this.invalidFileArray = [];
+    // this.reviewInvalidUrl = [];
+    this.invalidImages = [];
+    this.validImages = [];
   }
 
   uploadFile(index: number) {
     const gallery = this.galleries.find(g => g.galleryId ===  this.uploadForm.controls.upldGallery.value);
-    const imageInfo = this.validImageInfos[index];
+    const imageInfo = this.validImages[index];
     imageInfo.galleryid = gallery.galleryId;
     imageInfo.gallery = gallery.gallery;
     imageInfo.year = this.uploadForm.controls.yearPicker.value;
     // console.log(imageInfo);
-    this.uplder.upload(this.fileArray[index],imageInfo)
+    this.uplder.upload( imageInfo)
       .subscribe(
         (res) => { this.uploadResponse = res; },
         (err) => { this.error = err; }

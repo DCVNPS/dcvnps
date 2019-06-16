@@ -79,28 +79,17 @@ function apiRouter(database) {
     router.post('/upload/:gallery/:year', (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
-        const { galleryId, author, size, portrait } = req.body;
+        const { galleryId, fileName, author, size, portrait } = req.body;
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
-        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author });
+        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
         const file = req.files.file;
-        // console.log(file);
-        // move the file place before insert into galleryphotos.
-        // in the insertion failed, rollback by unlink the file.
-        const upldDir = path.join(galleryBaseDir,`${upldGallery}/${upldYear}`);
-        try{
-            fs.mkdirSync(upldDir);
-        } catch(err) {
-            if(err.code !== 'EEXIST'){
-                return res.status(err.code).json(err.message);
-            }
-        }
         const updateUser='Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
-        const fileName = file.name.split('_')[1];
-        const destFile = path.join(upldDir, fileName);
+        // const fileName = file.name.split('_')[1];
+        const destFile = path.join( galleryBaseDir,`${upldGallery}/${upldYear}/${fileName}`);
         console.log(req.auth);
         file.mv(destFile, err => {
             if (err) {

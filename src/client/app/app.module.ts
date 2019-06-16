@@ -35,6 +35,7 @@ import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
 import { HvncarouselComponent } from './hvncarousel/hvncarousel.component';
 import { MatchHeightDirective } from './directives/matchheight.directive';
+import { ImageSizeDirective } from './directives/image-size.directive';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { MatchHeightDirective } from './directives/matchheight.directive';
     DndDirective,
     HvncarouselComponent,
     MatchHeightDirective,
+    ImageSizeDirective,
   ],
   imports: [
     BrowserModule,

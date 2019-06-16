@@ -7,7 +7,7 @@
   <div class="ui four stackable cards">
     <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
       <div class="image">
-        <img [src]="s.imgsrc">
+        <img [src]="s.imgsrc" appImageSize [cardCount]="4" >
       </div>
     </a>
   </div>

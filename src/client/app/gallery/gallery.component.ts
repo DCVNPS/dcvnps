@@ -30,17 +30,16 @@ export class GalleryComponent implements OnInit {
             this.years.push(item.year);
             item.photos.forEach((photo) => {
               // console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
-              if (photo.portrait !== 1) {
-                this.selectedSlides.push(new Slide(photo.galleryPhotoId,
-                  photo.galleryId,
-                  item.year,
-                  'dummy note',
-                  cnt,
-                  `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
-                  `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
-                  item.portrait === 1,
-                  true));
-              }
+              this.selectedSlides.push(new Slide(photo.galleryPhotoId,
+                photo.galleryId,
+                item.year,
+                'dummy note',
+                cnt,
+                `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
+                `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
+                item.portrait === 1,
+                true));
+
               cnt += 1;
             });
           });

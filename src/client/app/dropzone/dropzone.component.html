@@ -25,7 +25,7 @@
       </div>
     </form>
 
-    <div class="pt-10" *ngIf="invalidImageInfos.length !== 0 || validImageInfos.length !== 0">
+    <div class="pt-10" *ngIf="invalidImages.length !== 0 || validImages.length !== 0">
       <div class="ui grid">
         <div class="row">
           <div class="three wide column">Image</div>
@@ -35,19 +35,19 @@
           <div class="three wide column center aligned">Actions</div>
         </div>
       </div>
-      <div class="ui grid" *ngIf="validImageInfos.length !== 0">
-        <div class="row" *ngFor="let url of reviewUrl; let i=index">
+      <div class="ui grid" *ngIf="validImages.length !== 0">
+        <div class="row" *ngFor="let img of validImages; let i=index">
           <div class="three wide column">
             <div class="ui tiny image">
-              <img [src]="url">
+              <img [src]="img.reviewUrl">
             </div>
           </div>
           <div class="five wide column">
-            <div class="description">{{validImageInfos[i].filename}}</div>
+            <div class="description">{{validImages[i].filename}}</div>
           </div>
-          <div class="three wide column">{{validImageInfos[i].author}}</div>
+          <div class="three wide column">{{validImages[i].author}}</div>
           <div class="two wide column">
-            <div class="description">{{validImageInfos[i].size/1024|number:'.2-2'}}</div>
+            <div class="description">{{validImages[i].size/1024|number:'.2-2'}}</div>
           </div>
           <div class="three wide column right aligned">
             <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
@@ -55,23 +55,23 @@
           </div>
         </div>
       </div>
-      <div class="ui grid" *ngIf="invalidImageInfos.length > 0">
-        <div class="row" *ngFor="let url of reviewInvalidUrl; let i=index">
+      <div class="ui grid" *ngIf="invalidImages.length > 0">
+        <div class="row" *ngFor="let img of invalidImages; let i=index">
           <div class="three wide column">
-            <div class="ui small image" *ngIf="!url">
+            <div class="ui small image" *ngIf="!img.reviewUrl">
               <i class="large file icon"></i>
             </div>
-            <div class="ui tiny image" *ngIf="url">
-              <img [src]="url">
+            <div class="ui tiny image" *ngIf="img.reviewUrl">
+              <img [src]="img.reviewUrl">
             </div>
           </div>
           <div class="five wide column">
             <div class="description">
-              <div class="red text" *ngIf="!isValidFileName(invalidImageInfos[i].filename)">Invalid File Name Format: </div>
-              <div>{{invalidImageInfos[i].filename}}</div>
+              <div class="red text" *ngIf="!isValidFileName(invalidImages[i].imgFile.name)">Invalid File Name Format: </div>
+              <div>{{invalidImages[i].imgFile.name}}</div>
             </div>
           </div>
-          <div class="three wide column">{{invalidImageInfos[i].author}}</div>
+          <div class="three wide column">{{invalidImages[i].author}}</div>
           <div class="two wide column">
             <div class="description">{{invalidFileArray[i].size/1024|number:'.2-2'}}</div>
           </div>
