@@ -1,7 +1,7 @@
 <div class="ui centered grid">
   <div #vnpscarousel class="ui basic segment">
     <div *ngFor="let s of data" (click)="toggleSlideshow();">
-      <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" [height]="cHeight" [width]="cWidth">
+      <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" appSlideImageSize [config]="{'columnSpan': 8}">
     </div>
     <div class="ui secondary menu carousel-arrows">
       <div class="left menu">
@@ -15,7 +15,7 @@
         </a>
       </div>
     </div>
-    <div class="centered row carousel-indicators">
+    <div class="centered row carousel-indicators" [hidden]="!config['showIndicator']">
       <a *ngFor="let s of data" class="item" [class.active]="!s.hidden"><i class="blue outline circle icon"></i></a>
     </div>
   </div>

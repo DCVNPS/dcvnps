@@ -1,9 +1,9 @@
 import { Directive, HostBinding, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appImageSize]'
+  selector: '[appCardImageSize]'
 })
-export class ImageSizeDirective {
+export class CardImageSizeDirective {
   // tslint:disable-next-line: no-input-rename
   @Input('cardCount') private noCards = 4;
 
@@ -21,6 +21,9 @@ export class ImageSizeDirective {
   @HostBinding('style.margin-left') private leftMargin: string;
   @HostBinding('style.margin-right') private rightMargin: string;
   constructor(private el: ElementRef) {
+    if (!this.noCards) {
+      this.noCards = 6;
+    }
   }
 
   @HostListener('load') elementLoad() {
@@ -28,8 +31,8 @@ export class ImageSizeDirective {
     this.naturalHeight = this.el.nativeElement.naturalHeight;
     this.clientWidth = this.el.nativeElement.clientWidth;
     this.clientHeight = this.el.nativeElement.clientHeight;
-    console.log({ naturalWidth: this.naturalWidth, naturalHeight: this.naturalHeight });
-    console.log({ clientWidth: this.clientWidth, clientHeight: this.clientHeight });
+    // console.log({ naturalWidth: this.naturalWidth, naturalHeight: this.naturalHeight });
+    // console.log({ clientWidth: this.clientWidth, clientHeight: this.clientHeight });
     this.adjustPortratiSize();
   }
 
@@ -49,11 +52,14 @@ export class ImageSizeDirective {
       case 8:
         HWRatio = this.eightCardsRatio;
         break;
+      default:
+        HWRatio = this.sixCardsRatio;
+        break;
     }
     if (isPortrait) {
       const newHeight = Math.round(HWRatio * this.clientWidth);
       const newWidth = Math.round(newHeight * this.clientWidth / this.clientHeight);
-      console.log({ newWidth , newHeight });
+      // console.log({ newWidth , newHeight });
       this.elementWidth = `${newWidth}px`;
       this.elementHeight = `${newHeight}px`;
       this.leftMargin = 'auto';

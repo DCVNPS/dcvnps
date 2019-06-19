@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
 import { Slide } from '../shared/slide.model';
 
 @Component({
@@ -10,10 +10,9 @@ export class HvncarouselComponent implements OnInit {
 
   @Input() data: Array<Slide>;
   // @Input() delay = 500;
-  @Input() config: any = { 'delay': 3000, 'wRatio': 0.5};
+  @Input() config: any = { 'delay': 3000, 'showIndicator': true};
 
   private delay: number;
-  private wRatio: number;
   public isRunning = true;
   public cWidth = 600;
   public cHeight = 400;
@@ -23,15 +22,8 @@ export class HvncarouselComponent implements OnInit {
   private count: number;
   private max: number;
 
-  @HostListener('window:resize', ['$event']) onResize() {
-    this.cWidth = Math.round(this.wRatio * window.innerWidth);
-    this.cHeight = Math.round(2 / 3 * this.cWidth);
-    // console.log({'carousel width': this.cWidth, 'carousel height': this.cHeight});
-  }
   constructor() {
-    this.delay = this.config.delay || 3000;
-    this.wRatio = this.config.wRatio || 0.5;
-    this.onResize();
+    this.delay = this.config['delay'] || 3000;
   }
 
   ngOnInit() {

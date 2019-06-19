@@ -18,7 +18,7 @@ import { Slide } from '../shared/slide.model';
     ])
   ]
 })
-export class PopupComponent implements OnInit {
+export class PopupComponent {
   public closable = true;
   private max: number;
   @Input() data: Slide[];
@@ -26,9 +26,6 @@ export class PopupComponent implements OnInit {
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   close() {
     this.visible = false;

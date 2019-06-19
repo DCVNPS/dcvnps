@@ -35,7 +35,9 @@ import { DropzoneComponent } from './dropzone/dropzone.component';
 import { DndDirective } from './dropzone/dnd.directive';
 import { HvncarouselComponent } from './hvncarousel/hvncarousel.component';
 import { MatchHeightDirective } from './directives/matchheight.directive';
-import { ImageSizeDirective } from './directives/image-size.directive';
+import { CardImageSizeDirective } from './directives/card-image-size.directive';
+import { SlideImageSizeDirective } from './directives/slide-image-size.directive';
+import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { ImageSizeDirective } from './directives/image-size.directive';
     DndDirective,
     HvncarouselComponent,
     MatchHeightDirective,
-    ImageSizeDirective,
+    CardImageSizeDirective,
+    SlideImageSizeDirective,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,9 @@ import { ImageSizeDirective } from './directives/image-size.directive';
     AuthService,
     AuthGuard,
     DomService,
-    ModalService],
+    ModalService,
+    HomeGalleryResolve
+  ],
   bootstrap: [AppComponent],
   entryComponents: []
 })

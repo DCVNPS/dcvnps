@@ -12,6 +12,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
+import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
 
 const routes: Routes = [
   {
@@ -21,7 +22,10 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    resolve: {
+      photos: HomeGalleryResolve
+    }
   },
   {
     path: 'contacts',
@@ -65,6 +69,9 @@ const routes: Routes = [
   {
     path: 'quicktest',
     component: QuickTestComponent,
+    resolve: {
+      photos: HomeGalleryResolve
+    }
   },
   {
     path: '**',

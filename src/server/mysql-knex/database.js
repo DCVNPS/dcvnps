@@ -306,7 +306,7 @@
         //             return result;
         //         });
         // },
-        // // Get the list of galleries that will be used in Galleries/Gallery page show
+        // Get the list of galleries that will be used in Galleries/Gallery page show
         getPhotoByGalleryId(galleryId) {
             return knex({ gp: 'galleryphotos', g: 'galleries' })
                 .select({
