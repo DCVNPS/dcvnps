@@ -12,6 +12,7 @@ export class QuickTestComponent implements OnInit {
   public popupInput: Slide[] = [];
   public slides: Array<Slide> = [];
   public showDialog: boolean;
+  public carouseConfig: Object = {'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
   constructor(private route: ActivatedRoute) {
     this.popupInput = [new Slide(
       '12345',

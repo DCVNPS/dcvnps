@@ -50,25 +50,35 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
+  //   this.years = [];
+  //   this.slides = [];
+  //   const galleryData = this.route.snapshot.data['data'];
+  //   if (galleryData) {
+  //     console.log(galleryData);
+  //     this.level = galleryData.level;
+  //     this.years = galleryData.years;
+  //     this.slides = galleryData.photos;
+  //     this.selectedSlides = galleryData.selectedSlides;
+  // }
+}
 
-  onFilterYear(year: string) {
-    let cnt = 0;
-    // console.log('selected slides',this.selectedSlides);
-    if (year) {
-      this.slides = this.selectedSlides.filter(s => s.year === year);
-    } else {
-      this.slides = this.selectedSlides;
-    }
-    this.slides.forEach(s => s.photoIndex = cnt++);
+onFilterYear(year: string) {
+  let cnt = 0;
+  // console.log('selected slides',this.selectedSlides);
+  if (year) {
+    this.slides = this.selectedSlides.filter(s => s.year === year);
+  } else {
+    this.slides = this.selectedSlides;
   }
+  this.slides.forEach(s => s.photoIndex = cnt++);
+}
 
-  showPopup(sIndex: number) {
-    const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
-    if (currentSlide) {
-      this.showDialog = true;
-      this.slides.forEach(s => s.hidden = true);
-      currentSlide.hidden = false;
-    }
+showPopup(sIndex: number) {
+  const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
+  if (currentSlide) {
+    this.showDialog = true;
+    this.slides.forEach(s => s.hidden = true);
+    currentSlide.hidden = false;
   }
+}
 }

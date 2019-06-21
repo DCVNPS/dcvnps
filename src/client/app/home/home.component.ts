@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnInit {
   public slides: Array<Slide> = [];
   public galleries: Array<Gallery> = [];
+  public carouseConfig: Object = {'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
   constructor( private route: ActivatedRoute) {  }
 
   ngOnInit() {

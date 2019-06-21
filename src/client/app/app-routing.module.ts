@@ -13,6 +13,7 @@ import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
+import { GalleryResolveService } from './resolvers/gallery-resolve.service';
 
 const routes: Routes = [
   {
@@ -44,7 +45,10 @@ const routes: Routes = [
   },
   {
     path: 'gallery/:level',
-    component: GalleryComponent
+    component: GalleryComponent,
+    resolve: {
+      data: GalleryResolveService
+    }
   },
   {
     path: 'galleries',

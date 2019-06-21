@@ -3,12 +3,17 @@ import { Resolve } from '@angular/router';
 import { Slide } from '../shared/slide.model';
 import { ApiService } from '../services/api.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 
 export class HomeGalleryResolve implements Resolve<Array<Slide>> {
-    private slides: Array<Slide> = [];
-    constructor(private api: ApiService) { }
-    resolve() {
+    private slides: Array<Slide>;
+    constructor(private api: ApiService) {
+        this.slides = [];
+     }
+    resolve(): Array<Slide> {
+        this.slides = [];
         this.getHomePhotos();
         return this.slides;
     }

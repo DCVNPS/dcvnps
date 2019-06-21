@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestOptions, RequestMethod, Response } from '@angular/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class ApiService {
     return this.request(url, RequestMethod.Delete);
   }
 
-  request(url: string, method: RequestMethod, body?: Object) {
+  request(url: string, method: RequestMethod, body?: Object): Observable<any> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
@@ -48,8 +48,10 @@ export class ApiService {
     const request = new Request(requestOptions);
 
     return this.http.request(request)
-      .pipe(map((res: Response) => res.json()),
-        catchError((res: Response) => this.onRequestError(res)));
+      .pipe(
+        map((res: Response) => res.json()),
+        catchError((res: Response) => this.onRequestError(res))
+      );
   }
 
   onRequestError(res: Response) {

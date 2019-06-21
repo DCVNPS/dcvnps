@@ -10,7 +10,7 @@ export class HvncarouselComponent implements OnInit {
 
   @Input() data: Array<Slide>;
   // @Input() delay = 500;
-  @Input() config: any = { 'delay': 3000, 'showIndicator': true};
+  @Input() config: any = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
 
   private delay: number;
   public isRunning = true;
@@ -21,17 +21,25 @@ export class HvncarouselComponent implements OnInit {
   private curIdx: number;
   private count: number;
   private max: number;
+  private runSlideShow: boolean;
 
   constructor() {
-    this.delay = this.config['delay'] || 3000;
   }
 
   ngOnInit() {
-    if (this.data.length) {
+    this.delay = this.config['delay'] || 3000;
+    this.runSlideShow = this.config['runSlideShow'] || false;
+    this.max = this.data.length;
+    if (this.runSlideShow) {
       console.log('Start runing slide show');
       this.count = 0;
-      this.max = this.data.length;
       this.StartSlide();
+    } else {
+      // If not run slide show, set current index to the current active imsage's index
+      const curImg = this.data.find( img => img.hidden === false);
+      this.curIdx = this.data.indexOf(curImg);
+      this.count = this.curIdx + 1;
+      console.log(this.curIdx);
     }
   }
   StartSlide() {
