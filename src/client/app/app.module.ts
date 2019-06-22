@@ -37,7 +37,9 @@ import { HvncarouselComponent } from './hvncarousel/hvncarousel.component';
 import { MatchHeightDirective } from './directives/matchheight.directive';
 import { CardImageSizeDirective } from './directives/card-image-size.directive';
 import { SlideImageSizeDirective } from './directives/slide-image-size.directive';
-import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
+import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
+import { GalleriesResolve } from './resolvers/galleries-resolve';
+import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
     AuthGuard,
     DomService,
     ModalService,
-    HomeGalleryResolve
+    GalleryPhotosResolve,
+    NonGalleryPhotosResolve,
+    GalleriesResolve
   ],
   bootstrap: [AppComponent],
   entryComponents: []

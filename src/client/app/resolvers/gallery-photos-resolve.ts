@@ -5,12 +5,16 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class GalleryResolveService implements Resolve<any> {
+export class GalleryPhotosResolve implements Resolve<any> {
   constructor(private api: ApiService) {
    }
   resolve( route: ActivatedRouteSnapshot) {
     const gallery = route.paramMap.get('level');
-    const apiEndpoint = `/galleryphotosbyname/${gallery}`;
+    let apiEndpoint = `galleryphotosbyname/${gallery}`;
+    if (!gallery) {
+      apiEndpoint = `galleryphotosbyname/${route.url.toString()}`;
+    }
+    console.log(apiEndpoint);
     return this.api.get(apiEndpoint);
   }
 }

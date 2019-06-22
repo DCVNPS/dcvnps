@@ -17,6 +17,7 @@ export class DndDirective {
   @Output() private filesInvalidEmitter: EventEmitter<Array<File>> = new EventEmitter();
   @Input() private allowed_extensions: Array<string> = [];
   @HostBinding('style.background') private background = '#eee';
+
   constructor(private regexService: RegexService) {
     window.addEventListener('dragover', (e) => {
       e.preventDefault();

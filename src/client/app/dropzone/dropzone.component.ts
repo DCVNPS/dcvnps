@@ -8,10 +8,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../services/api.service';
 import { Gallery } from '../shared/gallery.model';
 import { ImageInfo } from '../shared/image.model';
 import { RegexService } from '../services/regex.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dropzone',
@@ -36,18 +36,14 @@ export class DropzoneComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
-    private api: ApiService,
+    private route: ActivatedRoute,
     private regexSrvc: RegexService) {
-    // Get the galleries list from database
-    this.api.get('galleries')
-      .subscribe(async (data) => {
-        this.galleries = await Array.from(data);
-        // console.log(this.galleries);
-      });
     this.years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
   }
 
   ngOnInit() {
+    // Get the galleries list from database
+    this.galleries = this.route.snapshot.data.galleries;
     this.upldGallery = new FormControl(null, Validators.required);
     this.upldYear = new FormControl(null, Validators.required);
     this.uploadForm = this.formBuilder.group({
@@ -139,22 +135,14 @@ export class DropzoneComponent implements OnInit {
   }
 
   removeFile(index: number) {
-    // this.fileArray.splice(index, 1);
-    // this.reviewUrl.splice(index, 1);
     this.validImages.splice(index, 1);
   }
 
   removeInvalidFile(index: number) {
-    // this.invalidFileArray.splice(index, 1);
-    // this.reviewInvalidUrl.splice(index, 1);
     this.invalidImages.splice(index, 1);
   }
 
   removeAllFiles() {
-    // this.fileArray = [];
-    // this.reviewUrl = [];
-    // this.invalidFileArray = [];
-    // this.reviewInvalidUrl = [];
     this.invalidImages = [];
     this.validImages = [];
   }

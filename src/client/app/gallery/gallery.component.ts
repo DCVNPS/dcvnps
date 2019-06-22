@@ -17,7 +17,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
   slides: Array<Slide>;
   showDialog = false;
   public destroyed = new Subject<any>();
-  constructor(private route: ActivatedRoute, private router: Router) { 
+  /******************************************************************
+   *  @route: ActivatedRoute is used to retrieve resolve data
+   *  @router: Router is used to retrigger navigation on the same Url
+  *******************************************************************/
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.initializeData();
   }
 
@@ -39,7 +43,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.years = [];
     this.slides = [];
     this.selectedSlides = [];
+    // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
+    // get the gallery data from route resolver
     const galleryData = this.route.snapshot.data;
     // console.log(galleryData);
     let cnt = 0;

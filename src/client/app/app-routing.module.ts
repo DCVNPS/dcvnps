@@ -12,8 +12,9 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { HomeGalleryResolve } from './resolvers/home-gallery-resolve';
-import { GalleryResolveService } from './resolvers/gallery-resolve.service';
+import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
+import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
+import { GalleriesResolve } from './resolvers/galleries-resolve';
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      photos: HomeGalleryResolve
+      photos: NonGalleryPhotosResolve
     }
   },
   {
@@ -41,13 +42,16 @@ const routes: Routes = [
   {
     path: 'fileupload',
     component: DropzoneComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      galleries: GalleriesResolve
+    }
   },
   {
     path: 'gallery/:level',
     component: GalleryComponent,
     resolve: {
-      data: GalleryResolveService
+      data: GalleryPhotosResolve
     },
     runGuardsAndResolvers: 'always'
   },
@@ -69,15 +73,18 @@ const routes: Routes = [
   },
   {
     path: 'aboutus',
-    component: AboutusComponent
-  },
-  {
-    path: 'quicktest',
-    component: QuickTestComponent,
+    component: AboutusComponent,
     resolve: {
-      photos: HomeGalleryResolve
+      photos: NonGalleryPhotosResolve
     }
   },
+  // {
+  //   path: 'quicktest',
+  //   component: QuickTestComponent,
+  //   resolve: {
+  //     photos: NonGalleryPhotosResolve
+  //   }
+  // },
   {
     path: '**',
     redirectTo: 'home'

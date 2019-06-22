@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Slide } from '../shared/slide.model';
-import { Gallery } from '../shared/gallery.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -10,9 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   public slides: Array<Slide> = [];
-  public galleries: Array<Gallery> = [];
-  public carouseConfig: Object = {'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
-  constructor( private route: ActivatedRoute) {  }
+  public carouseConfig: Object = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true };
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.slides = this.route.snapshot.data['photos'];

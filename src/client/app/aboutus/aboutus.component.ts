@@ -18,29 +18,8 @@ export class AboutusComponent implements OnInit {
   public auditor: Person;
   public bodyText: string;
   public showDialog: boolean;
-  constructor(private api: ApiService,
-    private router: ActivatedRoute) {
+  constructor(private router: ActivatedRoute) {
     this.showDialog = false;
-    this.api.get('/galleryphotosbyname/about')
-      .subscribe(data => {
-        let cnt = 0;
-        data.forEach((item) => {
-          item.photos.forEach((photo) => {
-            // console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
-            this.slides.push(new Slide(photo.galleryPhotoId,
-              photo.galleryId,
-              item.year,
-              'dummy note',
-              cnt,
-              `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
-              `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
-              item.portrait===1,
-              true));
-          });
-        });
-        console.log(this.slides);
-        this.slides.forEach(s => s.photoIndex = cnt++);
-      });
     this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
     this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
     this.generalSec = { lastName: 'Nguyen', firstName: 'Lan', middleName: 'Kieu', tittle: 'general secretary' };
@@ -49,6 +28,7 @@ export class AboutusComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.slides = this.router.snapshot.data['photos'];
   }
   showPopup(sIndex: number) {
     const currentSlide = this.slides.find(s => s.photoIndex === sIndex);

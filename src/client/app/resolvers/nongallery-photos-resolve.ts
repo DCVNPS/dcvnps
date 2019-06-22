@@ -1,31 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Slide } from '../shared/slide.model';
 import { ApiService } from '../services/api.service';
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 
-export class HomeGalleryResolve implements Resolve<Array<Slide>> {
+export class NonGalleryPhotosResolve implements Resolve<Array<Slide>> {
     private slides: Array<Slide>;
     constructor(private api: ApiService) {
         this.slides = [];
-     }
-    resolve(): Array<Slide> {
+    }
+    resolve(route: ActivatedRouteSnapshot): Array<Slide> {
         this.slides = [];
-        this.getHomePhotos();
+        this.getHomePhotos(route);
         return this.slides;
     }
 
-    getHomePhotos() {
-        this.api.get('galleryphotosbyname/home')
+    getHomePhotos(route: ActivatedRouteSnapshot) {
+        const urlEnpoint = `galleryphotosbyname/${route.url.toString()}`;
+        // console.log(urlEnpoint);
+        this.api.get(urlEnpoint)
             .subscribe(data => {
                 // console.log(data);
                 let cnt = 0;
                 data.forEach((item) => {
                     item.photos.forEach((photo) => {
-                        // console.log(`year: ${item.year} -- photoUrl: ${photo.photoUrl} -- portrait:${photo.portrait}`);
                         this.slides.push(new Slide(photo.galleryPhotoId,
                             photo.galleryId,
                             item.year,

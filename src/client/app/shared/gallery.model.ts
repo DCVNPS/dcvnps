@@ -9,8 +9,7 @@ export class Gallery {
         gallery: string,
         profilePhoto: string,
         createdDate: Date,
-        updatedDate: Date)
-    {
+        updatedDate: Date) {
         this.galleryId = id;
         this.gallery = gallery;
         this.profilePhoto = profilePhoto;
@@ -18,11 +17,3 @@ export class Gallery {
         this.updatedDate = updatedDate;
     }
 }
-// export interface Gallery{
-//     id: string;
-//     gallery: string;
-//     year: string;
-//     profilePhoto: string;
-//     createdDate: Date;
-//     updatedDate: Date;    
-// }
