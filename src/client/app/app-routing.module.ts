@@ -48,7 +48,8 @@ const routes: Routes = [
     component: GalleryComponent,
     resolve: {
       data: GalleryResolveService
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'galleries',
@@ -84,7 +85,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

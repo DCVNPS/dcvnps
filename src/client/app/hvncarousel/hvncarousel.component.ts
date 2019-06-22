@@ -31,7 +31,7 @@ export class HvncarouselComponent implements OnInit {
     this.runSlideShow = this.config['runSlideShow'] || false;
     this.max = this.data.length;
     if (this.runSlideShow) {
-      console.log('Start runing slide show');
+      // console.log('Start runing slide show');
       this.count = 0;
       this.StartSlide();
     } else {
@@ -39,7 +39,7 @@ export class HvncarouselComponent implements OnInit {
       const curImg = this.data.find( img => img.hidden === false);
       this.curIdx = this.data.indexOf(curImg);
       this.count = this.curIdx + 1;
-      console.log(this.curIdx);
+      // console.log(this.curIdx);
     }
   }
   StartSlide() {
