@@ -31,7 +31,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       takeUntil(this.destroyed)
     ).subscribe(() => {
       this.initializeData();
-    })
+    });
   }
 
   ngOnDestroy() {

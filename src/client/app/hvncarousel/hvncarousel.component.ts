@@ -2,6 +2,7 @@ import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/cor
 import { Slide } from '../shared/slide.model';
 
 @Component({
+// tslint:disable-next-line: component-selector
   selector: 'hvn-carousel',
   templateUrl: './hvncarousel.component.html',
   styleUrls: ['./hvncarousel.component.scss']

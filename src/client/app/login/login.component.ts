@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
               private router: Router) {
     this.routeStat.params.subscribe(async (params) => {
       this.backUrl = await params['backUrl'];
-      console.log(this.backUrl);
+      // console.log(this.backUrl);
     });
 }
 
