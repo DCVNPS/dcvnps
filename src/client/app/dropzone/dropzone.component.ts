@@ -33,8 +33,8 @@ export class DropzoneComponent implements OnInit {
   private selectedGallery: Gallery;
   private upldGallery: FormControl;
   private upldYear: FormControl;
-  private uploadForm: FormGroup;
-  private years: Array<number>;
+  public uploadForm: FormGroup;
+  public years: Array<number>;
   private selectedYear: number;
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
 
