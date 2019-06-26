@@ -9,7 +9,6 @@ import { ApiService } from './services/api.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  private appRole = { usersrole: null, admin: false };
   constructor(private auth: AuthService, private router: Router, private api: ApiService) { }
   canActivate(
     next: ActivatedRouteSnapshot,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Slide } from '../shared/slide.model';
-import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../shared/person.model';
 
@@ -18,7 +18,7 @@ export class AboutusComponent implements OnInit {
   public auditor: Person;
   public bodyText: string;
   public showDialog: boolean;
-  constructor(private router: ActivatedRoute) {
+  constructor(private router: ActivatedRoute, private location: Location) {
     this.showDialog = false;
     this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
     this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
@@ -37,5 +37,9 @@ export class AboutusComponent implements OnInit {
       this.slides.forEach(s => s.hidden = true);
       currentSlide.hidden = false;
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

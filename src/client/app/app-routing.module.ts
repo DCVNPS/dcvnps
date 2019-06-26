@@ -14,7 +14,6 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
-import { GalleriesResolve } from './resolvers/galleries-resolve';
 
 const routes: Routes = [
   {

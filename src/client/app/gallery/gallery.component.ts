@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { Slide } from '../shared/slide.model';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-gallery',
@@ -16,12 +18,17 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private selectedSlides: Array<Slide>;
   slides: Array<Slide>;
   showDialog = false;
+  public isAdmin: boolean;
+  public editUrl: string;
   public destroyed = new Subject<any>();
   /******************************************************************
    *  @route: ActivatedRoute is used to retrieve resolve data
    *  @router: Router is used to retrigger navigation on the same Url
   *******************************************************************/
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService,
+    private location: Location) {
     this.initializeData();
   }
 
@@ -45,6 +52,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.selectedSlides = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
+    this.editUrl = `/editgallery/${this.level}`;
+    this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // get the gallery data from route resolver
     const galleryData = this.route.snapshot.data;
     // console.log(galleryData);
@@ -55,7 +64,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.selectedSlides.push(new Slide(photo.galleryPhotoId,
           photo.galleryId,
           item.year,
-          'dummy note',
+          photo.author,
           cnt,
           `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
           `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
@@ -67,6 +76,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
     });
     this.slides = this.selectedSlides;
     // console.log(this.slides);
+  }
+
+  goBack() {
+    this.location.back();
   }
   onFilterYear(year: string) {
     let cnt = 0;
