@@ -21,7 +21,7 @@
     "@angular/animations": "^7.2.7",
     "@angular/common": "^7.2.7",
     "@angular/compiler": "^7.2.7",
-    "@angular/core": "^7.2.7",
+    "@angular/core": "^8.0.2",
     "@angular/elements": "^7.2.13",
     "@angular/forms": "^7.2.7",
     "@angular/http": "^7.2.7",
