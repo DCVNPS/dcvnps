@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
+  public isAdmin: boolean;
   constructor(public auth: AuthService,
     private api: ApiService,
     private router: Router) {
@@ -23,11 +24,12 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isAdmin = this.auth.isAdmin();
     this.api.get('galleries')
       .subscribe(data => {
         data.forEach(item => {
           if (!this.mGalleries.some(i => i === item.gallery)) {
-            if (item.gallery !== 'home' && item.gallery !== 'about') {
+            if (item.gallery !== 'home' && item.gallery !== 'aboutus') {
               this.mGalleries.push(item.gallery);
             }
           }

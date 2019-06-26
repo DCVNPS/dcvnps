@@ -2,7 +2,7 @@ export class Slide {
     public id: string;
     public galleryId: string;
     public year: string;
-    public galleryNote: string;
+    public author: string;
     public photoIndex: number;
     public imgsrc: string;
     public imgalt: string;
@@ -11,7 +11,7 @@ export class Slide {
     constructor(id: string,
         galleryId: string,
         year: string,
-        galleryNote: string,
+        author: string,
         photoIndex: number,
         imgsrc: string,
         imgalt: string,
@@ -20,7 +20,7 @@ export class Slide {
         this.id = id;
         this.galleryId = galleryId;
         this.year = year;
-        this.galleryNote = galleryNote;
+        this.author = author;
         this.photoIndex = photoIndex;
         this.imgsrc = imgsrc;
         this.imgalt = imgalt;

@@ -120,7 +120,7 @@ function apiRouter(database) {
             })
     });
 
-    router.get('/galleryphotosbyname/:gallery', async (req, res) => {
+    router.get('/galleryphotosbyname/:gallery', (req, res) => {
 
         const gallery = req.params.gallery;
         database.getPhotoByGalleryName(gallery)

@@ -15,7 +15,7 @@ export class GalleriesComponent implements OnInit {
       .subscribe(data => {
         data.forEach(item => {
           const g = this.galleries.find(i => i.gallery === item.gallery);
-          if (!g && item.gallery !== 'home' && item.gallery !== 'about') {
+          if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
             this.galleries.push(new Gallery(
               item._id,
               item.gallery,

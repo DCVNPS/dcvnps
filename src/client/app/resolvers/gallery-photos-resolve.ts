@@ -14,7 +14,7 @@ export class GalleryPhotosResolve implements Resolve<any> {
     if (!gallery) {
       apiEndpoint = `galleryphotosbyname/${route.url.toString()}`;
     }
-    console.log(apiEndpoint);
+    // console.log(apiEndpoint);
     return this.api.get(apiEndpoint);
   }
 }

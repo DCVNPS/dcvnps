@@ -1,14 +1,26 @@
 <div class="min-page-height">
-  <div class="ui secondary menu">
+  <div class="ui grey inverted secondary menu">
+    <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
     <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
     <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
     <button class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</button>
+    <div class="stackable right menu" *ngIf="isAdmin">
+        <a class="item" [routerLink]="['/editgallery',level]" [routerLinkActive]="['active']" aria-label="Edit gallery">
+          <span><i class="big edit icon"></i></span>Edit Gallery
+        </a>  
+      <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+        <span>Upload Image</span><i class="big upload icon"></i>
+      </a>
+    </div>
   </div>
   <div class="ui four stackable cards">
     <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
       <div class="image">
-        <img [src]="s.imgsrc" appCardImageSize [cardCount]="4" >
+        <img [src]="s.imgsrc" appCardImageSize [cardCount]="4">
       </div>
+      <!-- <div class="conent">
+        <div class="header">author: {{s.author}}</div>
+      </div> -->
     </a>
   </div>
 </div>

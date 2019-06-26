@@ -5,7 +5,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-
+  private roleLevels = [
+    { 'role': 'MBMRADM', 'level': 'member' },
+    { 'role': 'LVL3ADM', 'level': 'level3' },
+    { 'role': 'LVL2ADM', 'level': 'level2' },
+    { 'role': 'LVL1ADM', 'level': 'level1' }
+  ];
   storageKey = 'dcvnps-manager-jwt';
   roleKey = 'dcvnps-role';
 
@@ -30,13 +35,35 @@ export class AuthService {
   }
 
   getRole() {
-    return localStorage.getItem(this.roleKey);
+    if (this.isLogin()) {
+      return localStorage.getItem(this.roleKey);
+    }
+    return null;
   }
 
-  isAdmin() {
-    const roleStr = this.getRole();
-     const match = roleStr.match(/ADM$/g);
-     return (match ? true : false);
+  isAdmin(level?: string) {
+    let isLevelAdmin = false;
+    let roleLevel: any;
+    if (this.isLogin()) {
+      const roleStr = this.getRole();
+      const match = roleStr.match(/ADM$/g);
+      // console.log({ 'level': level, 'role': roleStr, 'match': match });
+      if (level) {
+        roleLevel = this.roleLevels.find(rl => rl.role === roleStr && rl.level === level);
+      }
+      if (match[0] === 'ADM' && (roleLevel)) {
+        isLevelAdmin = true;
+      }
+    }
+    return isLevelAdmin;
+  }
+
+  siteAdmin() {
+    return this.getRole() === 'SITEADM';
+  }
+
+  levelAdmin() {
+    return this.isAdmin() && this.siteAdmin();
   }
   logout() {
     this.removeToken();
@@ -44,7 +71,7 @@ export class AuthService {
   }
 }
 
-export class AuthToken{
+export class AuthToken {
   public token: string;
   public role: string;
 }
