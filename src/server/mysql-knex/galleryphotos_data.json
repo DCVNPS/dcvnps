@@ -1,14 +1,58 @@
 [
 	{
-		"galleryPhotoId" : "7cb637ab-6eb2-11e9-8849-848f69b86260",
-		"galleryId" : "d63a6b38-6dfe-11e9-8849-848f69b86260",
-		"photo" : "binh.le_members_002.jpg",
+		"galleryPhotoId" : "0c31d1d8-8f39-11e9-b507-080027ed0259",
+		"galleryId" : "eac81e4c-6dfe-11e9-8849-848f69b86260",
+		"photo" : "A77-00069.jpg",
+		"portrait" : 1,
+		"author" : "Henry.Nguyen",
+		"year" : "2020",
+		"updateUser" : "Temporary",
+		"createdDate" : "2019-06-15 02:44:39",
+		"updatedDate" : "2019-06-15 02:44:39"
+	},
+	{
+		"galleryPhotoId" : "33cbbaf1-8f39-11e9-b507-080027ed0259",
+		"galleryId" : "eac81e4c-6dfe-11e9-8849-848f69b86260",
+		"photo" : "A77-00166.jpg",
 		"portrait" : 0,
-		"author" : "dcvnps",
-		"year" : "2017",
-		"updateUser" : "dcvnps",
-		"createdDate" : "2019-05-04 17:20:02",
-		"updatedDate" : "2019-05-04 17:20:02"
+		"author" : "Henry.Nguyen",
+		"year" : "2020",
+		"updateUser" : "Temporary",
+		"createdDate" : "2019-06-15 02:45:45",
+		"updatedDate" : "2019-06-15 02:45:45"
+	},
+	{
+		"galleryPhotoId" : "3ecd8635-8f37-11e9-b507-080027ed0259",
+		"galleryId" : "eac81e4c-6dfe-11e9-8849-848f69b86260",
+		"photo" : "A7-03678.jpg",
+		"portrait" : 0,
+		"author" : "Henry.Nguyen",
+		"year" : "2019",
+		"updateUser" : "Temporary",
+		"createdDate" : "2019-06-15 02:31:45",
+		"updatedDate" : "2019-06-15 02:31:45"
+	},
+	{
+		"galleryPhotoId" : "53c51211-8f37-11e9-b507-080027ed0259",
+		"galleryId" : "eac81e4c-6dfe-11e9-8849-848f69b86260",
+		"photo" : "A7-03575.jpg",
+		"portrait" : 0,
+		"author" : "Henry.Nguyen",
+		"year" : "2019",
+		"updateUser" : "Temporary",
+		"createdDate" : "2019-06-15 02:32:20",
+		"updatedDate" : "2019-06-15 02:32:20"
+	},
+	{
+		"galleryPhotoId" : "6f5fb5ee-8f39-11e9-b507-080027ed0259",
+		"galleryId" : "eac81e4c-6dfe-11e9-8849-848f69b86260",
+		"photo" : "A77-01626.jpg",
+		"portrait" : 0,
+		"author" : "Henry.Nguyen",
+		"year" : "2020",
+		"updateUser" : "Temporary",
+		"createdDate" : "2019-06-15 02:47:25",
+		"updatedDate" : "2019-06-15 02:47:25"
 	},
 	{
 		"galleryPhotoId" : "7cb6aeaf-6eb2-11e9-8849-848f69b86260",
@@ -79,17 +123,6 @@
 	{
 		"galleryPhotoId" : "7cb6bd7b-6eb2-11e9-8849-848f69b86260",
 		"galleryId" : "d63a6b38-6dfe-11e9-8849-848f69b86260",
-		"photo" : "image001.jpg",
-		"portrait" : 0,
-		"author" : "dcvnps",
-		"year" : "2019",
-		"updateUser" : "dcvnps",
-		"createdDate" : "2019-05-04 17:20:02",
-		"updatedDate" : "2019-05-04 17:20:02"
-	},
-	{
-		"galleryPhotoId" : "7cb6c099-6eb2-11e9-8849-848f69b86260",
-		"galleryId" : "f10448dd-6dfe-11e9-8849-848f69b86260",
 		"photo" : "image001.jpg",
 		"portrait" : 0,
 		"author" : "dcvnps",

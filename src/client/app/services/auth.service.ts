@@ -63,8 +63,9 @@ export class AuthService {
   }
 
   levelAdmin() {
-    return this.isAdmin() && this.siteAdmin();
+    return this.isAdmin() || this.siteAdmin();
   }
+
   logout() {
     this.removeToken();
     this.router.navigate(['/home']);

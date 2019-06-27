@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
   public isAdmin: boolean;
-  constructor(public auth: AuthService,
+  constructor(private auth: AuthService,
     private api: ApiService,
     private router: Router) {
     this.mGalleries = [];
@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAdmin = this.auth.isAdmin();
+    this.isAdmin = this.auth.siteAdmin();
     this.api.get('galleries')
       .subscribe(data => {
         data.forEach(item => {

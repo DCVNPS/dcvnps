@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 const createExpressApp = require('./create-express-app');
 
 require('dotenv').config();

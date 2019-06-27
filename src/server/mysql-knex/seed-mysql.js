@@ -1,5 +1,5 @@
 const path = require('path');
-const envPath = path.normalize(__dirname + '/../../.env');
+const envPath = path.normalize(__dirname + '/../../../.env');
 require('dotenv').config({path:envPath});
 const config = JSON.parse(process.env.MYSQL2);
 const database = require("knex")(config);
@@ -10,10 +10,10 @@ const bcrypt = require('bcrypt');
 // .catch((err)=>{console.log(err);})
 // .finally(()=>{database.destroy();});
 
-const users = require('./users');
+const users = require('./users_data');
 const contacts = require('./contacts');
-const roles = require('./roles');
-const galleries = require('./gallery_data');
+const roles = require('./roles_data');
+const galleries = require('./galleries_data');
 const galleryphotos = require('./galleryphotos_data');
 const chunkSize = 100;
 
@@ -49,9 +49,9 @@ async function dbConnectOK(db) {
 // Uncomment the below to Create Initial Application Data
 createSeedData('users', users);
 // createSeedData('contacts', contacts);
-// createSeedData('roles', roles);
-// createSeedData('galleries',galleries);
-// createSeedData('galleryphotos',galleryphotos);
+createSeedData('roles', roles);
+createSeedData('galleries',galleries);
+createSeedData('galleryphotos',galleryphotos);
 
 
 // async function testDB(database){

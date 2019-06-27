@@ -47,19 +47,17 @@
     Add User
   </a>
    -->
-  <a class="item" [routerLink]="['/management']" [routerLinkActive]="['active']" *ngIf="isAdmin">
-    <span> <i class="user icon"></i><i class="cogs icon"></i></span>
-    management
-  </a>
-
-<div class="stackable right menu">
-    <a class="item" (click)="logout()"  *ngIf="auth.isLogin()">
-      <i class="small sign out icon"></i>
-      Sign Out
+  <div class="stackable right menu">
+    <a class="item" [routerLink]="['/managesite']" [routerLinkActive]="['active']" *ngIf="isAdmin">
+      <span> <i class="user icon"></i><i class="cogs icon"></i></span>
+      Manage Site
     </a>
-    <a class="item" [routerLink]="['/login']" [routerLinkActive]="['active']" >
+    <a class="item" [routerLink]="['/login']" [routerLinkActive]="['active']">
       <i class="small sign in icon"></i>
       Sign in
+    </a>
+    <a class="item" (click)="logout()" *ngIf="auth.isLogin()">
+      Sign Out<i class="small sign out icon"></i>
     </a>
   </div>
 </div>

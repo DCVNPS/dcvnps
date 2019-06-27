@@ -1,7 +1,7 @@
 [
 	{
 		"roleId" : 1,
-		"roleCode" : "MBMADM",
+		"roleCode" : "MBMRADM",
 		"roleDescription" : "Member Admin",
 		"createdDate" : "2019-05-04 21:11:34",
 		"updateUser" : "dcvnps",
@@ -9,7 +9,7 @@
 	},
 	{
 		"roleId" : 2,
-		"roleCode" : "MBMUSR",
+		"roleCode" : "MBMRUSR",
 		"roleDescription" : "Member User",
 		"createdDate" : "2019-05-04 21:11:35",
 		"updateUser" : "dcvnps",
@@ -65,7 +65,7 @@
 	},
 	{
 		"roleId" : 9,
-		"roleCode" : "SITUSR",
+		"roleCode" : "SITEUSR",
 		"roleDescription" : "Site User",
 		"createdDate" : "2019-05-04 21:11:35",
 		"updateUser" : "dcvnps",
@@ -73,7 +73,7 @@
 	},
 	{
 		"roleId" : 10,
-		"roleCode" : "SITADM",
+		"roleCode" : "SITEADM",
 		"roleDescription" : "Site Admin",
 		"createdDate" : "2019-05-04 21:14:38",
 		"updateUser" : "dcvnps",

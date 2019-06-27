@@ -1,7 +1,7 @@
 'use strict';
 (function () {
     const path = require('path');
-    const envPath = path.normalize(__dirname + '/../../.env');
+    const envPath = path.normalize(__dirname + '/../../../.env');
     require('dotenv').config({path:envPath});
     const config = JSON.parse(process.env.MYSQL2);
     const knex = require('knex')(config);
