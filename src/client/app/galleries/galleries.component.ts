@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { Gallery } from '../shared/gallery.model';
 import { ApiService } from '../services/api.service';
-import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-galleries',
   templateUrl: './galleries.component.html',
   styleUrls: ['./galleries.component.scss']
 })
-export class GalleriesComponent implements OnInit {
+export class GalleriesComponent {
   public galleries: Gallery[] = [];
-  constructor(private api: ApiService) {
+  public isAdmin: boolean;
+  constructor(private api: ApiService, private auth: AuthService, private location: Location) {
     this.api.get('/galleries')
       .subscribe(data => {
         data.forEach(item => {
@@ -26,9 +28,12 @@ export class GalleriesComponent implements OnInit {
         });
         // console.log(this.galleries);
       });
+      this.isAdmin = this.auth.siteAdmin();
   }
 
-  ngOnInit() {
+  goBack() {
+    this.location.back();
   }
+
 }
 

@@ -5,6 +5,7 @@ import { Slide } from '../shared/slide.model';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { GalleryDataService } from '../services/gallery-data.service';
 
 @Component({
   selector: 'app-gallery',
@@ -28,6 +29,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
+    private galleryData: GalleryDataService,
     private location: Location) {
     this.initializeData();
   }
@@ -75,7 +77,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
       });
     });
     this.slides = this.selectedSlides;
-    // console.log(this.slides);
+    this.galleryData.updateData(this.slides);
+     // console.log(this.slides);
   }
 
   goBack() {

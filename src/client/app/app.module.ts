@@ -40,6 +40,8 @@ import { SlideImageSizeDirective } from './directives/slide-image-size.directive
 import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
+import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
+import { HvnHoverDirective } from './directives/hvn-hover.directive';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
     MatchHeightDirective,
     CardImageSizeDirective,
     SlideImageSizeDirective,
+    EditGalleryComponent,
+    HvnHoverDirective,
   ],
   imports: [
     BrowserModule,

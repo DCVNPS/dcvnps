@@ -1,0 +1,42 @@
+<div class="min-page-height">
+  <div class="ui grey inverted secondary menu">
+    <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
+  </div>
+  <!-- <div class="ui four stackable cards">
+    <div class="card" *ngFor="let s of slides">
+      <div class="image">
+        <img [src]="s.imgsrc" appCardImageSize [cardCount]="4">
+      </div>
+      <div class="conent">
+        <div class="header">author: {{s.author}}</div>
+      </div>
+    </div>
+  </div> -->
+  <div class="ui grid" *ngIf="slides.length !== 0">
+    <div class="row">
+      <div class="three wide column">Image</div>
+      <div class="five wide column">File Name</div>
+      <div class="three wide column">Author</div>
+      <div class="two wide column">Size(KB)</div>
+      <div class="three wide column center aligned">Actions</div>
+    </div>
+    <div class="row" *ngFor="let img of slides; let i=index">
+      <div class="three wide column">
+        <div class="ui tiny image">
+          <img [src]="img.imgsrc">
+        </div>
+      </div>
+      <div class="five wide column">
+        <div class="description">{{img.imgalt}}</div>
+      </div>
+      <div class="three wide column">{{img.author}}</div>
+      <div class="two wide column">
+        <div class="description">testing</div>
+      </div>
+      <div class="three wide column right aligned">
+        <button class=" mini ui negative basic button" (click)="deletePhoto(img)">Delete</button>
+        <button class=" mini ui positive basic button" (click)="editPhot(img)">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>

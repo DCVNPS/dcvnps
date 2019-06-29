@@ -1,13 +1,29 @@
 <div class="min-page-height">
-  <div class="ui padded grid">
-    <div class="ui four cards">
-      <a class="card" *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
-          <div class="content">
-          <div class="header">{{g.gallery| titlecase}}</div>
-          <!-- <div class="meta">{{g.year}}</div> -->
-        </div>
-        <div class="image">
-          <img [src]="g?.profilePhoto">
+  <div class="ui grey inverted secondary menu">
+    <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
+    <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
+    <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
+    <button class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</button>
+    <div class="stackable right menu" *ngIf="isAdmin">
+        <a class="item" [routerLink]="['/editgalleries']" [routerLinkActive]="['active']" aria-label="Edit galleries">
+          <span><i class="big edit icon"></i></span>Edit Galleries
+        </a>  
+      <!-- <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+        <span>Upload Image</span><i class="big upload icon"></i>
+      </a> -->
+    </div>
+  </div>  <div class="ui padded grid">
+    <div class="ui four special cards">
+      <a class="card"  *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
+        <div class="blurring dimmable image" [appHvnHover]="{'querySelector': '.dimmer'}">
+          <div class="ui dimmer" >
+            <div class="content">
+              <div class="center">
+                <div class="ui inverted button">{{g.gallery}}</div>
+              </div>
+            </div>
+          </div>
+          <img [src]="g.profilePhoto">
         </div>
       </a>
     </div>
