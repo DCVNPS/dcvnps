@@ -3,8 +3,6 @@
 <!-- dialog layer -->
 <div [@popup] *ngIf="visible" class="dialog">
   <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog-close-btn">X</button>
-  <div class="slide-pos">
-    <hvn-carousel [data]="data" [config] = "{'delay':3000,'showIndicator':false}" ></hvn-carousel>
-  </div>
-  <!-- <button (click)="showDialog = !showDialog" class="btn">Close</button> -->
+   <hvn-carousel [data]="data" [config] = "{'delay':3000,'showIndicator':false}" ></hvn-carousel>
+  
 </div>

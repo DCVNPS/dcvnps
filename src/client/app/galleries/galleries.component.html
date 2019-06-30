@@ -1,4 +1,3 @@
-<div class="min-page-height">
   <div class="ui grey inverted secondary menu">
     <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
     <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
@@ -8,24 +7,6 @@
         <a class="item" [routerLink]="['/editgalleries']" [routerLinkActive]="['active']" aria-label="Edit galleries">
           <span><i class="big edit icon"></i></span>Edit Galleries
         </a>  
-      <!-- <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
-        <span>Upload Image</span><i class="big upload icon"></i>
-      </a> -->
     </div>
-  </div>  <div class="ui padded grid">
-    <div class="ui four special cards">
-      <a class="card"  *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
-        <div class="blurring dimmable image" [appHvnHover]="{'querySelector': '.dimmer'}">
-          <div class="ui dimmer" >
-            <div class="content">
-              <div class="center">
-                <div class="ui inverted button">{{g.gallery}}</div>
-              </div>
-            </div>
-          </div>
-          <img [src]="g.profilePhoto">
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
+  </div>  
+  <app-gallery-list [galleries]="galleries"></app-gallery-list>

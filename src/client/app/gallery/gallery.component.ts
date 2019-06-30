@@ -77,7 +77,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       });
     });
     this.slides = this.selectedSlides;
-    this.galleryData.updateData(this.slides);
+    this.galleryData.updateData(this.selectedSlides);
      // console.log(this.slides);
   }
 
@@ -93,6 +93,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.slides = this.selectedSlides;
     }
     this.slides.forEach(s => s.photoIndex = cnt++);
+    this.galleryData.updateData(this.slides);
   }
 
   showPopup(sIndex: number) {

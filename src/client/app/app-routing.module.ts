@@ -15,7 +15,7 @@ import { DropzoneComponent } from './dropzone/dropzone.component';
 import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
-import { CanActivate } from '@angular/router/src/utils/preactivation';
+import { GalleriesResolve } from './resolvers/galleries-resolve';
 
 const routes: Routes = [
   {
@@ -27,7 +27,8 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      photos: NonGalleryPhotosResolve
+      photos: NonGalleryPhotosResolve,
+      galleries: GalleriesResolve
     }
   },
   {

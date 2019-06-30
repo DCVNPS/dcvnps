@@ -42,6 +42,7 @@ import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
+import { GalleryListComponent } from './gallery-list/gallery-list.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { HvnHoverDirective } from './directives/hvn-hover.directive';
     SlideImageSizeDirective,
     EditGalleryComponent,
     HvnHoverDirective,
+    GalleryListComponent,
   ],
   imports: [
     BrowserModule,

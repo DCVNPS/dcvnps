@@ -40,12 +40,11 @@
                         </div>
                     </div>
                 </div>
-                <app-galleries></app-galleries>
+                <!-- <app-galleries></app-galleries> -->
+                <app-gallery-list [galleries]="galleries"></app-gallery-list>
             </div>
             <div class="eight wide column">
-                <div class="segment borderless">
                     <hvn-carousel [data]="slides" [config] = "carouseConfig" ></hvn-carousel>
-                </div>
             </div>
             <div class="four wide column">
                 <div class="ui  raised padded text segments">

@@ -1,5 +1,4 @@
-<div class="min-page-height">
-  <div class="ui grey inverted secondary menu">
+<div class="ui grey inverted secondary menu">
     <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
     <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
     <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
@@ -13,6 +12,8 @@
       </a>
     </div>
   </div>
+
+  <div class="min-page-height">
   <div class="ui four stackable cards">
     <a class="card" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
       <div class="image">

@@ -89,8 +89,7 @@ export class HvncarouselComponent implements OnInit {
   }
   NextSlide() {
     clearInterval(this.intervalID);
-    console.log(`NextSlide - Before Adjusting Current Index: ${this.curIdx}
-        Current Count: ${this.count}`);
+    // console.log(`NextSlide - Before Adjusting Current Index: ${this.curIdx}\n Current Count: ${this.count}`);
     // If carousel is running mean interval is set. Clear interval
     if (this.isRunning) {
       this.isRunning = false;
@@ -104,8 +103,7 @@ export class HvncarouselComponent implements OnInit {
         this.count = 0;
       }
       this.curIdx = this.count % this.max;
-      console.log(`NextSlide - After Adjusting Current Index: ${this.curIdx}
-        Current Count: ${this.count}`);
+      // console.log(`NextSlide - After Adjusting Current Index: ${this.curIdx}\n  Current Count: ${this.count}`);
       this.data.forEach((item) => item.hidden = true);
       this.data[this.curIdx].hidden = false;
       this.count += 1;
