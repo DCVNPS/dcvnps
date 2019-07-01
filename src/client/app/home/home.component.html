@@ -40,11 +40,17 @@
                         </div>
                     </div>
                 </div>
-                <!-- <app-galleries></app-galleries> -->
-                <app-gallery-list [galleries]="galleries"></app-gallery-list>
+                <div class="ui raised padded text segments">
+                    <div class="ui segment vnps-header">
+                        <a class="ui header" [routerLink]="['/galleries']">Gallery Photos</a>
+                    </div>
+                    <div class="ui segment">
+                        <app-gallery-list [galleries]="galleries"></app-gallery-list>
+                    </div>
+                </div>
             </div>
             <div class="eight wide column">
-                    <hvn-carousel [data]="slides" [config] = "carouseConfig" ></hvn-carousel>
+                <hvn-carousel [data]="slides" [config]="carouseConfig"></hvn-carousel>
             </div>
             <div class="four wide column">
                 <div class="ui  raised padded text segments">

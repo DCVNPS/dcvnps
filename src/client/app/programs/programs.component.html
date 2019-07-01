@@ -17,21 +17,21 @@
     To request information on the program and how to register for VNPS photography course, please send email to
     info@dcvnps.org
   </p>
-  <div class="ui top attached tabular menu">
+  <div class="ui top  attached tabular menu">
     <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showProgram('level1');">
-      <h3 class="ui blue header">Basic Photograpy (Level 1)</h3>
+      <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
     </a>
     <a class="item" #lvl2Anchor [class.active]="showLevel2" (click)="showProgram('level2');">
-      <h3 class="ui blue header">Mid-Level Photography (Level 2)</h3>
+      <h3 class="ui brown header">Mid-Level Photography (Level 2)</h3>
     </a>
     <a class="item" #lvl3Anchor [class.active]="showLevel3" (click)="showProgram('level3');">
-      <div class="ui blue header">Advance Photography (Level 3)</div>
+      <div class="ui brown header">Advance Photography (Level 3)</div>
     </a>
   </div>
 
   <div class="ui grid" style="padding: 0 20px 0 20px;">
     <div class="column">
-      <div class="ui raised segment" [hidden]="!showLevel1">
+      <div class="ui raised segment" *ngIf="showLevel1">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
@@ -78,7 +78,7 @@
           <li>Chuan Truong</li>
         </ul>
       </div>
-      <div class="ui raised segment" [hidden]="!showLevel2">
+      <div class="ui raised segment" *ngIf="showLevel2">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
@@ -151,7 +151,7 @@
           <li>KieuHanh Vu</li>
         </ul>
       </div>
-      <div class="ui raised segment" [hidden]="!showLevel3">
+      <div class="ui raised segment" *ngIf="showLevel3">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
