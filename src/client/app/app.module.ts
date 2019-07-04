@@ -43,6 +43,7 @@ import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
+import { AuthorPhotoComponent } from './author-photo/author-photo.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { GalleryListComponent } from './gallery-list/gallery-list.component';
     EditGalleryComponent,
     HvnHoverDirective,
     GalleryListComponent,
+    AuthorPhotoComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,6 +21,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   showDialog = false;
   public isAdmin: boolean;
   public editUrl: string;
+  public galleryData: Array<any> = [];
   public destroyed = new Subject<any>();
   /******************************************************************
    *  @route: ActivatedRoute is used to retrieve resolve data
@@ -29,7 +30,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
-    private galleryData: GalleryDataService,
+    private galleryDataService: GalleryDataService,
     private location: Location) {
     this.initializeData();
   }
@@ -52,48 +53,56 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.years = [];
     this.slides = [];
     this.selectedSlides = [];
+    this.galleryData = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
     this.editUrl = `/editgallery/${this.level}`;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // get the gallery data from route resolver
-    const galleryData = this.route.snapshot.data;
-    // console.log(galleryData);
-    let cnt = 0;
-    galleryData.data.forEach((item) => {
-      this.years.push(item.year);
-      item.photos.forEach((photo) => {
-        this.selectedSlides.push(new Slide(photo.galleryPhotoId,
-          photo.galleryId,
-          item.year,
-          photo.author,
-          cnt,
-          `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
-          `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
-          item.portrait === 1,
-          true));
-
-        cnt += 1;
+    this.route.snapshot.data.data.forEach((thisyear) => {
+      this.years.push(thisyear.year);
+      this.galleryData.push(thisyear);
+      thisyear.yeardata.forEach((authordata) => {
+        authordata.photos.forEach(photo => {
+          this.selectedSlides.push(
+            new Slide(photo.galleryPhotoId,
+                    photo.galleryId,
+                    thisyear.year,
+                    authordata.author,
+                    photo.photoIndex,
+                    photo.imgsrc,
+                    `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
+                    photo.portrait === 1,
+                    true)
+          );
+        });
       });
-    });
+    })
+    console.log(this.galleryData);
     this.slides = this.selectedSlides;
-    this.galleryData.updateData(this.selectedSlides);
+    this.galleryDataService.updateData(this.selectedSlides);
      // console.log(this.slides);
   }
 
   goBack() {
     this.location.back();
   }
+
   onFilterYear(year: string) {
     let cnt = 0;
+    this.galleryData = [];
     // console.log('selected slides',this.selectedSlides);
     if (year) {
+      this.galleryData.push(this.route.snapshot.data.data.find((d) => d.year === year));
       this.slides = this.selectedSlides.filter(s => s.year === year);
     } else {
+      this.route.snapshot.data.data.forEach( y => {
+        this.galleryData.push(y);
+      })
       this.slides = this.selectedSlides;
     }
     this.slides.forEach(s => s.photoIndex = cnt++);
-    this.galleryData.updateData(this.slides);
+    this.galleryDataService.updateData(this.slides);
   }
 
   showPopup(sIndex: number) {

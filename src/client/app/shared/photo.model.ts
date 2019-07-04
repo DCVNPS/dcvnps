@@ -1,7 +1,7 @@
 export interface Photo {
-    id: string,
+    photoId: string,
     galleryId: string,
-    galleryNote: string,
-    photoIndex: number,
+    photoIndex?: number,
+    imgalt: string,
     imgsrc: string
 }

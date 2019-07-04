@@ -1,5 +1,5 @@
 export class Slide {
-    public id: string;
+    public photoId: string;
     public galleryId: string;
     public year: string;
     public author: string;
@@ -8,7 +8,7 @@ export class Slide {
     public imgalt: string;
     public hidden: boolean;
     public portrait: boolean;
-    constructor(id: string,
+    constructor(photoId: string,
         galleryId: string,
         year: string,
         author: string,
@@ -17,7 +17,7 @@ export class Slide {
         imgalt: string,
         portrait: boolean,
         hidden: boolean) {
-        this.id = id;
+        this.photoId = photoId;
         this.galleryId = galleryId;
         this.year = year;
         this.author = author;

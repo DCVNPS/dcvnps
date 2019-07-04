@@ -2,7 +2,7 @@
 (function () {
     const path = require('path');
     const envPath = path.normalize(__dirname + '/../../../.env');
-    require('dotenv').config({path:envPath});
+    require('dotenv').config({ path: envPath });
     const config = JSON.parse(process.env.MYSQL2);
     const knex = require('knex')(config);
     // var Promise = require('bluebird');
@@ -63,7 +63,7 @@
             username,
             password
         }) {
-            if(username === 'vnpsuser'){
+            if (username === 'vnpsuser') {
                 password = process.env.vnspusrpwd;
             }
             let response = undefined;
@@ -134,69 +134,69 @@
         },
         async insertContacts(contact) {
             //contact:{name, address, phone, photoUrl, updateUser, createdDate, updatedDate}
-                return knex('contacts').insert(contact)
-                .then(() =>{
+            return knex('contacts').insert(contact)
+                .then(() => {
                     knex('contacts')
-                    .select()
-                    .where({ name: contact.name, address: contact.address })
-                    .then((c) => { return c; })
-                    .catch((err) => { throw err; });
+                        .select()
+                        .where({ name: contact.name, address: contact.address })
+                        .then((c) => { return c; })
+                        .catch((err) => { throw err; });
                 })
-                .catch ((err_1) => {  throw err_1; })
+                .catch((err_1) => { throw err_1; })
         },
-        updateContact(contact){
+        updateContact(contact) {
             return knex('contacts')
-            .where({contactId:contact.contactId})
-            .update({
-                name:contact.name,
-                address: contact.address,
-                phone: contact.phone,
-                photoUrl: contact.photoUrl,
-                updateUser: contact.updateUser,
-                updatedDate: contact.updatedDate
-            })
-            .then(() => { return {"updated":true};})
-            .catch((err) => { throw err;})
+                .where({ contactId: contact.contactId })
+                .update({
+                    name: contact.name,
+                    address: contact.address,
+                    phone: contact.phone,
+                    photoUrl: contact.photoUrl,
+                    updateUser: contact.updateUser,
+                    updatedDate: contact.updatedDate
+                })
+                .then(() => { return { "updated": true }; })
+                .catch((err) => { throw err; })
         },
         insertGallery({
             gallery,
             profilePhoto,
             updateUser
-        }){
+        }) {
             const createdDate = new Date();
             const updatedDate = new Date();
             return knex('galleries')
-            .insert({
-                gallery: gallery,
-                profilePhoto: profilePhoto,
-                updateUser: updateUser,
-                createdDate: createdDate,
-                updatedDate: updatedDate
-            })
-            .then( async()=>{
-                return await knex('galleries')
-                .where({gallery})
-                .select()
-                .then((data) => { return data; })
-                .catch((err) =>{ throw err});
-            })
-            .catch((error) => { throw error});
+                .insert({
+                    gallery: gallery,
+                    profilePhoto: profilePhoto,
+                    updateUser: updateUser,
+                    createdDate: createdDate,
+                    updatedDate: updatedDate
+                })
+                .then(async () => {
+                    return await knex('galleries')
+                        .where({ gallery })
+                        .select()
+                        .then((data) => { return data; })
+                        .catch((err) => { throw err });
+                })
+                .catch((error) => { throw error });
         },
-        updateGallery(gly){
-            if(gly){
+        updateGallery(gly) {
+            if (gly) {
                 gly.updatedDate = new Date();
                 return knex('galleries')
-                .where({galleryId: gly.galleryId})
-                .update({
-                    gallery:gly.gallery,
-                    profilePhoto: gly.profilePhoto,
-                    updateUser: gly.updateUser,
-                    updatedDate: gly.updatedDate
-                })
-                .then(() => {return {"Updated": true};})
-                .catch((err) => { throw err;})
+                    .where({ galleryId: gly.galleryId })
+                    .update({
+                        gallery: gly.gallery,
+                        profilePhoto: gly.profilePhoto,
+                        updateUser: gly.updateUser,
+                        updatedDate: gly.updatedDate
+                    })
+                    .then(() => { return { "Updated": true }; })
+                    .catch((err) => { throw err; })
             }
-            else{
+            else {
                 throw new error("No gallery data.");
             }
         },
@@ -208,7 +208,7 @@
             // .toString());
             return knex('galleries')
                 .select('galleryId', 'gallery', 'profilePhoto')
-                .whereRaw('galleryId = IFNULL(?,galleryId)',[galleryId])
+                .whereRaw('galleryId = IFNULL(?,galleryId)', [galleryId])
                 .orderBy('createdDate')
                 .then((data) => {
                     return data;
@@ -318,35 +318,62 @@
                     year: 'gp.year',
                     portrait: 'gp.portrait'
                 })
+                .orderBy([{column:'year', order:'desc'},'author'])
                 .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
                 .whereRaw('?? = ?', ['g.galleryId', galleryId])
                 .then((data) => {
                     let result = [];
+                    let cnt = 0;
                     data.forEach((item) => {
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
-                            let jsonEl = { "year": item.year, "photos": [] };
-                            jsonEl.photos.push({
+                            // a new year value, there should not be any author or photo in the set
+                            let jsonEl = { "year": item.year, "yeardata": []};
+                            const anAuthor = { "author": item.author, "photos": [] };
+                            anAuthor.photos.push({
                                 "galleryPhotoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
                                 "gallery": item.gallery,
                                 "photoImg": item.photo,
-                                "author": item.author,
+                                "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                "photoIndex": cnt,
                                 "portrait": item.portrait
                             });
+                            jsonEl.yeardata.push(anAuthor);
                             result.push(jsonEl);
                         } else {
-                            sr.photos.push({
-                                "galleryPhotoId": item.galleryPhotoId,
-                                "galleryId": item.galleryId,
-                                "gallery": item.gallery,
-                                "photoImg": item.photo,
-                                "author": item.author,
-                                "portrait": item.portrait
-                            });
+                            // a year exists in the array
+                            // find the author that comes along item result of current year
+                            let thisAuthor = sr.yeardata.find((a) => a.author === item.author);
+                            if (!thisAuthor) {
+                                // new author to the list
+                                thisAuthor = { "author": item.author, "photos": [] };
+                                thisAuthor.photos.push({
+                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "galleryId": item.galleryId,
+                                    "gallery": item.gallery,
+                                    "photoImg": item.photo,
+                                    "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                    "photoIndex": cnt,
+                                    "portrait": item.portrait
+                                });
+                                sr.yeardata.push(thisAuthor);
+                            } else {
+                                //existing author
+                                thisAuthor.photos.push({
+                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "galleryId": item.galleryId,
+                                    "gallery": item.gallery,
+                                    "photoImg": item.photo,
+                                    "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                    "photoIndex": cnt,
+                                    "portrait": item.portrait
+                                });
+                            }
                         }
+                        cnt += 1;
                     });
-                    return JSON.stringify(result);
+                    return result;
                 })
                 .catch((error) => { console.log(error); throw error; });
         },
@@ -361,33 +388,60 @@
                     year: 'gp.year',
                     portrait: 'gp.portrait'
                 })
+                .orderBy([{column:'year', order:'desc'},'author'])
                 .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
                 .whereRaw('?? = ?', ['g.gallery', gallery])
                 .then((data) => {
                     let result = [];
+                    let cnt = 0;
                     data.forEach((item) => {
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
-                            let jsonEl = { "year": item.year, "photos": [] };
-                            jsonEl.photos.push({
+                            // a new year value, there should not be any author or photo in the set
+                            let jsonEl = { "year": item.year, "yeardata": []};
+                            const anAuthor = { "author": item.author, "photos": [] };
+                            anAuthor.photos.push({
                                 "galleryPhotoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
                                 "gallery": item.gallery,
                                 "photoImg": item.photo,
-                                "author": item.author,
+                                "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                "photoIndex": cnt,
                                 "portrait": item.portrait
                             });
+                            jsonEl.yeardata.push(anAuthor);
                             result.push(jsonEl);
                         } else {
-                            sr.photos.push({
-                                "galleryPhotoId": item.galleryPhotoId,
-                                "galleryId": item.galleryId,
-                                "gallery": item.gallery,
-                                "photoImg": item.photo,
-                                "author": item.author,
-                                "portrait": item.portrait
-                            });
+                            // a year exists in the array
+                            // find the author that comes along item result of current year
+                            let thisAuthor = sr.yeardata.find((a) => a.author === item.author);
+                            if (!thisAuthor) {
+                                // new author to the list
+                                thisAuthor = { "author": item.author, "photos": [] };
+                                thisAuthor.photos.push({
+                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "galleryId": item.galleryId,
+                                    "gallery": item.gallery,
+                                    "photoImg": item.photo,
+                                    "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                    "photoIndex": cnt,
+                                    "portrait": item.portrait
+                                });
+                                sr.yeardata.push(thisAuthor);
+                            } else {
+                                //existing author
+                                thisAuthor.photos.push({
+                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "galleryId": item.galleryId,
+                                    "gallery": item.gallery,
+                                    "photoImg": item.photo,
+                                    "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
+                                    "photoIndex": cnt,
+                                    "portrait": item.portrait
+                                });
+                            }
                         }
+                        cnt += 1;
                     });
                     return result;
                 })

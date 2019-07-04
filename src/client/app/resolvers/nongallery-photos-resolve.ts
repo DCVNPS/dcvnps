@@ -26,18 +26,22 @@ export class NonGalleryPhotosResolve implements Resolve<Array<Slide>> {
                 // console.log(data);
                 let cnt = 0;
                 data.forEach((item) => {
-                    item.photos.forEach((photo) => {
-                        this.slides.push(new Slide(photo.galleryPhotoId,
-                            photo.galleryId,
-                            item.year,
-                            'dummy note',
-                            cnt,
-                            `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
-                            `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
-                            item.portrait === 1,
-                            true));
-                        cnt += 1;
-                    });
+                    item.yeardata.forEach(ydt => {
+                        ydt.photos.forEach(photo =>{
+                            this.slides.push(new Slide(
+                                photo.galleryPhotoId,
+                                photo.galleryId,
+                                item.year,
+                                ydt.author,
+                                cnt,
+                                `/galleries/${photo.gallery}/${item.year}/${photo.photoImg}`,
+                                `${photo.photoImg.replace(/\.jpg$|\.bmp$/i,'')}`,
+                                photo.portrait === 1,
+                                true
+                            ));
+                            cnt += 1;
+                        })
+                    })
                 });
             });
     }

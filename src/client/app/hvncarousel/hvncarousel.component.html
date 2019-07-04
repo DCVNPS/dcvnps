@@ -1,4 +1,4 @@
-<div class="ui centered grid">
+<div class="ui raised centered grid">
   <div #vnpscarousel class="ui basic segment">
     <div *ngFor="let s of data" (click)="toggleSlideshow();">
       <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" appSlideImageSize [config]="{'columnSpan': 8}">

@@ -1,4 +1,15 @@
-.card .image img{
-    vertical-align: middle!important;
-
+.author{
+    position: relative !important;
+    top:-20% !important;
+    padding-left: 10px !important;
+}
+.author>.name{
+    font-size: 1.5em !important;
+    color: rgba(19, 19, 19, 0.6) !important;
+}
+.author>.year{
+    float: right !important;
+    font-size: .8em !important;
+    padding-right: 10px !important;
+    color:rgba(19, 199, 115, 0.8) !important;
 }
