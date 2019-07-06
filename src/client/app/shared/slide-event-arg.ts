@@ -6,12 +6,5 @@ export enum Direction {
 }
 
 export class SlideEventArg {
-    public name: Direction;
-    public slideIndex: number;
-    public isPlaying: boolean;
-    constructor(name: Direction, slideIndex: number, playing: boolean) {
-        this.name = name;
-        this.slideIndex = slideIndex;
-        this.isPlaying = playing;
-    }
+    constructor(public name: Direction, public slideIndex: number, public playing: boolean) {    }
 }

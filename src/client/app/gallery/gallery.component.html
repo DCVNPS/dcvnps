@@ -1,9 +1,7 @@
 <div class="ui grey inverted secondary menu">
   <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
   <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
-  <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
-  <button class="item" *ngFor="let year of years"
-    (click)="onFilterYear(year);">{{year}}</button>
+  <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
   <div class="stackable right menu" *ngIf="isAdmin">
     <a class="item" [routerLink]="['/editgallery',level]" [routerLinkActive]="['active']" aria-label="Edit gallery">
       <span><i class="big edit icon"></i></span>Edit Gallery
@@ -14,7 +12,7 @@
   </div>
 </div>
 
-<div class="ui six stackable cards">
+<!-- <div class="ui six stackable cards">
     <a class="card borderless" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
       <div class="image">
         <img [src]="s.imgsrc" appCardImageSize [cardCount]="6">
@@ -24,14 +22,14 @@
         <div class="year">{{s.year}}</div>
       </div>
     </a>
-  </div>
-<!-- <div *ngFor="let curYear of galleryData">
-  <div class="ui header vnps-header">{{curYear.year}}</div>
+  </div> -->
+<div *ngFor="let curYear of galleryData">
+  <!-- <div class="ui header vnps-header">{{curYear.year}}</div> -->
   <div class="ui two column grid">
   <div *ngFor="let authorData of curYear.yeardata" class="column">
     <app-author-photo [authorData]="authorData"></app-author-photo>
   </div>
 </div>
-</div> -->
+</div>
 <!-- Popup slide show -->
 <app-popup [(visible)]="showDialog" [data]="slides"></app-popup>

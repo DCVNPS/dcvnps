@@ -59,29 +59,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.editUrl = `/editgallery/${this.level}`;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // get the gallery data from route resolver
-    this.route.snapshot.data.data.forEach((thisyear) => {
-      this.years.push(thisyear.year);
-      this.galleryData.push(thisyear);
-      thisyear.yeardata.forEach((authordata) => {
-        authordata.photos.forEach(photo => {
-          this.selectedSlides.push(
-            new Slide(photo.galleryPhotoId,
-                    photo.galleryId,
-                    thisyear.year,
-                    authordata.author,
-                    photo.photoIndex,
-                    photo.imgsrc,
-                    `${photo.photoImg.replace(/\.jpg$|\.bmp$/i, '')}`,
-                    photo.portrait === 1,
-                    true)
-          );
-        });
-      });
-    })
-    console.log(this.galleryData);
+    this.galleryData = this.route.snapshot.data.galleryData;
+    this.galleryData.forEach( yearData => {
+      this.years.push(yearData.year);
+    });
     this.slides = this.selectedSlides;
     this.galleryDataService.updateData(this.selectedSlides);
-     // console.log(this.slides);
+    // console.log(this.galleryData);
   }
 
   goBack() {
@@ -89,28 +73,24 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onFilterYear(year: string) {
-    let cnt = 0;
     this.galleryData = [];
-    // console.log('selected slides',this.selectedSlides);
+    const data = this.route.snapshot.data.galleryData;
     if (year) {
-      this.galleryData.push(this.route.snapshot.data.data.find((d) => d.year === year));
-      this.slides = this.selectedSlides.filter(s => s.year === year);
+      this.galleryData.push(data.find(y => y.year === year));
     } else {
-      this.route.snapshot.data.data.forEach( y => {
-        this.galleryData.push(y);
-      })
-      this.slides = this.selectedSlides;
+      this.galleryData = data;
     }
-    this.slides.forEach(s => s.photoIndex = cnt++);
-    this.galleryDataService.updateData(this.slides);
+    // console.log(this.galleryData);
   }
 
   showPopup(sIndex: number) {
-    const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
-    if (currentSlide) {
-      this.showDialog = true;
-      this.slides.forEach(s => s.hidden = true);
-      currentSlide.hidden = false;
-    }
+    // const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
+    // if (currentSlide) {
+    //   this.showDialog = true;
+    //   this.slides.forEach(s => s.hidden = true);
+    //   currentSlide.hidden = false;
+    // }
+    this.slides.forEach(s => s.hidden = true);
+    this.slides[sIndex].hidden = false;
   }
 }

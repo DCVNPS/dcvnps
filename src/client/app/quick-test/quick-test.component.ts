@@ -16,10 +16,10 @@ export class QuickTestComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.popupInput = [new Slide(
       '12345',
-      '2017',
       '45678',
-      'Testing image',
-      1,
+      'member',
+      '2017',
+      'johm.brand',
       'profiles/member/2018/member-2018.jpg',
       'alternative',
       false,

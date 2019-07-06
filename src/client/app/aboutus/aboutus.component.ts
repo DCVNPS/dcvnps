@@ -28,15 +28,29 @@ export class AboutusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.slides = this.router.snapshot.data['photos'];
+    const data = this.router.snapshot.data['photos'];
+    data.forEach((item) => {
+        item.yeardata.forEach(ydt => {
+            ydt.photos.forEach(photo => {
+                this.slides.push(new Slide(
+                    photo.galleryPhotoId,
+                    photo.galleryId,
+                    photo.gallery,
+                    item.year,
+                    ydt.author,
+                    photo.imgsrc,
+                    photo.imgalt,
+                    photo.portrait === 1,
+                    true
+                ));
+            })
+        })
+    });
   }
   showPopup(sIndex: number) {
-    const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
-    if (currentSlide) {
-      this.showDialog = true;
-      this.slides.forEach(s => s.hidden = true);
-      currentSlide.hidden = false;
-    }
+    this.slides.forEach(s => s.hidden = true);
+    this.slides[sIndex].hidden = false;
+    this.showDialog = true;
   }
 
   goBack() {

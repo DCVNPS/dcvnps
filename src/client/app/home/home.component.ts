@@ -15,7 +15,25 @@ export class HomeComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.slides = this.route.snapshot.data['photos'];
+    const data = this.route.snapshot.data['photos'];
     this.galleries = this.route.snapshot.data['galleries'];
+    // console.log(data);
+    data.forEach((item) => {
+        item.yeardata.forEach(ydt => {
+            ydt.photos.forEach(photo => {
+                this.slides.push(new Slide(
+                    photo.galleryPhotoId,
+                    photo.galleryId,
+                    photo.gallery,
+                    item.year,
+                    ydt.author,
+                    photo.imgsrc,
+                    photo.imgalt,
+                    photo.portrait === 1,
+                    true
+                ));
+            })
+        })
+    });
   }
 }

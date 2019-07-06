@@ -37,7 +37,6 @@ import { HvncarouselComponent } from './hvncarousel/hvncarousel.component';
 import { MatchHeightDirective } from './directives/matchheight.directive';
 import { CardImageSizeDirective } from './directives/card-image-size.directive';
 import { SlideImageSizeDirective } from './directives/slide-image-size.directive';
-import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
@@ -94,7 +93,6 @@ import { AuthorPhotoComponent } from './author-photo/author-photo.component';
     DomService,
     ModalService,
     GalleryPhotosResolve,
-    NonGalleryPhotosResolve,
     GalleriesResolve
   ],
   bootstrap: [AppComponent],

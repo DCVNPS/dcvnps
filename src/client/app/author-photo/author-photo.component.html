@@ -1,9 +1,12 @@
 <div class="ui basic segment">
   <div class="vnps-header">{{authorData.author | uppercase}}</div>
   <div class="ui three link cards">
-    <div class="ui card borderless" *ngFor="let photo of authorData.photos">
-      <a class="image" (click)="showPopup(photo.photoIndex);">
-        <img class="norounded" [src]="photo.imgsrc" appCardImageSize [cardCount]="5">
+    <div class="ui card borderless" *ngFor="let photo of authorData.photos; let i = index">
+      <!-- <div class="content">
+        <div class="meta">{{i}}--{{photo.imgalt}}</div>
+      </div> -->
+      <a class="image" (click)="imageClicked(i);">
+        <img class="norounded" [src]="photo.imgsrc" appCardImageSize [cardCount]="3">
       </a>
     </div>
   </div>

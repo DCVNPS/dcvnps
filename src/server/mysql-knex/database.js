@@ -393,7 +393,6 @@
                 .whereRaw('?? = ?', ['g.gallery', gallery])
                 .then((data) => {
                     let result = [];
-                    let cnt = 0;
                     data.forEach((item) => {
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
@@ -404,9 +403,8 @@
                                 "galleryPhotoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
                                 "gallery": item.gallery,
-                                "photoImg": item.photo,
+                                "imgalt": item.photo,
                                 "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                "photoIndex": cnt,
                                 "portrait": item.portrait
                             });
                             jsonEl.yeardata.push(anAuthor);
@@ -422,9 +420,8 @@
                                     "galleryPhotoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,
                                     "gallery": item.gallery,
-                                    "photoImg": item.photo,
+                                    "imgalt": item.photo,
                                     "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                    "photoIndex": cnt,
                                     "portrait": item.portrait
                                 });
                                 sr.yeardata.push(thisAuthor);
@@ -434,16 +431,15 @@
                                     "galleryPhotoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,
                                     "gallery": item.gallery,
-                                    "photoImg": item.photo,
+                                    "imgalt": item.photo,
                                     "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                    "photoIndex": cnt,
                                     "portrait": item.portrait
                                 });
                             }
                         }
-                        cnt += 1;
                     });
                     return result;
+                    // return data;
                 })
                 .catch((error) => { console.log(error); throw error; });
         },

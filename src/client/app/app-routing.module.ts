@@ -12,7 +12,6 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
-import { NonGalleryPhotosResolve } from './resolvers/nongallery-photos-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
@@ -27,7 +26,7 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      photos: NonGalleryPhotosResolve,
+      photos: GalleryPhotosResolve,
       galleries: GalleriesResolve
     }
   },
@@ -50,7 +49,7 @@ const routes: Routes = [
     path: 'gallery/:level',
     component: GalleryComponent,
     resolve: {
-      data: GalleryPhotosResolve
+      galleryData: GalleryPhotosResolve
     },
     runGuardsAndResolvers: 'always'
   },
@@ -79,7 +78,7 @@ const routes: Routes = [
     path: 'aboutus',
     component: AboutusComponent,
     resolve: {
-      photos: NonGalleryPhotosResolve
+      photos: GalleryPhotosResolve
     }
   },
   // {
