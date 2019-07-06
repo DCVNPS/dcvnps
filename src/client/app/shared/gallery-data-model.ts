@@ -1,9 +1,9 @@
-import { Slide } from './slide-model';
+import { Photo } from './photo.model';
 
 export class GalleryDataModel {
     // public level: string;
     public years: string[];
-    public photos: Slide[];
+    public photos: Photo[];
     // public selectedPhotos: Slide[];
     constructor( ) {};
     }

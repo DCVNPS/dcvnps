@@ -17,20 +17,20 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     const data = this.route.snapshot.data['photos'];
     this.galleries = this.route.snapshot.data['galleries'];
-    data.forEach((item) => {
-        item.yeardata.forEach(ydt => {
-            ydt.photos.forEach(photo => {
-                this.photos.push(new Photo(
-                    photo.photoId,
-                    photo.galleryId,
-                    photo.gallery,
-                    photo.imgalt,
-                    photo.imgsrc,
-                    photo.portrait === 1,
-                    true
-                ));
-            })
+    data.forEach((yearData) => {
+      yearData.authorData.forEach(authorPhotos => {
+        authorPhotos.photos.forEach(photo => {
+          this.photos.push(new Photo(
+            photo.photoId,
+            photo.galleryId,
+            photo.gallery,
+            photo.imgalt,
+            photo.imgsrc,
+            photo.portrait === 1,
+            true
+          ));
         })
+      })
     });
     console.log(this.photos);
   }

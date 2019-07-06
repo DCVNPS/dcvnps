@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Slide } from '../shared/slide.model';
+import { Photo } from '../shared/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../shared/person.model';
 
@@ -10,7 +10,7 @@ import { Person } from '../shared/person.model';
   styleUrls: ['./aboutus.component.scss']
 })
 export class AboutusComponent implements OnInit {
-  public slides: Slide[] = [];
+  public photos: Photo[] = [];
   public chair: Person;
   public viceChair: Person;
   public generalSec: Person;
@@ -29,27 +29,26 @@ export class AboutusComponent implements OnInit {
 
   ngOnInit() {
     const data = this.router.snapshot.data['photos'];
-    data.forEach((item) => {
-        item.yeardata.forEach(ydt => {
-            ydt.photos.forEach(photo => {
-                this.slides.push(new Slide(
-                    photo.galleryPhotoId,
-                    photo.galleryId,
-                    photo.gallery,
-                    item.year,
-                    ydt.author,
-                    photo.imgsrc,
-                    photo.imgalt,
-                    photo.portrait === 1,
-                    true
-                ));
-            })
+    data.forEach((yearData) => {
+      yearData.authorData.forEach(authorPhotos => {
+        authorPhotos.photos.forEach(photo => {
+          this.photos.push(new Photo(
+            photo.photoId,
+            photo.galleryId,
+            photo.gallery,
+            photo.imgalt,
+            photo.imgsrc,
+            photo.portrait === 1,
+            true
+          ));
         })
+      })
     });
+    // console.log(this.photos);
   }
   showPopup(sIndex: number) {
-    this.slides.forEach(s => s.hidden = true);
-    this.slides[sIndex].hidden = false;
+    this.photos.forEach(s => s.hidden = true);
+    this.photos[sIndex].hidden = false;
     this.showDialog = true;
   }
 

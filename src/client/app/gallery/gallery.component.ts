@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
-import { Slide } from '../shared/slide.model';
+import { Photo } from '../shared/photo.model';
 import { YearData } from '../shared/year.data';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -17,8 +17,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   level: string;
   year: string;
   years: Array<string>;
-  private selectedSlides: Array<Slide>;
-  slides: Array<Slide>;
+  selectedPhotos: Array<Photo>;
+  photos: Array<Photo>;
   showDialog = false;
   public isAdmin: boolean;
   public editUrl: string;
@@ -52,8 +52,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   initializeData() {
     this.years = [];
-    this.slides = [];
-    this.selectedSlides = [];
+    this.photos = [];
+    this.selectedPhotos = [];
     this.galleryData = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
@@ -61,12 +61,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // get the gallery data from route resolver
     this.galleryData = this.route.snapshot.data.galleryData;
+    // console.log(this.galleryData);
     this.galleryData.forEach( yearData => {
       this.years.push(yearData.year);
     });
-    this.slides = this.selectedSlides;
-    this.galleryDataService.updateData(this.selectedSlides);
-    // console.log(this.galleryData);
+    this.photos = this.selectedPhotos;
+    this.galleryDataService.updateData(this.selectedPhotos);
   }
 
   goBack() {
@@ -84,14 +84,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // console.log(this.galleryData);
   }
 
-  showPopup(sIndex: number) {
-    // const currentSlide = this.slides.find(s => s.photoIndex === sIndex);
-    // if (currentSlide) {
-    //   this.showDialog = true;
-    //   this.slides.forEach(s => s.hidden = true);
-    //   currentSlide.hidden = false;
-    // }
-    this.slides.forEach(s => s.hidden = true);
-    this.slides[sIndex].hidden = false;
+  showPopup(event) {
+    this.photos = event;
+    // console.log(this.photos);
+    this.showDialog = true;
   }
+
 }

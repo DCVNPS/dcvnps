@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { Slide } from '../shared/slide.model';
+import { Photo } from '../shared/photo.model';
 
 @Component({
   selector: 'app-popup',
@@ -21,7 +21,7 @@ import { Slide } from '../shared/slide.model';
 export class PopupComponent {
   public closable = true;
   private max: number;
-  @Input() data: Slide[];
+  @Input() data: Photo[];
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

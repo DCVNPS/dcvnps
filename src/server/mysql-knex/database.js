@@ -397,7 +397,7 @@
                         const sr = result.find((y) => y.year === item.year);
                         if (!sr) {
                             // a new year value, there should not be any author or photo in the set
-                            let jsonEl = { "year": item.year, "yeardata": []};
+                            let jsonEl = { "year": item.year, "authorData": []};
                             const anAuthor = { "author": item.author, "photos": [] };
                             anAuthor.photos.push({
                                 "photoId": item.galleryPhotoId,
@@ -408,12 +408,12 @@
                                 "portrait": item.portrait,
                                 "hidden": true
                             });
-                            jsonEl.yeardata.push(anAuthor);
+                            jsonEl.authorData.push(anAuthor);
                             result.push(jsonEl);
                         } else {
                             // a year exists in the array
                             // find the author that comes along item result of current year
-                            let thisAuthor = sr.yeardata.find((a) => a.author === item.author);
+                            let thisAuthor = sr.authorData.find((a) => a.author === item.author);
                             if (!thisAuthor) {
                                 // new author to the list
                                 thisAuthor = { "author": item.author, "photos": [] };
@@ -426,7 +426,7 @@
                                     "portrait": item.portrait,
                                     "hidden": true
                                 });
-                                sr.yeardata.push(thisAuthor);
+                                sr.authorData.push(thisAuthor);
                             } else {
                                 //existing author
                                 thisAuthor.photos.push({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { GalleryDataService } from '../services/gallery-data.service';
-import { Slide } from '../shared/slide.model';
+import { Photo } from '../shared/photo.model';
 
 @Component({
   selector: 'app-edit-gallery',
@@ -10,12 +10,11 @@ import { Slide } from '../shared/slide.model';
 })
 export class EditGalleryComponent implements OnInit {
 
-  public slides: Array<Slide> = [];
+  public photos: Array<Photo> = [];
   constructor(private location: Location, private galleryData: GalleryDataService) { }
 
   ngOnInit() {
-    this.galleryData.data.subscribe( data => this.slides = data);
-    // console.log(this.slides);
+    // this.galleryData.data.subscribe( data => this.photos = dataPhoto // console.log(this.slides);
   }
   goBack() {
     this.location.back();

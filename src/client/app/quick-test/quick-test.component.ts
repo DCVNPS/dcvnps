@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Slide } from '../shared/slide.model';
 import { ActivatedRoute } from '@angular/router';
+
+import { Photo } from '../shared/photo.model';
+import { Gallery } from '../shared/gallery.model';
 
 @Component({
   selector: 'app-quick-test',
@@ -9,24 +11,39 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class QuickTestComponent implements OnInit {
   imgSrc = 'profiles/member/2018/member-2018.jpg';
-  public popupInput: Slide[] = [];
-  public slides: Array<Slide> = [];
+  public popupInput: Photo[] = [];
+  public photos: Array<Photo> = [];
+  public galleries: Array<Gallery> = [];
   public showDialog: boolean;
   public carouseConfig: Object = {'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
   constructor(private route: ActivatedRoute) {
-    this.popupInput = [new Slide(
+    this.popupInput = [new Photo(
       '12345',
       '45678',
       'member',
-      '2017',
-      'johm.brand',
       'profiles/member/2018/member-2018.jpg',
       'alternative',
       false,
       false)];
   }
   ngOnInit() {
-    // this.getHomePhotos();
-    this.slides = this.route.snapshot.data['photos'];
+    const data = this.route.snapshot.data['photos'];
+    this.galleries = this.route.snapshot.data['galleries'];
+    data.forEach((item) => {
+        item.yeardata.forEach(ydt => {
+            ydt.photos.forEach(photo => {
+                this.photos.push(new Photo(
+                    photo.photoId,
+                    photo.galleryId,
+                    photo.gallery,
+                    photo.imgalt,
+                    photo.imgsrc,
+                    photo.portrait === 1,
+                    true
+                ));
+            })
+        })
+    });
+    console.log(this.photos);
   }
 }

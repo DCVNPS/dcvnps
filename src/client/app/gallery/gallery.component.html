@@ -12,24 +12,13 @@
   </div>
 </div>
 
-<!-- <div class="ui six stackable cards">
-    <a class="card borderless" *ngFor="let s of slides" (click)="showPopup(s.photoIndex);">
-      <div class="image">
-        <img [src]="s.imgsrc" appCardImageSize [cardCount]="6">
-      </div>
-      <div class="author">
-        <div class="name">{{s.author}}</div> 
-        <div class="year">{{s.year}}</div>
-      </div>
-    </a>
-  </div> -->
-<div *ngFor="let curYear of galleryData">
+<div *ngFor="let yearData of galleryData">
   <!-- <div class="ui header vnps-header">{{curYear.year}}</div> -->
   <div class="ui two column grid">
-  <div *ngFor="let authorData of curYear.yeardata" class="column">
-    <app-author-photo [authorData]="authorData"></app-author-photo>
+  <div *ngFor="let authorPhotos of yearData.authorData" class="column">
+    <app-author-photo [authorPhotos]="authorPhotos" (showPopupClicked)="showPopup($event)"></app-author-photo>
   </div>
 </div>
 </div>
 <!-- Popup slide show -->
-<app-popup [(visible)]="showDialog" [data]="slides"></app-popup>
+<app-popup [(visible)]="showDialog" [data]="photos"></app-popup>
