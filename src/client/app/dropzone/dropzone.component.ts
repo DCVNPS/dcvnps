@@ -11,7 +11,7 @@ import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { Gallery } from '../shared/gallery.model';
-import { ImageInfo } from '../shared/image.model';
+import { ImageInfo } from '../shared/image-model';
 import { RegexService } from '../services/regex.service';
 import { AuthService } from '../services/auth.service';
 

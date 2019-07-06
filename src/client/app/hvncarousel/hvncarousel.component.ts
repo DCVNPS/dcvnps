@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
-import { Slide } from '../shared/slide.model';
+import { Photo } from '../shared/photo.model';
 
 @Component({
 // tslint:disable-next-line: component-selector
@@ -9,7 +9,7 @@ import { Slide } from '../shared/slide.model';
 })
 export class HvncarouselComponent implements OnInit {
 
-  @Input() data: Array<Slide>;
+  @Input() data: Array<Photo>;
   // @Input() delay = 500;
   @Input() config: any = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
 

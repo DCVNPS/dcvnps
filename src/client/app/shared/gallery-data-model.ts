@@ -1,4 +1,4 @@
-import { Slide } from './slide.model';
+import { Slide } from './slide-model';
 
 export class GalleryDataModel {
     // public level: string;

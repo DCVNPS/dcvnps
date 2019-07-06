@@ -10,7 +10,7 @@
             Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
         </p>
     </div>
-    <div *ngIf="slides.length > 0" class="ui grid">
+    <div *ngIf="photos.length > 0" class="ui grid">
         <div class="stretched row">
             <div class="four wide column">
                 <div class="ui raised padded text segments">
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="eight wide column">
-                <hvn-carousel [data]="slides" [config]="carouseConfig"></hvn-carousel>
+                <hvn-carousel [data]="photos" [config]="carouseConfig"></hvn-carousel>
             </div>
             <div class="four wide column">
                 <div class="ui  raised padded text segments">

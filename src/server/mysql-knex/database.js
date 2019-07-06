@@ -400,12 +400,13 @@
                             let jsonEl = { "year": item.year, "yeardata": []};
                             const anAuthor = { "author": item.author, "photos": [] };
                             anAuthor.photos.push({
-                                "galleryPhotoId": item.galleryPhotoId,
+                                "photoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
                                 "gallery": item.gallery,
                                 "imgalt": item.photo,
                                 "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                "portrait": item.portrait
+                                "portrait": item.portrait,
+                                "hidden": true
                             });
                             jsonEl.yeardata.push(anAuthor);
                             result.push(jsonEl);
@@ -417,23 +418,25 @@
                                 // new author to the list
                                 thisAuthor = { "author": item.author, "photos": [] };
                                 thisAuthor.photos.push({
-                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "photoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,
                                     "gallery": item.gallery,
                                     "imgalt": item.photo,
                                     "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                    "portrait": item.portrait
+                                    "portrait": item.portrait,
+                                    "hidden": true
                                 });
                                 sr.yeardata.push(thisAuthor);
                             } else {
                                 //existing author
                                 thisAuthor.photos.push({
-                                    "galleryPhotoId": item.galleryPhotoId,
+                                    "photoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,
                                     "gallery": item.gallery,
                                     "imgalt": item.photo,
                                     "imgsrc": `/galleries/${item.gallery}/${item.year}/${item.photo}`,
-                                    "portrait": item.portrait
+                                    "portrait": item.portrait,
+                                    "hidden": true
                                 });
                             }
                         }

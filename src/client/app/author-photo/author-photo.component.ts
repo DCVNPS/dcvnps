@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Photo } from '../shared/photo.model';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-author-photo',
@@ -16,9 +15,11 @@ export class AuthorPhotoComponent implements OnInit {
   ngOnInit() {
     this.author = this.authorData.author;
     this.photos = this.authorData.photos;
-    console.log(this.photos);
+    // console.log(this.photos);
   }
   imageClicked(i: number) {
-
+    this.photos.forEach( photo => { photo.hidden = true; } );
+    this.photos[i].hidden = false;
+    console.log(this.photos);
   }
 }

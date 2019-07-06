@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { ImageInfo } from '../shared/image.model';
+import { ImageInfo } from '../shared/image-model';
 import { AuthService } from './auth.service';
 
 @Injectable({

@@ -1,8 +1,11 @@
-export interface Photo {
-    photoId: string,
-    galleryId: string,
-    gallery: string,
-    imgalt: string,
-    imgsrc: string,
-    portrait: boolean
+export class Photo {
+    constructor(
+        public photoId: string,
+        public galleryId: string,
+        public gallery: string,
+        public imgalt: string,
+        public imgsrc: string,
+        public portrait: boolean,
+        public hidden: boolean    
+    ) {}
 }

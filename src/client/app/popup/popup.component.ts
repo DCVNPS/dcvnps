@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Slide } from '../shared/slide.model';
-import { copyStyles } from '@angular/animations/browser/src/util';
 
 @Component({
   selector: 'app-popup',

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { Slide } from '../shared/slide.model';
+import { YearData } from '../shared/year.data';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
@@ -21,7 +22,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   showDialog = false;
   public isAdmin: boolean;
   public editUrl: string;
-  public galleryData: Array<any> = [];
+  public galleryData: Array<YearData> = [];
   public destroyed = new Subject<any>();
   /******************************************************************
    *  @route: ActivatedRoute is used to retrieve resolve data

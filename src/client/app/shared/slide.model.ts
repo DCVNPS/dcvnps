@@ -10,8 +10,7 @@ export class Slide {
         public portrait: boolean,
         public hidden: boolean) {
     }
-    toggle() {
-        this.hidden = !this.hidden;
-    }
-
+    // toggle() {
+    //     this.hidden = !this.hidden;
+    // }
 }
