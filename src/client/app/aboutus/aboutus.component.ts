@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Photo } from '../shared/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../shared/person.model';
+import { BoardMember } from '../shared/board-member';
 
 @Component({
   selector: 'app-aboutus',
@@ -18,16 +19,25 @@ export class AboutusComponent implements OnInit {
   public auditor: Person;
   public bodyText: string;
   public showDialog: boolean;
+  public boardMembers: Array<BoardMember> = [];
   constructor(private router: ActivatedRoute, private location: Location) {
     this.showDialog = false;
-    this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
-    this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
-    this.generalSec = { lastName: 'Nguyen', firstName: 'Lan', middleName: 'Kieu', tittle: 'general secretary' };
-    this.treasury = { lastName: 'Hoang', firstName: 'Ly', middleName: 'Truc', tittle: 'treasury' };
-    this.auditor = { lastName: 'Long', firstName: 'Vuong', middleName: '', tittle: 'auditor' };
+    // this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
+    // this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
+    // this.generalSec = { lastName: 'Nguyen', firstName: 'Lan', middleName: 'Kieu', tittle: 'general secretary' };
+    // this.treasury = { lastName: 'Hoang', firstName: 'Ly', middleName: 'Truc', tittle: 'treasury' };
+    // this.auditor = { lastName: 'Long', firstName: 'Vuong', middleName: '', tittle: 'auditor' };
   }
 
   ngOnInit() {
+    this.boardMembers = this.router.snapshot.data['board'];
+    // this.boardMembers.forEach(m => { console.log(m); });
+    this.chair = this.boardMembers.find( m => m.tittle === 'chairman');
+    this.viceChair = this.boardMembers.find( m => m.tittle === 'vice chairman');
+    this.generalSec = this.boardMembers.find( m => m.tittle === 'general secretary');
+    this.treasury = this.boardMembers.find( m => m.tittle === 'treasury');
+    this.auditor = this.boardMembers.find( m => m.tittle === 'auditor');
+
     const data = this.router.snapshot.data['photos'];
     data.forEach((yearData) => {
       yearData.authorData.forEach(authorPhotos => {

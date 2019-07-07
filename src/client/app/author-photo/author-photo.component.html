@@ -1,9 +1,10 @@
 <div class="ui basic segment">
   <div class="ui blue inverted secondary menu">
     <div class="header item">{{author | uppercase}}</div>
-    <div class="right menu" *ngIf="isAdmin">
+    <div class="right menu">
+      <div class="item">{{year}}</div>
         <!-- <a class="item" [routerLink]="['/editgallery',level]" [routerLinkActive]="['active']" aria-label="Edit"> -->
-          <a class="item" (click)="editPhotos()" aria-label="Edit">
+          <a class="item" (click)="editPhotos()" aria-label="Edit"  *ngIf="isAdmin">
           <span><i class="big edit icon"></i></span>Edit
         </a>    
     </div>

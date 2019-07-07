@@ -15,6 +15,7 @@ import { DropzoneComponent } from './dropzone/dropzone.component';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
+import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 
 const routes: Routes = [
   {
@@ -78,7 +79,8 @@ const routes: Routes = [
     path: 'aboutus',
     component: AboutusComponent,
     resolve: {
-      photos: GalleryPhotosResolve
+      photos: GalleryPhotosResolve,
+      board: BoardDirectorResolve
     }
   },
   // {

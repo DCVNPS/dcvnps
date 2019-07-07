@@ -4,9 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { MenuComponent } from './menu/menu.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactComponent } from './contact/contact.component';
@@ -43,6 +43,7 @@ import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { AuthorPhotoComponent } from './author-photo/author-photo.component';
+import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { AuthorPhotoComponent } from './author-photo/author-photo.component';
     HvnHoverDirective,
     GalleryListComponent,
     AuthorPhotoComponent,
+    PaypalButtonComponent,
   ],
   imports: [
     BrowserModule,

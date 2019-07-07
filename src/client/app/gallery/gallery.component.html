@@ -15,8 +15,8 @@
 <div *ngFor="let yearData of galleryData">
   <!-- <div class="ui header vnps-header">{{curYear.year}}</div> -->
   <div class="ui two column grid">
-  <div *ngFor="let authorPhotos of yearData.authorData" class="column">
-    <app-author-photo [authorPhotos]="authorPhotos" (showPopupClicked)="showPopup($event)"></app-author-photo>
+  <div *ngFor="let authorData of yearData.authorData" class="column">
+    <app-author-photo [authorData]="{'year': yearData.year, 'authorPhotos': authorData}" (showPopupClicked)="showPopup($event)"></app-author-photo>
   </div>
 </div>
 </div>

@@ -16,6 +16,7 @@ function apiRouter(database) {
                 path:
                     [
                         '/api/authenticate',
+                        '/api/boardmembers',
                         {url: /^\/api\/galleries.*/i, methods:['GET'] },
                         { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
                         { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
@@ -166,6 +167,17 @@ function apiRouter(database) {
             .catch((err) => { return res.status(err.status).json({ error: err.message }); })
     });
 
+    router.get('/boardmembers', (req, res) => {
+        fs.readFile(`${serverRoot}/data/director-board.json`, (err, data) =>{
+            if(err){
+                console.log(err);
+                return res.status(500).json(err);
+            }
+            const boardMembers = JSON.parse(data);
+            // console.log(boardMembers);
+            return res.status(200).json(boardMembers);
+        });
+    });
     return router;
 }
 

@@ -6,7 +6,6 @@ import { YearData } from '../shared/year.data';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { GalleryDataService } from '../services/gallery-data.service';
 
 @Component({
   selector: 'app-gallery',
@@ -57,7 +56,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.galleryData = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
-    this.editUrl = `/editgallery/${this.level}`;
+    // this.editUrl = `/editgallery/${this.level}`;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // get the gallery data from route resolver
     this.galleryData = this.route.snapshot.data.galleryData;

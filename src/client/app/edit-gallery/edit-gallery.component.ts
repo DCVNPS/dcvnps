@@ -23,4 +23,12 @@ export class EditGalleryComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  deletePhoto(img: Photo) {
+    console.log(img);
+  }
+
+  editPhoto(img: Photo){
+    console.log(img);
+  }
 }

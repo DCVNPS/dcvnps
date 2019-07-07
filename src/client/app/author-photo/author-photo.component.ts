@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./author-photo.component.scss']
 })
 export class AuthorPhotoComponent implements OnInit {
-  @Input() private authorPhotos: AuthorData;
+  @Input() private authorData: Object = {};
   @Output() showPopupClicked: EventEmitter<Photo[]> = new EventEmitter<Photo[]>();
   public author: string;
   public photos: Array<Photo> = [];
+  public year: string;
   public isAdmin = false;
   constructor(
     private router: Router,
@@ -23,8 +24,10 @@ export class AuthorPhotoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.author = this.authorPhotos.author;
-    this.photos = this.authorPhotos.photos;
+    // console.log(this.authorData);
+    this.year = this.authorData['year'];
+    this.author = this.authorData['authorPhotos'].author;
+    this.photos = this.authorData['authorPhotos'].photos;
     this.isAdmin = this.auth.levelAdmin();
     // console.log(this.photos);
     // console.log({ 'isAdmin ': this.isAdmin });
@@ -37,7 +40,7 @@ export class AuthorPhotoComponent implements OnInit {
   }
 
   editPhotos() {
-    this.galleryDataService.updateData(this.authorPhotos);
+    this.galleryDataService.updateData(this.authorData['authorPhotos']);
     console.log(`Edit Author ${this.author} photos`);
     this.router.navigateByUrl('/editgallery');
   }
