@@ -17,7 +17,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   level: string;
   year: string;
   years: Array<string>;
-  selectedPhotos: Array<Photo>;
+  // selectedPhotos: Array<Photo>;
   photos: Array<Photo>;
   showDialog = false;
   public isAdmin: boolean;
@@ -31,7 +31,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService,
-    private galleryDataService: GalleryDataService,
+    // private galleryDataService: GalleryDataService,
     private location: Location) {
     this.initializeData();
   }
@@ -53,7 +53,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   initializeData() {
     this.years = [];
     this.photos = [];
-    this.selectedPhotos = [];
+    // this.selectedPhotos = [];
     this.galleryData = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
@@ -64,9 +64,14 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // console.log(this.galleryData);
     this.galleryData.forEach( yearData => {
       this.years.push(yearData.year);
+      yearData.authorData.forEach( authData => {
+        authData.photos.forEach( p => {
+          this.photos.push(p);
+        })
+      })
     });
-    this.photos = this.selectedPhotos;
-    this.galleryDataService.updateData(this.selectedPhotos);
+    // console.log(this.photos);
+    // this.galleryDataService.updateData(this.photos);
   }
 
   goBack() {

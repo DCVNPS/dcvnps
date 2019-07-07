@@ -54,7 +54,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-  path: 'editgallery/:level',
+  path: 'editgallery',
   component: EditGalleryComponent,
   canActivate: [AuthGuard]
 },

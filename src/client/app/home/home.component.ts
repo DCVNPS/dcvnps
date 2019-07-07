@@ -32,6 +32,6 @@ export class HomeComponent implements OnInit {
         })
       })
     });
-    console.log(this.photos);
+    // console.log(this.photos);
   }
 }

@@ -6,6 +6,6 @@ export class Photo {
         public imgalt: string,
         public imgsrc: string,
         public portrait: boolean,
-        public hidden: boolean    
+        public hidden: boolean
     ) {}
 }
