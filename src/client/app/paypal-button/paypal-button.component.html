@@ -1,3 +1,7 @@
-<input type="number" [(ngModel)]="finalAmount">
-<h2 *ngIf="paypalLoad">Paypal is loading...</h2>
-<div id="paypal-button-container"></div>
+<div class="paypal-container">
+  <h2 class="header">Class enrollment payment</h2>
+  <div class="header">Enrollement Fee: {{finalAmount | currency}}</div>
+  <div class="field">There is a 5% transaction fee applied</div>
+  <h2 *ngIf="paypalLoad">Paypal is loading...</h2>
+  <div id="paypal-button-container"></div>
+</div>
