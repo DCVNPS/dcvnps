@@ -44,8 +44,9 @@ export class AuthService {
   isAdmin(level?: string) {
     let isLevelAdmin = false;
     let roleLevel: any;
+    let roleStr: string;
     if (this.isLogin()) {
-      const roleStr = this.getRole();
+      roleStr = this.getRole();
       const match = roleStr.match(/ADM$/g);
       // console.log({ 'level': level, 'role': roleStr, 'match': match });
       if (level) {
@@ -55,16 +56,16 @@ export class AuthService {
         isLevelAdmin = true;
       }
     }
-    return isLevelAdmin;
+    return isLevelAdmin || roleStr === 'SITEADMIN';
   }
 
   siteAdmin() {
     return this.getRole() === 'SITEADM';
   }
 
-  levelAdmin() {
-    return this.isAdmin() || this.siteAdmin();
-  }
+  // levelAdmin() {
+  //   return this.isAdmin() || this.siteAdmin();
+  // }
 
   logout() {
     this.removeToken();

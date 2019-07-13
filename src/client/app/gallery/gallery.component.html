@@ -7,7 +7,7 @@
       <span><i class="big edit icon"></i></span>Edit Gallery
     </a> -->
     <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
-      <span>Upload Image</span><i class="big upload icon"></i>
+      <span>Upload Image</span><i class="large upload icon"></i>
     </a>
   </div>
 </div>
@@ -16,7 +16,7 @@
   <!-- <div class="ui header vnps-header">{{curYear.year}}</div> -->
   <div class="ui two column grid">
   <div *ngFor="let authorData of yearData.authorData" class="column">
-    <app-author-photo [authorData]="{'year': yearData.year, 'authorPhotos': authorData}" (showPopupClicked)="showPopup($event)"></app-author-photo>
+    <app-author-photo [authorData]="{'level': level, 'year': yearData.year, 'authorPhotos': authorData}" (showPopupClicked)="showPopup($event)"></app-author-photo>
   </div>
 </div>
 </div>

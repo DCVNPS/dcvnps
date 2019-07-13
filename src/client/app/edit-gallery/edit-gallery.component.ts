@@ -28,7 +28,7 @@ export class EditGalleryComponent implements OnInit {
     console.log(img);
   }
 
-  editPhoto(img: Photo){
+  editPhoto(img: Photo) {
     console.log(img);
   }
 }

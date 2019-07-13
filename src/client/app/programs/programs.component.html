@@ -17,35 +17,42 @@
     To request information on the program and how to register for VNPS photography course, please send email to
     info@dcvnps.org
   </p>
-  <div class="ui top  attached tabular menu">
-    <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showProgram('level1');">
-      <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
-    </a>
-    <a class="item" #lvl2Anchor [class.active]="showLevel2" (click)="showProgram('level2');">
-      <h3 class="ui brown header">Mid-Level Photography (Level 2)</h3>
-    </a>
-    <a class="item" #lvl3Anchor [class.active]="showLevel3" (click)="showProgram('level3');">
-      <div class="ui brown header">Advance Photography (Level 3)</div>
-    </a>
-  </div>
+</div>
+<div class="ui top  attached tabular menu">
+  <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showProgram('level1');">
+    <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
+  </a>
+  <a class="item" #lvl2Anchor [class.active]="showLevel2" (click)="showProgram('level2');">
+    <h3 class="ui brown header">Mid-Level Photography (Level 2)</h3>
+  </a>
+  <a class="item" #lvl3Anchor [class.active]="showLevel3" (click)="showProgram('level3');">
+    <div class="ui brown header">Advance Photography (Level 3)</div>
+  </a>
+</div>
 
-  <div class="ui grid" style="padding: 0 20px 0 20px;">
-    <div class="column">
-      <div class="ui raised segment" *ngIf="showLevel1">
+<div class="ui grid" style="padding: 0 20px 0 20px;">
+  <div class="stretched row">
+    <div class="twelve wide column">
+      <div class="ui basic segment" *ngIf="showLevel1">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
           In Level 1, VNPS students will learn the fundamental photography skills: how to use and operate their camera
           properly, how to incorporate five photographic components (line, shape, form, light, and color) in composing
           an
-          aesthetic image. In addition, they will also learn the rule of thirds in photographic composition. In the new
+          aesthetic image. In addition, they will also learn the rule of thirds in photographic composition. In the
+          new
           era
-          of digital photography, photo image post processing plays a major role in how good a photograph will turn out.
+          of digital photography, photo image post processing plays a major role in how good a photograph will turn
+          out.
           The
-          students will be learning the basics steps on how to edit the photo in Photoshop CC Camera Raw. To re-enforce
+          students will be learning the basics steps on how to edit the photo in Photoshop CC Camera Raw. To
+          re-enforce
           the
-          principles learned in the class room, the Level 1 students will have at least 15 photography field trips with
-          hands-on guidance from the VNPS instructors. These field trips are designed to give the student opportunities
+          principles learned in the class room, the Level 1 students will have at least 15 photography field trips
+          with
+          hands-on guidance from the VNPS instructors. These field trips are designed to give the student
+          opportunities
           to
           practice taking photographs on various subjects in landscape photography, event & action photography, street
           photography, and night time photography.
@@ -78,14 +85,16 @@
           <li>Chuan Truong</li>
         </ul>
       </div>
-      <div class="ui raised segment" *ngIf="showLevel2">
+      <div class="ui basic segment" *ngIf="showLevel2">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
           Level 2 focuses in intermediate photography lessons integrated with practice sessions and special topics in
-          photography. The course is taught by Mr. Dinh Tran assisted with a teaching staff of experienced photographers
+          photography. The course is taught by Mr. Dinh Tran assisted with a teaching staff of experienced
+          photographers
           and
-          guest speakers. Hands-on practice session is either in class or field trip to local parks or National Parks in
+          guest speakers. Hands-on practice session is either in class or field trip to local parks or National Parks
+          in
           and
           around the Washington Metropolitan, Pennsylvania, New Jersey, and New York. Field trip is normally organized
           on
@@ -151,15 +160,18 @@
           <li>KieuHanh Vu</li>
         </ul>
       </div>
-      <div class="ui raised segment" *ngIf="showLevel3">
+      <div class="ui basic segment" *ngIf="showLevel3">
         <div class="ui teal ribbon big label">Course Description:</div>
         <p></p>
         <p>
-          After gaining the solid basic understanding of photography and digital software from level 1 and level 2. The
+          After gaining the solid basic understanding of photography and digital software from level 1 and level 2.
+          The
           Level
-          3 program aims to push the students into much higher plane, both as a photographer and as an artist. With the
+          3 program aims to push the students into much higher plane, both as a photographer and as an artist. With
+          the
           idea
-          that photographs could capture more than just surface appearances, the students will embrace both photography
+          that photographs could capture more than just surface appearances, the students will embrace both
+          photography
           and
           digital software techniques, to complete their work of art portfolios, which are required for the final
           graduation
@@ -169,7 +181,8 @@
           Prerequisite:
         </div>
         <p></p>
-        <p>Completion of the intermediate photography (Level 2). It is not recommended a prospective student enter this
+        <p>Completion of the intermediate photography (Level 2). It is not recommended a prospective student enter
+          this
           level
           without completion of Level 2.</p>
         <div class="ui violet ribbon big label">
@@ -197,6 +210,19 @@
         </ul>
       </div>
     </div>
+    <div class="four wide column">
+      <div class="ui basic segment">
+        <div class="ui card">
+          <div class="content">
+            <h3 class="header">Class Enrollment Payment</h3>
+            <h5 class="description">Enrollment Fee: {{classFee | currency}}</h5>
+            <div class="meta">There is a 5% transaction fee applied</div>
+          </div>
+          <div class="extra content">
+            <app-paypal-button [purchaseAmount]="classFee"></app-paypal-button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<app-paypal-button></app-paypal-button>

@@ -16,6 +16,7 @@ import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { BoardDirectorResolve } from './resolvers/board-director-resolve';
+import { ManageSiteComponent } from './manage-site/manage-site.component';
 
 const routes: Routes = [
   {
@@ -55,11 +56,16 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-  path: 'editgallery',
-  component: EditGalleryComponent,
-  canActivate: [AuthGuard]
-},
-{
+    path: 'editgallery',
+    component: EditGalleryComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'managesite',
+    component: ManageSiteComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'galleries',
     component: GalleriesComponent
   },

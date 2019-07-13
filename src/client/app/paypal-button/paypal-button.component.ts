@@ -1,5 +1,4 @@
-import { Component, AfterViewChecked } from '@angular/core';
-import { SafeMethodCall } from '@angular/compiler';
+import { Component, AfterViewChecked, Input } from '@angular/core';
 declare let paypal: any;
 
 @Component({
@@ -10,7 +9,7 @@ declare let paypal: any;
 export class PaypalButtonComponent implements AfterViewChecked {
   addScript = false;
   paypalLoad = true;
-  finalAmount = 50.00;
+  @Input() purchaseAmount = 50.00;
   private SB_CLIENT_ID = 'AZzmfRuo1IGXpa4ZCxlXFCYL8sOhqoVwbnUBXbN8pIa-1xKoaBi03cgcRNpNsUqURZhLARAxb2paPkYR'
   // FAIL_DATA = {
   //   sender_batch_header: {
@@ -28,14 +27,15 @@ export class PaypalButtonComponent implements AfterViewChecked {
   paypalConfig = {
       style: {
       color: 'gold',
-      shape: 'rect',
+      shape: 'pill',
       label: 'pay',
       height: 30
     },
     createOrder: (data, actions) => {
+      const finalAmount = this.purchaseAmount  * 1.05;
       return actions.order.create({
         purchase_units: [{
-          amount: { value: `${this.finalAmount * 1.05}`, currency: 'USD' }
+          amount: { value: `${finalAmount}`, currency: 'USD' }
         }]
       });
     },
@@ -78,7 +78,7 @@ export class PaypalButtonComponent implements AfterViewChecked {
     this.addScript = true;
     return new Promise((resolve, reject) => {
       const scripttagElement = document.createElement('script');
-      scripttagElement.src = `https://www.paypal.com/sdk/js?client-id=${this.SB_CLIENT_ID}&currency=USD&disable-funding=credit`;
+      scripttagElement.src = `https://www.paypal.com/sdk/js?client-id=${this.SB_CLIENT_ID}&currency=USD&disable-funding=credit&commit=true&components=buttons`;
       scripttagElement.onload = resolve;
       document.body.appendChild(scripttagElement);
     });

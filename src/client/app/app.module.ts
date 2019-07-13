@@ -44,6 +44,7 @@ import { HvnHoverDirective } from './directives/hvn-hover.directive';
 import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { AuthorPhotoComponent } from './author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
+import { ManageSiteComponent } from './manage-site/manage-site.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
     GalleryListComponent,
     AuthorPhotoComponent,
     PaypalButtonComponent,
+    ManageSiteComponent,
   ],
   imports: [
     BrowserModule,

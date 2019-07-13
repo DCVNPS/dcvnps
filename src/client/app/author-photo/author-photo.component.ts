@@ -17,6 +17,7 @@ export class AuthorPhotoComponent implements OnInit {
   public photos: Array<Photo> = [];
   public year: string;
   public isAdmin = false;
+  private level: string;
   constructor(
     private router: Router,
     private auth: AuthService,
@@ -25,10 +26,11 @@ export class AuthorPhotoComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.authorData);
+    this.level = this.authorData['level'];
     this.year = this.authorData['year'];
     this.author = this.authorData['authorPhotos'].author;
     this.photos = this.authorData['authorPhotos'].photos;
-    this.isAdmin = this.auth.levelAdmin();
+    this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
     // console.log(this.photos);
     // console.log({ 'isAdmin ': this.isAdmin });
   }

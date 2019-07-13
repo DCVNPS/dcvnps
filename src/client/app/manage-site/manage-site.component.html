@@ -1,0 +1,24 @@
+<div class="ui grid">
+  <div class="four wide column">
+    <div class="ui vertical fluid tabular menu">
+        <a class="item" (click)="goBack()"><span><i class="medium arrow left icon"></i></span>BACK</a>
+      <a class="item" [class.active]="isPhotoUpload">
+        Upload Photo
+      </a>
+      <a class="item">
+        Edit Gallery Profiles
+      </a>
+      <a class="item">
+        Companies
+      </a>
+      <a class="item">
+        Links
+      </a>
+    </div>
+  </div>
+  <div class="twelve wide stretched column">
+    <div class="ui segment" *ngIf="isPhotoUpload">
+      <app-dropzone></app-dropzone>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,8 @@ import { RouterLinkActive, ActivatedRoute } from '@angular/router';
   styleUrls: ['./programs.component.scss']
 })
 export class ProgramsComponent implements OnInit {
-  private programLevel: string = 'level1';
+  private programLevel = 'level1';
+  classFee = 50;
   public showLevel1: boolean;
   public showLevel2: boolean;
   public showLevel3: boolean;
