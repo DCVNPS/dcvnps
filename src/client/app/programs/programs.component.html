@@ -18,6 +18,7 @@
     info@dcvnps.org
   </p>
 </div>
+<p></p>
 <div class="ui top  attached tabular menu">
   <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showProgram('level1');">
     <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
@@ -43,20 +44,22 @@
         <div class="ui violet ribbon big label">
           Curriculum:
         </div>
-        <ul>
-          <li *ngFor="let c of level1Data.curriculums">
-              {{c.item}}
-              <ul *ngIf="c.subitems">
-                <li *ngFor="let item of c.subitems">{{item}}</li>
-              </ul>
-            </li>  
-        </ul>
+        <div class="ui list">
+          <div class="item" *ngFor="let c of level1Data.curriculums">
+            <div><i class="right triangle angle icon"></i>{{c.item}}</div>
+            <ul *ngIf="c.subitems">
+              <li *ngFor="let item of c.subitems">{{item}}</li>
+            </ul>
+          </div>
+        </div>
         <h3 class="ui brown ribbon big label">
           Instructors:
         </h3>
-        <ul>
-          <li *ngFor="let instr of level1Data.instructors">{{instr}}</li>
-        </ul>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level1Data.instructors">
+            <i class="right triangle icon"></i>{{instr}}
+          </div>
+        </div>
       </div>
       <div class="ui basic segment" *ngIf="showLevel2">
         <div class="ui teal ribbon big label">Course Description:</div>
@@ -72,20 +75,37 @@
         <div class="ui violet ribbon big label">
           Curriculums:
         </div>
-        <ul>
-            <li *ngFor="let c of level2Data.curriculums">
+        <p></p>
+        <div class="ui list" *ngFor="let c of level2Data.curriculums">
+          <!-- <h4 class="ui teal large label" *ngIf="c.subitems">
+            {{c.item}}
+          </h4>
+          <ul *ngIf="c.subitems">
+            <li *ngFor="let item of c.subitems">{{item}}</li>
+          </ul> -->
+          <div class="item">
+            <div class="content">
+              <div class="ui teal large label">
+                <i class="marker icon"></i>
                 {{c.item}}
-                <ul *ngIf="c.subitems">
-                  <li *ngFor="let item of c.subitems">{{item}}</li>
-                </ul>
-              </li>        
-        </ul>
+              </div>
+              <div class="ui list">
+                <div class="item" *ngFor="let item of c.subitems">
+                  <i class="right triangle icon"></i>
+                  {{item}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="ui brown ribbon big label">
           Instructors:
         </div>
-        <ul>
-          <li *ngFor="let instr of level2Data.instructors">{{instr}}</li>
-        </ul>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level2Data.instructors">
+            <i class="right triangle icon"></i>{{instr}}
+          </div>
+        </div>
       </div>
       <div class="ui basic segment" *ngIf="showLevel3">
         <div class="ui teal ribbon big label">Course Description:</div>
@@ -95,24 +115,34 @@
           Prerequisite:
         </div>
         <p></p>
-          <p>{{level3Data.prerequisite}}</p>
+        <p>{{level3Data.prerequisite}}</p>
         <div class="ui violet ribbon big label">
           Curriculum:
         </div>
-        <ul>
+        <!-- <ul>
           <li *ngFor="let c of level3Data.curriculums">
             {{c.item}}
             <ul *ngIf="c.subitem">
               <li *ngFor="let item of c.subitem">{{item}}</li>
             </ul>
           </li>
-        </ul>
-        <div class="ui brown ribbon big label">
+        </ul> -->
+        <div class="ui list">
+            <div class="item" *ngFor="let c of level3Data.curriculums">
+              <div><i class="right triangle angle icon"></i>{{c.item}}</div>
+              <ul *ngIf="c.subitems">
+                <li *ngFor="let item of c.subitems">{{item}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="ui brown ribbon big label">
           Instructors:
         </div>
-        <ul>
-          <li *ngFor="let instr of level3Data.instructors">{{instr}}</li>
-        </ul>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level3Data.instructors">
+            <i class="right triangle icon"></i>{{instr}}
+          </div>
+        </div>
       </div>
     </div>
     <div class="four wide column">
