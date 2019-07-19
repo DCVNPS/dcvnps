@@ -1,0 +1,47 @@
+{
+    "title":"level 1",
+    "description": "In Level 1, VNPS students will learn the fundamental photography skills: how to use and operate their camera properly, how to incorporate five photographic components (line, shape, form, light, and color) in composing an aesthetic image. In addition, they will also learn the rule of thirds in photographic composition. In the new era of digital photography, photo image post processing plays a major role in how good a photograph will turn out. The students will be learning the basics steps on how to edit the photo in Photoshop CC Camera Raw. To re-enforce the principles learned in the class room, the Level 1 students will have at least 15 photography field trips with hands-on guidance from the VNPS instructors. These field trips are designed to give the student opportunities to practice taking photographs on various subjects in landscape photography, event & action photography, street photography, and night time photography.",
+    "prerequisite": "None",
+    "curriculums": [
+        {
+            "item": "Introduction to Digital Single Lens Reflex (DSLR) camera",
+            "subitems": []
+        },
+        {
+            "item": "Triangle Exposure:",
+            "subitems": [
+                "Aperture",
+                "Shutter",
+                "ISO"
+            ]
+        },
+        {
+            "item": "File/image management under Windows operating system",
+            "subitems": []
+        },
+        {
+            "item": "Introduction to photography composition",
+            "subitems": [
+                "Line, Shape, Form, and Texture",
+                "Light and Color"
+            ]
+        },
+        {
+            "item": "Motion in Photography",
+            "subitems": []
+        },
+        {
+            "item": "Introduction to RAW image and modern digital darkroom",
+            "subitems": []
+        },
+        {
+            "item": "Introduction to image editing using Photoshop",
+            "subitems": []
+        }
+    ],
+    "instructors": [
+        "Binh Le",
+        "Christine Nguyen",
+        "Chuan Truong"
+    ]
+}

@@ -12,11 +12,14 @@ export class ProgramsComponent implements OnInit {
   public showLevel1: boolean;
   public showLevel2: boolean;
   public showLevel3: boolean;
-  constructor(private route: ActivatedRoute) {
+  public level1Data: any;
+  public level2Data: any;
+  public level3Data: any;
+  constructor(private router: ActivatedRoute) {
     this.showLevel1 = true;
     this.showLevel2 = false;
     this.showLevel3 = false;
-    this.route.params.subscribe(params => {
+    this.router.params.subscribe(params => {
       // console.log(params);
       //default the programs to Level1 program
       this.programLevel = params['level'] || 'level1';
@@ -25,8 +28,15 @@ export class ProgramsComponent implements OnInit {
   }
 
   ngOnInit() {
+    const data = this.router.snapshot.data['programs'];
+    this.level1Data = data.find(lvl => lvl.title === 'level 1');
+    this.level2Data = data.find(lvl => lvl.title === 'level 2');
+    this.level3Data = data.find(lvl => lvl.title === 'level 3');
+    // console.log(this.level1Data);
+    // console.log(this.level2Data);
+    // console.log(this.level3Data);
   }
-  showProgram(level:string){
+  showProgram(level: string) {
     switch (level) {
       case 'level1': {
         this.showLevel1Program();

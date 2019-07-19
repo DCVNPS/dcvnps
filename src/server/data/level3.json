@@ -1,0 +1,58 @@
+{
+    "title":"level 3",
+    "description": "After gaining the solid basic understanding of photography and digital software from level 1 and level 2. The Level 3 program aims to push the students into much higher plane, both as a photographer and as an artist. With the idea that photographs could capture more than just surface appearances, the students will embrace both photography and digital software techniques, to complete their work of art portfolios, which are required for the final graduation exam. before becoming official VNPS members.",
+    "prerequisite": "Completion of the intermediate photography (Level 2). It is not recommended a prospective student enter this level without completion of Level 2.",
+    "curriculums": [
+        {
+            "item": "Review of basic photography techniques and manipulations",
+            "subitems": []
+        },
+        {
+            "item": "Different types of portfolio",
+            "subitems": []
+        },
+        {
+            "item": "Trend and concept in photography",
+            "subitems": []
+        },
+        {
+            "item": "Photoshop and post processing work flow",
+            "subitems": []
+        },
+        {
+            "item": "Nature Photography",
+            "subitems": []
+        },
+        {
+            "item": "Travel Photography",
+            "subitems": []
+        },
+        {
+            "item": "Other photography applications",
+            "subitems": []
+        },
+        {
+            "item": "Advanced topics in : Camera Raw, Composition, Macro, HDR, Long Exposure, High & Low Key",
+            "subitems": []
+        },
+        {
+            "item": "Basic Infrared photography",
+            "subitems": []
+        },
+        {
+            "item": "Conceptual Photography",
+            "subitems": []
+        },
+        {
+            "item": "Creative Photography",
+            "subitems": []
+        },
+        {
+            "item": "Preparation for the final Photo Essay",
+            "subitems": []
+        }
+    ],
+    "instructors": [
+        "MinhTan Thai, MPSA"
+    ]
+}

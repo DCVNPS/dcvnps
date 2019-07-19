@@ -17,6 +17,7 @@ import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
+import { ProgramsResolve } from './resolvers/programs-resolve';
 
 const routes: Routes = [
   {
@@ -72,6 +73,9 @@ const routes: Routes = [
   {
     path: 'programs/:level',
     component: ProgramsComponent,
+    resolve: {
+      programs: ProgramsResolve
+    }
   },
   {
     path: 'announcements',

@@ -25,14 +25,14 @@ export class PaypalButtonComponent implements AfterViewChecked {
   //   }]
   // };
   paypalConfig = {
-      style: {
+    style: {
       color: 'gold',
       shape: 'pill',
       label: 'pay',
       height: 30
     },
     createOrder: (data, actions) => {
-      const finalAmount = this.purchaseAmount  * 1.05;
+      const finalAmount = this.purchaseAmount * 1.05;
       return actions.order.create({
         purchase_units: [{
           amount: { value: `${finalAmount}`, currency: 'USD' }
@@ -61,6 +61,16 @@ export class PaypalButtonComponent implements AfterViewChecked {
         //   })
         // });
       });
+    },
+    onCancel: (data) => {
+      if (data) {
+        console.log(data.orderID);
+      }
+      alert('Payment canceled.');
+    },
+    onError: (err) => {
+      console.log(err);
+      alert(err);
     }
   };
   constructor() { }
@@ -78,6 +88,7 @@ export class PaypalButtonComponent implements AfterViewChecked {
     this.addScript = true;
     return new Promise((resolve, reject) => {
       const scripttagElement = document.createElement('script');
+      // tslint:disable-next-line: max-line-length
       scripttagElement.src = `https://www.paypal.com/sdk/js?client-id=${this.SB_CLIENT_ID}&currency=USD&disable-funding=credit&commit=true&components=buttons`;
       scripttagElement.onload = resolve;
       document.body.appendChild(scripttagElement);

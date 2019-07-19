@@ -1,0 +1,59 @@
+{
+    "title":"level 2",
+    "description": "Level 2 focuses in intermediate photography lessons integrated with practice sessions and special topics in photography. The course is taught by Mr. Dinh Tran assisted with a teaching staff of experienced photographers and guest speakers. Hands-on practice session is either in class or field trip to local parks or National Parks in and around the Washington Metropolitan, Pennsylvania, New Jersey, and New York. Field trip is normally organized on Saturday so that the normal course of classroom instruction will not be disrupted.",
+    "prerequisite": "Completion of Level 1: Basic Photography, or pass and evaluation test",
+    "curriculums": [
+        {
+            "item": "Lighting in photography.",
+            "subitems": [
+                "Review Different types of lights in photography",
+                "Flash versus ambient light",
+                "Lighting in event photography"
+            ]
+        },
+        {
+            "item": "Special photography techniques.",
+            "subitems": [
+                "Intentional camera movement (ICM) (zooming, panning and shaking the camera)",
+                "Long exposure in photographing fireworks (Fourth of July fireworks on the Mall)"
+            ]
+        },
+        {
+            "item": "Introduction and Workshop on various photography genres.",
+            "subitems": [
+                "Landscape photography",
+                "Macro and close-up photography",
+                "Event photography with special practice workshop on Lunar New Year (“Tet”) festival at Lao and Cambodia Temples",
+                "Nature photography",
+                "Portrait photography",
+                "Night photography"
+               
+            ]
+        },
+        {
+            "item":"Photoshop",
+            "subitems":[
+                "Review Adobe Bridge and Camera Raw",
+                "Review Basic Photoshop editing for photographers",
+                "Non-destructive versus destructive Photoshop Adjustments",
+                "Layer, layer mask and basic Photoshop selection techniques",
+                "Introduction to Photoshop blending modes"
+            ]
+        },
+        {
+            "item":"Special Topics",
+            "subitems":[
+                "Traditional compositions like the Rules of the Thirds versus contemporary trends in Beyond the Rule of the Thirds",
+                "Creativity process in Photography",
+                "Abstract Photography"
+            ]
+        },
+        {
+            "item":"Final Photographic Project:",
+            "subitems":[
+                " Each student has to work on a photo story project that consists of three images, each image is a message. And the thee images should support an overall interesting story. A panel of three judges will grade the projects on composition and technical photographic presentation as well as the intended photo story."
+            ]
+        }
+    ],
+    "instructors":["Dinh Tran, GM","Diana Nguyen, EPSA, AFIAP","KieuHanh Vu"]
+}

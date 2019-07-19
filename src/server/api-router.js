@@ -7,7 +7,7 @@ const serverRoot = path.normalize(__dirname);
 
 
 function apiRouter(database) {
-    const galleryBaseDir = path.join(serverRoot,"galleries");
+    const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
     // This code is good for application that require login from begining.
     router.use(
@@ -17,7 +17,8 @@ function apiRouter(database) {
                     [
                         '/api/authenticate',
                         '/api/boardmembers',
-                        {url: /^\/api\/galleries.*/i, methods:['GET'] },
+                        '/api/programs',
+                        { url: /^\/api\/galleries.*/i, methods: ['GET'] },
                         { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
                         { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
                     ]
@@ -86,11 +87,11 @@ function apiRouter(database) {
         }
         console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
         const file = req.files.file;
-        const updateUser='Temporary';
+        const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
         // const fileName = file.name.split('_')[1];
-        const destFile = path.join( galleryBaseDir,`${upldGallery}/${upldYear}/${fileName}`);
+        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${fileName}`);
         console.log(req.auth);
         file.mv(destFile, err => {
             if (err) {
@@ -99,14 +100,14 @@ function apiRouter(database) {
             }
             // insertGalleryPhoto(galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate)
             database.insertGalleryPhoto(galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
-            .then( result => {
-                console.log(result);
-                return res.status(200).json('Upload reach server.');
-            })
-            .catch( err => {
-                console.log('insert gallery error ',err);
-                return res.status(err.status).json(err.message);
-            });
+                .then(result => {
+                    console.log(result);
+                    return res.status(200).json('Upload reach server.');
+                })
+                .catch(err => {
+                    console.log('insert gallery error ', err);
+                    return res.status(err.status).json(err.message);
+                });
         });
     });
 
@@ -168,8 +169,8 @@ function apiRouter(database) {
     });
 
     router.get('/boardmembers', (req, res) => {
-        fs.readFile(`${serverRoot}/data/director-board.json`, (err, data) =>{
-            if(err){
+        fs.readFile(`${serverRoot}/data/director-board.json`, (err, data) => {
+            if (err) {
                 console.log(err);
                 return res.status(500).json(err);
             }
@@ -178,6 +179,22 @@ function apiRouter(database) {
             return res.status(200).json(boardMembers);
         });
     });
+
+    router.get('/programs', (req, res) => {
+        let programData = [];
+        try {
+            let rawData = fs.readFileSync(path.join(serverRoot, '/data/level1.json'));
+            programData.push(JSON.parse(rawData));
+            rawData = fs.readFileSync(path.join(serverRoot, '/data/level2.json'));
+            programData.push(JSON.parse(rawData));
+            rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
+            programData.push(JSON.parse(rawData));
+            return res.status(200).json(programData);
+            // console.log(programData);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    })
     return router;
 }
 

@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 
-export class BoardDirectorResolve implements Resolve<Observable<any>> {
+export class ProgramsResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve():  Observable<any>|Promise<any>|any {
-        const apiEndpoint = 'boardmembers';
+        const apiEndpoint = 'programs';
         return this.api.get(apiEndpoint);
     }
 }
