@@ -45,6 +45,7 @@ import { GalleryListComponent } from './gallery-list/gallery-list.component';
 import { AuthorPhotoComponent } from './author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
+import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { ManageSiteComponent } from './manage-site/manage-site.component';
     AuthorPhotoComponent,
     PaypalButtonComponent,
     ManageSiteComponent,
+    PrettyPrintPipe
   ],
   imports: [
     BrowserModule,

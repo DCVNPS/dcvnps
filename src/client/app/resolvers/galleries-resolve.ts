@@ -17,6 +17,7 @@ export class GalleriesResolve implements Resolve<Array<Gallery>> {
         // console.log(apiEndpoint);
         this.api.get(apiEndpoint)
             .subscribe(data => {
+                // console.log(data);
                 data.forEach((item) => {
                     const g = this.galleries.find(i => i.gallery === item.gallery);
                     if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {

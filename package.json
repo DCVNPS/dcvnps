@@ -56,7 +56,6 @@
     "@angular-devkit/schematics": "^7.3.4",
     "@angular/cli": "^7.3.9",
     "@angular/compiler-cli": "^7.2.15",
-    "@ngtools/webpack": "^7.2.4",
     "@schematics/angular": "^7.3.4",
     "@schematics/update": "^0.13.4",
     "@types/jasmine": "2.5.38",

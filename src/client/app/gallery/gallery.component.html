@@ -12,13 +12,11 @@
   </div>
 </div>
 
-<div *ngFor="let yearData of galleryData">
-  <!-- <div class="ui header vnps-header">{{curYear.year}}</div> -->
-  <div class="ui two column grid">
-  <div *ngFor="let authorData of yearData.authorData" class="column">
-    <app-author-photo [authorData]="{'level': level, 'year': yearData.year, 'authorPhotos': authorData}" (showPopupClicked)="showPopup($event)"></app-author-photo>
+<div class="ui two column grid">
+  <div class="column" *ngFor="let authPhoto of authPhotos">
+    <app-author-photo [authorData]="{'level': level, 'authorPhotos': authPhoto}" (showPopupClicked)="showPopup($event)">
+    </app-author-photo>
   </div>
-</div>
 </div>
 <!-- Popup slide show -->
 <app-popup [(visible)]="showDialog" [data]="photos"></app-popup>

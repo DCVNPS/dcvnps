@@ -1,8 +1,5 @@
 <div class="ui grey inverted secondary menu">
   <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
-  <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
-  <!-- <a class="item" *ngFor="let year of years" [routerLink]="['/gallery',level,year]">{{year}}</a> -->
-  <button class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</button>
   <div class="stackable right menu" *ngIf="isAdmin">
     <a class="item" [routerLink]="['/editgalleries']" [routerLinkActive]="['active']" aria-label="Edit galleries">
       <span><i class="big edit icon"></i></span>Edit Galleries

@@ -27,7 +27,7 @@ export class AuthorPhotoComponent implements OnInit {
   ngOnInit() {
     // console.log(this.authorData);
     this.level = this.authorData['level'];
-    this.year = this.authorData['year'];
+    this.year = this.authorData['authorPhotos'].year;
     this.author = this.authorData['authorPhotos'].author;
     this.photos = this.authorData['authorPhotos'].photos;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();

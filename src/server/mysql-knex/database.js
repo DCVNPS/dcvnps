@@ -329,7 +329,7 @@
                         if (!sr) {
                             // a new year value, there should not be any author or photo in the set
                             let jsonEl = { "year": item.year, "yeardata": []};
-                            const anAuthor = { "author": item.author, "photos": [] };
+                            const anAuthor = { "author": item.author, "year": item.year, "photos": [] };
                             anAuthor.photos.push({
                                 "galleryPhotoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
@@ -347,7 +347,7 @@
                             let thisAuthor = sr.yeardata.find((a) => a.author === item.author);
                             if (!thisAuthor) {
                                 // new author to the list
-                                thisAuthor = { "author": item.author, "photos": [] };
+                                thisAuthor = { "author": item.author, "year": item.year, "photos": [] };
                                 thisAuthor.photos.push({
                                     "galleryPhotoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,
@@ -398,7 +398,7 @@
                         if (!sr) {
                             // a new year value, there should not be any author or photo in the set
                             let jsonEl = { "year": item.year, "authorData": []};
-                            const anAuthor = { "author": item.author, "photos": [] };
+                            const anAuthor = { "author": item.author, "year": item.year, "photos": [] };
                             anAuthor.photos.push({
                                 "photoId": item.galleryPhotoId,
                                 "galleryId": item.galleryId,
@@ -416,7 +416,7 @@
                             let thisAuthor = sr.authorData.find((a) => a.author === item.author);
                             if (!thisAuthor) {
                                 // new author to the list
-                                thisAuthor = { "author": item.author, "photos": [] };
+                                thisAuthor = { "author": item.author, "year": item.year, "photos": [] };
                                 thisAuthor.photos.push({
                                     "photoId": item.galleryPhotoId,
                                     "galleryId": item.galleryId,

@@ -12,9 +12,11 @@ export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
   public isAdmin: boolean;
-  constructor(private auth: AuthService,
+  constructor(
+    private auth: AuthService,
     private api: ApiService,
-    private router: Router) {
+    private router: Router
+    ) {
     this.mGalleries = [];
     this.mPrograms = [
       {level: 'level1', ariatext: 'Basic Photography'},
@@ -41,5 +43,9 @@ export class MenuComponent implements OnInit {
     this.isAdmin = false;
     this.auth.logout();
     this.router.navigate(['/home']);
+  }
+
+  isLogin(): boolean {
+    return this.auth.isLogin();
   }
 }

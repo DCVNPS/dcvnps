@@ -49,7 +49,7 @@
       <i class="small sign in icon"></i>
       Sign in
     </a>
-    <a class="item" (click)="logout()" *ngIf="auth.isLogin()">
+    <a class="item" (click)="logout()" *ngIf="isLogin()">
       Sign Out<i class="small sign out icon"></i>
     </a>
   </div>

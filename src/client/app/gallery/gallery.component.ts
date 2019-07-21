@@ -6,6 +6,7 @@ import { YearData } from '../shared/year.data';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { AuthorData } from '../shared/author.data.model';
 
 @Component({
   selector: 'app-gallery',
@@ -21,7 +22,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   showDialog = false;
   public isAdmin: boolean;
   public editUrl: string;
-  public galleryData: Array<YearData> = [];
+  private galleryData: Array<YearData> = [];
+  public authPhotos: Array<AuthorData> = [];
   public destroyed = new Subject<any>();
   /******************************************************************
    *  @route: ActivatedRoute is used to retrieve resolve data
@@ -52,22 +54,19 @@ export class GalleryComponent implements OnInit, OnDestroy {
   initializeData() {
     this.years = [];
     this.photos = [];
-    // this.selectedPhotos = [];
     this.galleryData = [];
+    this.authPhotos = [];
     // get the gallery name/ level from the route parameter
     this.level = this.route.snapshot.paramMap.get('level');
     // this.editUrl = `/editgallery/${this.level}`;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
-    // get the gallery data from route resolver
     this.galleryData = this.route.snapshot.data.galleryData;
-    // console.log(this.galleryData);
     this.galleryData.forEach( yearData => {
       this.years.push(yearData.year);
       yearData.authorData.forEach( authData => {
-        authData.photos.forEach( p => {
-          this.photos.push(p);
-        })
-      })
+        this.authPhotos.push(authData);
+        console.log(this.authPhotos);
+      });
     });
     // console.log(this.photos);
     // this.galleryDataService.updateData(this.photos);
@@ -79,18 +78,24 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   onFilterYear(year: string) {
     this.galleryData = [];
+    this.authPhotos = [];
     const data = this.route.snapshot.data.galleryData;
     if (year) {
       this.galleryData.push(data.find(y => y.year === year));
     } else {
       this.galleryData = data;
     }
-    // console.log(this.galleryData);
+    this.galleryData.forEach( yearData => {
+      yearData.authorData.forEach( authData => {
+        this.authPhotos.push(authData);
+        console.log(this.authPhotos);
+      });
+    });
+    console.log(this.authPhotos);
   }
 
   showPopup(event) {
     this.photos = event;
-    // console.log(this.photos);
     this.showDialog = true;
   }
 

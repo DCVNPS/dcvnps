@@ -8,7 +8,7 @@ import { AuthorData } from '../shared/author.data.model';
 })
 export class GalleryDataService {
 
-  private dataSource = new BehaviorSubject<AuthorData>(new AuthorData('author', []));
+  private dataSource = new BehaviorSubject<AuthorData>(new AuthorData('author', 'year', []));
   data  =  this.dataSource.asObservable();
   constructor() { }
   updateData(data: AuthorData) {
