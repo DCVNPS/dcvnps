@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLinkActive, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-programs',
@@ -15,7 +16,7 @@ export class ProgramsComponent implements OnInit {
   public level1Data: any;
   public level2Data: any;
   public level3Data: any;
-  constructor(private router: ActivatedRoute) {
+  constructor(private router: ActivatedRoute, private location: Location) {
     this.showLevel1 = true;
     this.showLevel2 = false;
     this.showLevel3 = false;
@@ -70,5 +71,8 @@ export class ProgramsComponent implements OnInit {
     this.showLevel1 = false;
     this.showLevel2 = false;
     this.showLevel3 = true;
+  }
+  goBack() {
+    this.location.back();
   }
 }
