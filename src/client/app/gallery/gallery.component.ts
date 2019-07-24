@@ -67,7 +67,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.authPhotos.push(authData);
       });
     });
-    console.log(this.authPhotos);
+    // console.log(this.authPhotos);
   }
 
   goBack() {

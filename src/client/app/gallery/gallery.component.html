@@ -1,11 +1,7 @@
 <div class="ui grey inverted secondary menu">
-  <!-- <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a> -->
   <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
   <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
   <div class="stackable right menu" *ngIf="isAdmin">
-    <!-- <a class="item" [routerLink]="['/editgallery',level]" [routerLinkActive]="['active']" aria-label="Edit gallery">
-      <span><i class="big edit icon"></i></span>Edit Gallery
-    </a> -->
     <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
       <span>Upload Image</span><i class="large upload icon"></i>
     </a>
@@ -18,7 +14,7 @@
     </app-author-photo>
   </div>
 </div>
-<div class="ui secondary menu">
+<div class="ui secondary menu borderless">
   <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
 </div>
 <!-- Popup slide show -->

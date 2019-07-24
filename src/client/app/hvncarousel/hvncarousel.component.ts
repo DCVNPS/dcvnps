@@ -37,9 +37,10 @@ export class HvncarouselComponent implements OnInit {
       this.StartSlide();
     } else {
       // If not run slide show, set current index to the current active imsage's index
-      const curImg = this.data.find( img => img.hidden === false);
+      const curImg = this.data.find( img => img.hidden === false) || this.data[0];
       this.curIdx = this.data.indexOf(curImg);
-      this.count = this.curIdx + 1;
+      this.count = this.curIdx;
+      this.NextSlide();
       // console.log(this.curIdx);
     }
   }

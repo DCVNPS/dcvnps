@@ -5,7 +5,7 @@
     https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-2
   Code was expand to include the review before uploading to server.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -34,10 +34,11 @@ export class DropzoneComponent implements OnInit {
   private upldGallery: FormControl;
   private upldYear: FormControl;
   public uploadForm: FormGroup;
-  public years: Array<number>;
-  private selectedYear: number;
+  public years: Array<string>;
+  private selectedYear: string;
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
 
+  @Input() private config: any = { 'gallery': undefined, 'year': undefined };
   constructor(private formBuilder: FormBuilder,
     private uplder: UploadService,
     private api: ApiService,
@@ -45,8 +46,8 @@ export class DropzoneComponent implements OnInit {
     private regexSrvc: RegexService,
     private location: Location) {
     // Get the galleries list from database
-    this.years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020];
-    this.selectedYear = (new Date()).getFullYear();
+    this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
+    // this.selectedYear = (new Date()).getFullYear().toString();
     this.upldGallery = new FormControl(this.selectedGallery, Validators.required);
     this.upldYear = new FormControl(this.selectedYear, Validators.required);
     this.uploadForm = this.formBuilder.group({
@@ -79,15 +80,21 @@ export class DropzoneComponent implements OnInit {
     return gText;
   }
   ngOnInit() {
-    const galleryText = this.selectedGalleryText();
+    // console.log(this.config);
+    const galleryText = this.config.gallery || this.selectedGalleryText();
+    this.selectedYear = this.config.year || (new Date()).getFullYear().toString();
     this.api.get('galleries')
       .subscribe(async (data) => {
         this.galleries = await Array.from(data);
         this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);
         if (this.selectedGallery) {
-          console.log(this.selectedGallery);
+          // console.log(this.selectedGallery);
           this.upldGallery.setValue(this.selectedGallery);
           this.upldGallery.disable({ onlySelf: true });
+        }
+        this.upldYear.setValue(this.selectedYear);
+        if (this.config.year) {
+          this.upldYear.disable({onlySelf: true})
         }
       });
   }
@@ -162,10 +169,8 @@ export class DropzoneComponent implements OnInit {
 
   onGallerySelectChanged(event) {
     this.selectedGallery = event;
-    // console.log(selectedGallery);
-    // console.log(`galleryId: ${event.galleryId} --- gallery: ${event.gallery}`);
     this.validImages.forEach(item => { item.galleryid = event.galleryId; item.gallery = event.gallery });
-    console.log(this.validImages);
+    // console.log(this.validImages);
   }
 
   onYearSelectChanged(event) {

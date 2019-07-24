@@ -31,8 +31,6 @@ export class AuthorPhotoComponent implements OnInit {
     this.author = this.authorData['authorPhotos'].author;
     this.photos = this.authorData['authorPhotos'].photos;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
-    // console.log(this.photos);
-    // console.log({ 'isAdmin ': this.isAdmin });
   }
   imageClicked(i: number) {
     this.photos.forEach(photo => { photo.hidden = true; });
@@ -42,8 +40,8 @@ export class AuthorPhotoComponent implements OnInit {
   }
 
   editPhotos() {
-    this.galleryDataService.updateData(this.authorData['authorPhotos']);
-    console.log(`Edit Author ${this.author} photos`);
+    this.galleryDataService.updateData(this.authorData);
+    // console.log(`Edit Author ${this.authorData}`);
     this.router.navigateByUrl('/editgallery');
   }
 }

@@ -25,7 +25,7 @@ export class SlideImageSizeDirective {
   }
 
   @HostListener('load') elementLoad() {
-    this.clientWidth = Math.round(this.columnSpan * 0.94*window.innerWidth / 16);
+    this.clientWidth = Math.round(this.columnSpan * 0.94 * window.innerWidth / 16);
     this.clientHeight = Math.round(this.clientWidth * 2 / 3);
     this.naturalWidth = this.el.nativeElement.naturalWidth;
     this.naturalHeight = this.el.nativeElement.naturalHeight;

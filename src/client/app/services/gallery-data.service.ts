@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Photo } from '../shared/photo.model';
 import { AuthorData } from '../shared/author.data.model';
 
 @Injectable({
@@ -8,10 +7,10 @@ import { AuthorData } from '../shared/author.data.model';
 })
 export class GalleryDataService {
 
-  private dataSource = new BehaviorSubject<AuthorData>(new AuthorData('author', 'year', []));
+  private dataSource = new BehaviorSubject<any>({});
   data  =  this.dataSource.asObservable();
   constructor() { }
-  updateData(data: AuthorData) {
+  updateData(data: any) {
     this.dataSource.next(data);
   }
 }

@@ -3,7 +3,6 @@
     <div class="header item">{{author | uppercase}}</div>
     <div class="right menu">
       <div class="item">{{year}}</div>
-        <!-- <a class="item" [routerLink]="['/editgallery',level]" [routerLinkActive]="['active']" aria-label="Edit"> -->
           <a class="item" (click)="editPhotos()" aria-label="Edit"  *ngIf="isAdmin">
           <span><i class="big edit icon"></i></span>Edit
         </a>    
@@ -11,9 +10,6 @@
   </div>
   <div class="ui three link cards">
     <div class="ui card borderless" *ngFor="let photo of photos; let i = index">
-      <!-- <div class="content">
-        <div class="meta">{{i}}--{{photo.imgalt}}</div>
-      </div> -->
       <a class="image" (click)="imageClicked(i);">
         <img class="norounded" [src]="photo.imgsrc" appCardImageSize [cardCount]="3">
       </a>

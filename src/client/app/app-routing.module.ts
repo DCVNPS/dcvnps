@@ -93,13 +93,14 @@ const routes: Routes = [
       board: BoardDirectorResolve
     }
   },
-  // {
-  //   path: 'quicktest',
-  //   component: QuickTestComponent,
-  //   resolve: {
-  //     photos: NonGalleryPhotosResolve
-  //   }
-  // },
+  {
+    path: 'quicktest',
+    component: QuickTestComponent,
+    resolve: {
+      photos: GalleryPhotosResolve,
+      galleries: GalleriesResolve
+    }
+  },
   {
     path: '**',
     redirectTo: 'home'

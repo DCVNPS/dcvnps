@@ -15,7 +15,7 @@ export class QuickTestComponent implements OnInit {
   public photos: Array<Photo> = [];
   public galleries: Array<Gallery> = [];
   public showDialog: boolean;
-  public carouseConfig: Object = {'delay': 3000, 'showIndicator': true, 'runSlideShow': true};
+  public carouseConfig: Object = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': false };
   constructor(private route: ActivatedRoute) {
     this.popupInput = [new Photo(
       '12345',
@@ -29,21 +29,21 @@ export class QuickTestComponent implements OnInit {
   ngOnInit() {
     const data = this.route.snapshot.data['photos'];
     this.galleries = this.route.snapshot.data['galleries'];
-    data.forEach((item) => {
-        item.yeardata.forEach(ydt => {
-            ydt.photos.forEach(photo => {
-                this.photos.push(new Photo(
-                    photo.photoId,
-                    photo.galleryId,
-                    photo.gallery,
-                    photo.imgalt,
-                    photo.imgsrc,
-                    photo.portrait === 1,
-                    true
-                ));
-            })
+    data.forEach((yearData) => {
+      yearData.authorData.forEach(authorPhotos => {
+        authorPhotos.photos.forEach(photo => {
+          this.photos.push(new Photo(
+            photo.photoId,
+            photo.galleryId,
+            photo.gallery,
+            photo.imgalt,
+            photo.imgsrc,
+            photo.portrait === 1,
+            true
+          ));
         })
+      })
     });
-    console.log(this.photos);
+    // console.log(this.photos);
   }
 }

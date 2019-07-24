@@ -13,9 +13,9 @@ export class GalleryPhotosResolve implements Resolve<Observable<any>> {
     const gallery = route.paramMap.get('level');
     let apiEndpoint = `galleryphotosbyname/${gallery}`;
     if (!gallery) {
-      apiEndpoint = `galleryphotosbyname/${route.url.toString()}`;
+      apiEndpoint = (route.url.toString() === 'quicktest') ? 'galleryphotosbyname/home' : `galleryphotosbyname/${route.url.toString()}`;
     }
-    // console.log(apiEndpoint);
-    return this.api.get(apiEndpoint);
+      // console.log(apiEndpoint);
+      return this.api.get(apiEndpoint);
   }
 }

@@ -14,8 +14,12 @@ export class EditGalleryComponent implements OnInit {
 
   public authorData: AuthorData;
   public isAdmin: boolean;
+  public author: string;
+  public photos: Array<Photo> = [];
+  public year: string;
+  private level: string;
+
   constructor(
-    private auth: AuthService,
     private location: Location,
     private galleryData: GalleryDataService
   ) { }
@@ -23,7 +27,11 @@ export class EditGalleryComponent implements OnInit {
   ngOnInit() {
     this.galleryData.data.subscribe(data => {
       this.authorData = data;
-      console.log(this.authorData);
+      // console.log(this.authorData);
+      this.level = this.authorData['level'];
+      this.year = this.authorData['authorPhotos'].year;
+      this.author = this.authorData['authorPhotos'].author;
+      this.photos = this.authorData['authorPhotos'].photos;
     });
   }
   goBack() {
