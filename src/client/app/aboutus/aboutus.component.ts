@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Photo } from '../shared/photo.model';
+import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
-import { Person } from '../shared/person.model';
-import { BoardMember } from '../shared/board-member';
+import { Person } from '../models/person.model';
+import { BoardMember } from '../models/board-member';
 
 @Component({
   selector: 'app-aboutus',

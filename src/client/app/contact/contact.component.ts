@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { Contact } from '../shared/contact.model';
+import { Contact } from '../models/contact.model';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',

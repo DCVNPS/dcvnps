@@ -7,11 +7,10 @@
 */
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { UploadService } from '../services/upload.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
-import { Gallery } from '../shared/gallery.model';
-import { ImageInfo } from '../shared/image-model';
+import { Gallery } from '../models/gallery.model';
+import { ImageInfo } from '../models/image-model';
 import { RegexService } from '../services/regex.service';
 import { AuthService } from '../services/auth.service';
 
@@ -40,7 +39,6 @@ export class DropzoneComponent implements OnInit {
 
   @Input() private config: any = { 'gallery': undefined, 'year': undefined };
   constructor(private formBuilder: FormBuilder,
-    private uplder: UploadService,
     private api: ApiService,
     private auth: AuthService,
     private regexSrvc: RegexService,
@@ -199,7 +197,7 @@ export class DropzoneComponent implements OnInit {
     imageInfo.gallery = this.selectedGallery.gallery;
     imageInfo.year = this.selectedYear.toString();
     console.log(imageInfo);
-    this.uplder.upload(imageInfo)
+    this.api.upload(imageInfo)
       .subscribe(
         (res) => { this.uploadResponse = res; },
         (err) => { this.error = err; }

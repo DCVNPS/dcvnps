@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Photo } from '../shared/photo.model';
-import { Gallery } from '../shared/gallery.model';
+import { Photo } from '../models/photo.model';
+import { Gallery } from '../models/gallery.model';
 
 @Component({
   selector: 'app-quick-test',

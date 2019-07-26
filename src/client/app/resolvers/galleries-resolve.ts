@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { Gallery } from '../shared/gallery.model';
+import { Gallery } from '../models/gallery.model';
 
 @Injectable({
     providedIn: 'root'

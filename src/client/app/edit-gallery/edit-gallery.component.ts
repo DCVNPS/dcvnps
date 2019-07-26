@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { GalleryDataService } from '../services/gallery-data.service';
-import { Photo } from '../shared/photo.model';
-import { AuthorData } from '../shared/author.data.model';
-import { AuthService } from '../services/auth.service';
+import { Photo } from '../models/photo.model';
+import { AuthorData } from '../models/author.data.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-edit-gallery',
@@ -21,6 +21,7 @@ export class EditGalleryComponent implements OnInit {
 
   constructor(
     private location: Location,
+    private api: ApiService,
     private galleryData: GalleryDataService
   ) { }
 

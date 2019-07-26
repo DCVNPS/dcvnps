@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener, ElementRef } from '@angular/core';
-import { Photo } from '../shared/photo.model';
+import { Photo } from '../models/photo.model';
 
 @Component({
 // tslint:disable-next-line: component-selector

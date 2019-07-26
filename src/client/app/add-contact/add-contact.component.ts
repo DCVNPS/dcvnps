@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Contact } from '../shared/contact.model';
+import { Contact } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
 
 @Component({

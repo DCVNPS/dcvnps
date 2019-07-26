@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Photo } from '../shared/photo.model';
+import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
-import { Gallery } from '../shared/gallery.model';
+import { Gallery } from '../models/gallery.model';
 
 @Component({
   selector: 'app-home',

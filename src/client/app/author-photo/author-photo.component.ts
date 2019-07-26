@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Photo } from '../shared/photo.model';
-import { AuthorData } from '../shared/author.data.model';
+import { Photo } from '../models/photo.model';
+import { AuthorData } from '../models/author.data.model';
 import { AuthService } from '../services/auth.service';
 import { GalleryDataService } from '../services/gallery-data.service';
 import { Router } from '@angular/router';

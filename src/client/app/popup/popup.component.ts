@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { Photo } from '../shared/photo.model';
+import { Photo } from '../models/photo.model';
 
 @Component({
   selector: 'app-popup',

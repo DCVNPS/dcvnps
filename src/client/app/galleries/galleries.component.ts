@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Gallery } from '../shared/gallery.model';
+import { Gallery } from '../models/gallery.model';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 

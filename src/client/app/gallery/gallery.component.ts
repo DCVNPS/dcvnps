@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
-import { Photo } from '../shared/photo.model';
-import { YearData } from '../shared/year.data';
+import { Photo } from '../models/photo.model';
+import { YearData } from '../models/year.data';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { AuthorData } from '../shared/author.data.model';
+import { AuthorData } from '../models/author.data.model';
 
 @Component({
   selector: 'app-gallery',
