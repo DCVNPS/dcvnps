@@ -377,7 +377,7 @@
                 })
                 .catch((error) => { console.log(error); throw error; });
         },
-        getPhotoByGalleryName(gallery) {
+        getPhotoByGalleryName(gallery, year, author) {
             return knex({ gp: 'galleryphotos', g: 'galleries' })
                 .select({
                     galleryPhotoId: 'gp.galleryPhotoId',
@@ -391,6 +391,8 @@
                 .orderBy([{column:'year', order:'desc'},'author'])
                 .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
                 .whereRaw('?? = ?', ['g.gallery', gallery])
+                .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
+                .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
                 .then((data) => {
                     let result = [];
                     data.forEach((item) => {
@@ -467,6 +469,17 @@
         //             throw err;
         //         });
         // },
+        deletePhoto(photoId){
+            return knex('galleryphotos')
+                .whereRaw('galleryPhotoId = ?',[photoId])
+                .delete()
+                .then(resp => {
+                    return resp;
+                })
+                .catch( err => {
+                    throw err;
+                })
+        },
         destroy() {
             knex.destroy();
         }

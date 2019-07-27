@@ -65,6 +65,7 @@ function apiRouter(database) {
             .catch((err) => { return res.status(500).json({ error: err.message }); })
     });
 
+    // Method to get the list of all galleries
     router.post('/galleries', (req, res) => {
         const _gallery = req.body;
         if (_gallery) {
@@ -78,6 +79,7 @@ function apiRouter(database) {
         }
     });
 
+    // Upload a photo to a gallery
     router.post('/upload/:gallery/:year', (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
@@ -85,32 +87,33 @@ function apiRouter(database) {
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
-        console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
+        // console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
         const file = req.files.file;
         const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
         // const fileName = file.name.split('_')[1];
         const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${fileName}`);
-        console.log(req.auth);
+        // console.log(req.auth);
         file.mv(destFile, err => {
             if (err) {
                 console.log('photoupload-Move file', err.message)
                 return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            // insertGalleryPhoto(galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate)
             database.insertGalleryPhoto(galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
                     console.log(result);
                     return res.status(200).json('Upload reach server.');
                 })
                 .catch(err => {
-                    console.log('insert gallery error ', err);
+                    console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    fs.unlink(destFile);
                     return res.status(err.status).json(err.message);
                 });
         });
     });
 
+    // Get photo of a gallery by a galleryId
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
         const galleryId = req.params.galleryId;
         database.getPhotoByGalleryId(galleryId)
@@ -122,11 +125,15 @@ function apiRouter(database) {
             })
     });
 
-    router.get('/galleryphotosbyname/:gallery', (req, res) => {
-
+    // GET photo of gallery by gallery name.
+    // Called by: GalleryPhotosResolve, EditGalleryResolve
+    router.get('/galleryphotosbyname/:gallery/:year?/:author?', (req, res) => {
         const gallery = req.params.gallery;
-        database.getPhotoByGalleryName(gallery)
+        const year = req.params.year || null;
+        const author = req.params.author || null;
+        database.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
+                // console.log(data);
                 return res.json(data);
             })
             .catch((err) => {
@@ -195,6 +202,56 @@ function apiRouter(database) {
             res.status(500).json(err);
         }
     })
+    router.delete('/deletephoto', (req, res) => {
+        console.log({ 'photoId': req.params.photoId });
+        const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
+        // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
+        const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
+
+        // const file = fs.readFile(filePath, (err, data) => {
+        //     if ( err ) {
+        //         console.log(`error reading file ${filePath} --- ${err.message}`);
+        //        return res.status(500).json(err);
+        //     }
+        //     fs.unlink(filePath, error => {
+        //         if (error) {
+        //             console.log(`error removing file ${filePath} --- ${error.message}`);
+        //             return res.status(500).json(`Error: Cannot delete ${imgsrc} ---- ${error.message}`);
+        //         }
+        //         // suscessfully delete file from OS
+        //         database.delete(photoId)
+        //         .then( resp => {
+        //             // successfully remove file from OS and database.
+        //             return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
+        //         })
+        //         .catch( ex => {
+        //             file.mv(filePath, err => {  });
+        //             return res.status(500).json(`Error: Cannot delete ${imgsrc} ---- ${err.message}`);
+        //         });
+        //     });
+        // });
+        try {
+            console.log(`read file ${filePath}`);
+            // Save the file content in case delete from database fail
+            // we can use that to restore the file. 
+            const file = fs.readFileSync(filePath);
+            fs.unlinkSync(filePath);
+            console.log(`file ${filePath} removed.`);
+            database.deletePhoto(photoId)
+                .then( resp => {
+                    return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
+                })
+                .catch(exp => {
+                    throw exp;
+                });
+        }
+        catch (error) {
+            console.log(error);
+            console.log(`Resote file ${filePath}`);
+            fs.writeFileSync(filePath,file);
+            return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
+        }
+    });
     return router;
 }
 

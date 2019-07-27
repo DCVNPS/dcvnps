@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <div class="ui blue inverted secondary menu">
-    <div class="header item">{{author | uppercase}}</div>
+    <div class="header item">{{author.replace('.',' ') | uppercase}}</div>
     <div class="right menu">
       <div class="item">{{year}}</div>
           <a class="item" (click)="editPhotos()" aria-label="Edit"  *ngIf="isAdmin">

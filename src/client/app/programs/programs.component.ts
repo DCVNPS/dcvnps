@@ -16,20 +16,20 @@ export class ProgramsComponent implements OnInit {
   public level1Data: any;
   public level2Data: any;
   public level3Data: any;
-  constructor(private router: ActivatedRoute, private location: Location) {
+  constructor(private route: ActivatedRoute, private location: Location) {
     this.showLevel1 = true;
     this.showLevel2 = false;
     this.showLevel3 = false;
-    this.router.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       // console.log(params);
-      //default the programs to Level1 program
+      // default the programs to Level1 program
       this.programLevel = params['level'] || 'level1';
       this.showProgram(this.programLevel);
     });
   }
 
   ngOnInit() {
-    const data = this.router.snapshot.data['programs'];
+    const data = this.route.snapshot.data['programs'];
     this.level1Data = data.find(lvl => lvl.title === 'level 1');
     this.level2Data = data.find(lvl => lvl.title === 'level 2');
     this.level3Data = data.find(lvl => lvl.title === 'level 3');

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Photo } from '../models/photo.model';
-import { AuthorData } from '../models/author.data.model';
 import { AuthService } from '../services/auth.service';
-import { GalleryDataService } from '../services/gallery-data.service';
 import { Router } from '@angular/router';
-
+// this component is the child component of GalleryComponent
+// The output showPopupClicked is to trigger parent component
+// to display the popup Modal.
 @Component({
   selector: 'app-author-photo',
   templateUrl: './author-photo.component.html',
@@ -20,9 +20,7 @@ export class AuthorPhotoComponent implements OnInit {
   private level: string;
   constructor(
     private router: Router,
-    private auth: AuthService,
-    private galleryDataService: GalleryDataService
-  ) { }
+    private auth: AuthService  ) { }
 
   ngOnInit() {
     // console.log(this.authorData);
@@ -33,6 +31,7 @@ export class AuthorPhotoComponent implements OnInit {
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
   }
   imageClicked(i: number) {
+    // hide all photo except the one that is clicked
     this.photos.forEach(photo => { photo.hidden = true; });
     this.photos[i].hidden = false;
     // console.log(this.photos);
@@ -40,8 +39,9 @@ export class AuthorPhotoComponent implements OnInit {
   }
 
   editPhotos() {
-    this.galleryDataService.updateData(this.authorData);
+    // this.galleryDataService.updateData(this.authorData);
     // console.log(`Edit Author ${this.authorData}`);
-    this.router.navigateByUrl('/editgallery');
+    // this.router.navigateByUrl('/editgallery');
+    this.router.navigateByUrl(`/editgallery/${this.level}/${this.year}/${this.author}`);
   }
 }

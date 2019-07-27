@@ -28,8 +28,8 @@ export class ApiService {
     return this.request(url, RequestMethod.Put, body, headers);
   }
 
-  delete(url: string) {
-    return this.request(url, RequestMethod.Delete);
+  delete(url: string, body?: Object, headers?: Headers) {
+    return this.request(url, RequestMethod.Delete, body, headers);
   }
 
   // this acts as an intercepter
@@ -52,7 +52,7 @@ export class ApiService {
     }
 
     const request = new Request(requestOptions);
-
+    // console.log(requestOptions);
     return this.http.request(request)
       .pipe(
         map((res: Response) => res.json()),
@@ -62,11 +62,11 @@ export class ApiService {
 
   onRequestError(res: Response) {
     if (res) {
+      console.log(res);
       const error = {
         statusCode: res.status,
         error: res.statusText
       };
-      console.log(error);
       return throwError(error);
     }
   }

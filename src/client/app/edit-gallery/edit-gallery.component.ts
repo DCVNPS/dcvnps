@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { GalleryDataService } from '../services/gallery-data.service';
 import { Photo } from '../models/photo.model';
 import { AuthorData } from '../models/author.data.model';
 import { ApiService } from '../services/api.service';
+import { ActivatedRoute } from '@angular/router';
+import { YearData } from '../models/year.data';
 
 @Component({
   selector: 'app-edit-gallery',
@@ -16,31 +17,39 @@ export class EditGalleryComponent implements OnInit {
   public isAdmin: boolean;
   public author: string;
   public photos: Array<Photo> = [];
+  private galleryData: Array<YearData> = [];
   public year: string;
   private level: string;
 
   constructor(
     private location: Location,
-    private api: ApiService,
-    private galleryData: GalleryDataService
-  ) { }
+    private route: ActivatedRoute,
+    private api: ApiService) { }
 
   ngOnInit() {
-    this.galleryData.data.subscribe(data => {
-      this.authorData = data;
-      // console.log(this.authorData);
-      this.level = this.authorData['level'];
-      this.year = this.authorData['authorPhotos'].year;
-      this.author = this.authorData['authorPhotos'].author;
-      this.photos = this.authorData['authorPhotos'].photos;
-    });
+    const parms = this.route.snapshot.params;
+    this.author = parms.author;
+    this.level = parms.level;
+    this.year = parms.year;
+    // console.log(parms);
+    this.galleryData = this.route.snapshot.data.galleryData;
+    // console.log(this.galleryData);
+    this.photos = this.galleryData[0].authorData[0].photos;
   }
   goBack() {
     this.location.back();
   }
 
   deletePhoto(img: Photo) {
-    console.log(img);
+    // console.log(img);
+    this.api.delete('deletephoto', img)
+      .subscribe(res => {
+        console.log(res);
+        const delIndx = this.photos.indexOf(img);
+        this.photos.splice(delIndx, 1);
+      });
+      console.log(this.galleryData);
+      console.log(this.photos);
   }
 
   editPhoto(img: Photo) {

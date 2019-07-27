@@ -12,6 +12,7 @@ export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
   public isAdmin: boolean;
+  public hidden = false;
   constructor(
     private auth: AuthService,
     private api: ApiService,

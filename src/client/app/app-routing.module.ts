@@ -18,6 +18,7 @@ import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { ProgramsResolve } from './resolvers/programs-resolve';
+import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
 
 const routes: Routes = [
   {
@@ -57,9 +58,13 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-    path: 'editgallery',
+    path: 'editgallery/:gallery/:year/:author',
     component: EditGalleryComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      galleryData: EditGalleryResolve
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'managesite',
