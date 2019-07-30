@@ -1,5 +1,5 @@
 <div class="ui grey inverted secondary menu">
-  <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
+  <!-- <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a> -->
   <div class="stackable right menu" *ngIf="isAdmin">
     <a class="item" [routerLink]="['/editgalleries']" [routerLinkActive]="['active']" aria-label="Edit galleries">
       <span><i class="big edit icon"></i></span>Edit Galleries
@@ -10,3 +10,6 @@
   </div>
 </div>
 <app-gallery-list [galleries]="galleries"></app-gallery-list>
+<div class="ui top attached secondary menu borderless">
+  <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a>
+</div>

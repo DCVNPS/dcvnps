@@ -28,6 +28,7 @@ export class DropzoneComponent implements OnInit {
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
   public allowed_ext: Array<string> = ['png', 'jpg', 'bmp', 'ico'];
   public error: string;
+  public showBackMenu: false;
   public galleries: Array<Gallery> = [];
   private selectedGallery: Gallery;
   private upldGallery: FormControl;
@@ -37,7 +38,7 @@ export class DropzoneComponent implements OnInit {
   private selectedYear: string;
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
 
-  @Input() private config: any = { 'gallery': undefined, 'year': undefined };
+  @Input() private config: any = { 'gallery': undefined, 'year': undefined, 'showBackMenu': false };
   constructor(private formBuilder: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
@@ -81,6 +82,7 @@ export class DropzoneComponent implements OnInit {
     // console.log(this.config);
     const galleryText = this.config.gallery || this.selectedGalleryText();
     this.selectedYear = this.config.year || (new Date()).getFullYear().toString();
+    this.showBackMenu = this.config.showBackMenu;
     this.api.get('galleries')
       .subscribe(async (data) => {
         this.galleries = await Array.from(data);

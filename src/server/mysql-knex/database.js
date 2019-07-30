@@ -448,27 +448,6 @@
                 })
                 .catch((error) => { console.log(error); throw error; });
         },
-        // Get the list of galleries will be used in the uploadimages page.
-        // ,
-        // selExtGallery(reqData) {
-        //     //    console.log(
-        //     //        knex('vw_ext_galleries')
-        //     //         .whereRaw('gallery_id = IFNULL(?,gallery_id) and year = IFNULL(?,year)',[reqData.galleryId,reqData.year])
-        //     //         .select('ext_link as ui_sref','anchor_text','gallery_name','year')
-        //     //         .orderBy('ext_gallery_id')
-        //     //         .toString()
-        //     //     ); 
-        //     return knex('vw_ext_galleries')
-        //         .whereRaw('gallery_id = IFNULL(?,gallery_id) and year = IFNULL(?,year)', [reqData.galleryId, reqData.year])
-        //         .select('ext_link as ui_sref', 'anchor_text', 'gallery_name', 'year')
-        //         .orderBy('ext_gallery_id')
-        //         .then(function (data) {
-        //             return data;
-        //         })
-        //         .catch(function (err) {
-        //             throw err;
-        //         });
-        // },
         deletePhoto(photoId){
             return knex('galleryphotos')
                 .whereRaw('galleryPhotoId = ?',[photoId])

@@ -1,24 +1,22 @@
 <div class="ui grid">
   <div class="four wide column">
-    <div class="ui vertical fluid tabular menu">
+    <div class="ui vertical fluid tabular menu borderless">
         <a class="item" (click)="goBack()"><span><i class="medium arrow left icon"></i></span>BACK</a>
-      <a class="item" [class.active]="isPhotoUpload">
-        Upload Photo
+      <a class="item" (click)="onUploadClick();"  [class.active]="isPhotoUpload">
+        Upload Photos
       </a>
-      <a class="item">
-        Edit Gallery Profiles
+      <a class="item" (click)="onGalleryClick();" [class.active]="isGallery" >
+        Galleries
       </a>
-      <a class="item">
-        Companies
+      <a class="item" (click)="onPrograms();" [class.active]="isPrograms">
+        Programs
       </a>
-      <a class="item">
-        Links
+      <a class="item" (click)="onAnnouncements();" [class.active]="isAnnouncements">
+        Announcements
       </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
-    <div class="ui segment" *ngIf="isPhotoUpload">
-      <app-dropzone></app-dropzone>
-    </div>
+      <app-dropzone  *ngIf="isPhotoUpload"></app-dropzone>
   </div>
 </div>

@@ -207,38 +207,16 @@ function apiRouter(database) {
         const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
         // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
         const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
-
-        // const file = fs.readFile(filePath, (err, data) => {
-        //     if ( err ) {
-        //         console.log(`error reading file ${filePath} --- ${err.message}`);
-        //        return res.status(500).json(err);
-        //     }
-        //     fs.unlink(filePath, error => {
-        //         if (error) {
-        //             console.log(`error removing file ${filePath} --- ${error.message}`);
-        //             return res.status(500).json(`Error: Cannot delete ${imgsrc} ---- ${error.message}`);
-        //         }
-        //         // suscessfully delete file from OS
-        //         database.delete(photoId)
-        //         .then( resp => {
-        //             // successfully remove file from OS and database.
-        //             return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
-        //         })
-        //         .catch( ex => {
-        //             file.mv(filePath, err => {  });
-        //             return res.status(500).json(`Error: Cannot delete ${imgsrc} ---- ${err.message}`);
-        //         });
-        //     });
-        // });
+        console.log(`read file ${filePath}`);
+        // Save the file content in case delete from database fail
+        // we can use that to restore the file. 
+        const file = fs.readFileSync(filePath);
         try {
-            console.log(`read file ${filePath}`);
-            // Save the file content in case delete from database fail
-            // we can use that to restore the file. 
-            const file = fs.readFileSync(filePath);
             fs.unlinkSync(filePath);
             console.log(`file ${filePath} removed.`);
             database.deletePhoto(photoId)
                 .then( resp => {
+                    console.log(resp);
                     return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
                 })
                 .catch(exp => {
@@ -248,7 +226,7 @@ function apiRouter(database) {
         catch (error) {
             console.log(error);
             console.log(`Resote file ${filePath}`);
-            fs.writeFileSync(filePath,file);
+            fs.writeFileSync(filePath, file);
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }
     });

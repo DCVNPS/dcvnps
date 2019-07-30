@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public mPrograms: Array<any>;
-  public isAdmin: boolean;
   public hidden = false;
   constructor(
     private auth: AuthService,
@@ -27,7 +26,6 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAdmin = this.auth.siteAdmin();
     this.api.get('galleries')
       .subscribe(data => {
         data.forEach(item => {
@@ -41,12 +39,15 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    this.isAdmin = false;
     this.auth.logout();
     this.router.navigate(['/home']);
   }
 
   isLogin(): boolean {
     return this.auth.isLogin();
+  }
+
+  isAdmin(): boolean {
+    return this.auth.siteAdmin();
   }
 }
