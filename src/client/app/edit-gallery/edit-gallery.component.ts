@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Photo } from '../models/photo.model';
 import { AuthorData } from '../models/author.data.model';
 import { ApiService } from '../services/api.service';
@@ -22,7 +21,6 @@ export class EditGalleryComponent implements OnInit {
   private level: string;
 
   constructor(
-    private location: Location,
     private route: ActivatedRoute,
     private api: ApiService) { }
 
@@ -35,9 +33,6 @@ export class EditGalleryComponent implements OnInit {
     this.galleryData = this.route.snapshot.data.galleryData;
     // console.log(this.galleryData);
     this.photos = this.galleryData[0].authorData[0].photos;
-  }
-  goBack() {
-    this.location.back();
   }
 
   deletePhoto(img: Photo) {

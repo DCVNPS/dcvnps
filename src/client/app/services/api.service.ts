@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ImageInfo } from '../models/image-model';
+import { Gallery } from '../models/gallery.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { ImageInfo } from '../models/image-model';
 export class ApiService {
 
   private baseUrl = environment.apiUrl;
+  private galleries: Array<Gallery> = [];
 
   constructor(private http: Http, private httpClient: HttpClient, private auth: AuthService) { }
 
@@ -101,5 +103,23 @@ export class ApiService {
       }
     })
     );
+  }
+  getGalleries(): Array<Gallery> {
+    this.get('/galleries')
+    .subscribe(data => {
+      data.forEach(item => {
+        const g = this.galleries.find(i => i.gallery === item.gallery);
+        if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
+          this.galleries.push(new Gallery(
+            item._id,
+            item.gallery,
+            `galleries/${item.gallery}/profile/${item.profilePhoto}`,
+            item.createdDate,
+            item.updatedDate))
+        }
+      });
+      // console.log(this.galleries);
+    });
+    return this.galleries;
   }
 }

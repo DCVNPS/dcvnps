@@ -41,7 +41,7 @@
   </a>
   
   <div class="stackable right menu">
-    <a class="item" [routerLink]="['/managesite']" [routerLinkActive]="['active']" *ngIf="isAdmin">
+    <a class="item" [routerLink]="['/managesite']" [routerLinkActive]="['active']" *ngIf="isAdmin()">
       <span> <i class="user icon"></i><i class="cogs icon"></i></span>
       Manage Site
     </a>

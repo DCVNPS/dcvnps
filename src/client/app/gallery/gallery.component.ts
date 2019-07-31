@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { Photo } from '../models/photo.model';
 import { YearData } from '../models/year.data';
@@ -17,7 +16,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
   level: string;
   year: string;
   years: Array<string>;
-  // selectedPhotos: Array<Photo>;
   photos: Array<Photo>;
   showDialog = false;
   public isAdmin: boolean;
@@ -31,8 +29,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   *******************************************************************/
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private auth: AuthService,
-    private location: Location) {
+    private auth: AuthService) {
     this.initializeData();
   }
 
@@ -66,10 +63,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
       });
     });
     // console.log(this.authPhotos);
-  }
-
-  goBack() {
-    this.location.back();
   }
 
   onFilterYear(year: string) {

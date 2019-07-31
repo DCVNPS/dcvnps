@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { ApiService } from '../services/api.service';
+import { Gallery } from '../models/gallery.model';
 
 @Component({
   selector: 'app-manage-site',
@@ -12,14 +13,13 @@ export class ManageSiteComponent implements OnInit {
   public isGallery: boolean;
   public isPrograms: boolean;
   public isAnnouncements: boolean;
-  constructor(private location: Location) { }
+  private galleries: Array<Gallery> = [];
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.isPhotoUpload = true;
   }
-  goBack() {
-    this.location.back();
-  }
+
   onUploadClick() {
     this.isPhotoUpload = true;
     this.isGallery = false;
@@ -31,6 +31,7 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = true;
     this.isPrograms = false;
     this.isAnnouncements = false;
+    this.galleries = this.api.getGalleries();
   }
   onAnnouncements() {
     this.isPhotoUpload = false;

@@ -6,7 +6,6 @@
   Code was expand to include the review before uploading to server.
 */
 import { Component, OnInit, Input } from '@angular/core';
-import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { Gallery } from '../models/gallery.model';
@@ -42,8 +41,7 @@ export class DropzoneComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
-    private regexSrvc: RegexService,
-    private location: Location) {
+    private regexSrvc: RegexService) {
     // Get the galleries list from database
     this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
     // this.selectedYear = (new Date()).getFullYear().toString();
@@ -214,9 +212,5 @@ export class DropzoneComponent implements OnInit {
 
   isValidFileName(fileName: string): boolean {
     return this.regexSrvc.validFileName(fileName, this.fileNamePattern);
-  }
-
-  goBack() {
-    this.location.back();
   }
 }

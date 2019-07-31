@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Photo } from '../models/photo.model';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../models/person.model';
@@ -20,7 +19,7 @@ export class AboutusComponent implements OnInit {
   public bodyText: string;
   public showDialog: boolean;
   public boardMembers: Array<BoardMember> = [];
-  constructor(private router: ActivatedRoute, private location: Location) {
+  constructor(private router: ActivatedRoute) {
     this.showDialog = false;
     // this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
     // this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
@@ -60,9 +59,5 @@ export class AboutusComponent implements OnInit {
     this.photos.forEach(s => s.hidden = true);
     this.photos[sIndex].hidden = false;
     this.showDialog = true;
-  }
-
-  goBack() {
-    this.location.back();
   }
 }
