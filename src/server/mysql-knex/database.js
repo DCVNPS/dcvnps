@@ -207,7 +207,7 @@
             // .orderBy('createdDate')
             // .toString());
             return knex('galleries')
-                .select('galleryId', 'gallery', 'profilePhoto')
+                .select('galleryId', 'gallery', 'profilePhoto', 'updateUser', 'createdDate','updatedDate')
                 .whereRaw('galleryId = IFNULL(?,galleryId)', [galleryId])
                 .orderBy('createdDate')
                 .then((data) => {

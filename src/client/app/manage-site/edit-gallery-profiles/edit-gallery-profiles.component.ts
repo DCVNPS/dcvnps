@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Gallery } from 'client/app/models/gallery.model';
-
+import { Gallery } from '../../models/gallery.model';
 @Component({
   selector: 'app-edit-gallery-profiles',
   templateUrl: './edit-gallery-profiles.component.html',
@@ -12,6 +11,15 @@ export class EditGalleryProfilesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // console.log(this.galleries);
+  }
+  editGallery(index: number) {
+    console.log(`Edit gallery at index ${index}`);
+    console.log(this.galleries[index]);
   }
 
+  deleteGallery(index: number) {
+    console.log(`Delete gallery at index ${index}`);
+    console.log(this.galleries[index]);
+  }
 }

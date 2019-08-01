@@ -62,16 +62,19 @@ function apiRouter(database) {
             .then((data) => {
                 return res.json(data);
             })
-            .catch((err) => { return res.status(500).json({ error: err.message }); })
+            .catch((err) => { 
+                console.log(err)
+                return res.status(500); 
+            });
     });
 
-    // Method to get the list of all galleries
+    // Method to insert a gallery into galleries
     router.post('/galleries', (req, res) => {
-        const _gallery = req.body;
-        if (_gallery) {
-            _gallery.createdDate = new Date();
-            _gallery.updatedDate = new Date();
-            database.insertGallery({ _gallery })
+        const gallery = req.body;
+        if (gallery) {
+            gallery.createdDate = new Date();
+            gallery.updatedDate = new Date();
+            database.insertGallery({ gallery })
                 .then(() => { return res.status(200).json('Gallery inserted'); })
                 .catch((err) => { return res.status(500).json('Geller insert failed.'); });
         } else {
@@ -216,7 +219,7 @@ function apiRouter(database) {
             console.log(`file ${filePath} removed.`);
             database.deletePhoto(photoId)
                 .then( resp => {
-                    console.log(resp);
+                    console.log(resp);gallery
                     return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
                 })
                 .catch(exp => {

@@ -104,16 +104,17 @@ export class ApiService {
     })
     );
   }
-  getGalleries(): Array<Gallery> {
-    this.get('/galleries')
+  getGalleries(galleryId?): Array<Gallery> {
+    const apiEndpoint = (galleryId) ? `galleries/${galleryId}` : `galleries`;
+    this.get(apiEndpoint)
     .subscribe(data => {
       data.forEach(item => {
         const g = this.galleries.find(i => i.gallery === item.gallery);
         if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
           this.galleries.push(new Gallery(
-            item._id,
+            item.galleryId,
             item.gallery,
-            `galleries/${item.gallery}/profile/${item.profilePhoto}`,
+            item.profilePhoto,
             item.createdDate,
             item.updatedDate))
         }

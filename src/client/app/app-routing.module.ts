@@ -69,11 +69,17 @@ const routes: Routes = [
   {
     path: 'managesite',
     component: ManageSiteComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      galleries: GalleriesResolve
+    }
   },
   {
     path: 'galleries',
-    component: GalleriesComponent
+    component: GalleriesComponent,
+    resolve: {
+      galleries: GalleriesResolve
+    }
   },
   {
     path: 'programs/:level',

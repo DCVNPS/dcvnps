@@ -1,3 +1,25 @@
-<div *ngFor="let g of galleries">
-    {{g.gallery}}
-</div>
+<div class="ui centered grid" *ngIf="galleries.length > 0">
+    <div class="row">
+      <div class="three wide column"><h3>Profile Photo</h3></div>
+      <div class="three wide column"><h3>File Name</h3></div>
+      <div class="three wide column"><h3>Created Date</h3></div>
+      <div class="three wide column"><h3>Updated Date</h3></div>
+      <div class="four wide column center aligned"><h3>Actions</h3></div>
+    </div>
+    <div class="row" *ngFor="let g of galleries; let i=index">
+      <div class="three wide column">
+        <div class="ui tiny image">
+          <img [src]="g.imgSrc">
+        </div>
+      </div>
+      <div class="three wide column">
+        <div class="description">{{g.profilePhoto}}</div>
+      </div>
+      <div class="three wide column">{{g.createdDate | date:'medium'}}</div>
+      <div class="three wide column">{{g.updatedDate | date:'medium'}}</div>
+      <div class="four wide column right aligned">
+        <button class=" mini ui positive basic button" (click)="editGallery(i)">Edit</button>
+        <button class=" mini ui negative basic button" (click)="deleteGallery(i)">Delete</button>
+      </div>
+    </div>
+  </div>
