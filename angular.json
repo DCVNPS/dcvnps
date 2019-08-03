@@ -18,7 +18,10 @@
             "polyfills": "src/client/polyfills.ts",
             "assets": [
               "src/client/assets",
-              "src/client/favicon.ico"
+              "src/client/favicon.ico",
+              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
+              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
+              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" }
             ],
             "styles": [
               "src/client/styles.scss",
@@ -27,7 +30,8 @@
             ],
             "scripts": [
               "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js"
+              "src/client/assets/semantic.min.js",
+              "node_modules/tinymce/tinymce.min.js"
             ]
           },
           "configurations": {
@@ -76,7 +80,10 @@
             "tsConfig": "src/client/tsconfig.spec.json",
             "assets": [
               "src/client/assets",
-              "src/client/favicon.ico"
+              "src/client/favicon.ico",
+              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
+              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
+              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" } 
             ],
             "styles": [
               "src/client/styles.scss",
@@ -85,7 +92,8 @@
             ],
             "scripts": [
               "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js"
+              "src/client/assets/semantic.min.js",
+              "node_modules/tinymce/tinymce.min.js"
             ]
           }
         },

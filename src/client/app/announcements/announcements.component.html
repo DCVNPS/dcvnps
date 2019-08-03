@@ -1,6 +1,30 @@
 <div class="min-page-height" id="pagebody">
-<p>
-  Page under construction. 
-  We are sorry for the inconvinence.
-</p>
+  <div class="ui centered grid container">
+    <div class="eight wide column">
+      <!-- <div class="ui icon message" *ngIf="newContact">
+        <i class="notched check green icon" (click)="newContact = null"></i>
+        <div class="close icon">
+          <div class="content">
+            <div class="header">
+              New contact added!
+            </div>
+            <p>Name: {{newContact.name}}</p>
+          </div>
+        </div>
+      </div> -->
+      <form class="ui big form" #mForm="ngForm" (submit)="onSubmit(mForm)">
+          <div class="inline field">
+            <label>Announcement Title</label>
+            <input type="text" placeholder="Announcement Title" name="title" ngModel>
+          </div>
+        <div class="field">
+          <label>Announcement Content:</label>
+          <editor [init]="tinyInit" name="content" placeholder="enter content/" ngModel></editor>
+        </div>
+        <button type="submit" class="ui submit large grey button right floated">Add Announcement</button>
+      </form>
+    </div>
+  </div>
+  <div [innerHTML]="title | safeHtml" *ngIf="title"></div>
+  <div [innerHTML]="content | safeHtml" *ngIf="content"></div>
 </div>
