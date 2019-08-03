@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { MenuComponent } from './menu/menu.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
@@ -47,6 +48,7 @@ import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,8 @@ import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profile
     PaypalButtonComponent,
     ManageSiteComponent,
     PrettyPrintPipe,
-    EditGalleryProfilesComponent
+    EditGalleryProfilesComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profile
     ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    EditorModule
   ],
   providers: [
     RouterLinkActive,
