@@ -1,5 +1,5 @@
 const database = require('./database');
-const user = { "userName": "siteuser", "password": "Testing1","roleCode":"SITUSR","updateUser":"testUpdate" };
+const user = { "userName": "siteuser", "password": "Testing1", "roleCode": "SITUSR", "updateUser": "testUpdate" };
 
 async function testDatabase(user) {
     try {
@@ -21,39 +21,56 @@ async function testDatabase(user) {
         //     const jsonGallery = JSON.parse(result);
         //     jsonGallery.forEach((item)=>{ console.log(item);});
         // });
-        // database.getPhotoByGalleryId("d63a6b38-6dfe-11e9-8849-848f69b86260")
-        // .then((data)=>{
-        //     let result = [];
-        //     data.forEach((item)=>{
-        //         const sr = result.find((y)=> y.year === item.year);
-        //         if(!sr){
-        //             let jsonEl = {"year":item.year,"photos":[]};
-        //             jsonEl.photos.push({"src":`galleries/${item.gallery}/${item.year}/${item.photo}`,"author":item.author,"portrait":item.portrait});
-        //             result.push(jsonEl);
-        //         } else {
-        //             sr.photos.push({"src":`galleries/${item.gallery}/${item.year}/${item.photo}`,"author":item.author,"portrait":item.portrait});
-        //         }
-        //     });
-        //     result.forEach((y)=>{
-        //         console.log(y.year);
-        //         y.photos.forEach((photo)=>{
-        //             console.log(photo.src);
-        //         })
-        //     });
-        //     console.log(JSON.stringify(result));
-        // });
-        database.getPhotoByGalleryName('home')
+        return database.getPhotoByGalleryId("f10448dd-6dfe-11e9-8849-848f69b86260")
         .then((data)=>{
-            const jData = JSON.parse(data);
-            jData.forEach((y)=>{
-                console.log(`"year": ${y.year}:`);
-                y.photos.forEach((photo)=>{
-                    console.log(`\tphoto: ${photo.src}`);
+            const photos = [];
+            let result = [];
+            data.forEach((item)=>{
+                console.log(item);
+                const sr = result.find((y)=> y.year === item.year);
+                if(!sr){
+                    let jsonEl = {"year":item.year,"authorData":[]};
+                    item.authorData.forEach( authData => {
+                        jsonEl.authorData.push(authData);
+                    })
+                    result.push(jsonEl);
+                } else {
+                    item.authorData.forEach( authData => {
+                        sr.authorData.push(authData);
+
+                    });
+                }
+            });
+            result.forEach((y)=>{
+                console.log(y.year);
+                // console.log(y.authorData);
+                y.authorData.forEach(authData => {
+                    console.log(authData)
+                    authData.photos.forEach( photo => {
+                        console.log(photo);
+                    })
                 });
             });
-    });
+            // console.log(JSON.stringify(result));
+            return;
+        });
+        // database.getPhotoByGalleryName('home')
+        //     .then((data) => {
+        //         const jData = JSON.parse(data);
+        //         jData.forEach((y) => {
+        //             console.log(`"year": ${y.year}:`);
+        //             y.photos.forEach((photo) => {
+        //                 console.log(`\tphoto: ${photo.src}`);
+        //             });
+        //         });
+        //     });
+        // database.uuid()
+        // .then( data => {
+        //     console.log(data);
+        // })
+        // .catch (err => console(err));
     }
-    catch(err){
+    catch (err) {
         console.error(err);
         database.destroy();
     }

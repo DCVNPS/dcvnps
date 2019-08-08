@@ -101,7 +101,11 @@ export class DropzoneComponent implements OnInit {
     if (files.length > 0) {
       // this.fileArray = files;
       for (let i = 0; i < files.length; i++) {
-        const [author, filename] = (files[i].name).split('_');
+        const fileNameParts = (files[i].name).split('_');
+        const author = fileNameParts[0];
+        fileNameParts.splice(0, 1);
+        console.log(fileNameParts);
+        const filename = fileNameParts.join('_');
         const curImage = this.validImages.find((img) => img.imgFile.name === files[i].name);
         if (!curImage) {
           const imgInfo = new ImageInfo();

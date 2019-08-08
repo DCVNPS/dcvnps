@@ -31,6 +31,11 @@ function apiRouter(database) {
         }
     })
 
+    router.use('/uuid', (req, res) => {
+        database.uuid().then( data => { return res.json(data)})
+        .catch( err => {return res.status(500).json({ error: err.message }); });
+    });
+
     router.get('/contacts', (req, res) => {
         database.getContacts()
             .then((contacts) => { return res.json(contacts); })
@@ -83,7 +88,7 @@ function apiRouter(database) {
     });
 
     // Upload a photo to a gallery
-    router.post('/upload/:gallery/:year', (req, res) => {
+    router.post('/upload/:gallery/:year',async (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
         const { galleryId, fileName, author, size, portrait } = req.body;
@@ -95,15 +100,16 @@ function apiRouter(database) {
         const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
-        // const fileName = file.name.split('_')[1];
-        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${fileName}`);
-        // console.log(req.auth);
+        const gUuid = await database.uuid();
+        const destFileName = `${gUuid.uuid}_${fileName}`;
+        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
+        // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {
                 console.log('photoupload-Move file', err.message)
                 return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            database.insertGalleryPhoto(galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
+            database.insertGalleryPhoto(gUuid.uuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
                     console.log(result);
                     return res.status(200).json('Upload reach server.');

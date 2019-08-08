@@ -6,7 +6,7 @@
 /out-tsc
 /src/server/public
 #imange directories
-/src/server/galleries
+/src/server/galleries/*
 
 # env
 .env
