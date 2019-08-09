@@ -49,7 +49,8 @@ import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { AddAnnounceComponent } from './announcements/add-announce/add-announce.component';
+import { AddAnnounceComponent } from './add-announcement/add-announce.component';
+import { EditAnnouncementsComponent } from './edit-announcements/edit-announcements.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { AddAnnounceComponent } from './announcements/add-announce/add-announce.
     PrettyPrintPipe,
     EditGalleryProfilesComponent,
     SafeHtmlPipe,
-    AddAnnounceComponent
+    AddAnnounceComponent,
+    EditAnnouncementsComponent
   ],
   imports: [
     BrowserModule,

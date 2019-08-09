@@ -227,11 +227,6 @@
             }
         },
         getGalleries(galleryId) {
-            // console.log(knex('galleries')
-            // .select('galleryId', 'gallery', 'profilePhoto')
-            // .whereRaw('galleryId = IFNULL(?,galleryId)',[galId])
-            // .orderBy('createdDate')
-            // .toString());
             return knex('galleries')
                 .select('galleryId', 'gallery', 'profilePhoto', 'updateUser', 'createdDate', 'updatedDate')
                 .whereRaw('galleryId = IFNULL(?,galleryId)', [galleryId])
@@ -488,6 +483,26 @@
                 .catch(err => {
                     throw err;
                 })
+        },
+        getAnnouncements(announceId){
+            return knex({a: 'announcements'})
+                .select({
+                    announcementId: 'a.announcementId',
+                    title: 'a.title',
+                    content: 'a.content',
+                    userId: 'a.userId',
+                    postedBy: knex.raw('(select `u`.`username` from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`userId`)'),
+                    postedDate: 'a.createdDate',
+                    updatedDate: 'a.updatedDate'
+                })
+                .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)',[announceId])
+                // .toQuery();
+                .then(data => {
+                    return JSON.stringify(data);
+                })
+                .catch( err => {
+                    throw err;
+                });
         },
         destroy() {
             knex.destroy();

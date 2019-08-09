@@ -1,3 +1,10 @@
 <div class="min-page-height" id="pagebody">
-  <app-add-announce></app-add-announce>
+  <div class="ui card fluid borderless" *ngFor=" let announcement of announcements">
+    <div class="content">
+      <div class="header" [innerHTML]="announcement.title | safeHtml"></div>
+    </div>
+    <div class="content">
+      <div class="summary" [innerHTML]="announcement.content | safeHtml"></div>
+    </div>
+  </div>
 </div>

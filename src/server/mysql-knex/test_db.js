@@ -21,39 +21,39 @@ async function testDatabase(user) {
         //     const jsonGallery = JSON.parse(result);
         //     jsonGallery.forEach((item)=>{ console.log(item);});
         // });
-        return database.getPhotoByGalleryId("f10448dd-6dfe-11e9-8849-848f69b86260")
-        .then((data)=>{
-            const photos = [];
-            let result = [];
-            data.forEach((item)=>{
-                console.log(item);
-                const sr = result.find((y)=> y.year === item.year);
-                if(!sr){
-                    let jsonEl = {"year":item.year,"authorData":[]};
-                    item.authorData.forEach( authData => {
-                        jsonEl.authorData.push(authData);
-                    })
-                    result.push(jsonEl);
-                } else {
-                    item.authorData.forEach( authData => {
-                        sr.authorData.push(authData);
+        // return database.getPhotoByGalleryId("f10448dd-6dfe-11e9-8849-848f69b86260")
+        // .then((data)=>{
+        //     const photos = [];
+        //     let result = [];
+        //     data.forEach((item)=>{
+        //         console.log(item);
+        //         const sr = result.find((y)=> y.year === item.year);
+        //         if(!sr){
+        //             let jsonEl = {"year":item.year,"authorData":[]};
+        //             item.authorData.forEach( authData => {
+        //                 jsonEl.authorData.push(authData);
+        //             })
+        //             result.push(jsonEl);
+        //         } else {
+        //             item.authorData.forEach( authData => {
+        //                 sr.authorData.push(authData);
 
-                    });
-                }
-            });
-            result.forEach((y)=>{
-                console.log(y.year);
-                // console.log(y.authorData);
-                y.authorData.forEach(authData => {
-                    console.log(authData)
-                    authData.photos.forEach( photo => {
-                        console.log(photo);
-                    })
-                });
-            });
-            // console.log(JSON.stringify(result));
-            return;
-        });
+        //             });
+        //         }
+        //     });
+        //     result.forEach((y)=>{
+        //         console.log(y.year);
+        //         // console.log(y.authorData);
+        //         y.authorData.forEach(authData => {
+        //             console.log(authData)
+        //             authData.photos.forEach( photo => {
+        //                 console.log(photo);
+        //             })
+        //         });
+        //     });
+        //     // console.log(JSON.stringify(result));
+        //     return;
+        // });
         // database.getPhotoByGalleryName('home')
         //     .then((data) => {
         //         const jData = JSON.parse(data);
@@ -69,6 +69,21 @@ async function testDatabase(user) {
         //     console.log(data);
         // })
         // .catch (err => console(err));
+        const announceId = null;
+        // console.log(database.getAnnouncements(announceId));
+        database.getAnnouncements(announceId)
+        .then( (data) => {
+            const jData = JSON.parse(data);
+            jData.forEach( (r) => {
+                console.log(r);
+            });
+            console.log(jData);
+        })
+        .catch( err => { console.error(err)})
+        .finally(() => {
+            database.destroy();
+        });
+        
     }
     catch (err) {
         console.error(err);

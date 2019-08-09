@@ -239,6 +239,17 @@ function apiRouter(database) {
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }
     });
+    router.get('/announcements/:announceId?', (req, res) => {
+        const announceId =  req.params.announceId || null;
+        database.getAnnouncements(announceId)
+        .then( data => {
+            const jData = JSON.parse(data);
+            return res.status(200).send(jData);
+        })
+        .catch( err =>{
+            return res.status(500).json(err.message);
+        })
+    })
     return router;
 }
 

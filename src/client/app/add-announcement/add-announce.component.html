@@ -3,7 +3,7 @@
     <form class="ui form" #mForm="ngForm" (submit)="onSubmit(mForm)">
         <div class="inline field">
           <label>Announcement Title</label>
-          <input type="text" placeholder="Announcement Title" name="title" ngModel>
+          <input class="announcementtitle" type="text" placeholder="Announcement Title" name="title" ngModel>
         </div>
       <div class="field">
         <label>Announcement Content:</label>
@@ -11,11 +11,5 @@
       </div>
       <button type="submit" class="ui submit large grey button right floated">Add Announcement</button>
     </form>
-  </div>
-  <div class="ui card fluid borderless">
-    <div class="content">
-      <div class="header" [innerHTML]="title | safeHtml" *ngIf="title"></div>
-      <div class="desription" [innerHTML]="content | safeHtml" *ngIf="content"></div>
-    </div>
   </div>
 </div>

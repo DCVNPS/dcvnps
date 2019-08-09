@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+// 'https://www.youtube.com/embed/3FEs2IFnkEw'
+// 'https://www.youtube.com/embed/okceADa846I'
 
 @Component({
   selector: 'app-add-announce',
@@ -10,7 +13,7 @@ export class AddAnnounceComponent implements OnInit {
   private tinyInit: Object;
   private title: string;
   private content: string;
-
+  @Output() announcementAdded: EventEmitter<Object> = new EventEmitter<Object>();
   constructor() { }
 
   ngOnInit() {
@@ -25,8 +28,10 @@ export class AddAnnounceComponent implements OnInit {
     const formValues = Object.assign({}, mForm.value);
     this.title = formValues.title;
     this.content = formValues.content;
-    console.log(this.title);
-    console.log(this.content);
+    // console.log({ 'title': this.title, 'content': this.content });
+    // call api to post announcement content
+    this.announcementAdded.emit({ 'title': this.title, 'content': this.content });
+    mForm.reset();
   }
 
 }
