@@ -10,19 +10,36 @@ import { ApiService } from '../services/api.service';
 })
 export class AnnouncementsComponent implements OnInit {
   public announcements: Array<Announcement> = [];
+  public isEditAnnouncement = false;
+  public initEditAnnouncement: Announcement;
   constructor(private api: ApiService, private auth: AuthService) {  }
   ngOnInit() {
     const apiEndPoint = 'announcements';
     this.api.get(apiEndPoint)
     .subscribe( res => {
-      console.log(res);
+      // console.log(res);
       res.forEach( ancmnt => {
         this.announcements.push(ancmnt);
       });
-    })
+    });
+
   }
 
   siteAdmin() {
     return this.auth.siteAdmin();
+  }
+  editAnnouncements() {
+    this.isEditAnnouncement = true;
+  }
+  saveAnnouncements() {
+    this.isEditAnnouncement = false;
+  }
+  onAnnouncementAdded(event) {
+    this.announcements.unshift(event);
+    console.log(this.announcements);
+  }
+  onAnnouncementClick(event) {
+    this.initEditAnnouncement = event;
+    console.log(this.initEditAnnouncement);
   }
 }

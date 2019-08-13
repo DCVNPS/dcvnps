@@ -41,7 +41,9 @@ export class ApiService {
       headers = new Headers();
       headers.append('Content-Type', 'application/json');
     }
-    headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    // headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    const authToken = this.auth.getToken() || environment.defaultAuthToken;
+    headers.append('Authorization', `Bearer ${authToken}`);
 
     const requestOptions = new RequestOptions({
       url: `${this.baseUrl}/${url}`,

@@ -12,17 +12,17 @@ function apiRouter(database) {
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-            .unless({
-                path:
-                    [
-                        '/api/authenticate',
-                        '/api/boardmembers',
-                        '/api/programs',
-                        { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-                    ]
-            })
+            // .unless({
+            //     path:
+            //         [
+            //             '/api/authenticate',
+            //             '/api/boardmembers',
+            //             '/api/programs',
+            //             { url: /^\/api\/galleries.*/i, methods: ['GET'] },
+            //             { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+            //             { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+            //         ]
+            // })
     );
 
     router.use((err, req, res, next) => {
@@ -153,11 +153,6 @@ function apiRouter(database) {
 
     router.post('/authenticate', (req, res) => {
         const user = req.body;
-        // console.log(user);
-        if (user.username === 'default') {
-            user.username = 'vnpsuser';
-            user.password = null;
-        }
         database.authenticate({ username: user.username, password: user.password })
             .then((result) => {
                 if (result.success) {
@@ -240,6 +235,7 @@ function apiRouter(database) {
         }
     });
     router.get('/announcements/:announceId?', (req, res) => {
+        // console.log(req.auth);
         const announceId =  req.params.announceId || null;
         database.getAnnouncements(announceId)
         .then( data => {
@@ -249,7 +245,10 @@ function apiRouter(database) {
         .catch( err =>{
             return res.status(500).json(err.message);
         })
-    })
+    });
+    router.post('/announcements', (req, res) => {
+        return res.status(500).send('Not implemented.');
+    });
     return router;
 }
 

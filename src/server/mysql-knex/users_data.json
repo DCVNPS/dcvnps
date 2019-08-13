@@ -2,6 +2,8 @@
 	{
 		"userId" : "79f9a290-6f38-11e9-8849-848f69b86260",
 		"userName" : "siteuser",
+		"userSurname": "vnps",
+		"userGivenName": "user",
 		"password" : "ANz75xWo3n2J3Y",
 		"roleCode" : "SITEUSR",
 		"createdDate" : "2019-05-05 09:19:10",
@@ -11,6 +13,8 @@
 	{
 		"userId" : "7cb5e812-6eb2-11e9-8849-848f69b86260",
 		"userName" : "siteadmin",
+		"userSurname": "vnps",
+		"userGivenName": "admin",
 		"password" : "Pt4bvZSSI4KN4g",
 		"roleCode" : "SITEADM",
 		"createdDate" : "2019-05-04 17:20:02",
@@ -20,6 +24,8 @@
 	{
 		"userId" : "7cb5ecfe-6eb2-11e9-8849-848f69b86260",
 		"userName" : "level3admin",
+		"userSurname": "vnps",
+		"userGivenName": "level3",
 		"password" : "ANz75xWo3n2J3Y",
 		"roleCode" : "LVL3ADM",
 		"createdDate" : "2019-05-04 17:20:02",
@@ -28,9 +34,22 @@
 	},
 	{
 		"userId" : "7cb5ee94-6eb2-11e9-8849-848f69b86260",
-		"userName" : "vnpsuser",
+		"userName" : "level2admin",
+		"userSurname": "vnps",
+		"userGivenName": "level2",
 		"password" : "ANz75xWo3n2J3Y",
-		"roleCode" : "SITEUSR",
+		"roleCode" : "LVL2ADM",
+		"createdDate" : "2019-05-04 17:20:02",
+		"updateUser" : "dcvnps",
+		"updatedDate" : "2019-05-04 17:20:02"
+	},
+	{
+		"userId" : "f223b401-bb25-11e9-8110-08002764505e",
+		"userName" : "level1admin",
+		"userSurname": "vnps",
+		"userGivenName": "level1",
+		"password" : "ANz75xWo3nK13Y",
+		"roleCode" : "LVL1ADM",
 		"createdDate" : "2019-05-04 17:20:02",
 		"updateUser" : "dcvnps",
 		"updatedDate" : "2019-05-04 17:20:02"
@@ -38,6 +57,8 @@
 	{
 		"userId" : "7cb5eff6-6eb2-11e9-8849-848f69b86260",
 		"userName" : "memberadmin",
+		"userSurname": "vnps",
+		"userGivenName": "members",
 		"password" : "ANz75xWo3n2J3Y",
 		"roleCode" : "MBMRADM",
 		"createdDate" : "2019-05-04 17:20:02",

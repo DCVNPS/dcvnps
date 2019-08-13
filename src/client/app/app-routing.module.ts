@@ -19,6 +19,7 @@ import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { ProgramsResolve } from './resolvers/programs-resolve';
 import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
+import { EditAnnouncementsComponent } from './edit-announcements/edit-announcements.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,10 @@ const routes: Routes = [
   {
     path: 'announcements',
     component: AnnouncementsComponent
+  },
+  {
+    path: 'editannouncement',
+    component: EditAnnouncementsComponent
   },
   {
     path: 'login',

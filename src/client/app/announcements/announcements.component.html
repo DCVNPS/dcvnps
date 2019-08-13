@@ -1,10 +1,13 @@
-<div class="min-page-height" id="pagebody">
-  <div class="ui card fluid borderless" *ngFor=" let announcement of announcements">
-    <div class="content">
-      <div class="header" [innerHTML]="announcement.title | safeHtml"></div>
-    </div>
-    <div class="content">
-      <div class="summary" [innerHTML]="announcement.content | safeHtml"></div>
-    </div>
-  </div>
+<div class="ui small grey inverted secondary menu">
+    <a class="item" (click)="editAnnouncements()" aria-label="Edit Announcements" *ngIf="siteAdmin()">
+        <span><i class="large edit icon"></i></span>Edit Announcements
+    </a>
+    <!-- <a class="item" (click)="saveAnnouncements()" aria-label="Save" *ngIf="siteAdmin() && isEditAnnouncement">
+            <span><i class="large save icon"></i></span>Save
+        </a>         -->
+</div>
+
+<div class="min-page-height">
+        <app-add-announce (announcementAdded)="onAnnouncementAdded($event)" [editAnnouncement]="initEditAnnouncement"  *ngIf="siteAdmin() && isEditAnnouncement"></app-add-announce> 
+        <app-announcement *ngFor=" let announcement of announcements" [announcement]="announcement" [isEdit]="isEditAnnouncement" (editAnnounceClick)="onAnnouncementClick($event)"></app-announcement>
 </div>

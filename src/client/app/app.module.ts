@@ -51,6 +51,8 @@ import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profile
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { AddAnnounceComponent } from './add-announcement/add-announce.component';
 import { EditAnnouncementsComponent } from './edit-announcements/edit-announcements.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { EditAnnouncementComponent } from './edit-announcement/edit-announcement.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { EditAnnouncementsComponent } from './edit-announcements/edit-announceme
     EditGalleryProfilesComponent,
     SafeHtmlPipe,
     AddAnnounceComponent,
-    EditAnnouncementsComponent
+    EditAnnouncementsComponent,
+    AnnouncementComponent,
+    EditAnnouncementComponent
   ],
   imports: [
     BrowserModule,

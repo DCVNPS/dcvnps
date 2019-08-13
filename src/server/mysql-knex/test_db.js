@@ -1,4 +1,5 @@
 const database = require('./database');
+const jwt = require('jsonwebtoken');
 const user = { "userName": "siteuser", "password": "Testing1", "roleCode": "SITUSR", "updateUser": "testUpdate" };
 
 async function testDatabase(user) {
@@ -72,18 +73,18 @@ async function testDatabase(user) {
         const announceId = null;
         // console.log(database.getAnnouncements(announceId));
         database.getAnnouncements(announceId)
-        .then( (data) => {
-            const jData = JSON.parse(data);
-            jData.forEach( (r) => {
-                console.log(r);
+            .then((data) => {
+                const jData = JSON.parse(data);
+                jData.forEach((r) => {
+                    console.log(r);
+                });
+                console.log(jData);
+            })
+            .catch(err => { console.error(err) })
+            .finally(() => {
+                database.destroy();
             });
-            console.log(jData);
-        })
-        .catch( err => { console.error(err)})
-        .finally(() => {
-            database.destroy();
-        });
-        
+
     }
     catch (err) {
         console.error(err);
@@ -92,4 +93,33 @@ async function testDatabase(user) {
 
 }
 
-testDatabase(user);
+function genAuthToken({ user, pwd }) {
+    const username = user || 'siteuser';
+    const password = pwd || 'ANz75xWo3n2J3Y';
+    const payload = {
+        username: username,
+        password: password
+
+    }
+    database.authenticate(payload)
+        .then(result => {
+            console.log(result);
+            if (result.success) {
+                const roleCode = result.authuser.roleCode;
+                const admRole = roleCode.match(/ADM$/g);
+                const payload = {
+                    userid: result.authuser.userId,
+                    username: result.authuser.userName,
+                    userrole: result.authuser.roleCode,
+                    admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
+                };
+
+                const token = jwt.sign(payload, process.env.JWT_SECRET);
+                console.log(token);
+            }
+        })
+        .catch(err => { console.error(err); });
+}
+
+// testDatabase(user);
+genAuthToken({});

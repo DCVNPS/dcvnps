@@ -1,15 +1,15 @@
 <div class="ui grid container">
   <div class="twelve wide column">
-    <form class="ui form" #mForm="ngForm" (submit)="onSubmit(mForm)">
+    <div class="ui form">
         <div class="inline field">
           <label>Announcement Title</label>
-          <input class="announcementtitle" type="text" placeholder="Announcement Title" name="title" ngModel>
+          <input class="announcementtitle" type="text" placeholder="Announcement Title" [(ngModel)]="title">
         </div>
       <div class="field">
         <label>Announcement Content:</label>
-        <editor [init]="tinyInit" name="content" placeholder="enter content/" ngModel></editor>
+        <editor [init]="tinyInit" [(ngModel)]="content"></editor>
       </div>
-      <button type="submit" class="ui submit large grey button right floated">Add Announcement</button>
-    </form>
+      <button type="submit" class="ui submit large grey button right floated" (click)="onSubmit()">Save Announcement</button>
+    </div>
   </div>
 </div>

@@ -1,0 +1,16 @@
+<div class="ui card fluid borderless">
+  <div class="content">
+    <div class="header">{{announcement.title}}</div>
+  </div>
+  <div class="extra content">
+      <span>posted by: {{announcement.postedBy | titlecase}}</span>
+      <span class="right floated">posted date: {{announcement.postedDate| date:'medium'}}</span>
+  </div>
+  <div class="content">
+    <div class="summary" [innerHTML]="announcement.content | safeHtml"></div>
+  </div>
+  <div class="extra content" *ngIf="isEdit">
+    <div class="ui brown basic button"(click)="editAnnouncement()">Edit</div>
+    <div class="ui red basic button">Delete</div>
+  </div>
+</div>
