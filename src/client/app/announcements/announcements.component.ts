@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Announcement } from '../models/announcement-model';
 import { ApiService } from '../services/api.service';
@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./announcements.component.scss']
 })
 export class AnnouncementsComponent implements OnInit {
+  @Input() isEdit: boolean;
   public announcements: Array<Announcement> = [];
   public editAncmnts = false;
   public editAncmnt = false;
@@ -21,6 +22,7 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   initData() {
+    this.editAncmnts = this.isEdit || false;
     const apiEndPoint = 'announcements';
     this.api.get(apiEndPoint)
     .subscribe( res => {
@@ -40,7 +42,9 @@ export class AnnouncementsComponent implements OnInit {
   cancelEditAnnouncements() {
     this.editAncmnts = false;
     this.addAncmnt = false;
+    this.editAncmnt = false;
   }
+
   addAnnouncement() {
     this.addAncmnt = true;
   }

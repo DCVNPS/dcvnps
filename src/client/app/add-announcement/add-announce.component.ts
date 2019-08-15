@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Announcement } from '../models/announcement-model';
+import { ApiService } from '../services/api.service';
 
 // 'https://www.youtube.com/embed/3FEs2IFnkEw'
 // 'https://www.youtube.com/embed/okceADa846I'
@@ -14,7 +15,7 @@ export class AddAnnounceComponent implements OnInit {
   private title: string;
   private content: string;
   @Output() addAncmntEvent: EventEmitter<Object> = new EventEmitter<Object>();
-  constructor() {
+  constructor(private api: ApiService) {
    }
 
   ngOnInit() {
@@ -26,8 +27,11 @@ export class AddAnnounceComponent implements OnInit {
     };
   }
   onSubmit() {
-    console.log({ 'title': this.title, 'content': this.content });
-    this.addAncmntEvent.emit({ 'title': this.title, 'content': this.content });
+    // console.log({ 'title': this.title, 'content': this.content });
+    this.api.post('announcement', { 'title': this.title, 'content': this.content })
+    .subscribe( data => {
+      this.addAncmntEvent.emit(data);
+    });
     this.resetForm();
   }
   onCancel() {

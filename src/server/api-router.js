@@ -31,7 +31,7 @@ function apiRouter(database) {
         }
     })
 
-    router.use('/uuid', (req, res) => {
+    router.get('/uuid', (req, res) => {
         database.uuid().then( data => { return res.json(data)})
         .catch( err => {return res.status(500).json({ error: err.message }); });
     });
@@ -234,6 +234,24 @@ function apiRouter(database) {
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }
     });
+
+    router.post('/announcement', async (req, res) => {
+        try{
+            const ancmnt = req.body;
+            const ancmentuuid =  await database.uuid();
+            console.log(ancmentuuid);
+            ancmnt.announcementId = ancmentuuid.uuid;
+            ancmnt.userId = req.auth.userid;
+            ancmnt.createdDate = new Date();
+            ancmnt.updatedDate = new Date();
+            console.log(ancmnt);
+            res.status(200).json(ancmnt);    
+        }
+        catch ( error) {
+            res.status(500).json(error.message);
+        }
+    });
+
     router.get('/announcements/:announceId?', (req, res) => {
         // console.log(req.auth);
         const announceId =  req.params.announceId || null;
@@ -245,9 +263,6 @@ function apiRouter(database) {
         .catch( err =>{
             return res.status(500).json(err.message);
         })
-    });
-    router.post('/announcements', (req, res) => {
-        return res.status(500).send('Not implemented.');
     });
     return router;
 }
