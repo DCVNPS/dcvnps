@@ -1,13 +1,19 @@
 <div class="ui small grey inverted secondary menu">
-    <a class="item" (click)="editAnnouncements()" aria-label="Edit Announcements" *ngIf="siteAdmin()">
+    <a class="item" (click)="editAnnouncements()" aria-label="Edit Announcements" *ngIf="siteAdmin() && !editAncmnts ">
         <span><i class="large edit icon"></i></span>Edit Announcements
     </a>
-    <!-- <a class="item" (click)="saveAnnouncements()" aria-label="Save" *ngIf="siteAdmin() && isEditAnnouncement">
-            <span><i class="large save icon"></i></span>Save
-        </a>         -->
+    <a class="item" (click)="cancelEditAnnouncements()" aria-label="Edit Announcements" *ngIf="siteAdmin() && editAncmnts ">
+        <span><i class="large remove icon"></i></span>End Editing
+    </a>
+    <a class="item" (click)="addAnnouncement()" aria-label="Add Announcements" *ngIf="siteAdmin()">
+        <span><i class="large add icon"></i></span>Add Announcement
+    </a>
 </div>
 
-<div class="min-page-height">
-        <app-add-announce (announcementAdded)="onAnnouncementAdded($event)" [editAnnouncement]="initEditAnnouncement"  *ngIf="siteAdmin() && isEditAnnouncement"></app-add-announce> 
-        <app-announcement *ngFor=" let announcement of announcements" [announcement]="announcement" [isEdit]="isEditAnnouncement" (editAnnounceClick)="onAnnouncementClick($event)"></app-announcement>
+<div class="ui grid container">
+    <div class="twelve wide column">
+        <app-add-announce (addAncmntEvent)="onAddAncmntEvent($event)" *ngIf="siteAdmin() && addAncmnt"></app-add-announce>
+        <app-edit-announcement (editAncmntEvent)="onEditAncmntEvent($event)" [announcement]="initEditAncmnt" *ngIf="siteAdmin() && editAncmnt"></app-edit-announcement>
+        <app-announcement *ngFor=" let announcement of announcements" [announcement]="announcement" [isEdit]="editAncmnts" (editAnnounceClick)="onAnnouncementEditClick($event)"></app-announcement>
+    </div>
 </div>

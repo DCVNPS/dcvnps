@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthorPhotoComponent implements OnInit {
   @Input() private authorData: Object = {};
   @Output() showPopupClicked: EventEmitter<Photo[]> = new EventEmitter<Photo[]>();
-  public author: string;
+  public author: Array<string>;
   public photos: Array<Photo> = [];
   public year: string;
   public isAdmin = false;
@@ -26,7 +26,7 @@ export class AuthorPhotoComponent implements OnInit {
     // console.log(this.authorData);
     this.level = this.authorData['level'];
     this.year = this.authorData['authorPhotos'].year;
-    this.author = this.authorData['authorPhotos'].author;
+    this.author = this.authorData['authorPhotos'].author.split('.');
     this.photos = this.authorData['authorPhotos'].photos;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
   }

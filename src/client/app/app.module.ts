@@ -50,7 +50,6 @@ import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { AddAnnounceComponent } from './add-announcement/add-announce.component';
-import { EditAnnouncementsComponent } from './edit-announcements/edit-announcements.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 import { EditAnnouncementComponent } from './edit-announcement/edit-announcement.component';
 
@@ -91,7 +90,6 @@ import { EditAnnouncementComponent } from './edit-announcement/edit-announcement
     EditGalleryProfilesComponent,
     SafeHtmlPipe,
     AddAnnounceComponent,
-    EditAnnouncementsComponent,
     AnnouncementComponent,
     EditAnnouncementComponent
   ],

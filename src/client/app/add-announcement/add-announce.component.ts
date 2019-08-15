@@ -13,13 +13,8 @@ export class AddAnnounceComponent implements OnInit {
   private tinyInit: Object;
   private title: string;
   private content: string;
-  @Output() announcementAdded: EventEmitter<Object> = new EventEmitter<Object>();
-  @Input() editAnnouncement: Announcement;
+  @Output() addAncmntEvent: EventEmitter<Object> = new EventEmitter<Object>();
   constructor() {
-    if (this.editAnnouncement) {
-      this.title = this.editAnnouncement.title;
-      this.content = this.editAnnouncement.content;
-    }
    }
 
   ngOnInit() {
@@ -29,13 +24,14 @@ export class AddAnnounceComponent implements OnInit {
       toolbar: 'formatselect | bold italic forecolor backcolor permanentpen formatpainter | link image media| alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent',
       height: 400
     };
-    this.content = 'Testing Testing';
   }
   onSubmit() {
-    // console.log({ 'title': this.title, 'content': this.content });
-    // call api to post announcement content
-    this.announcementAdded.emit({ 'title': this.title, 'content': this.content });
+    console.log({ 'title': this.title, 'content': this.content });
+    this.addAncmntEvent.emit({ 'title': this.title, 'content': this.content });
     this.resetForm();
+  }
+  onCancel() {
+    this.addAncmntEvent.emit();
   }
   resetForm() {
     this.title = null;
