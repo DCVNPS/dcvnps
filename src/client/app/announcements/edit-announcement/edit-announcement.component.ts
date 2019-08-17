@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Announcement } from '../models/announcement-model';
+import { Announcement } from '../../models/announcement-model';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 @Component({
@@ -9,7 +9,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 })
 export class EditAnnouncementComponent implements OnInit {
 @Input() announcement: Announcement;
-@Output() editAncmntEvent: EventEmitter<Object> = new EventEmitter<Object>();
+@Output() editAncmntSaved: EventEmitter<Object> = new EventEmitter<Object>();
 private tinyInit: Object;
 public title: string;
 public content: string;
@@ -30,17 +30,15 @@ public postdDate: Date;
       height: 400
     };
   }
-  onSubmit() {
+  onSave() {
     const updtAncmnt = this.announcement;
     updtAncmnt.title = this.title;
     updtAncmnt.content = this.content;
-    // Call api.saveAncmnt();
-    // console.log(updtAncmnt);
     this.resetForm();
-    this.editAncmntEvent.emit(updtAncmnt);
+    this.editAncmntSaved.emit(updtAncmnt);
   }
   onCancel() {
-    this.editAncmntEvent.emit();
+    this.editAncmntSaved.emit();
   }
   resetForm() {
     this.title = null;

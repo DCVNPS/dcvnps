@@ -70,9 +70,9 @@ async function testDatabase(user) {
         //     console.log(data);
         // })
         // .catch (err => console(err));
-        const announceId = null;
+        const announceId = 'b9e3c98d-bfe3-11e9-b62d-08002764505e';
         // console.log(database.getAnnouncements(announceId));
-        database.getAnnouncements(announceId)
+        database.readAnnouncements(announceId)
             .then((data) => {
                 const jData = JSON.parse(data);
                 jData.forEach((r) => {
@@ -121,5 +121,5 @@ function genAuthToken({ user, pwd }) {
         .catch(err => { console.error(err); });
 }
 
-// testDatabase(user);
-genAuthToken({});
+testDatabase(user);
+// genAuthToken({});

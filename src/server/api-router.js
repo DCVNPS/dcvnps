@@ -12,17 +12,17 @@ function apiRouter(database) {
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-            // .unless({
-            //     path:
-            //         [
-            //             '/api/authenticate',
-            //             '/api/boardmembers',
-            //             '/api/programs',
-            //             { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-            //             { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-            //             { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-            //         ]
-            // })
+        // .unless({
+        //     path:
+        //         [
+        //             '/api/authenticate',
+        //             '/api/boardmembers',
+        //             '/api/programs',
+        //             { url: /^\/api\/galleries.*/i, methods: ['GET'] },
+        //             { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+        //             { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+        //         ]
+        // })
     );
 
     router.use((err, req, res, next) => {
@@ -32,8 +32,8 @@ function apiRouter(database) {
     })
 
     router.get('/uuid', (req, res) => {
-        database.uuid().then( data => { return res.json(data)})
-        .catch( err => {return res.status(500).json({ error: err.message }); });
+        database.uuid().then(data => { return res.json(data) })
+            .catch(err => { return res.status(500).json({ error: err.message }); });
     });
 
     router.get('/contacts', (req, res) => {
@@ -67,9 +67,9 @@ function apiRouter(database) {
             .then((data) => {
                 return res.json(data);
             })
-            .catch((err) => { 
+            .catch((err) => {
                 console.log(err)
-                return res.status(500); 
+                return res.status(500);
             });
     });
 
@@ -88,7 +88,7 @@ function apiRouter(database) {
     });
 
     // Upload a photo to a gallery
-    router.post('/upload/:gallery/:year',async (req, res) => {
+    router.post('/upload/:gallery/:year', async (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
         const { galleryId, fileName, author, size, portrait } = req.body;
@@ -219,8 +219,8 @@ function apiRouter(database) {
             fs.unlinkSync(filePath);
             console.log(`file ${filePath} removed.`);
             database.deletePhoto(photoId)
-                .then( resp => {
-                    console.log(resp);gallery
+                .then(resp => {
+                    console.log(resp); gallery
                     return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
                 })
                 .catch(exp => {
@@ -235,34 +235,67 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/announcement', async (req, res) => {
-        try{
-            const ancmnt = req.body;
-            const ancmentuuid =  await database.uuid();
-            console.log(ancmentuuid);
-            ancmnt.announcementId = ancmentuuid.uuid;
+    router.get('/announcements/:announceId?', (req, res) => {
+        // console.log(req.auth);
+        const announceId = req.params.announceId || null;
+        database.readAnnouncements(announceId)
+            .then(data => {
+                const jData = JSON.parse(data);
+                return res.status(200).send(jData);
+            })
+            .catch(err => {
+                return res.status(500).json(err.message);
+            })
+    });
+    router.post('/announcements', async (req, res) => {
+        try {
+            const ancmntuuid = await database.uuid();
+            let ancmnt = req.body;
+            ancmnt.announcementId = ancmntuuid.uuid;
             ancmnt.userId = req.auth.userid;
-            ancmnt.createdDate = new Date();
+            ancmnt.postedDate = new Date();
             ancmnt.updatedDate = new Date();
-            console.log(ancmnt);
-            res.status(200).json(ancmnt);    
+            ancmnt = await database.createAnnouncement(ancmnt);
+
+            res.status(200).json(ancmnt);
         }
-        catch ( error) {
+        catch (error) {
+            console.log(error);
             res.status(500).json(error.message);
         }
     });
 
-    router.get('/announcements/:announceId?', (req, res) => {
-        // console.log(req.auth);
-        const announceId =  req.params.announceId || null;
-        database.getAnnouncements(announceId)
-        .then( data => {
-            const jData = JSON.parse(data);
-            return res.status(200).send(jData);
-        })
-        .catch( err =>{
-            return res.status(500).json(err.message);
-        })
+    router.put('/announcements', async (req, res) => {
+        try {
+            const ancmnt = req.body;
+            const ancmentuuid = await database.uuid();
+            console.log(ancmentuuid);
+            ancmnt.announcementId = ancmentuuid.uuid;
+            ancmnt.userId = req.auth.userid;
+            ancmnt.postedDate = new Date();
+            ancmnt.updatedDate = new Date();
+            console.log(ancmnt);
+            res.status(200).json(ancmnt);
+        }
+        catch (error) {
+            res.status(500).json(error.message);
+        }
+    });
+
+    router.delete('/announcements/:announceId', async (req, res) => {
+        const announceId = req.params.announceId || null;
+        console.log(`delete announcement with id ${announceId}`);
+        try {
+            if (announceId) {
+                const result = await database.deleteAnnouncements(announceId);
+                return res.status(200).json(`${result} row(s) deleted.`);
+            } else {
+                return res.status(500).json('announceId is not null');
+            }
+        }
+        catch( error ){
+            return res.status(500).json(error.message);
+        }
     });
     return router;
 }

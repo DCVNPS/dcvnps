@@ -9,12 +9,16 @@ import { Announcement } from '../../models/announcement-model';
 export class AnnouncementComponent implements OnInit {
 @Input() announcement: Announcement;
 @Input() isEdit: boolean;
-@Output() editAnnounceClick: EventEmitter<Object> = new EventEmitter<Object>();
+@Output() announcementAction: EventEmitter<Object> = new EventEmitter<Object>();
   constructor() { }
 
   ngOnInit() {
   }
   editAnnouncement() {
-    this.editAnnounceClick.emit(this.announcement);
+    this.announcementAction.emit({'action': 'edit', 'ancmnt': this.announcement});
+  }
+
+  deleteAnnouncement()  {
+    this.announcementAction.emit({'action': 'delete', 'ancmnt': this.announcement});
   }
 }

@@ -10,18 +10,6 @@
 
     module.exports = {
         async uuid() {
-            // return knex.raw('select uuid() as uuid')
-            //     .then(data => {
-            //         //the 2 steps needed eliminate the DataRowPackage
-            //         // setup by the DB dirver
-            //         var jsonstring = JSON.stringify(data);
-            //         var jsonvalue = JSON.parse(jsonstring);
-            //         return  jsonvalue[0][0];
-            //     })
-            //     .catch ( err => {
-            //         console.log(err);
-            //         throw err;
-            //     });
             try {
                 const data = await knex.raw('select uuid() as uuid');
                 const jsonString = JSON.stringify(data);
@@ -340,7 +328,7 @@
                     author: 'gp.author',
                     year: 'gp.year',
                     portrait: 'gp.portrait'
-            })
+                })
                 .orderBy([{ column: 'year', order: 'desc' }, 'author'])
                 .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
                 .whereRaw('?? = ?', ['g.galleryId', galleryId])
@@ -484,8 +472,50 @@
                     throw err;
                 })
         },
-        getAnnouncements(announceId){
-            return knex({a: 'announcements'})
+        createAnnouncement(ancmnt) {
+            // console.log(ancmnt);
+            return knex('announcements')
+            .insert({
+                announcementId: ancmnt.announcementId,
+                title: ancmnt.title,
+                content: ancmnt.content,
+                userId: ancmnt.userId,
+                createdDate: ancmnt.postedDate,
+                updatedDate: ancmnt.updatedDate
+            })
+            .then( result => {
+                console.log(`createAnnouncement ${result}`);
+                return this.readAnnouncements(ancmnt.announcementId)
+                .then( rec => { 
+                    return rec;
+                })
+                .catch( exp => {
+                    throw exp;
+                });
+            })
+            .catch(err =>{
+                throw err;
+            })
+        },
+        updateAnnouncement(ancmnt) {
+
+        },
+        readAnnouncements(ancmntId) {
+            // console.log(`readAnnouncement ${ancmntId}`);
+            // const sqlstm = knex({ a: 'announcements' })
+            // .select({
+            //     announcementId: 'a.announcementId',
+            //     title: 'a.title',
+            //     content: 'a.content',
+            //     userId: 'a.userId',
+            //     postedBy: knex.raw('(select `u`.`username` from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`userId`)'),
+            //     postedDate: 'a.createdDate',
+            //     updatedDate: 'a.updatedDate'
+            // })
+            // .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])
+            // .toQuery();
+            // console.log(sqlstm);
+            return knex({ a: 'announcements' })
                 .select({
                     announcementId: 'a.announcementId',
                     title: 'a.title',
@@ -495,14 +525,24 @@
                     postedDate: 'a.createdDate',
                     updatedDate: 'a.updatedDate'
                 })
-                .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)',[announceId])
-                // .toQuery();
+                .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])
                 .then(data => {
                     return JSON.stringify(data);
                 })
-                .catch( err => {
+                .catch(err => {
                     throw err;
                 });
+        },
+        deleteAnnouncements(ancmntId) {
+            return knex('announcements')
+            .whereRaw('announcementId = ?',[ancmntId])
+            .delete()
+            .then ( roweffected => {
+                return roweffected
+            })
+            .catch(err => {
+                throw err;
+            });
         },
         destroy() {
             knex.destroy();

@@ -49,9 +49,9 @@ import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { AddAnnounceComponent } from './add-announcement/add-announce.component';
+import { AddAnnounceComponent } from './announcements/add-announcement/add-announce.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
-import { EditAnnouncementComponent } from './edit-announcement/edit-announcement.component';
+import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
 
 @NgModule({
   declarations: [
