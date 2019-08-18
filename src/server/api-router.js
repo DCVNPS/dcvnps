@@ -111,8 +111,18 @@ function apiRouter(database) {
             }
             database.insertGalleryPhoto(gUuid.uuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
-                    console.log(result);
-                    return res.status(200).json('Upload reach server.');
+                    const photo = {
+                        photoId: gUuid.uuid,
+                        galleryId: galleryId,
+                        gallery: upldGallery,
+                        imgalt: fileName,
+                        imgsrc: `/galleries/${upldGallery}/${upldYear}/${destFileName}`,
+                        portrait: portrait,
+                        hidden: 'false'
+                    }
+                    result.photo = photo;
+                    // console.log(result);
+                    return res.status(200).json(result);
                 })
                 .catch(err => {
                     console.log(`insert gallery error: ${err}\nRemove file from server `);
@@ -137,12 +147,14 @@ function apiRouter(database) {
     // GET photo of gallery by gallery name.
     // Called by: GalleryPhotosResolve, EditGalleryResolve
     router.get('/galleryphotosbyname/:gallery/:year?/:author?', (req, res) => {
+        // console.log(`api-router.get ${req.url}`);
         const gallery = req.params.gallery;
         const year = req.params.year || null;
         const author = req.params.author || null;
         database.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
                 // console.log(data);
+                // console.log(data[0].authorData);
                 return res.json(data);
             })
             .catch((err) => {
@@ -207,17 +219,17 @@ function apiRouter(database) {
         }
     })
     router.delete('/deletephoto', (req, res) => {
-        console.log({ 'photoId': req.params.photoId });
         const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
         // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
         const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
-        console.log(`read file ${filePath}`);
+        // console.log(`read file ${filePath}`);
         // Save the file content in case delete from database fail
         // we can use that to restore the file. 
         const file = fs.readFileSync(filePath);
         try {
             fs.unlinkSync(filePath);
-            console.log(`file ${filePath} removed.`);
+            // console.log(`file ${filePath} removed.`);
+            // Success removing file from server, delete entry in database.
             database.deletePhoto(photoId)
                 .then(resp => {
                     console.log(resp); gallery
@@ -230,6 +242,7 @@ function apiRouter(database) {
         catch (error) {
             console.log(error);
             console.log(`Resote file ${filePath}`);
+            // Failure to remove photo entry in database, restore file.
             fs.writeFileSync(filePath, file);
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }

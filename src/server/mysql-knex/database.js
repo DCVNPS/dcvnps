@@ -239,16 +239,16 @@
                 createdDate,
                 updatedDate
             })
-                .then(([galleryPhotoId]) => {
-                    response = {
-                        success: true,
-                        galleryPhotoId: galleryPhotoId
-                    };
-                    return response;
-                })
-                .catch(function (err) {
-                    throw err;
-                });
+            .then((result) => {
+                response = {
+                    success: true,
+                    galleryPhotoId: galleryPhotoId
+                };
+                return response;
+            })
+            .catch(function (err) {
+                throw err;
+            });
         },
         // saveExtGallery(extGallery) {
         //     var response;
@@ -387,7 +387,7 @@
                 })
                 .catch((error) => { console.log(error); throw error; });
         },
-        getPhotoByGalleryName(gallery, year, author) {
+        getPhotoByGalleryName(gallery, year, author, photoId) {
             return knex({ gp: 'galleryphotos', g: 'galleries' })
                 .select(
                     {
@@ -406,6 +406,7 @@
                 .whereRaw('?? = ?', ['g.gallery', gallery])
                 .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
                 .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
+                // .whereRaw('gp.galleryPhotoId = IFNULL(?,gp.galleryPhotoId)',[photoId])
                 .then((data) => {
                     let result = [];
                     data.forEach((item) => {
@@ -460,6 +461,33 @@
                     // return data;
                 })
                 .catch((error) => { console.log(error); throw error; });
+        },
+        getPhoto(photoId){
+            return knex({ gp: 'galleryphotos', g: 'galleries' })
+                .select(
+                    {
+                        photoId: 'gp.galleryPhotoId',
+                        galleryId: 'gp.galleryId',
+                        gallery: 'g.gallery',
+                        imgalt: 'gp.photo',
+                        imgsrc: knex.raw('concat_ws(\'/\',\'/galleries\', g.gallery, gp.year, concat_ws(\'_\',gp.galleryPhotoId, gp.photo))'),
+                        author: 'gp.author',
+                        portrait: 'gp.portrait',
+                        hidden:'false'
+                    }
+                )
+                .orderBy([{ column: 'year', order: 'desc' }, 'author'])
+                .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
+                .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
+                .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
+                .whereRaw('gp.galleryPhotoId = ?',[photoId])
+                .then((data) => {
+                    console.log(data);
+                    return JSON.stringify(data);
+                })
+                .catch(err =>{
+                    console.log(err);
+                })
         },
         deletePhoto(photoId) {
             return knex('galleryphotos')

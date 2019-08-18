@@ -72,7 +72,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: {
       galleries: GalleriesResolve
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'galleries',

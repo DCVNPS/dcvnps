@@ -5,13 +5,14 @@
     https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-2
   Code was expand to include the review before uploading to server.
 */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { Gallery } from '../models/gallery.model';
 import { ImageInfo } from '../models/image-model';
 import { RegexService } from '../services/regex.service';
 import { AuthService } from '../services/auth.service';
+import { Photo } from '../models/photo.model';
 
 @Component({
   selector: 'app-dropzone',
@@ -35,9 +36,11 @@ export class DropzoneComponent implements OnInit {
   public uploadForm: FormGroup;
   public years: Array<string>;
   private selectedYear: string;
+  private photo: Photo;
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
 
   @Input() private config: any = { 'gallery': undefined, 'year': undefined, 'showBackMenu': false };
+  @Output() photoAdded: EventEmitter<Photo> = new EventEmitter<Photo>();
   constructor(private formBuilder: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
@@ -86,7 +89,7 @@ export class DropzoneComponent implements OnInit {
         this.galleries = await Array.from(data);
         this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);
         if (this.selectedGallery) {
-          // console.log(this.selectedGallery);
+          console.log(this.selectedGallery);
           this.upldGallery.setValue(this.selectedGallery);
           this.upldGallery.disable({ onlySelf: true });
         }
@@ -200,10 +203,17 @@ export class DropzoneComponent implements OnInit {
     imageInfo.galleryid = this.selectedGallery.galleryId;
     imageInfo.gallery = this.selectedGallery.gallery;
     imageInfo.year = this.selectedYear.toString();
-    console.log(imageInfo);
+    // console.log(imageInfo);
     this.api.upload(imageInfo)
       .subscribe(
-        (res) => { this.uploadResponse = res; },
+        (res) => {
+          this.uploadResponse = res;
+          this.photo = this.uploadResponse['photo'];
+          if (this.photo) {
+            // console.log(this.photo);
+            this.photoAdded.emit(this.photo);
+          }
+        },
         (err) => { this.error = err; }
       );
   }
