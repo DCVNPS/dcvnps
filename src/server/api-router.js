@@ -247,17 +247,20 @@ function apiRouter(database) {
                 return res.status(500).json(err.message);
             })
     });
+
     router.post('/announcements', async (req, res) => {
         try {
             const ancmntuuid = await database.uuid();
             let ancmnt = req.body;
             ancmnt.announcementId = ancmntuuid.uuid;
-            ancmnt.userId = req.auth.userid;
+            ancmnt.postedUserId = req.auth.userid;
             ancmnt.postedDate = new Date();
+            ancmnt.updatedUserId = req.auth.userid;
             ancmnt.updatedDate = new Date();
-            ancmnt = await database.createAnnouncement(ancmnt);
-
-            res.status(200).json(ancmnt);
+            const result = await database.createAnnouncement(ancmnt);
+            const jData = JSON.parse(result);
+            // console.log(jData);
+            res.status(200).json(jData[0]);
         }
         catch (error) {
             console.log(error);
@@ -268,16 +271,14 @@ function apiRouter(database) {
     router.put('/announcements', async (req, res) => {
         try {
             const ancmnt = req.body;
-            const ancmentuuid = await database.uuid();
-            console.log(ancmentuuid);
-            ancmnt.announcementId = ancmentuuid.uuid;
-            ancmnt.userId = req.auth.userid;
-            ancmnt.postedDate = new Date();
+            ancmnt.updatedUserId = req.auth.userid;
             ancmnt.updatedDate = new Date();
-            console.log(ancmnt);
+            // console.log(ancmnt);
+            const result = await database.updateAnnouncement(ancmnt);
             res.status(200).json(ancmnt);
         }
         catch (error) {
+            console.log(error);
             res.status(500).json(error.message);
         }
     });

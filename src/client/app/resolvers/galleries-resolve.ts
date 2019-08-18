@@ -13,6 +13,25 @@ export class GalleriesResolve implements Resolve<Array<Gallery>> {
     }
     resolve(route: ActivatedRouteSnapshot): Array<Gallery> {
         const galleryId = route.paramMap.get('galleryId');
-        return this.api.getGalleries(galleryId);
+        return this.getGalleries(galleryId);
+    }
+    getGalleries(galleryId?): Array<Gallery> {
+        const apiEndpoint = (galleryId) ? `galleries/${galleryId}` : `galleries`;
+        this.api.get(apiEndpoint)
+            .subscribe(data => {
+                data.forEach(item => {
+                    const g = this.galleries.find(i => i.gallery === item.gallery);
+                    if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
+                        this.galleries.push(new Gallery(
+                            item.galleryId,
+                            item.gallery,
+                            item.profilePhoto,
+                            item.createdDate,
+                            item.updatedDate))
+                    }
+                });
+                // console.log(this.galleries);
+            });
+        return this.galleries;
     }
 }

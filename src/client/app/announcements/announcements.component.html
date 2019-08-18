@@ -11,9 +11,9 @@
 </div>
 
 <div class="ui grid container">
-    <div class="ten wide column">
-        <app-add-announce (addAncmntEvent)="onAddAncmntEvent($event)" *ngIf="siteAdmin() && addAncmnt"></app-add-announce>
-        <app-edit-announcement (editAncmntSaved)="onEditAncmntSaved($event)" [announcement]="initEditAncmnt" *ngIf="siteAdmin() && editAncmnt"></app-edit-announcement>
+    <div class="twelve wide column">
+        <app-add-announce (announcementAction)="onAnnouncementAction($event)" *ngIf="siteAdmin() && addAncmnt"></app-add-announce>
+        <app-edit-announcement (announcementAction)="onAnnouncementAction($event)" [announcement]="initEditAncmnt" *ngIf="siteAdmin() && editAncmnt"></app-edit-announcement>
         <app-announcement *ngFor=" let announcement of announcements" [announcement]="announcement" [isEdit]="editAncmnts" (announcementAction)="onAnnouncementAction($event)"></app-announcement>
     </div>
 </div>

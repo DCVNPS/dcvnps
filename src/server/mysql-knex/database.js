@@ -479,14 +479,15 @@
                 announcementId: ancmnt.announcementId,
                 title: ancmnt.title,
                 content: ancmnt.content,
-                userId: ancmnt.userId,
+                postedUserId: ancmnt.postedUserId,
                 createdDate: ancmnt.postedDate,
+                updatedUserId: ancmnt.updatedUserId,
                 updatedDate: ancmnt.updatedDate
             })
             .then( result => {
-                console.log(`createAnnouncement ${result}`);
                 return this.readAnnouncements(ancmnt.announcementId)
-                .then( rec => { 
+                .then( rec => {
+                    // console.log(rec);
                     return rec;
                 })
                 .catch( exp => {
@@ -498,7 +499,22 @@
             })
         },
         updateAnnouncement(ancmnt) {
-
+            // console.log(`update announcement ID: ${ancmnt.announcementId}`);
+            return knex('announcements')
+            .update({
+                title: ancmnt.title,
+                content: ancmnt.content,
+                updatedUserId: ancmnt.updatedUserId,
+                createdDate: new Date(ancmnt.postedDate),
+                updatedDate: new Date(ancmnt.updatedDate)
+            })
+            .where({announcementId: ancmnt.announcementId})
+            .then( result => {
+                return result;
+            })
+            .catch( err => {
+                throw err;
+            })
         },
         readAnnouncements(ancmntId) {
             // console.log(`readAnnouncement ${ancmntId}`);
@@ -515,14 +531,15 @@
             // .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])
             // .toQuery();
             // console.log(sqlstm);
+            // console.log(`Read announcement Id: ${ancmntId}`);
             return knex({ a: 'announcements' })
                 .select({
                     announcementId: 'a.announcementId',
                     title: 'a.title',
                     content: 'a.content',
-                    userId: 'a.userId',
-                    postedBy: knex.raw('(select `u`.`username` from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`userId`)'),
+                    postedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                     postedDate: 'a.createdDate',
+                    updatedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                     updatedDate: 'a.updatedDate'
                 })
                 .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])
@@ -530,6 +547,7 @@
                     return JSON.stringify(data);
                 })
                 .catch(err => {
+                    console.log(err);
                     throw err;
                 });
         },

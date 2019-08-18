@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Announcement } from '../../models/announcement-model';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { AnnouncementActions } from '../../models/dcnpsn-enum';
 
 @Component({
   selector: 'app-edit-announcement',
@@ -9,7 +9,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 })
 export class EditAnnouncementComponent implements OnInit {
 @Input() announcement: Announcement;
-@Output() editAncmntSaved: EventEmitter<Object> = new EventEmitter<Object>();
+@Output() announcementAction: EventEmitter<Object> = new EventEmitter<Object>();
 private tinyInit: Object;
 public title: string;
 public content: string;
@@ -31,14 +31,19 @@ public postdDate: Date;
     };
   }
   onSave() {
-    const updtAncmnt = this.announcement;
-    updtAncmnt.title = this.title;
-    updtAncmnt.content = this.content;
-    this.resetForm();
-    this.editAncmntSaved.emit(updtAncmnt);
+    const updtAncmnt = {
+      announcementId: this.announcement.announcementId,
+      title: this.title,
+      content: this.content,
+      postedBy: this.announcement.postedBy,
+      postedDate: this.announcement.postedDate,
+      updatedBy: null,
+      updatedDate: new Date()
+    };
+    this.announcementAction.emit({'action': AnnouncementActions.put, 'ancmnt': updtAncmnt});
   }
   onCancel() {
-    this.editAncmntSaved.emit();
+    this.announcementAction.emit({'action': AnnouncementActions.cancelEdit, 'ancmnt': undefined});
   }
   resetForm() {
     this.title = null;

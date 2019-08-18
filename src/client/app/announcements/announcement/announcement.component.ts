@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Announcement } from '../../models/announcement-model';
+import { AnnouncementActions } from '../../models/dcnpsn-enum';
 
 @Component({
   selector: 'app-announcement',
@@ -15,10 +16,10 @@ export class AnnouncementComponent implements OnInit {
   ngOnInit() {
   }
   editAnnouncement() {
-    this.announcementAction.emit({'action': 'edit', 'ancmnt': this.announcement});
+    this.announcementAction.emit({'action': AnnouncementActions.edit, 'ancmnt': this.announcement});
   }
 
   deleteAnnouncement()  {
-    this.announcementAction.emit({'action': 'delete', 'ancmnt': this.announcement});
+    this.announcementAction.emit({'action': AnnouncementActions.delete, 'ancmnt': this.announcement});
   }
 }

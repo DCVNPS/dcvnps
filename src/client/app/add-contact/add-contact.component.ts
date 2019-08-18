@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { map } from 'rxjs/operators';
+import { Headers } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { Contact } from '../models/contact.model';
 import { ApiService } from '../services/api.service';
@@ -36,7 +35,6 @@ export class AddContactComponent implements OnInit {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    const requestOptions = new RequestOptions({headers: headers });
     this.api.post('/contacts', contact )
     // .pipe(map((res: Response) => res.json()))
     .subscribe( data => {
