@@ -27,4 +27,4 @@
     </div>
   </div>
 </div>
-<app-dropzone [config]="{'gallery':level, 'year': year}"></app-dropzone>
+<app-dropzone [config]="{'gallery':level, 'year': year}" (photoAdded)="onPhotoAdded($event)"></app-dropzone>

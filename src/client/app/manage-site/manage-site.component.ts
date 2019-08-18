@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
 import { Gallery } from '../models/gallery.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-site',
@@ -14,10 +14,11 @@ export class ManageSiteComponent implements OnInit {
   public isPrograms: boolean;
   public isAnnouncements: boolean;
   private galleries: Array<Gallery> = [];
-  constructor(private api: ApiService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.isPhotoUpload = true;
+    this.galleries = this.route.snapshot.data['galleries'];
   }
 
   onUploadClick() {
@@ -31,7 +32,6 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = true;
     this.isPrograms = false;
     this.isAnnouncements = false;
-    this.galleries = this.api.getGalleries();
   }
   onAnnouncements() {
     this.isPhotoUpload = false;

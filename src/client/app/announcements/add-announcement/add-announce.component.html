@@ -1,0 +1,16 @@
+<div class="ui grid container">
+  <div class="twelve wide column">
+    <div class="ui form">
+        <div class="inline field">
+          <label>Announcement Title</label>
+          <input class="announcementtitle" type="text" placeholder="Announcement Title" [(ngModel)]="title">
+        </div>
+      <div class="field">
+        <label>Announcement Content:</label>
+        <editor [init]="tinyInit" [(ngModel)]="content"></editor>
+      </div>
+      <button type="submit" class="ui submit large blue button" (click)="onSubmit()">Save</button>
+      <button type="submit" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
+</div>

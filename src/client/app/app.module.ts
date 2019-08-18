@@ -42,13 +42,16 @@ import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
-import { GalleryListComponent } from './gallery-list/gallery-list.component';
-import { AuthorPhotoComponent } from './author-photo/author-photo.component';
+import { GalleryListComponent } from './galleries/gallery-list/gallery-list.component';
+import { AuthorPhotoComponent } from './gallery/author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
 import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { AddAnnounceComponent } from './announcements/add-announcement/add-announce.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,10 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     ManageSiteComponent,
     PrettyPrintPipe,
     EditGalleryProfilesComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    AddAnnounceComponent,
+    AnnouncementComponent,
+    EditAnnouncementComponent
   ],
   imports: [
     BrowserModule,

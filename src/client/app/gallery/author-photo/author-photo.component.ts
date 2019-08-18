@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Photo } from '../models/photo.model';
-import { AuthService } from '../services/auth.service';
+import { Photo } from '../../models/photo.model';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 // this component is the child component of GalleryComponent
 // The output showPopupClicked is to trigger parent component
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthorPhotoComponent implements OnInit {
   @Input() private authorData: Object = {};
   @Output() showPopupClicked: EventEmitter<Photo[]> = new EventEmitter<Photo[]>();
-  public author: string;
+  public author: Array<string>;
   public photos: Array<Photo> = [];
   public year: string;
   public isAdmin = false;
@@ -26,7 +26,7 @@ export class AuthorPhotoComponent implements OnInit {
     // console.log(this.authorData);
     this.level = this.authorData['level'];
     this.year = this.authorData['authorPhotos'].year;
-    this.author = this.authorData['authorPhotos'].author;
+    this.author = this.authorData['authorPhotos'].author.split('.');
     this.photos = this.authorData['authorPhotos'].photos;
     this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
   }
@@ -40,8 +40,9 @@ export class AuthorPhotoComponent implements OnInit {
 
   editPhotos() {
     // this.galleryDataService.updateData(this.authorData);
-    // console.log(`Edit Author ${this.authorData}`);
-    // this.router.navigateByUrl('/editgallery');
-    this.router.navigateByUrl(`/editgallery/${this.level}/${this.year}/${this.author}`);
+    // Need to join the author's name parts together. js will automatically join with ',' as default.
+    const editUrl = `/editgallery/${this.level}/${this.year}/${this.author.join('.')}`;
+    // console.log(`Edit Photos ${editUrl}`);
+    this.router.navigateByUrl(editUrl);
   }
 }

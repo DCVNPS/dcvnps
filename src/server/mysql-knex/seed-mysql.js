@@ -49,9 +49,9 @@ async function dbConnectOK(db) {
 // Uncomment the below to Create Initial Application Data
 createSeedData('users', users);
 // createSeedData('contacts', contacts);
-createSeedData('roles', roles);
-createSeedData('galleries',galleries);
-createSeedData('galleryphotos',galleryphotos);
+// createSeedData('roles', roles);
+// createSeedData('galleries',galleries);
+// createSeedData('galleryphotos',galleryphotos);
 
 
 // async function testDB(database){

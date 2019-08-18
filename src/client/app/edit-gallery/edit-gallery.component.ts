@@ -27,7 +27,7 @@ export class EditGalleryComponent implements OnInit {
   ngOnInit() {
     const parms = this.route.snapshot.params;
     this.author = parms.author;
-    this.level = parms.level;
+    this.level = parms.gallery;
     this.year = parms.year;
     // console.log(parms);
     this.galleryData = this.route.snapshot.data.galleryData;
@@ -39,14 +39,21 @@ export class EditGalleryComponent implements OnInit {
     // console.log(img);
     this.api.delete('deletephoto', img)
       .subscribe(res => {
-        console.log(res);
         const delIndx = this.photos.indexOf(img);
         this.photos.splice(delIndx, 1);
+      },
+      error => {
+        console.log(`Delete photo Id: ${img.photoId}_${img.imgalt}`);
+        // Should log into a database table for later analys
+        console.log(error);
       });
-      console.log(this.galleryData);
-      console.log(this.photos);
+      // console.log(this.galleryData);
+      // console.log(this.photos);
   }
-
+  onPhotoAdded(event) {
+    // console.log(event);
+    this.photos.push(event);
+  }
   editPhoto(img: Photo) {
     console.log(img);
   }

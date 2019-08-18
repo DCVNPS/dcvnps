@@ -18,5 +18,6 @@
   <div class="twelve wide stretched column">
       <app-dropzone  *ngIf="isPhotoUpload"></app-dropzone>
       <app-edit-gallery-profiles *ngIf="isGallery" [galleries]="galleries"></app-edit-gallery-profiles>
+      <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
   </div>
 </div>

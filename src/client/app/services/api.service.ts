@@ -41,7 +41,9 @@ export class ApiService {
       headers = new Headers();
       headers.append('Content-Type', 'application/json');
     }
-    headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    // headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    const authToken = this.auth.getToken() || environment.defaultAuthToken;
+    headers.append('Authorization', `Bearer ${authToken}`);
 
     const requestOptions = new RequestOptions({
       url: `${this.baseUrl}/${url}`,
@@ -50,6 +52,7 @@ export class ApiService {
     });
 
     if (body) {
+      // console.log(body);
       requestOptions.body = body;
     }
 
@@ -90,9 +93,7 @@ export class ApiService {
       reportProgress: true,
       observe: 'events'
     }).pipe(map((event) => {
-
       switch (event.type) {
-
         case HttpEventType.UploadProgress:
           const progress = Math.round(100 * event.loaded / event.total);
           return { status: 'progress', message: progress };
@@ -103,24 +104,5 @@ export class ApiService {
       }
     })
     );
-  }
-  getGalleries(galleryId?): Array<Gallery> {
-    const apiEndpoint = (galleryId) ? `galleries/${galleryId}` : `galleries`;
-    this.get(apiEndpoint)
-    .subscribe(data => {
-      data.forEach(item => {
-        const g = this.galleries.find(i => i.gallery === item.gallery);
-        if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
-          this.galleries.push(new Gallery(
-            item.galleryId,
-            item.gallery,
-            item.profilePhoto,
-            item.createdDate,
-            item.updatedDate))
-        }
-      });
-      // console.log(this.galleries);
-    });
-    return this.galleries;
   }
 }

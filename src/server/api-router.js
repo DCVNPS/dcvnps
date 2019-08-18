@@ -12,17 +12,17 @@ function apiRouter(database) {
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-            .unless({
-                path:
-                    [
-                        '/api/authenticate',
-                        '/api/boardmembers',
-                        '/api/programs',
-                        { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-                    ]
-            })
+        // .unless({
+        //     path:
+        //         [
+        //             '/api/authenticate',
+        //             '/api/boardmembers',
+        //             '/api/programs',
+        //             { url: /^\/api\/galleries.*/i, methods: ['GET'] },
+        //             { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+        //             { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+        //         ]
+        // })
     );
 
     router.use((err, req, res, next) => {
@@ -30,6 +30,11 @@ function apiRouter(database) {
             return res.status(401).send({ error: err.message });
         }
     })
+
+    router.get('/uuid', (req, res) => {
+        database.uuid().then(data => { return res.json(data) })
+            .catch(err => { return res.status(500).json({ error: err.message }); });
+    });
 
     router.get('/contacts', (req, res) => {
         database.getContacts()
@@ -62,9 +67,9 @@ function apiRouter(database) {
             .then((data) => {
                 return res.json(data);
             })
-            .catch((err) => { 
+            .catch((err) => {
                 console.log(err)
-                return res.status(500); 
+                return res.status(500);
             });
     });
 
@@ -83,7 +88,7 @@ function apiRouter(database) {
     });
 
     // Upload a photo to a gallery
-    router.post('/upload/:gallery/:year', (req, res) => {
+    router.post('/upload/:gallery/:year', async (req, res) => {
         const upldGallery = req.params['gallery'];
         const upldYear = req.params['year'];
         const { galleryId, fileName, author, size, portrait } = req.body;
@@ -95,18 +100,29 @@ function apiRouter(database) {
         const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
-        // const fileName = file.name.split('_')[1];
-        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${fileName}`);
-        // console.log(req.auth);
+        const gUuid = await database.uuid();
+        const destFileName = `${gUuid.uuid}_${fileName}`;
+        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
+        // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {
                 console.log('photoupload-Move file', err.message)
                 return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            database.insertGalleryPhoto(galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
+            database.insertGalleryPhoto(gUuid.uuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
-                    console.log(result);
-                    return res.status(200).json('Upload reach server.');
+                    const photo = {
+                        photoId: gUuid.uuid,
+                        galleryId: galleryId,
+                        gallery: upldGallery,
+                        imgalt: fileName,
+                        imgsrc: `/galleries/${upldGallery}/${upldYear}/${destFileName}`,
+                        portrait: portrait,
+                        hidden: 'false'
+                    }
+                    result.photo = photo;
+                    // console.log(result);
+                    return res.status(200).json(result);
                 })
                 .catch(err => {
                     console.log(`insert gallery error: ${err}\nRemove file from server `);
@@ -131,12 +147,14 @@ function apiRouter(database) {
     // GET photo of gallery by gallery name.
     // Called by: GalleryPhotosResolve, EditGalleryResolve
     router.get('/galleryphotosbyname/:gallery/:year?/:author?', (req, res) => {
+        // console.log(`api-router.get ${req.url}`);
         const gallery = req.params.gallery;
         const year = req.params.year || null;
         const author = req.params.author || null;
         database.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
                 // console.log(data);
+                // console.log(data[0].authorData);
                 return res.json(data);
             })
             .catch((err) => {
@@ -147,11 +165,6 @@ function apiRouter(database) {
 
     router.post('/authenticate', (req, res) => {
         const user = req.body;
-        // console.log(user);
-        if (user.username === 'default') {
-            user.username = 'vnpsuser';
-            user.password = null;
-        }
         database.authenticate({ username: user.username, password: user.password })
             .then((result) => {
                 if (result.success) {
@@ -206,20 +219,20 @@ function apiRouter(database) {
         }
     })
     router.delete('/deletephoto', (req, res) => {
-        console.log({ 'photoId': req.params.photoId });
         const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
         // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
         const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
-        console.log(`read file ${filePath}`);
+        // console.log(`read file ${filePath}`);
         // Save the file content in case delete from database fail
         // we can use that to restore the file. 
         const file = fs.readFileSync(filePath);
         try {
             fs.unlinkSync(filePath);
-            console.log(`file ${filePath} removed.`);
+            // console.log(`file ${filePath} removed.`);
+            // Success removing file from server, delete entry in database.
             database.deletePhoto(photoId)
-                .then( resp => {
-                    console.log(resp);gallery
+                .then(resp => {
+                    console.log(resp); gallery
                     return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
                 })
                 .catch(exp => {
@@ -229,8 +242,73 @@ function apiRouter(database) {
         catch (error) {
             console.log(error);
             console.log(`Resote file ${filePath}`);
+            // Failure to remove photo entry in database, restore file.
             fs.writeFileSync(filePath, file);
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
+        }
+    });
+
+    router.get('/announcements/:announceId?', (req, res) => {
+        // console.log(req.auth);
+        const announceId = req.params.announceId || null;
+        database.readAnnouncements(announceId)
+            .then(data => {
+                const jData = JSON.parse(data);
+                return res.status(200).send(jData);
+            })
+            .catch(err => {
+                return res.status(500).json(err.message);
+            })
+    });
+
+    router.post('/announcements', async (req, res) => {
+        try {
+            const ancmntuuid = await database.uuid();
+            let ancmnt = req.body;
+            ancmnt.announcementId = ancmntuuid.uuid;
+            ancmnt.postedUserId = req.auth.userid;
+            ancmnt.postedDate = new Date();
+            ancmnt.updatedUserId = req.auth.userid;
+            ancmnt.updatedDate = new Date();
+            const result = await database.createAnnouncement(ancmnt);
+            const jData = JSON.parse(result);
+            // console.log(jData);
+            res.status(200).json(jData[0]);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json(error.message);
+        }
+    });
+
+    router.put('/announcements', async (req, res) => {
+        try {
+            const ancmnt = req.body;
+            ancmnt.updatedUserId = req.auth.userid;
+            ancmnt.updatedDate = new Date();
+            // console.log(ancmnt);
+            const result = await database.updateAnnouncement(ancmnt);
+            res.status(200).json(ancmnt);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json(error.message);
+        }
+    });
+
+    router.delete('/announcements/:announceId', async (req, res) => {
+        const announceId = req.params.announceId || null;
+        console.log(`delete announcement with id ${announceId}`);
+        try {
+            if (announceId) {
+                const result = await database.deleteAnnouncements(announceId);
+                return res.status(200).json(`${result} row(s) deleted.`);
+            } else {
+                return res.status(500).json('announceId is not null');
+            }
+        }
+        catch( error ){
+            return res.status(500).json(error.message);
         }
     });
     return router;
