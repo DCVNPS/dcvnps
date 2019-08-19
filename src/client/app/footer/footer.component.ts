@@ -15,4 +15,7 @@ export class FooterComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+  goToTop(){
+    window.scroll(0,0);
+  }
 }

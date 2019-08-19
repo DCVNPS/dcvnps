@@ -19,6 +19,7 @@ import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { ProgramsResolve } from './resolvers/programs-resolve';
 import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
+import { AddUserComponent } from './users/add-user/add-user.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,11 @@ const routes: Routes = [
     path: 'contacts',
     component: ContactListComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'adduser',
+    component: AddUserComponent
+    // ,  canActivate: [AuthGuard]
   },
   {
     path: 'newcontact',

@@ -29,6 +29,9 @@ export class GalleriesResolve implements Resolve<Array<Gallery>> {
                             item.createdDate,
                             item.updatedDate))
                     }
+                },
+                (error) => {
+                    console.log(error);
                 });
                 // console.log(this.galleries);
             });

@@ -121,5 +121,5 @@ function genAuthToken({ user, pwd }) {
         .catch(err => { console.error(err); });
 }
 
-testDatabase(user);
-// genAuthToken({});
+// testDatabase(user);
+genAuthToken({});
