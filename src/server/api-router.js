@@ -312,6 +312,17 @@ function apiRouter(database) {
             return res.status(500).json(error.message);
         }
     });
+
+    router.get('/roles', (req, res) => {
+        return database.getRoles()
+        .then( data => {
+            return res.status(200).json(data);
+        })
+        .catch( error =>{
+            return res.status(500).json(error.message);
+        });
+    });
+
     return router;
 }
 

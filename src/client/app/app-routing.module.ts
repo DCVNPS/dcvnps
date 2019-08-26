@@ -19,7 +19,8 @@ import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { ProgramsResolve } from './resolvers/programs-resolve';
 import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
-import { AddUserComponent } from './users/add-user/add-user.component';
+import { NewUserComponent } from './users/new-user/new-user.component';
+import { RoleResolve } from './resolvers/role-resolve';
 
 const routes: Routes = [
   {
@@ -41,9 +42,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'adduser',
-    component: AddUserComponent
-    // ,  canActivate: [AuthGuard]
+    path: 'newuser',
+    component: NewUserComponent,
+    // canActivate: [AuthGuard],
+    resolve: {
+      roles: RoleResolve
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'newcontact',

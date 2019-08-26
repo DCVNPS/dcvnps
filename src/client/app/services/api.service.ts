@@ -57,7 +57,7 @@ export class ApiService {
     }
 
     const request = new Request(requestOptions);
-    console.log(requestOptions);
+    // console.log(requestOptions);
     return this.http.request(request)
       .pipe(
         map((res: Response) => res.json()),

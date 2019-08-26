@@ -52,7 +52,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { AddAnnounceComponent } from './announcements/add-announcement/add-announce.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
-import { AddUserComponent } from './users/add-user/add-user.component';
+import { NewUserComponent } from './users/new-user/new-user.component';
 import { UserComponent } from './users/user/user.component';
 
 @NgModule({
@@ -94,7 +94,7 @@ import { UserComponent } from './users/user/user.component';
     AddAnnounceComponent,
     AnnouncementComponent,
     EditAnnouncementComponent,
-    AddUserComponent,
+    NewUserComponent,
     UserComponent
   ],
   imports: [

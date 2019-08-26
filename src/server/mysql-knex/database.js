@@ -239,16 +239,16 @@
                 createdDate,
                 updatedDate
             })
-            .then((result) => {
-                response = {
-                    success: true,
-                    galleryPhotoId: galleryPhotoId
-                };
-                return response;
-            })
-            .catch(function (err) {
-                throw err;
-            });
+                .then((result) => {
+                    response = {
+                        success: true,
+                        galleryPhotoId: galleryPhotoId
+                    };
+                    return response;
+                })
+                .catch(function (err) {
+                    throw err;
+                });
         },
         // saveExtGallery(extGallery) {
         //     var response;
@@ -462,7 +462,7 @@
                 })
                 .catch((error) => { console.log(error); throw error; });
         },
-        getPhoto(photoId){
+        getPhoto(photoId) {
             return knex({ gp: 'galleryphotos', g: 'galleries' })
                 .select(
                     {
@@ -473,19 +473,19 @@
                         imgsrc: knex.raw('concat_ws(\'/\',\'/galleries\', g.gallery, gp.year, concat_ws(\'_\',gp.galleryPhotoId, gp.photo))'),
                         author: 'gp.author',
                         portrait: 'gp.portrait',
-                        hidden:'false'
+                        hidden: 'false'
                     }
                 )
                 .orderBy([{ column: 'year', order: 'desc' }, 'author'])
                 .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
                 .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
                 .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
-                .whereRaw('gp.galleryPhotoId = ?',[photoId])
+                .whereRaw('gp.galleryPhotoId = ?', [photoId])
                 .then((data) => {
                     console.log(data);
                     return JSON.stringify(data);
                 })
-                .catch(err =>{
+                .catch(err => {
                     console.log(err);
                 })
         },
@@ -503,46 +503,46 @@
         createAnnouncement(ancmnt) {
             // console.log(ancmnt);
             return knex('announcements')
-            .insert({
-                announcementId: ancmnt.announcementId,
-                title: ancmnt.title,
-                content: ancmnt.content,
-                postedUserId: ancmnt.postedUserId,
-                createdDate: ancmnt.postedDate,
-                updatedUserId: ancmnt.updatedUserId,
-                updatedDate: ancmnt.updatedDate
-            })
-            .then( result => {
-                return this.readAnnouncements(ancmnt.announcementId)
-                .then( rec => {
-                    // console.log(rec);
-                    return rec;
+                .insert({
+                    announcementId: ancmnt.announcementId,
+                    title: ancmnt.title,
+                    content: ancmnt.content,
+                    postedUserId: ancmnt.postedUserId,
+                    createdDate: ancmnt.postedDate,
+                    updatedUserId: ancmnt.updatedUserId,
+                    updatedDate: ancmnt.updatedDate
                 })
-                .catch( exp => {
-                    throw exp;
-                });
-            })
-            .catch(err =>{
-                throw err;
-            })
+                .then(result => {
+                    return this.readAnnouncements(ancmnt.announcementId)
+                        .then(rec => {
+                            // console.log(rec);
+                            return rec;
+                        })
+                        .catch(exp => {
+                            throw exp;
+                        });
+                })
+                .catch(err => {
+                    throw err;
+                })
         },
         updateAnnouncement(ancmnt) {
             // console.log(`update announcement ID: ${ancmnt.announcementId}`);
             return knex('announcements')
-            .update({
-                title: ancmnt.title,
-                content: ancmnt.content,
-                updatedUserId: ancmnt.updatedUserId,
-                createdDate: new Date(ancmnt.postedDate),
-                updatedDate: new Date(ancmnt.updatedDate)
-            })
-            .where({announcementId: ancmnt.announcementId})
-            .then( result => {
-                return result;
-            })
-            .catch( err => {
-                throw err;
-            })
+                .update({
+                    title: ancmnt.title,
+                    content: ancmnt.content,
+                    updatedUserId: ancmnt.updatedUserId,
+                    createdDate: new Date(ancmnt.postedDate),
+                    updatedDate: new Date(ancmnt.updatedDate)
+                })
+                .where({ announcementId: ancmnt.announcementId })
+                .then(result => {
+                    return result;
+                })
+                .catch(err => {
+                    throw err;
+                })
         },
         readAnnouncements(ancmntId) {
             // console.log(`readAnnouncement ${ancmntId}`);
@@ -581,14 +581,22 @@
         },
         deleteAnnouncements(ancmntId) {
             return knex('announcements')
-            .whereRaw('announcementId = ?',[ancmntId])
-            .delete()
-            .then ( roweffected => {
-                return roweffected
-            })
-            .catch(err => {
-                throw err;
-            });
+                .whereRaw('announcementId = ?', [ancmntId])
+                .delete()
+                .then(roweffected => {
+                    return roweffected
+                })
+                .catch(err => {
+                    throw err;
+                });
+        },
+        getRoles() {
+            return knex('roles')
+                .select({roleCode: 'roleCode', roleDescription:  'roleDescription'})
+                .then(data => { return data; })
+                .catch(err => {
+                    throw err;
+                });
         },
         destroy() {
             knex.destroy();
