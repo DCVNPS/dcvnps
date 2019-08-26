@@ -12,18 +12,18 @@ function apiRouter(database) {
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-        // .unless({
-        //     path:
-        //         [
-        //             '/api/authenticate',
-        //             '/api/boardmembers',
-        //             '/api/programs',
-        //             { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-        //             { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-        //             { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-        //         ]
-        // })
-    );
+    //     .unless({
+    //         path:
+    //             [
+    //                 '/api/authenticate',
+    //                 '/api/boardmembers',
+    //                 '/api/programs',
+    //                 { url: /^\/api\/galleries.*/i, methods: ['GET'] },
+    //                 { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+    //                 { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+    //             ]
+    //     })
+ );
 
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
@@ -177,8 +177,9 @@ function apiRouter(database) {
                         admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
                     };
 
-                    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h' });
-
+                    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    // const token = jwt.sign(payload, process.env.JWT_SECRET);
+                    // console.log(token);
                     return res.json({
                         message: 'successfully authenticated',
                         token: token,
@@ -311,6 +312,17 @@ function apiRouter(database) {
             return res.status(500).json(error.message);
         }
     });
+
+    router.get('/roles', (req, res) => {
+        return database.getRoles()
+        .then( data => {
+            return res.status(200).json(data);
+        })
+        .catch( error =>{
+            return res.status(500).json(error.message);
+        });
+    });
+
     return router;
 }
 
