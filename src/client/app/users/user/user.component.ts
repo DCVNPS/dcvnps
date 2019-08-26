@@ -71,7 +71,7 @@ export class UserComponent implements OnInit {
     console.log(this.formValue);
   }
 
-  onUserRoleChanged(event){
-    console.log(this.f);
-  }
+  // onUserRoleChanged(event){
+  //   console.log(this.f);
+  // }
 }
