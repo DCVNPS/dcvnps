@@ -16,12 +16,12 @@
             <div class="header" *ngIf="lastName.errors.required"> Last Name is required.</div>
           </div>
         </div>
-        <div class="field" [ngClass]="{'error': email.invalid  && ( email.dirty || email.touched)}">
+        <div class="field" [ngClass]="{'error': userName.invalid  && ( userName.dirty || userName.touched)}">
           <label>Email</label>
-          <input type="text" placeholder="Email Address" formControlName="email">
-          <div [style.color]="'red'" *ngIf="f.email.errors && ( f.email.dirty || f.email.touched )">
-            <div class="header" *ngIf="f.email.errors.required"> email is required.</div>
-            <div class="header" *ngIf="f.email.errors.email"> a valid email address is required.</div>
+          <input type="text" placeholder="Email Address" formControlName="userName">
+          <div [style.color]="'red'" *ngIf="f.userName.errors && ( f.userName.dirty || f.userName.touched )">
+            <div class="header" *ngIf="f.userName.errors.required"> email is required.</div>
+            <div class="header" *ngIf="f.userName.errors.email"> a valid email address is required.</div>
           </div>
         </div>
         <div class="field" [ngClass]="{'error': password.invalid &&( password.dirty || password.touched)}">
@@ -45,14 +45,14 @@
               characters.</div>
           </div>
         </div> -->
-        <div class="field" [ngClass]="{error: f.userRole.invalid && ( f.userRole.dirty || f.userRole.touched)}">
-          <label for="userRole">Role</label>
-          <select class="menu" formControlName="userRole" >
+        <div class="field" [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
+          <label for="roleCode">Role</label>
+          <select class="menu" formControlName="roleCode" >
             <option class="item" [ngValue]="undefined" hidden disabled [selected]="true">Select a Role</option>
             <option class="item" *ngFor="let role of roles" [ngValue]="role.roleCode">{{role.roleDescription}}</option>
           </select>
-          <div [style.color]="'red'" *ngIf="f.userRole.errors && ( f.userRole.dirty || f.userRole.touched)">
-              <div class="header" *ngIf="f.userRole.errors.required"> Please Select a Role.</div>
+          <div [style.color]="'red'" *ngIf="f.roleCode.errors && ( f.roleCode.dirty || f.roleCode.touched)">
+              <div class="header" *ngIf="f.roleCode.errors.required"> Please Select a Role.</div>
             </div>
          </div>
       </div>

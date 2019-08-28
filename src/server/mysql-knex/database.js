@@ -29,47 +29,42 @@
                 })
                 .catch((err) => console.error(err));
         },
-        createUser({
-            userName,
-            password,
-            roleCode,
-            updateUser
-        }) {
-            // console.log(`Add User ${email}`);
-            var response;
-            const createdDate = new Date();
-            const updatedDate = new Date();
-            const pwdHash = bcrypt.hashSync(password, 10);
-            return knex('users').insert({
-                userName: userName,
-                password: pwdHash,
-                roleCode: roleCode,
-                updateUser: updateUser,
-                createdDate: createdDate,
-                updatedDate: updatedDate
+        deleteUser( userId) {
+            return knex('users').where('userId', userId).delete()
+            .then( r=> { return r;})
+            .catch( err => { throw err; });
+        },
+        createUser(user){
+            console.log(user);
+            return knex('users')
+            .insert({
+                userId: user.userId,
+                userName: user.userName,
+                userSurname: user.userSurname,
+                userGivenName: user.userGivenName,
+                password: user.password,
+                roleCode: user.roleCode,
+                createdUserId: user.createdUserId,
+                createdDate: user.createdDate,
+                updatedUserId: user.updatedUserId,
+                updatedDate: user.updatedDate
             })
-                .then(async () => {
-                    const userId = await knex('users')
-                        .select('userId')
-                        .where({ userName })
-                        .then((row) => { return row[0].userId })
-                        .catch((err) => { throw err; });
-                    console.log('Knex log', userId);
-                    response = {
-                        'success': true,
-                        'authmsg': 'Register Success',
-                        'authuser': {
-                            'userId': userId,
-                            'userName': userName,
-                            'roleCode': roleCode
-                        }
+            .then( result => { 
+                const response = {
+                    'success': true,
+                    'authmsg': 'Register Success',
+                    'authuser': {
+                        'userId': user.userId,
+                        'userName': user.userName,
+                        'roleCode': user.roleCode
                     }
-                    return response;
-
-                })
-                .catch(function (err) {
-                    throw err;
-                });
+                }
+                return response;
+            })
+            .catch(err =>{ 
+               console.log(err);
+                throw err; 
+            });
         },
         authenticate({
             username,

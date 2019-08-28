@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../../models/user-model';
 
 @Component({
   selector: 'app-new-user',
@@ -9,13 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 export class NewUserComponent implements OnInit {
 
   private roles: Object = {};
+  private user : User;
   private userConfig: Object = {};
   constructor( private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.roles = this.route.snapshot.data['roles'];
-    this.userConfig = {formType: 'new', user: null, roles: this.roles};
-    console.log(this.userConfig);
+    this.user = new User(null, null, null, null, null, null,null,null,null,null);
+    this.userConfig = {user: this.user, roles: this.roles};
+    // console.log(this.userConfig);
   }
 
 }
