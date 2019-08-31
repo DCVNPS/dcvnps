@@ -166,6 +166,7 @@ function apiRouter(database) {
 
     router.post('/authenticate', (req, res) => {
         const user = req.body;
+        // console.log(user);
         database.authenticate({ username: user.username, password: user.password })
             .then((result) => {
                 if (result.success) {

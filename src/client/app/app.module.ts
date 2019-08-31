@@ -54,6 +54,8 @@ import { AnnouncementComponent } from './announcements/announcement/announcement
 import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { UserComponent } from './users/user/user.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { ChangePasswordComponent } from './users/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import { UserComponent } from './users/user/user.component';
     AnnouncementComponent,
     EditAnnouncementComponent,
     NewUserComponent,
-    UserComponent
+    UserComponent,
+    EditUserComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

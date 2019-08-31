@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,12 @@ import { Component, OnDestroy } from '@angular/core';
 })
 export class AppComponent implements OnDestroy {
   title = 'dcvnps';
-  constructor() { }
+  constructor(private auth: AuthService) { }
+
   ngOnDestroy() {
-    localStorage.clear();
+    this.auth.logout();
+  }
+  @HostListener("window:onbeforeunload",["$event"]) clearLocalStorage(event){
+    this.auth.logout();
   }
 }

@@ -73,6 +73,9 @@ export class AnnouncementsComponent implements OnInit {
       case AnnouncementActions.cancelEdit:
         this.editAncmnt = false;
         break;
+      case AnnouncementActions.cancelNew:
+        this.addAncmnt = false;
+        break;
       case AnnouncementActions.post:
         console.log('inserting new announcement...');
         this.api.post('announcements', ancmnt)

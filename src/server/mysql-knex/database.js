@@ -70,9 +70,6 @@
             username,
             password
         }) {
-            if (username === 'vnpsuser') {
-                password = process.env.vnspusrpwd;
-            }
             let response = undefined;
             return knex('users')
                 .where({ userName: username })
@@ -82,7 +79,7 @@
                         return response = {
                             success: false,
                             status: 404,
-                            authmsg: 'User Not Found.',
+                            authmsg: `User  Not Found -- ${username} .`,
                             authuser: undefined
                         };
                     }
