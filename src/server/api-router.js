@@ -6,7 +6,13 @@ const fs = require('fs');
 const path = require('path');
 const serverRoot = path.normalize(__dirname);
 
-
+function isAdmin(req) {
+    const auth = req.auth;
+    if (auth.userrole !== "SITEADM") {
+       return false;
+    }
+    return true;
+}
 function apiRouter(database) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
@@ -28,9 +34,10 @@ function apiRouter(database) {
 
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
+            console.log(err);
             return res.status(401).send({ error: err.message });
         }
-    })
+    });
 
     router.get('/uuid', (req, res) => {
         database.uuid().then(data => { return res.json(data) })
@@ -63,6 +70,7 @@ function apiRouter(database) {
     });
 
     router.get('/galleries/:galleryId?', (req, res) => {
+        console.log(req.auth);
         const galleryId = req.params.galleryId || null;
         database.getGalleries(galleryId)
             .then((data) => {
@@ -326,9 +334,12 @@ function apiRouter(database) {
     });
 
     router.post('/users', async (req, res) => {
-        const auth = req.auth;
-        console.log(auth);
-        if (auth.userrole !== "SITEADM") {
+        // const auth = req.auth;
+        // console.log(auth);
+        // if (auth.userrole !== "SITEADM") {
+        //     return res.status(401).json(`user ${auth.username} is not authorized to create new application user`);
+        // }
+        if(!isAdmin(req)){
             return res.status(401).json(`user ${auth.username} is not authorized to create new application user`);
         }
         const user = req.body;
@@ -341,14 +352,21 @@ function apiRouter(database) {
             user.createdDate = new Date();
             user.updatedUserId = auth.userid;
             user.updatedDate = new Date();
-            // console.log(user);
-            const result =  await database.createUser(user);
+            console.log(user);
+            const result = await database.createUser(user);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(500).json(error.message);
         }
     });
 
+    router.get('/users/:userId?', (req, res) => {
+        console.log('get users', req.auth);
+        if(!isAdmin(req)){
+            return res.status(401).json(`user ${req.auth.username} is not authorized to create new application user`);
+        }
+
+    });
     return router;
 }
 

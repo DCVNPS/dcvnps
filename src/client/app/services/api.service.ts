@@ -70,7 +70,7 @@ export class ApiService {
       console.log(res);
       const error = {
         statusCode: res.status,
-        error: res.statusText
+        statusText: res.statusText
       };
       return throwError(error);
     }

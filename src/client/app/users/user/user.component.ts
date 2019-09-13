@@ -1,8 +1,6 @@
 import { Component, OnInit, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
-import { Headers } from '@angular/http';
 import { User } from '../../models/user-model';
-import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-user',
@@ -21,7 +19,9 @@ export class UserComponent implements OnInit {
   private formType:string;
   private roles: Object = {};
   @Input() config: Object = {};
-  constructor(private api: ApiService) {
+  @Output() newUserCreated: EventEmitter <User> = new EventEmitter<User>();
+  @Output() userUpdated: EventEmitter <User> = new EventEmitter<User>();
+  constructor() {
   }
 
   ngOnInit() {
@@ -29,6 +29,8 @@ export class UserComponent implements OnInit {
     this.roles = this.config['roles'] || null;
     // console.log(this.roles);
     this.user = this.config['user'] || null;
+    this.formType = this.config['formType'] ||  'newUser';
+    console.log(this.formType);
     this.createControls();
     this.createForm();
   }
@@ -65,22 +67,20 @@ export class UserComponent implements OnInit {
 
   createUser(){
     // console.log(this.f);
-    console.log(this.formValue);
+    // console.log(this.formValue);
     this.user = new User(null, this.formValue.userName,  this.formValue.password, this.formValue.lastName, this.formValue.firstName, this.formValue.roleCode, null, null, null, null);
     this.user.createdDate = new Date();
     this.user.updatedDate = new Date();
     console.log(this.user);
-    const endPoint="users";
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    this.api.post(endPoint, this.user, headers)
-    .subscribe(
-      result => {console.log(result);},
-      error => { console.error(error)}
-    );
+    this.newUserCreated.emit(this.user);
   }
 
-  // onUserRoleChanged(event){
-  //   console.log(this.f);
-  // }
+  cancelEdit(){
+    console.log(`Cancel Edit user  ${this.user.fulName}`);
+  }
+
+  updateUser(){
+    console.log(`Cancel Edit user  ${this.user.fulName}`);
+  }
+
 }

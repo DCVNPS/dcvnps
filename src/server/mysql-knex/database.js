@@ -29,42 +29,47 @@
                 })
                 .catch((err) => console.error(err));
         },
-        deleteUser( userId) {
+        deleteUser(userId) {
             return knex('users').where('userId', userId).delete()
-            .then( r=> { return r;})
-            .catch( err => { throw err; });
+                .then(r => { return r; })
+                .catch(err => { throw err; });
         },
-        createUser(user){
+        createUser(user) {
             console.log(user);
             return knex('users')
-            .insert({
-                userId: user.userId,
-                userName: user.userName,
-                userSurname: user.userSurname,
-                userGivenName: user.userGivenName,
-                password: user.password,
-                roleCode: user.roleCode,
-                createdUserId: user.createdUserId,
-                createdDate: user.createdDate,
-                updatedUserId: user.updatedUserId,
-                updatedDate: user.updatedDate
-            })
-            .then( result => { 
-                const response = {
-                    'success': true,
-                    'authmsg': 'Register Success',
-                    'authuser': {
-                        'userId': user.userId,
-                        'userName': user.userName,
-                        'roleCode': user.roleCode
+                .insert({
+                    userId: user.userId,
+                    userName: user.userName,
+                    userSurname: user.userSurname,
+                    userGivenName: user.userGivenName,
+                    password: user.password,
+                    roleCode: user.roleCode,
+                    createdUserId: user.createdUserId,
+                    createdDate: user.createdDate,
+                    updatedUserId: user.updatedUserId,
+                    updatedDate: user.updatedDate
+                })
+                .then(async () => {
+                    try {
+                        const nUser = await getUserById(user.userId);
+                        const response = {
+                            'success': true,
+                            'authmsg': 'Register Success',
+                            'authuser': {
+                                'userId': nUser.userId,
+                                'userName': nUser.userName,
+                                'roleCode': nUser.roleCode
+                            }
+                        }
+                        return response;
+                    } catch (error) {
+                        throw error;
                     }
-                }
-                return response;
-            })
-            .catch(err =>{ 
-               console.log(err);
-                throw err; 
-            });
+                })
+                .catch(err => {
+                    console.log(err);
+                    throw err;
+                });
         },
         authenticate({
             username,
@@ -106,25 +111,25 @@
                 })
                 .catch(function (err) { throw err; });
         },
-        getUserByName(userName) {
-            return knex('users').where({
-                userName: userName
-            }).select()
-                .then((user) => {
-                    console.log('Knex log getUserByName', JSON.stringify(user));
-                    return user;
+        getUsersByName(userName) {
+            return knex('users')
+                .whereRaw('userName = IFNULL(?, userName)', [userName])
+                .select()
+                .then((users) => {
+                    // console.log('Knex log getUserByName', JSON.stringify(users));
+                    return users;
                 })
                 .catch(function (err) {
                     throw err;
                 });
         },
-        getUserById(userId) {
+        getUsersById(userId) {
             return knex('users')
-                .where({ userId: userId })
+                .whereRaw('userId = IFNULL(?,userId)', [userId])
                 .select()
-                .then((user) => {
-                    console.log('Knex log getUserById', JSON.stringify(user));
-                    return user;
+                .then((users) => {
+                    // console.log('Knex log getUserById', JSON.stringify(user));
+                    return users;
                 })
                 .catch(function (err) {
                     throw err;
@@ -584,7 +589,7 @@
         },
         getRoles() {
             return knex('roles')
-                .select({roleCode: 'roleCode', roleDescription:  'roleDescription'})
+                .select({ roleCode: 'roleCode', roleDescription: 'roleDescription' })
                 .then(data => { return data; })
                 .catch(err => {
                     throw err;

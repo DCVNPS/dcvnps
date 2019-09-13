@@ -1,2 +1,2 @@
 <h3 class="ui center aligned header">New DCVNPS User</h3>
-<app-user [config]="userConfig"></app-user>
+<app-user [config]="userConfig" (newUserCreated) = "onNewUserCreated($event);"></app-user>

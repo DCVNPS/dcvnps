@@ -1,6 +1,6 @@
 <div class="ui centered grid">
   <div class="six wide column">
-    <form novalidate [formGroup]="userForm">
+    <form novalidate [formGroup]="userForm" *ngIf="formType==='newUser'">
       <div class="ui form">
         <div class="field" [ngClass]="{'error': firstName.invalid &&( firstName.dirty || firstName.touched)}">
           <label>First Name</label>
@@ -59,6 +59,45 @@
       <div class="ui menu borderless">
         <button type="button" class="ui primary button" (click)="createUser();"   [disabled]="userForm.errors || userForm.invalid">Submit</button>
         <button type="button" class="ui button" (click)="resetForm();">Cancel</button>
+      </div>
+    </form>
+    <form novalidate [formGroup]="userForm" *ngIf="formType==='editUser'">
+      <div class="ui form">
+        <div class="field" [ngClass]="{'error': firstName.invalid &&( firstName.dirty || firstName.touched)}">
+          <label>First Name</label>
+          <input type="text" placeholder="First Name" formControlName="firstName">
+          <div [style.color]="'red'" *ngIf="firstName.errors && ( firstName.dirty || firstName.touched )">
+            <div class="header" *ngIf="firstName.errors.required"> First Name is required.</div>
+          </div>
+        </div>
+        <div class="field" [ngClass]="{'error': lastName.invalid &&( lastName.dirty || lastName.touched)}">
+          <label>Last Name</label>
+          <input type="text" placeholder="Last Name" formControlName="lastName">
+          <div [style.color]="'red'" *ngIf="lastName.errors && ( lastName.dirty || lastName.touched )">
+            <div class="header" *ngIf="lastName.errors.required"> Last Name is required.</div>
+          </div>
+        </div>
+        <div class="field" [ngClass]="{'error': userName.invalid  && ( userName.dirty || userName.touched)}">
+          <label>Email</label>
+          <input type="text" placeholder="Email Address" formControlName="userName">
+          <div [style.color]="'red'" *ngIf="f.userName.errors && ( f.userName.dirty || f.userName.touched )">
+            <div class="header" *ngIf="f.userName.errors.required"> email is required.</div>
+            <div class="header" *ngIf="f.userName.errors.email"> a valid email address is required.</div>
+          </div>
+        </div>
+        <div class="field" [ngClass]="{'error': password.invalid &&( password.dirty || password.touched)}">
+          <label>password</label>
+          <input  class="password" type="password" placeholder="Password" formControlName="password"><span *ngIf="password.valid"><i
+              class="green check icon"></i></span>
+          <div [style.color]="'red'" *ngIf="password.errors && ( password.dirty || password.touched )">
+            <div class="header" *ngIf="password.errors.required"> Password is required.</div>
+            <div class="header" *ngIf="password.errors.minlength"> Password minimum length is 8 characters.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ui menu borderless">
+        <button type="button" class="ui primary button" (click)="updateUser();"   [disabled]="userForm.errors || userForm.invalid">Submit</button>
+        <button type="button" class="ui button" (click)="cancelEdit();">Cancel</button>
       </div>
     </form>
   </div>
