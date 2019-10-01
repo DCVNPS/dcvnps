@@ -23,6 +23,7 @@ import { NewUserComponent } from './users/new-user/new-user.component';
 import { RoleResolve } from './resolvers/role-resolve';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { UsersResolve } from './resolvers/users-resolve';
+import { ChangePasswordComponent } from './users/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       users: UsersResolve
     },
     runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'changepassword',
+    component: ChangePasswordComponent
   },
   {
     path: 'newcontact',

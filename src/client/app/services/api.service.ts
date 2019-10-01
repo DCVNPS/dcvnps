@@ -67,10 +67,10 @@ export class ApiService {
 
   onRequestError(res: Response) {
     if (res) {
-      console.log(res);
+      // console.log(res.json());
       const error = {
         statusCode: res.status,
-        statusText: res.statusText
+        statusText:  res.json()
       };
       return throwError(error);
     }

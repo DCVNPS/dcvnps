@@ -88,7 +88,8 @@
                             authuser: undefined
                         };
                     }
-                    const pwdMatch = bcrypt.compare(password, user.password);
+                    const pwdMatch = bcrypt.compareSync(password, user.password);
+                    // console.log({match: pwdMatch,   userpwd: user.password, inpwd:password});
                     if (pwdMatch) {
                         response = {
                             success: true,

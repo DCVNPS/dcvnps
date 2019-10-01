@@ -35,7 +35,7 @@ function apiRouter(database) {
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
             console.log(err);
-            return res.status(401).send({ error: err.message });
+            return res.status(401).json({ error: err.message });
         }
     });
 
