@@ -65,7 +65,8 @@ const routes: Routes = [
   },
   {
     path: 'changepassword',
-    component: ChangePasswordComponent
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'newcontact',
