@@ -70,7 +70,7 @@ function apiRouter(database) {
     });
 
     router.get('/galleries/:galleryId?', (req, res) => {
-        console.log(req.auth);
+        // console.log(req.auth);
         const galleryId = req.params.galleryId || null;
         database.getGalleries(galleryId)
             .then((data) => {
@@ -367,6 +367,22 @@ function apiRouter(database) {
         }
 
     });
+
+    //  Need to use Async to make sure the authentication and change password is  completed.
+    router.post('/changepassword', async (req, res) => {
+        const {userName,oldPassword, newPassword} = req.body;
+        const encryptedNewPassword = `${bcrypt.hashSync(newPassword, 10)}`;
+        // console.log(`username: ${userName}, oldPassword: ${oldPassword}, newPassword: ${encryptedNewPassword}`);
+        try{
+            const chgPwdResult = await database.changePassword(userName, oldPassword, encryptedNewPassword);
+            // console.log(chgPwdResult);
+            return res.status(200).json(chgPwdResult);
+        } catch( error ){
+            console.log(error);
+            return res.status(500).json(error);
+        }
+    });
+
     return router;
 }
 

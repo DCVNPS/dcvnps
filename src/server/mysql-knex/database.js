@@ -77,13 +77,13 @@
         }) {
             let response = undefined;
             return knex('users')
-                .where({ userName: username })
+                .whereRaw('userName=?', [username])
                 .first('userId', 'userName', 'password', 'roleCode')
                 .then((user) => {
                     if (!user) {
                         return response = {
                             success: false,
-                            status: 404,
+                            status: 401,
                             authmsg: `User  Not Found -- ${username} .`,
                             authuser: undefined
                         };
@@ -110,7 +110,36 @@
                         };
                     return response;
                 })
-                .catch(function (err) { throw err; });
+                .catch((err) => { throw err; });
+        },
+        changePassword(userName, oldPassword, encryptedNewPassword) {
+            // console.log(`changePassword DB ${userName}  -- ${oldPassword} -- ${encryptedNewPassword}`);
+            return this.authenticate({ username: userName, password: oldPassword })
+                .then(res => {
+                    if (res.success) {
+                        // console.log('chagne password authentication success');
+                        // console.log(res);
+                        const authuser = res.authuser;
+                        return knex('users')
+                            .whereRaw("userId=?", [authuser.userId])
+                            .update({ password: encryptedNewPassword })
+                            .then(() => {
+                                return {
+                                    success: true,
+                                    status: 200,
+                                    authuser: {
+                                        userId: authuser.userId,
+                                        userName: authuser.userName,
+                                        roleCode: authuser.roleCode
+                                    }
+                                }
+                            })
+                            .catch(error => { throw error; });
+                    } else {
+                        return res;
+                    }
+                })
+                .catch(error => { throw error; });
         },
         getUsersByName(userName) {
             return knex('users')

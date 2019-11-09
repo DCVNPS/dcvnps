@@ -94,7 +94,7 @@ export class AnnouncementsComponent implements OnInit {
         if (ancmnt) {
           this.api.put('announcements', ancmnt)
             .subscribe( result => {
-              console.log(result);
+              // console.log(result);
               const curAncmnt = this.announcements.find(a => a.announcementId === result.announcementId);
               const indx = this.announcements.indexOf(curAncmnt);
               this.announcements.splice(indx, 1, result);
@@ -106,7 +106,7 @@ export class AnnouncementsComponent implements OnInit {
         }
         break;
       case AnnouncementActions.delete:
-        console.log(ancmnt);
+        // console.log(ancmnt);
         this.api.delete(`announcements/${ancmnt.announcementId}`)
           .subscribe(result => {
             // Successful delete, remove from announcement list

@@ -18,7 +18,7 @@ export class EditGalleryComponent implements OnInit {
   public photos: Array<Photo> = [];
   private galleryData: Array<YearData> = [];
   public year: string;
-  private level: string;
+  public level: string;
 
   constructor(
     private route: ActivatedRoute,

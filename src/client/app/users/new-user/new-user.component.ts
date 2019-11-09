@@ -13,7 +13,7 @@ export class NewUserComponent implements OnInit {
 
   private roles: Object = {};
   private user: User;
-  private userConfig: Object = {};
+  public userConfig: Object = {};
   constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {

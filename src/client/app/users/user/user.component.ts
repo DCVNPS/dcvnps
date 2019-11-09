@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   private password: FormControl;
   // private confirmPassword: FormControl;
   private roleCode: FormControl;
-  private formType:string;
+  public formType:string;
   private roles: Object = {};
   @Input() config: Object = {};
   @Output() newUserCreated: EventEmitter <User> = new EventEmitter<User>();
