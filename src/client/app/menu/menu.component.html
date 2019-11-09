@@ -45,7 +45,7 @@
       <span> <i class="user icon"></i><i class="cogs icon"></i></span>
       Manage Site
     </a>
-    <a class="item" [routerLink]="['/login']" [routerLinkActive]="['active']">
+    <a class="item" [routerLink]="['/login']" [routerLinkActive]="['active']" *ngIf="!isLogin()">
       <i class="small sign in icon"></i>
       Sign in
     </a>

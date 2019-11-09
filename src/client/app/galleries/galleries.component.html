@@ -1,12 +1,14 @@
-<div class="ui grey inverted secondary menu">
+<div class="ui small grey inverted secondary menu" *ngIf="isAdmin">
   <!-- <a class="item" (click)="goBack()"><i class="medium arrow left icon"></i>BACK</a> -->
-  <div class="stackable right menu" *ngIf="isAdmin">
+  <div class="stackable  small right menu" *ngIf="isAdmin">
     <a class="item" [routerLink]="['/editgalleries']" [routerLinkActive]="['active']" aria-label="Edit galleries">
-      <span><i class="big edit icon"></i></span>Edit Galleries
+      <span><i class="large edit icon"></i></span>Edit Galleries
     </a>
     <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
-      <span>Upload Image</span><i class="big upload icon"></i>
+      <span>Upload Image</span><i class="large upload icon"></i>
     </a>
   </div>
 </div>
+<div style="margin-top: 20px;">
 <app-gallery-list [galleries]="galleries"></app-gallery-list>
+</div>

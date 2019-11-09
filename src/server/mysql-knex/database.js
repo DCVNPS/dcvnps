@@ -29,45 +29,45 @@
                 })
                 .catch((err) => console.error(err));
         },
-        createUser({
-            userName,
-            password,
-            roleCode,
-            updateUser
-        }) {
-            // console.log(`Add User ${email}`);
-            var response;
-            const createdDate = new Date();
-            const updatedDate = new Date();
-            const pwdHash = bcrypt.hashSync(password, 10);
-            return knex('users').insert({
-                userName: userName,
-                password: pwdHash,
-                roleCode: roleCode,
-                updateUser: updateUser,
-                createdDate: createdDate,
-                updatedDate: updatedDate
-            })
-                .then(async () => {
-                    const userId = await knex('users')
-                        .select('userId')
-                        .where({ userName })
-                        .then((row) => { return row[0].userId })
-                        .catch((err) => { throw err; });
-                    console.log('Knex log', userId);
-                    response = {
-                        'success': true,
-                        'authmsg': 'Register Success',
-                        'authuser': {
-                            'userId': userId,
-                            'userName': userName,
-                            'roleCode': roleCode
-                        }
-                    }
-                    return response;
-
+        deleteUser(userId) {
+            return knex('users').where('userId', userId).delete()
+                .then(r => { return r; })
+                .catch(err => { throw err; });
+        },
+        createUser(user) {
+            console.log(user);
+            return knex('users')
+                .insert({
+                    userId: user.userId,
+                    userName: user.userName,
+                    userSurname: user.userSurname,
+                    userGivenName: user.userGivenName,
+                    password: user.password,
+                    roleCode: user.roleCode,
+                    createdUserId: user.createdUserId,
+                    createdDate: user.createdDate,
+                    updatedUserId: user.updatedUserId,
+                    updatedDate: user.updatedDate
                 })
-                .catch(function (err) {
+                .then(async () => {
+                    try {
+                        const nUser = await getUserById(user.userId);
+                        const response = {
+                            'success': true,
+                            'authmsg': 'Register Success',
+                            'authuser': {
+                                'userId': nUser.userId,
+                                'userName': nUser.userName,
+                                'roleCode': nUser.roleCode
+                            }
+                        }
+                        return response;
+                    } catch (error) {
+                        throw error;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
                     throw err;
                 });
         },
@@ -75,9 +75,6 @@
             username,
             password
         }) {
-            if (username === 'vnpsuser') {
-                password = process.env.vnspusrpwd;
-            }
             let response = undefined;
             return knex('users')
                 .where({ userName: username })
@@ -87,11 +84,12 @@
                         return response = {
                             success: false,
                             status: 404,
-                            authmsg: 'User Not Found.',
+                            authmsg: `User  Not Found -- ${username} .`,
                             authuser: undefined
                         };
                     }
-                    const pwdMatch = bcrypt.compare(password, user.password);
+                    const pwdMatch = bcrypt.compareSync(password, user.password);
+                    // console.log({match: pwdMatch,   userpwd: user.password, inpwd:password});
                     if (pwdMatch) {
                         response = {
                             success: true,
@@ -114,25 +112,25 @@
                 })
                 .catch(function (err) { throw err; });
         },
-        getUserByName(userName) {
-            return knex('users').where({
-                userName: userName
-            }).select()
-                .then((user) => {
-                    console.log('Knex log getUserByName', JSON.stringify(user));
-                    return user;
+        getUsersByName(userName) {
+            return knex('users')
+                .whereRaw('userName = IFNULL(?, userName)', [userName])
+                .select()
+                .then((users) => {
+                    // console.log('Knex log getUserByName', JSON.stringify(users));
+                    return users;
                 })
                 .catch(function (err) {
                     throw err;
                 });
         },
-        getUserById(userId) {
+        getUsersById(userId) {
             return knex('users')
-                .where({ userId: userId })
+                .whereRaw('userId = IFNULL(?,userId)', [userId])
                 .select()
-                .then((user) => {
-                    console.log('Knex log getUserById', JSON.stringify(user));
-                    return user;
+                .then((users) => {
+                    // console.log('Knex log getUserById', JSON.stringify(user));
+                    return users;
                 })
                 .catch(function (err) {
                     throw err;
@@ -592,7 +590,7 @@
         },
         getRoles() {
             return knex('roles')
-                .select({roleCode: 'roleCode', roleDescription:  'roleDescription'})
+                .select({ roleCode: 'roleCode', roleDescription: 'roleDescription' })
                 .then(data => { return data; })
                 .catch(err => {
                     throw err;

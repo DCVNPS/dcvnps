@@ -2,11 +2,14 @@
   <form class="ui big form" #loginForm="ngForm" (submit)="onSubmit(loginForm)">
     <div class="field">
       <label>Username</label>
-      <input type="text" name="username" placeholder="Username" ngModel required>
+      <input type="text" name="username" (keydown)="onKeydown($event)" placeholder="Username" ngModel required>
     </div>
     <div class="field">
       <label>Password</label>
-      <input type="password" name="password" placeholder="Password" ngModel required>
+      <input type="password" name="password" (keydown)="onKeydown($event)" placeholder="Password" ngModel required>
+    </div>
+    <div *ngIf="formError">
+      <div class="header small"  [style.color]="'red'" >{{formError}}</div>
     </div>
     <button type="submit" class="ui primary button float right floated" [disabled]="!loginForm.valid">Login</button>
   </form>

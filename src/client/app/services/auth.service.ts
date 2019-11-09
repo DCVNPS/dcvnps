@@ -63,10 +63,6 @@ export class AuthService {
     return this.getRole() === 'SITEADM';
   }
 
-  // levelAdmin() {
-  //   return this.isAdmin() || this.siteAdmin();
-  // }
-
   logout() {
     this.removeToken();
     this.router.navigate(['/home']);

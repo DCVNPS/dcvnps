@@ -1,3 +1,2 @@
 <h3 class="ui center aligned header">New DCVNPS User</h3>
-<app-user [config]="userConfig"></app-user>
-<!-- <div *ngFor="let role of roles">{{role.roleCode}}</div> -->
+<app-user [config]="userConfig" (newUserCreated) = "onNewUserCreated($event);"></app-user>

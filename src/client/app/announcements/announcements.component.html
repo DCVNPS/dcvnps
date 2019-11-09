@@ -1,4 +1,4 @@
-<div class="ui small grey inverted secondary menu">
+<div class="ui small grey inverted secondary menu" *ngIf="siteAdmin()">
     <a class="item" (click)="editAnnouncements()" aria-label="Edit Announcements" *ngIf="siteAdmin() && !editAncmnts ">
         <span><i class="large edit icon"></i></span>Edit Announcements
     </a>

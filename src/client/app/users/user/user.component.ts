@@ -1,5 +1,5 @@
-import { Component, OnInit, NgModule, Input, Output, EventEmitter } from '@angular/core';
-import { ReactiveFormsModule, FormsModule, FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
 import { User } from '../../models/user-model';
 
 @Component({
@@ -10,28 +10,27 @@ import { User } from '../../models/user-model';
 export class UserComponent implements OnInit {
   private user: User;
   public userForm: FormGroup;
-  private email: FormControl;
+  private userName: FormControl;
   private lastName: FormControl;
   private firstName: FormControl;
   private password: FormControl;
   // private confirmPassword: FormControl;
-  private userRole: FormControl;
+  private roleCode: FormControl;
   private formType:string;
   private roles: Object = {};
   @Input() config: Object = {};
+  @Output() newUserCreated: EventEmitter <User> = new EventEmitter<User>();
+  @Output() userUpdated: EventEmitter <User> = new EventEmitter<User>();
   constructor() {
   }
 
   ngOnInit() {
     // console.log(this.config);
-    this.formType = this.config['formType'] || 'new';
     this.roles = this.config['roles'] || null;
     // console.log(this.roles);
-    if ( this.formType === 'edit'){
-      this.user = this.config['user'];
-    } else {
-      this.user = new User(null, null, null, null, null,null,null,null,null);
-    }
+    this.user = this.config['user'] || null;
+    this.formType = this.config['formType'] ||  'newUser';
+    console.log(this.formType);
     this.createControls();
     this.createForm();
   }
@@ -40,20 +39,20 @@ export class UserComponent implements OnInit {
     this.userForm = new FormGroup({
       firstName: this.firstName,
       lastName: this.lastName,
-      email: this.email,
+      userName: this.userName,
       password: this.password,
       // confirmPassword: this.confirmPassword,
-      userRole: this.userRole 
+      roleCode: this.roleCode 
     });
   }
 
   createControls() {
     this.firstName = new FormControl('', Validators.required);
     this.lastName = new FormControl('', Validators.required);
-    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.userName = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
     // this.confirmPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    this.userRole = new FormControl('', Validators.required);
+    this.roleCode = new FormControl('', Validators.required);
   }
 
   resetForm() {
@@ -67,11 +66,21 @@ export class UserComponent implements OnInit {
   get formValue() { return this.userForm.value;}
 
   createUser(){
-    console.log(this.f);
-    console.log(this.formValue);
+    // console.log(this.f);
+    // console.log(this.formValue);
+    this.user = new User(null, this.formValue.userName,  this.formValue.password, this.formValue.lastName, this.formValue.firstName, this.formValue.roleCode, null, null, null, null);
+    this.user.createdDate = new Date();
+    this.user.updatedDate = new Date();
+    console.log(this.user);
+    this.newUserCreated.emit(this.user);
   }
 
-  // onUserRoleChanged(event){
-  //   console.log(this.f);
-  // }
+  cancelEdit(){
+    console.log(`Cancel Edit user  ${this.user.fulName}`);
+  }
+
+  updateUser(){
+    console.log(`Cancel Edit user  ${this.user.fulName}`);
+  }
+
 }

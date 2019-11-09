@@ -1,35 +1,43 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
 const fs = require('fs');
 const path = require('path');
 const serverRoot = path.normalize(__dirname);
 
-
+function isAdmin(req) {
+    const auth = req.auth;
+    if (auth.userrole !== "SITEADM") {
+       return false;
+    }
+    return true;
+}
 function apiRouter(database) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-    //     .unless({
-    //         path:
-    //             [
-    //                 '/api/authenticate',
-    //                 '/api/boardmembers',
-    //                 '/api/programs',
-    //                 { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-    //                 { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-    //                 { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-    //             ]
-    //     })
- );
+        //     .unless({
+        //         path:
+        //             [
+        //                 '/api/authenticate',
+        //                 '/api/boardmembers',
+        //                 '/api/programs',
+        //                 { url: /^\/api\/galleries.*/i, methods: ['GET'] },
+        //                 { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
+        //                 { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+        //             ]
+        //     })
+    );
 
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
-            return res.status(401).send({ error: err.message });
+            console.log(err);
+            return res.status(401).json({ error: err.message });
         }
-    })
+    });
 
     router.get('/uuid', (req, res) => {
         database.uuid().then(data => { return res.json(data) })
@@ -62,6 +70,7 @@ function apiRouter(database) {
     });
 
     router.get('/galleries/:galleryId?', (req, res) => {
+        console.log(req.auth);
         const galleryId = req.params.galleryId || null;
         database.getGalleries(galleryId)
             .then((data) => {
@@ -165,6 +174,7 @@ function apiRouter(database) {
 
     router.post('/authenticate', (req, res) => {
         const user = req.body;
+        // console.log(user);
         database.authenticate({ username: user.username, password: user.password })
             .then((result) => {
                 if (result.success) {
@@ -252,7 +262,7 @@ function apiRouter(database) {
     router.get('/announcements/:announceId?', (req, res) => {
         // console.log(req.auth);
         const announceId = req.params.announceId || null;
-        database.readAnnouncements(announceId)
+        return database.readAnnouncements(announceId)
             .then(data => {
                 const jData = JSON.parse(data);
                 return res.status(200).send(jData);
@@ -274,11 +284,11 @@ function apiRouter(database) {
             const result = await database.createAnnouncement(ancmnt);
             const jData = JSON.parse(result);
             // console.log(jData);
-            res.status(200).json(jData[0]);
+            return res.status(200).json(jData[0]);
         }
         catch (error) {
             console.log(error);
-            res.status(500).json(error.message);
+            return res.status(500).json(error.message);
         }
     });
 
@@ -289,11 +299,11 @@ function apiRouter(database) {
             ancmnt.updatedDate = new Date();
             // console.log(ancmnt);
             const result = await database.updateAnnouncement(ancmnt);
-            res.status(200).json(ancmnt);
+            return res.status(200).json(ancmnt);
         }
         catch (error) {
             console.log(error);
-            res.status(500).json(error.message);
+            return res.status(500).json(error.message);
         }
     });
 
@@ -308,21 +318,55 @@ function apiRouter(database) {
                 return res.status(500).json('announceId is not null');
             }
         }
-        catch( error ){
+        catch (error) {
             return res.status(500).json(error.message);
         }
     });
 
     router.get('/roles', (req, res) => {
         return database.getRoles()
-        .then( data => {
-            return res.status(200).json(data);
-        })
-        .catch( error =>{
-            return res.status(500).json(error.message);
-        });
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(error => {
+                return res.status(500).json(error.message);
+            });
     });
 
+    router.post('/users', async (req, res) => {
+        // const auth = req.auth;
+        // console.log(auth);
+        // if (auth.userrole !== "SITEADM") {
+        //     return res.status(401).json(`user ${auth.username} is not authorized to create new application user`);
+        // }
+        if(!isAdmin(req)){
+            return res.status(401).json(`user ${auth.username} is not authorized to create new application user`);
+        }
+        const user = req.body;
+        // console.log(user);
+        try {
+            const userid = await database.uuid();
+            user.userId = userid.uuid;
+            user.password = `${bcrypt.hashSync(user.password, 10)}`
+            user.createdUserId = auth.userid;
+            user.createdDate = new Date();
+            user.updatedUserId = auth.userid;
+            user.updatedDate = new Date();
+            console.log(user);
+            const result = await database.createUser(user);
+            return res.status(200).json(result);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    });
+
+    router.get('/users/:userId?', (req, res) => {
+        console.log('get users', req.auth);
+        if(!isAdmin(req)){
+            return res.status(401).json(`user ${req.auth.username} is not authorized to create new application user`);
+        }
+
+    });
     return router;
 }
 
