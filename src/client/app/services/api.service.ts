@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestOptions, RequestMethod, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable } from 'rxjs';
@@ -67,12 +67,17 @@ export class ApiService {
 
   onRequestError(res: Response) {
     if (res) {
-      // console.log(res.json());
+      const jerror = res.json();
       const error = {
         statusCode: res.status,
-        statusText:  res.json()
+        statusText:  jerror.error
       };
-      return throwError(error);
+      console.log(error);
+      if( error.statusText === "jwt expired"){
+        this.auth.logout();
+      } else {
+        return throwError(error);
+      }
     }
   }
 

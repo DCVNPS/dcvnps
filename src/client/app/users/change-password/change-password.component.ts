@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Form, Validators } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -8,12 +11,12 @@ import { FormGroup, FormControl, Form, Validators } from '@angular/forms';
 })
 export class ChangePasswordComponent implements OnInit {
 public changePasswordForm: FormGroup;
-private userName: FormControl;
-private oldPassword: FormControl;
-private newPassword: FormControl;
-private confirmPassword: FormControl;
+public userName: FormControl;
+public oldPassword: FormControl;
+public newPassword: FormControl;
+public confirmPassword: FormControl;
 public misMatchPassword: boolean;
-  constructor() { }
+  constructor(private api: ApiService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -56,6 +59,23 @@ public misMatchPassword: boolean;
     this.misMatchPassword = this.formValue.newPassword !== this.formValue.confirmPassword;
   }
   changePassword(){
- 
+    const chgPwdObj = {
+      userName: this.formValue.userName,
+      oldPassword: this.formValue.oldPassword,
+      newPassword: this.formValue.newPassword
+    };
+    // console.log(chgPwdObj);
+    this.api.post('changepassword', chgPwdObj)
+    .subscribe(
+      result => { 
+        console.log(result); 
+        if ( result.success ){
+          this.auth.logout();
+          this.router.navigate(['/login']);
+        }
+      },
+      error => { console.log(error); }
+    )
   }
+  cancelEdit(){}
 }

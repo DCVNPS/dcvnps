@@ -10,7 +10,7 @@ import { AnnouncementActions } from '../../models/dcnpsn-enum';
 export class EditAnnouncementComponent implements OnInit {
 @Input() announcement: Announcement;
 @Output() announcementAction: EventEmitter<Object> = new EventEmitter<Object>();
-private tinyInit: Object;
+public tinyInit: Object;
 public title: string;
 public content: string;
 public postedBy: string;

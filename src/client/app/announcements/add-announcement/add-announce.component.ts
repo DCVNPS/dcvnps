@@ -11,10 +11,10 @@ import { AnnouncementActions } from '../../models/dcnpsn-enum';
   styleUrls: ['./add-announce.component.scss']
 })
 export class AddAnnounceComponent implements OnInit {
-  private tinyInit: Object;
-  private title: string;
-  private content: string;
-  private ancmnt: Announcement;
+  public tinyInit: Object;
+  public title: string;
+  public content: string;
+  public ancmnt: Announcement;
   @Output() announcementAction: EventEmitter<Object> = new EventEmitter<Object>();
   constructor() {
    }

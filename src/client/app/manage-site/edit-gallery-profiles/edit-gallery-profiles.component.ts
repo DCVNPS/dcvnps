@@ -7,7 +7,7 @@ import { Gallery } from '../../models/gallery.model';
 })
 export class EditGalleryProfilesComponent implements OnInit {
 
-  @Input() private galleries: Array<Gallery>;
+  @Input() public galleries: Array<Gallery>;
   constructor() { }
 
   ngOnInit() {
