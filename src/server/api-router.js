@@ -196,7 +196,7 @@ function apiRouter(database) {
                         role: result.authuser.roleCode
                     });
                 } else {
-                    return res.status(result.status).json(result.authmsg);
+                    return res.status(result.status).json({error:result.authmsg});
                 }
             })
             .catch((err) => { return res.status(err.status).json({ error: err.message }); })
@@ -381,6 +381,13 @@ function apiRouter(database) {
             console.log(error);
             return res.status(500).json(error);
         }
+    });
+
+    router.post('/paypaltransactioncomplete', (req, res) =>{
+        const papalTran = req.body;
+        console.log(papalTran);
+        // call  database to save transaction data.
+        return res.status(200).json('paypal transaction completed.');
     });
 
     return router;

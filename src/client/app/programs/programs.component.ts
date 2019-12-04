@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { paypalDescription } from '../models/paypal.descriptiont';
 
 @Component({
   selector: 'app-programs',
@@ -9,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProgramsComponent implements OnInit {
   private programLevel = 'level1';
   classFee = 50;
+  public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
   public showLevel1: boolean;
   public showLevel2: boolean;
   public showLevel3: boolean;

@@ -77,7 +77,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.galleryData.forEach( yearData => {
       yearData.authorData.forEach( authData => {
         this.authPhotos.push(authData);
-        console.log(this.authPhotos);
+        // console.log(this.authPhotos);
       });
     });
     // console.log(this.authPhotos);

@@ -42,7 +42,7 @@ export class AnnouncementsComponent implements OnInit {
     this.editAncmnts = true;
     this.addAncmnt = this.addAncmnt ? !this.addAncmnt : this.addAncmnt;
   }
-  cancelEditAnnouncements() {
+  finishEditAnnouncements() {
     this.editAncmnts = false;
     this.addAncmnt = false;
     this.editAncmnt = false;
