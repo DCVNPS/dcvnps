@@ -1,4 +1,5 @@
 <div class="paypal-container">
   <h2 *ngIf="paypalLoad">Paypal is loading...</h2>
-  <div id="paypal-button-container"></div>
+  <div #paypal></div>
+  <div *ngIf="paidFor"> Thank your for supporting DCVNPS. </div>
 </div>

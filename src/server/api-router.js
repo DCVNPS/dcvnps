@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
 const fs = require('fs');
 const path = require('path');
+const uuidv4 = require('uuid/v4');
 const serverRoot = path.normalize(__dirname);
 
 function isAdmin(req) {
@@ -196,7 +197,7 @@ function apiRouter(database) {
                         role: result.authuser.roleCode
                     });
                 } else {
-                    return res.status(result.status).json(result.authmsg);
+                    return res.status(result.status).json({error:result.authmsg});
                 }
             })
             .catch((err) => { return res.status(err.status).json({ error: err.message }); })
@@ -381,6 +382,62 @@ function apiRouter(database) {
             console.log(error);
             return res.status(500).json(error);
         }
+    });
+
+    router.post('/paypaltransactioncomplete', (req, res) =>{
+        let orderItems = [];
+        let payments = [];
+        const paypalTran = req.body;
+        const payer = {
+            payerId: paypalTran.payer.payer_id,
+            emailAddress: paypalTran.payer.email_address,
+            payerSurname: paypalTran.payer.name.surname,
+            payerGivenName: paypalTran.payer.name.given_name,
+            countryCode: paypalTran.payer.address.country_code,
+            createDate: paypalTran.create_time,
+            updatedUserid: req.auth.userid,
+            updateDate: paypalTran.update_time
+        }
+        const order = {
+            orderId: paypalTran.id,
+            payerId: paypalTran.payer.payer_id,
+            createDate: paypalTran.create_time,
+            updatedUserid: req.auth.userid,
+            updateDate: paypalTran.update_time           
+        }
+        // setting up payees ,payments
+        paypalTran.purchase_units.forEach(purchase => {
+            // payees setup
+            let orderItem = {
+                orderItemId: uuidv4(),
+                orderId: paypalTran.id,
+                amount: purchase.amount.value,
+                currencyCode: purchase.amount.currency_code,
+                description: purchase.description,
+                merchantId: purchase.payee.merchant_id,
+                merchantEmailAddress: purchase.payee.email_address,
+                createDate: paypalTran.create_time,
+                updatedUserId: req.auth.userid,
+                updateDate: paypalTran.update_time
+            }
+            orderItems.push(orderItem);
+            // payments setup
+            purchase.payments.captures.forEach( capture => {
+                let payment = {
+                    paymentId: capture.id,
+                    odrderId: paypalTran.id,
+                    amount: capture.amount.value,
+                    currencyCode: capture.currency_code,
+                    paymentStatus: capture.status,
+                    createdDate: capture.create_time,
+                    updatedUserId: req.auth.userid,
+                    updatedDate: capture.update_time  
+                }
+                payments.push(payment);
+            });          
+        });
+        // call  database to save transaction data.
+        return res.status(200).json('paypal transaction completed.');
     });
 
     return router;

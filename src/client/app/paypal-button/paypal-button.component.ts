@@ -1,16 +1,22 @@
-import { Component, AfterViewChecked, Input } from '@angular/core';
-declare let paypal: any;
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { paypalDescription } from '../models/paypal.descriptiont';
+import { ApiService } from '../services/api.service';
+declare let paypal;
 
 @Component({
   selector: 'app-paypal-button',
   templateUrl: './paypal-button.component.html',
   styleUrls: ['./paypal-button.component.scss']
 })
-export class PaypalButtonComponent implements AfterViewChecked {
-  addScript = false;
-  paypalLoad = true;
-  @Input() purchaseAmount = 50.00;
-  private SB_CLIENT_ID = 'AZzmfRuo1IGXpa4ZCxlXFCYL8sOhqoVwbnUBXbN8pIa-1xKoaBi03cgcRNpNsUqURZhLARAxb2paPkYR'
+export class PaypalButtonComponent implements OnInit {
+  @Input() private purchaseAmount = 50.00;
+  @Input() private purchaseDescription = paypalDescription.donation;
+  @ViewChild('paypal') paypalElement: ElementRef;
+  private authToken: any;
+  private addScript = false;
+  public paidFor = false;
+  public paypalLoad = true;
+  private SB_CLIENT_ID = 'AdyZCufrFNpgaWEz-y6CvOSLbzmDQNHuoAATdZqgCaNPVGUcxR0EETGv_JyaPQJCngKkWytVdo0j9Ezj'
   // FAIL_DATA = {
   //   sender_batch_header: {
   //     sender_batch_id: '1524086406556',
@@ -24,43 +30,34 @@ export class PaypalButtonComponent implements AfterViewChecked {
   //     amount: { value: `${this.finalAmount * 1.05}`, currency: 'USD' }
   //   }]
   // };
-  paypalConfig = {
+  private paypalConfig = {
     style: {
       color: 'gold',
       shape: 'pill',
-      label: 'pay',
+      label: 'paypal',
       height: 30
     },
     createOrder: (data, actions) => {
       const finalAmount = this.purchaseAmount * 1.05;
       return actions.order.create({
         purchase_units: [{
-          amount: { value: `${finalAmount}`, currency: 'USD' }
+          "description": this.purchaseDescription,
+          "amount": { value: `${finalAmount}`, currency: 'USD' }
         }]
       });
     },
-    onApprove: (data, actions) => {
-      console.log(data);
-      return actions.order.capture().then((details) => {
-        if (details.error === 'SENDER_EMAIL_UNCONFIRMED') {
-          console.log(details);
-          return actions.restart();
-        }
-        // Show success message to buyer
-        alert(`Transaction completed by ${details.payer.name.given_name}`);
-        console.log(details);
-        // call the server to save transaction
-        // need to create api router to handl this request.
-        // return fetch('/paypal-transaction-complete', {
-        //   method: 'post',
-        //   headers: {
-        //     'content-type': 'application/json'
-        //   },
-        //   body: JSON.stringify({
-        //     odrderID: data.orderID
-        //   })
-        // });
-      });
+    onApprove: async (data, actions) => {
+      const order = await actions.order.capture();
+      if (order.error === 'SENDER_EMAIL_UNCONFIRMED') {
+        console.log(order);
+        return actions.restart();
+      }
+      // console.log(data);
+      // console.log( JSON.stringify(order));
+      this.paidFor = true;
+      // Call server side to save the transaction contained in the order object.
+      const orderSaved = await this.api.post('paypaltransactioncomplete',order);
+      console.log(orderSaved);
     },
     onCancel: (data) => {
       if (data) {
@@ -73,23 +70,28 @@ export class PaypalButtonComponent implements AfterViewChecked {
       alert(err);
     }
   };
-  constructor() { }
+  constructor(private api: ApiService) {
+   }
 
-  ngAfterViewChecked(): void {
+  ngOnInit(): void {
+    console.log(this.purchaseDescription);
+   // This way is used in the react development.
     if (!this.addScript) {
       this.addPaypalScript().then(() => {
-        paypal.Buttons(this.paypalConfig).render('#paypal-button-container');
+        paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);
         this.paypalLoad = false;
       });
     }
+    // paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);
   }
-
+  // This way is used in the react development.
+  // for the simplicity, add script to the <body> of the index.html is good enough to move forward
   addPaypalScript() {
     this.addScript = true;
     return new Promise((resolve, reject) => {
       const scripttagElement = document.createElement('script');
       // tslint:disable-next-line: max-line-length
-      scripttagElement.src = `https://www.paypal.com/sdk/js?client-id=${this.SB_CLIENT_ID}&currency=USD&disable-funding=credit&commit=true&components=buttons`;
+      scripttagElement.src = `https://www.paypal.com/sdk/js?client-id=${this.SB_CLIENT_ID}&currency=USD&disable-funding=credit,card&commit=true&components=buttons`;
       scripttagElement.onload = resolve;
       document.body.appendChild(scripttagElement);
     });

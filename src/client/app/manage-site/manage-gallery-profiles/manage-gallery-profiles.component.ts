@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Gallery } from '../../models/gallery.model';
 @Component({
   selector: 'app-edit-gallery-profiles',
-  templateUrl: './edit-gallery-profiles.component.html',
-  styleUrls: ['./edit-gallery-profiles.component.scss']
+  templateUrl: './manage-gallery-profiles.component.html',
+  styleUrls: ['./manage-gallery-profiles.component.scss']
 })
-export class EditGalleryProfilesComponent implements OnInit {
+export class ManageGalleryProfilesComponent implements OnInit {
 
   @Input() public galleries: Array<Gallery>;
   constructor() { }

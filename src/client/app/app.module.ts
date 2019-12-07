@@ -47,7 +47,7 @@ import { AuthorPhotoComponent } from './gallery/author-photo/author-photo.compon
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
-import { EditGalleryProfilesComponent } from './manage-site/edit-gallery-profiles/edit-gallery-profiles.component';
+import { ManageGalleryProfilesComponent } from './manage-site/manage-gallery-profiles/manage-gallery-profiles.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { AddAnnounceComponent } from './announcements/add-announcement/add-announce.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
@@ -91,7 +91,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
     PaypalButtonComponent,
     ManageSiteComponent,
     PrettyPrintPipe,
-    EditGalleryProfilesComponent,
+    ManageGalleryProfilesComponent,
     SafeHtmlPipe,
     AddAnnounceComponent,
     AnnouncementComponent,

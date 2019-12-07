@@ -68,7 +68,7 @@ public misMatchPassword: boolean;
     this.api.post('changepassword', chgPwdObj)
     .subscribe(
       result => { 
-        console.log(result); 
+        // console.log(result); 
         if ( result.success ){
           this.auth.logout();
           this.router.navigate(['/login']);
