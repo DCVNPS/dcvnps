@@ -384,26 +384,26 @@ function apiRouter(database) {
         }
     });
 
-    router.post('/paypaltransactioncomplete', (req, res) =>{
+    router.post('/paypaltransactioncomplete', async (req, res) =>{
         let orderItems = [];
         let payments = [];
         const paypalTran = req.body;
         const payer = {
             payerId: paypalTran.payer.payer_id,
             emailAddress: paypalTran.payer.email_address,
-            payerSurname: paypalTran.payer.name.surname,
-            payerGivenName: paypalTran.payer.name.given_name,
+            surname: paypalTran.payer.name.surname,
+            givenName: paypalTran.payer.name.given_name,
             countryCode: paypalTran.payer.address.country_code,
-            createDate: paypalTran.create_time,
-            updatedUserid: req.auth.userid,
-            updateDate: paypalTran.update_time
+            createdDate: new Date(paypalTran.create_time),
+            updatedUserId: req.auth.userid,
+            updatedDate: new Date(paypalTran.update_time)
         }
         const order = {
             orderId: paypalTran.id,
             payerId: paypalTran.payer.payer_id,
-            createDate: paypalTran.create_time,
-            updatedUserid: req.auth.userid,
-            updateDate: paypalTran.update_time           
+            createdDate: new Date(paypalTran.create_time),
+            updatedUserId: req.auth.userid,
+            updatedDate: new Date(paypalTran.update_time)
         }
         // setting up payees ,payments
         paypalTran.purchase_units.forEach(purchase => {
@@ -416,28 +416,35 @@ function apiRouter(database) {
                 description: purchase.description,
                 merchantId: purchase.payee.merchant_id,
                 merchantEmailAddress: purchase.payee.email_address,
-                createDate: paypalTran.create_time,
+                createdDate: new Date(paypalTran.create_time),
                 updatedUserId: req.auth.userid,
-                updateDate: paypalTran.update_time
+                updatedDate: new Date(paypalTran.update_time)
             }
             orderItems.push(orderItem);
             // payments setup
             purchase.payments.captures.forEach( capture => {
                 let payment = {
                     paymentId: capture.id,
-                    odrderId: paypalTran.id,
+                    orderId: paypalTran.id,
                     amount: capture.amount.value,
-                    currencyCode: capture.currency_code,
+                    currencyCode: capture.amount.currency_code,
                     paymentStatus: capture.status,
-                    createdDate: capture.create_time,
+                    createdDate: new Date(paypalTran.create_time),
                     updatedUserId: req.auth.userid,
-                    updatedDate: capture.update_time  
-                }
+                    updatedDate: new Date(paypalTran.update_time)
+                        }
                 payments.push(payment);
-            });          
+            });
         });
+        // console.log({"payer": payer,  "order": order, "orderItems": orderItems,"payments":payments});
         // call  database to save transaction data.
-        return res.status(200).json('paypal transaction completed.');
+        try{
+            const result = await database.processPayPal({"payer": payer,  "order": order, "orderItems": orderItems,"payments":payments});
+            return res.status(200).json(result);    
+        }
+        catch(err){
+            return res.status(500).send(err);
+        };
     });
 
     return router;

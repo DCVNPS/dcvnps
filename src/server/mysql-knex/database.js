@@ -625,6 +625,45 @@
                     throw err;
                 });
         },
+        processPayPal(paypalTran) {
+            const { payer, order, orderItems, payments } = paypalTran;
+            // console.log('Database InsertPayer procedure');
+            // console.log(payer);
+
+            return knex.transaction( async (trx) => {
+                const autoCommitOff = await trx.raw('START TRANSACTION;');
+                const insPayerQuery = `insert into dcvnps.payers
+                (payerId, emailAddress, surname, givenName, countryCode, createdDate, updatedUserId, updatedDate)
+                values(:payerId, :emailAddress, :surname, :givenName, :countryCode, :createdDate, :updatedUserId, :updatedDate)
+                on duplicate key update emailAddress=values(emailAddress), surname=values(surname), givenName=values(givenName), updatedUserId = values(updatedUserId), updatedDate = values(updatedDate)`;
+                // console.log('Start insert into table Payers');
+                return knex.raw(insPayerQuery,payer).transacting(trx)
+                    .then(() => {
+                        // console.log('Start insert into table Orders');
+                        return knex('orders').insert(order).transacting(trx)
+                        .then(() =>{
+                            // console.log('Start insert into table OrderItems');
+                            return knex('orderItems').insert(orderItems).transacting(trx)
+                            .then(() =>{
+                                // console.log('Start insert into table payments');
+                                return knex('payments').insert(payments).transacting(trx)    
+                            });
+                        });
+                    })
+                    .then(trx.commit)
+                    .catch( (sqlerr) =>{
+                        trx.rollback;
+                        console.error(`knex transaction failed ${sqlerr.message}`);
+                        throw sqlerr;
+                    });
+            })
+            .catch((err)=>{
+                if(err.message !== undefined){
+                    console.error(err.message);
+                    throw err;
+                }
+             });
+        },
         destroy() {
             knex.destroy();
         }
