@@ -1,11 +1,7 @@
 'use strict';
 (function () {
-    const path = require('path');
-    const envPath = path.normalize(__dirname + '/../../../.env');
-    require('dotenv').config({ path: envPath });
-    const config = JSON.parse(process.env.MYSQL2);
-    const knex = require('knex')(config);
-    // var Promise = require('bluebird');
+    const knexConfig = JSON.parse(process.env.MYSQL2);
+    const knex = require('knex')(knexConfig);
     const bcrypt = require('bcrypt');
 
     module.exports = {

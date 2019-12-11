@@ -1,4 +1,3 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
@@ -14,7 +13,7 @@ function isAdmin(req) {
     }
     return true;
 }
-function apiRouter(database) {
+function apiRouter(express, database) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
     // This code is good for application that require login from begining.
@@ -450,4 +449,4 @@ function apiRouter(database) {
     return router;
 }
 
-module.exports = apiRouter;
+module.exports =  apiRouter;

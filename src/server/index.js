@@ -1,30 +1,13 @@
-// const MongoClient = require('mongodb').MongoClient;
+const path = require('path');
+const envPath = path.normalize(__dirname + '/../../.env');
+require('dotenv').config({ path: envPath });
+
 const createExpressApp = require('./create-express-app');
 
-require('dotenv').config();
-const mySQLDb = require('./mysql-knex/database');
-
-/* 
-    Create a Node Application with MongoDB
-    Check if the connection ok then start
-    Application.
-*/
-// MongoClient.connect(process.env.DB_CONN, (err, db) =>{
-//     if(err) {
-//         console.error(err);
-//         process.exit(1);
-//     }
-//     console.log('connected to mongo db...');
-
-//     createExpressApp(db)
-//     .listen(3000, () => {
-//         database = db;
-//         console.log('Listening on port 3000.....');
-//     });
-// });
+const mySQLDb = require('./database');
 
 createExpressApp(mySQLDb)
-.listen(3000, () =>{
+.listen(process.env.PORT, () =>{
     database = mySQLDb;
-    console.log('Listening on port 3000....');
+    console.log(`Listening on port ${process.env.PORT}....`);
 });
