@@ -1,8 +1,10 @@
+const uuidv4 = require('uuid/v4');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const apiRouter = require('./api-router');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 function createExpressApp(database) {
     const app = express();
@@ -19,6 +21,7 @@ function createExpressApp(database) {
     app.use('/galleries', express.static(path.join(__dirname, 'galleries')));
     app.use('/images', express.static(path.join(__dirname, 'images')));
     app.use('/api',apiRouter(express, database));
+ 
     // This routing part is to let Angular handles the client side routing.
     app.use('*', (req, res) => {
         return res.sendFile(path.join(__dirname, 'public/index.html'));

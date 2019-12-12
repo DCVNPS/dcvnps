@@ -109,8 +109,8 @@ function apiRouter(express, database) {
         const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
-        const gUuid = await database.uuid();
-        const destFileName = `${gUuid.uuid}_${fileName}`;
+        const gUuid = uuidv4();
+        const destFileName = `${gUuid}_${fileName}`;
         const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
         // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
@@ -118,10 +118,10 @@ function apiRouter(express, database) {
                 console.log('photoupload-Move file', err.message)
                 return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            database.insertGalleryPhoto(gUuid.uuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
+            database.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
                     const photo = {
-                        photoId: gUuid.uuid,
+                        photoId: gUuid,
                         galleryId: galleryId,
                         gallery: upldGallery,
                         imgalt: fileName,
@@ -274,9 +274,9 @@ function apiRouter(express, database) {
 
     router.post('/announcements', async (req, res) => {
         try {
-            const ancmntuuid = await database.uuid();
+            // const ancmntuuid = uuidv4();
             let ancmnt = req.body;
-            ancmnt.announcementId = ancmntuuid.uuid;
+            ancmnt.announcementId = uuidv4();
             ancmnt.postedUserId = req.auth.userid;
             ancmnt.postedDate = new Date();
             ancmnt.updatedUserId = req.auth.userid;
@@ -345,8 +345,8 @@ function apiRouter(express, database) {
         const user = req.body;
         // console.log(user);
         try {
-            const userid = await database.uuid();
-            user.userId = userid.uuid;
+            // const userid = await database.uuid();
+            user.userId = uuidv4();
             user.password = `${bcrypt.hashSync(user.password, 10)}`
             user.createdUserId = auth.userid;
             user.createdDate = new Date();
