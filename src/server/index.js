@@ -8,6 +8,6 @@ const mySQLDb = require('./database');
 
 createExpressApp(mySQLDb)
 .listen(process.env.PORT, () =>{
-    database = mySQLDb;
+    // database = mySQLDb;
     console.log(`Listening on port ${process.env.PORT}....`);
 });

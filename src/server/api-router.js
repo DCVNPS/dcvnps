@@ -13,9 +13,12 @@ function isAdmin(req) {
     }
     return true;
 }
-function apiRouter(express, database) {
+function apiRouter(express, database, logger) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
+    const {log, logResponse, logLevel} = logger;
+
+    log.levels('dcvnpslog',logLevel.DEBUG);
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
@@ -34,50 +37,67 @@ function apiRouter(express, database) {
 
     router.use((err, req, res, next) => {
         if (err.name === 'UnauthorizedError') {
-            console.log(err);
             return res.status(401).json({ error: err.message });
         }
     });
 
+    router.use((req, res, next) => {
+        this.log = log.child({
+            id: req.id,
+            body: req.body
+        }, true);
+        this.log.debug({src: true, req: req},'request');
+        next();
+    });
+
+    router.use((req, res, next) => {
+        logResponse(req.id,res);
+        next();
+    });
+
     router.get('/uuid', (req, res) => {
         database.uuid().then(data => { return res.json(data) })
-            .catch(err => { return res.status(500).json({ error: err.message }); });
+            .catch(err => { 
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting uuid');
+                return res.status(500).json({ error: err.message }); 
+            });
     });
 
-    router.get('/contacts', (req, res) => {
-        database.getContacts()
-            .then((contacts) => { return res.json(contacts); })
-            .catch((err) => { return res.status(500).json({ error: err.message }); });
-    });
+    // router.get('/contacts', (req, res) => {
+    //     database.getContacts()
+    //         .then((contacts) => { return res.json(contacts); })
+    //         .catch((err) => { return res.status(500).json({ error: err.message }); });
+    // });
 
-    router.post('/contacts', (req, res) => {
-        const contact = req.body;
-        database.insertContacts(contact)
-            .then((row) => { return res.status(200).json(row); })
-            .catch((error) => { return res.status(500).json({ error: 'Error Inserting new record.' }); });
-    });
+    // router.post('/contacts', (req, res) => {
+    //     const contact = req.body;
+    //     database.insertContacts(contact)
+    //         .then((row) => { return res.status(200).json(row); })
+    //         .catch((error) => { return res.status(500).json({ error: 'Error Inserting new record.' }); });
+    // });
 
-    router.put('/contacts', (req, res) => {
-        const _contact = req.body;
-        if (_contact) {
-            _contact.updatedDate = new Date();
-            database.updateContact(_contact)
-                .then(() => { return res.status(200).json('Update Contact success.'); })
-                .catch((err) => { return res.status(500).json('Update Contact failed.'); });
-        } else {
-            return res.status(500).json('No contact to udpate.');
-        }
-    });
+    // router.put('/contacts', (req, res) => {
+    //     const _contact = req.body;
+    //     if (_contact) {
+    //         _contact.updatedDate = new Date();
+    //         database.updateContact(_contact)
+    //             .then(() => { return res.status(200).json('Update Contact success.'); })
+    //             .catch((err) => { return res.status(500).json('Update Contact failed.'); });
+    //     } else {
+    //         return res.status(500).json('No contact to udpate.');
+    //     }
+    // });
 
     router.get('/galleries/:galleryId?', (req, res) => {
-        // console.log(req.auth);
         const galleryId = req.params.galleryId || null;
         database.getGalleries(galleryId)
             .then((data) => {
                 return res.json(data);
             })
             .catch((err) => {
-                console.log(err)
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},`Error getting gallery ${galleryId}`);
                 return res.status(500);
             });
     });
@@ -90,7 +110,11 @@ function apiRouter(express, database) {
             gallery.updatedDate = new Date();
             database.insertGallery({ gallery })
                 .then(() => { return res.status(200).json('Gallery inserted'); })
-                .catch((err) => { return res.status(500).json('Geller insert failed.'); });
+                .catch((err) => { 
+                    log.levels('dcvnpslog',logLevel.ERROR)
+                    log.error({id: req.id, err: err},'Error inserting Galleries');
+                    return res.status(500).json('Geller insert failed.'); 
+                });
         } else {
             return res.status(500).json('No gallery to insert.');
         }
@@ -115,8 +139,10 @@ function apiRouter(express, database) {
         // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {
-                console.log('photoupload-Move file', err.message)
-                return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
+                // console.log('photoupload-Move file', err.message)
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error photoupload-Move files');
+               return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
             database.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
@@ -134,7 +160,9 @@ function apiRouter(express, database) {
                     return res.status(200).json(result);
                 })
                 .catch(err => {
-                    console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    // console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    log.levels('dcvnpslog',logLevel.ERROR)
+                    log.error({id: req.id, err: err},'Error Insertting GalleryPhotos');
                     fs.unlink(destFile);
                     return res.status(err.status).json(err.message);
                 });
@@ -144,11 +172,14 @@ function apiRouter(express, database) {
     // Get photo of a gallery by a galleryId
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
         const galleryId = req.params.galleryId;
-        database.getPhotoByGalleryId(galleryId)
+        // log.info({id:req.id, galleryId: galleryId},'request');
+         database.getPhotoByGalleryId(galleryId)
             .then((data) => {
                 return res.json(data);
             })
             .catch((err) => {
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'response');               
                 return res.status(500).json({ error: err.message });
             })
     });
@@ -156,17 +187,17 @@ function apiRouter(express, database) {
     // GET photo of gallery by gallery name.
     // Called by: GalleryPhotosResolve, EditGalleryResolve
     router.get('/galleryphotosbyname/:gallery/:year?/:author?', (req, res) => {
-        // console.log(`api-router.get ${req.url}`);
         const gallery = req.params.gallery;
         const year = req.params.year || null;
         const author = req.params.author || null;
+        // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
         database.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
-                // console.log(data);
-                // console.log(data[0].authorData);
                 return res.json(data);
             })
             .catch((err) => {
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'Error get gallery photos by name');
                 return res.status(500).json({ error: err.message });
             })
 
@@ -199,13 +230,19 @@ function apiRouter(express, database) {
                     return res.status(result.status).json({error:result.authmsg});
                 }
             })
-            .catch((err) => { return res.status(err.status).json({ error: err.message }); })
+            .catch((err) => { 
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error authenticate');
+               return res.status(err.status).json({ error: err.message }); 
+            })
     });
 
     router.get('/boardmembers', (req, res) => {
         fs.readFile(`${serverRoot}/data/director-board.json`, (err, data) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting board memebers');
                 return res.status(500).json(err);
             }
             const boardMembers = JSON.parse(data);
@@ -226,7 +263,9 @@ function apiRouter(express, database) {
             return res.status(200).json(programData);
             // console.log(programData);
         } catch (err) {
-            res.status(500).json(err);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting program');
+           res.status(500).json(err);
         }
     })
     router.delete('/deletephoto', (req, res) => {
@@ -251,9 +290,11 @@ function apiRouter(express, database) {
                 });
         }
         catch (error) {
-            console.log(error);
-            console.log(`Resote file ${filePath}`);
+            // console.log(error);
+            // console.log(`Resote file ${filePath}`);
             // Failure to remove photo entry in database, restore file.
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting photo');
             fs.writeFileSync(filePath, file);
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }
@@ -268,7 +309,9 @@ function apiRouter(express, database) {
                 return res.status(200).send(jData);
             })
             .catch(err => {
-                return res.status(500).json(err.message);
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting announcements');
+                   return res.status(500).json(err.message);
             })
     });
 
@@ -287,8 +330,10 @@ function apiRouter(express, database) {
             return res.status(200).json(jData[0]);
         }
         catch (error) {
-            console.log(error);
-            return res.status(500).json(error.message);
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error creating announcement');
+           return res.status(500).json(error.message);
         }
     });
 
@@ -302,8 +347,10 @@ function apiRouter(express, database) {
             return res.status(200).json(ancmnt);
         }
         catch (error) {
-            console.log(error);
-            return res.status(500).json(error.message);
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error updating announcement');
+           return res.status(500).json(error.message);
         }
     });
 
@@ -318,8 +365,10 @@ function apiRouter(express, database) {
                 return res.status(500).json('announceId is not null');
             }
         }
-        catch (error) {
-            return res.status(500).json(error.message);
+        catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
         }
     });
 
@@ -328,8 +377,10 @@ function apiRouter(express, database) {
             .then(data => {
                 return res.status(200).json(data);
             })
-            .catch(error => {
-                return res.status(500).json(error.message);
+            .catch(err => {
+             log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting roles');
+            return res.status(500).json(err.message);
             });
     });
 
@@ -355,8 +406,10 @@ function apiRouter(express, database) {
             console.log(user);
             const result = await database.createUser(user);
             return res.status(200).json(result);
-        } catch (error) {
-            return res.status(500).json(error.message);
+        } catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error creating user');
+           return res.status(500).json(err.message);
         }
     });
 
@@ -377,9 +430,11 @@ function apiRouter(express, database) {
             const chgPwdResult = await database.changePassword(userName, oldPassword, encryptedNewPassword);
             // console.log(chgPwdResult);
             return res.status(200).json(chgPwdResult);
-        } catch( error ){
-            console.log(error);
-            return res.status(500).json(error);
+        } catch( err ){
+            // console.log(err);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error changin user password');
+            return res.status(500).json(err);
         }
     });
 
@@ -442,6 +497,8 @@ function apiRouter(express, database) {
             return res.status(200).json(result);    
         }
         catch(err){
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error insert payal data');
             return res.status(500).send(err);
         };
     });
