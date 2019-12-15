@@ -18,7 +18,7 @@ function apiRouter(express, database, logger) {
     const router = express.Router();
     const {log, logResponse, logLevel} = logger;
 
-    log.levels('dcvnpslog',logLevel.DEBUG);
+    log.levels('dcvnpslog',logLevel.ERROR);
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
@@ -36,6 +36,9 @@ function apiRouter(express, database, logger) {
     );
 
     router.use((err, req, res, next) => {
+        this.log = log.child({src:true, id: req.id, err:err},true);
+        this.log.levels('dcvnpslog',logLevel.ERROR);
+        this.log.error('Error');
         if (err.name === 'UnauthorizedError') {
             return res.status(401).json({ error: err.message });
         }
