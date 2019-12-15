@@ -7,7 +7,7 @@ export class RegexService {
   constructor() { }
 
   fileExtension(fileName: string): string {
-    return fileName.match(/[a-z]{3}$/i)[0];
+    return fileName.match(/[a-z]{3,}$/i)[0];
   }
 
   regexpMatch(source: string, pattern: string): string {

@@ -1,4 +1,4 @@
-const database = require('./database');
+const database = require('../../src/server/mysql-knex/database');
 const jwt = require('jsonwebtoken');
 const user = { "userName": "siteuser", "password": "Testing1", "roleCode": "SITUSR", "updateUser": "testUpdate" };
 

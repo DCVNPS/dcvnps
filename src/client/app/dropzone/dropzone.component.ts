@@ -26,7 +26,7 @@ export class DropzoneComponent implements OnInit {
   public validImages: Array<ImageInfo> = [];
   public invalidImages: Array<ImageInfo> = [];
   public uploadResponse: Object = { status: '', message: '', filePath: '' };
-  public allowed_ext: Array<string> = ['png', 'jpg', 'bmp', 'ico'];
+  public allowed_ext: Array<string> = ['png', 'jpg', 'jpeg', 'bmp', 'ico'];
   public error: string;
   public showBackMenu: false;
   public galleries: Array<Gallery> = [];
@@ -107,7 +107,7 @@ export class DropzoneComponent implements OnInit {
         const fileNameParts = (files[i].name).split('_');
         const author = fileNameParts[0];
         fileNameParts.splice(0, 1);
-        console.log(fileNameParts);
+        // console.log(fileNameParts);
         const filename = fileNameParts.join('_');
         const curImage = this.validImages.find((img) => img.imgFile.name === files[i].name);
         if (!curImage) {
