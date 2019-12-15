@@ -50,7 +50,7 @@ export class DndDirective {
       for (let i = 0; i < files.length; i++) {
         const allowedExt = this.regexService.isAllowedExt(files[i].name, this.allowed_extensions);
         if (allowedExt) {
-          const validName = this.regexService.validFileName(files[i].name, '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$');
+          const validName = this.regexService.validFileName(files[i].name, '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3,}$');
           if (validName) {
             fileList.push(files[i]);
           } else {

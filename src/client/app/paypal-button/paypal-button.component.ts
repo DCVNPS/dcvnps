@@ -53,11 +53,16 @@ export class PaypalButtonComponent implements OnInit {
         return actions.restart();
       }
       // console.log(data);
-      // console.log( JSON.stringify(order));
+      console.log( JSON.stringify(order));
       this.paidFor = true;
       // Call server side to save the transaction contained in the order object.
-      const orderSaved = await this.api.post('paypaltransactioncomplete',order);
-      console.log(orderSaved);
+      this.api.post('paypaltransactioncomplete',order)
+      .subscribe(result =>{
+        console.log(result);
+      },
+      error =>{
+        console.log(error);
+      });
     },
     onCancel: (data) => {
       if (data) {

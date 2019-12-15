@@ -1,4 +1,3 @@
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const checkJwt = require('express-jwt');
@@ -14,9 +13,12 @@ function isAdmin(req) {
     }
     return true;
 }
-function apiRouter(database) {
+function apiRouter(express, database, logger) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
+    const {log, logResponse, logLevel} = logger;
+
+    log.levels('dcvnpslog',logLevel.ERROR);
     // This code is good for application that require login from begining.
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
@@ -34,51 +36,71 @@ function apiRouter(database) {
     );
 
     router.use((err, req, res, next) => {
+        this.log = log.child({src:true, id: req.id, err:err},true);
+        this.log.levels('dcvnpslog',logLevel.ERROR);
+        this.log.error('Error');
         if (err.name === 'UnauthorizedError') {
-            console.log(err);
             return res.status(401).json({ error: err.message });
         }
     });
 
+    router.use((req, res, next) => {
+        this.log = log.child({
+            id: req.id,
+            body: req.body
+        }, true);
+        this.log.debug({src: true, req: req},'request');
+        next();
+    });
+
+    router.use((req, res, next) => {
+        logResponse(req.id,res);
+        next();
+    });
+
     router.get('/uuid', (req, res) => {
         database.uuid().then(data => { return res.json(data) })
-            .catch(err => { return res.status(500).json({ error: err.message }); });
+            .catch(err => { 
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting uuid');
+                return res.status(500).json({ error: err.message }); 
+            });
     });
 
-    router.get('/contacts', (req, res) => {
-        database.getContacts()
-            .then((contacts) => { return res.json(contacts); })
-            .catch((err) => { return res.status(500).json({ error: err.message }); });
-    });
+    // router.get('/contacts', (req, res) => {
+    //     database.getContacts()
+    //         .then((contacts) => { return res.json(contacts); })
+    //         .catch((err) => { return res.status(500).json({ error: err.message }); });
+    // });
 
-    router.post('/contacts', (req, res) => {
-        const contact = req.body;
-        database.insertContacts(contact)
-            .then((row) => { return res.status(200).json(row); })
-            .catch((error) => { return res.status(500).json({ error: 'Error Inserting new record.' }); });
-    });
+    // router.post('/contacts', (req, res) => {
+    //     const contact = req.body;
+    //     database.insertContacts(contact)
+    //         .then((row) => { return res.status(200).json(row); })
+    //         .catch((error) => { return res.status(500).json({ error: 'Error Inserting new record.' }); });
+    // });
 
-    router.put('/contacts', (req, res) => {
-        const _contact = req.body;
-        if (_contact) {
-            _contact.updatedDate = new Date();
-            database.updateContact(_contact)
-                .then(() => { return res.status(200).json('Update Contact success.'); })
-                .catch((err) => { return res.status(500).json('Update Contact failed.'); });
-        } else {
-            return res.status(500).json('No contact to udpate.');
-        }
-    });
+    // router.put('/contacts', (req, res) => {
+    //     const _contact = req.body;
+    //     if (_contact) {
+    //         _contact.updatedDate = new Date();
+    //         database.updateContact(_contact)
+    //             .then(() => { return res.status(200).json('Update Contact success.'); })
+    //             .catch((err) => { return res.status(500).json('Update Contact failed.'); });
+    //     } else {
+    //         return res.status(500).json('No contact to udpate.');
+    //     }
+    // });
 
     router.get('/galleries/:galleryId?', (req, res) => {
-        // console.log(req.auth);
         const galleryId = req.params.galleryId || null;
         database.getGalleries(galleryId)
             .then((data) => {
                 return res.json(data);
             })
             .catch((err) => {
-                console.log(err)
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},`Error getting gallery ${galleryId}`);
                 return res.status(500);
             });
     });
@@ -91,7 +113,11 @@ function apiRouter(database) {
             gallery.updatedDate = new Date();
             database.insertGallery({ gallery })
                 .then(() => { return res.status(200).json('Gallery inserted'); })
-                .catch((err) => { return res.status(500).json('Geller insert failed.'); });
+                .catch((err) => { 
+                    log.levels('dcvnpslog',logLevel.ERROR)
+                    log.error({id: req.id, err: err},'Error inserting Galleries');
+                    return res.status(500).json('Geller insert failed.'); 
+                });
         } else {
             return res.status(500).json('No gallery to insert.');
         }
@@ -110,19 +136,21 @@ function apiRouter(database) {
         const updateUser = 'Temporary';
         const createdDate = new Date();
         const updatedDate = new Date();
-        const gUuid = await database.uuid();
-        const destFileName = `${gUuid.uuid}_${fileName}`;
+        const gUuid = uuidv4();
+        const destFileName = `${gUuid}_${fileName}`;
         const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
         // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {
-                console.log('photoupload-Move file', err.message)
-                return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
+                // console.log('photoupload-Move file', err.message)
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error photoupload-Move files');
+               return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            database.insertGalleryPhoto(gUuid.uuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
+            database.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author, upldYear, updateUser, createdDate, updatedDate)
                 .then(result => {
                     const photo = {
-                        photoId: gUuid.uuid,
+                        photoId: gUuid,
                         galleryId: galleryId,
                         gallery: upldGallery,
                         imgalt: fileName,
@@ -135,7 +163,9 @@ function apiRouter(database) {
                     return res.status(200).json(result);
                 })
                 .catch(err => {
-                    console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    // console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    log.levels('dcvnpslog',logLevel.ERROR)
+                    log.error({id: req.id, err: err},'Error Insertting GalleryPhotos');
                     fs.unlink(destFile);
                     return res.status(err.status).json(err.message);
                 });
@@ -145,11 +175,14 @@ function apiRouter(database) {
     // Get photo of a gallery by a galleryId
     router.get('/galleryphotosbyid/:galleryId', (req, res) => {
         const galleryId = req.params.galleryId;
-        database.getPhotoByGalleryId(galleryId)
+        // log.info({id:req.id, galleryId: galleryId},'request');
+         database.getPhotoByGalleryId(galleryId)
             .then((data) => {
                 return res.json(data);
             })
             .catch((err) => {
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'response');               
                 return res.status(500).json({ error: err.message });
             })
     });
@@ -157,17 +190,17 @@ function apiRouter(database) {
     // GET photo of gallery by gallery name.
     // Called by: GalleryPhotosResolve, EditGalleryResolve
     router.get('/galleryphotosbyname/:gallery/:year?/:author?', (req, res) => {
-        // console.log(`api-router.get ${req.url}`);
         const gallery = req.params.gallery;
         const year = req.params.year || null;
         const author = req.params.author || null;
+        // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
         database.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
-                // console.log(data);
-                // console.log(data[0].authorData);
                 return res.json(data);
             })
             .catch((err) => {
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'Error get gallery photos by name');
                 return res.status(500).json({ error: err.message });
             })
 
@@ -200,13 +233,19 @@ function apiRouter(database) {
                     return res.status(result.status).json({error:result.authmsg});
                 }
             })
-            .catch((err) => { return res.status(err.status).json({ error: err.message }); })
+            .catch((err) => { 
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error authenticate');
+               return res.status(err.status).json({ error: err.message }); 
+            })
     });
 
     router.get('/boardmembers', (req, res) => {
         fs.readFile(`${serverRoot}/data/director-board.json`, (err, data) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting board memebers');
                 return res.status(500).json(err);
             }
             const boardMembers = JSON.parse(data);
@@ -227,7 +266,9 @@ function apiRouter(database) {
             return res.status(200).json(programData);
             // console.log(programData);
         } catch (err) {
-            res.status(500).json(err);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting program');
+           res.status(500).json(err);
         }
     })
     router.delete('/deletephoto', (req, res) => {
@@ -252,9 +293,11 @@ function apiRouter(database) {
                 });
         }
         catch (error) {
-            console.log(error);
-            console.log(`Resote file ${filePath}`);
+            // console.log(error);
+            // console.log(`Resote file ${filePath}`);
             // Failure to remove photo entry in database, restore file.
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting photo');
             fs.writeFileSync(filePath, file);
             return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${error.message}`);
         }
@@ -269,15 +312,17 @@ function apiRouter(database) {
                 return res.status(200).send(jData);
             })
             .catch(err => {
-                return res.status(500).json(err.message);
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting announcements');
+                   return res.status(500).json(err.message);
             })
     });
 
     router.post('/announcements', async (req, res) => {
         try {
-            const ancmntuuid = await database.uuid();
+            // const ancmntuuid = uuidv4();
             let ancmnt = req.body;
-            ancmnt.announcementId = ancmntuuid.uuid;
+            ancmnt.announcementId = uuidv4();
             ancmnt.postedUserId = req.auth.userid;
             ancmnt.postedDate = new Date();
             ancmnt.updatedUserId = req.auth.userid;
@@ -288,8 +333,10 @@ function apiRouter(database) {
             return res.status(200).json(jData[0]);
         }
         catch (error) {
-            console.log(error);
-            return res.status(500).json(error.message);
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error creating announcement');
+           return res.status(500).json(error.message);
         }
     });
 
@@ -303,8 +350,10 @@ function apiRouter(database) {
             return res.status(200).json(ancmnt);
         }
         catch (error) {
-            console.log(error);
-            return res.status(500).json(error.message);
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error updating announcement');
+           return res.status(500).json(error.message);
         }
     });
 
@@ -319,8 +368,10 @@ function apiRouter(database) {
                 return res.status(500).json('announceId is not null');
             }
         }
-        catch (error) {
-            return res.status(500).json(error.message);
+        catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
         }
     });
 
@@ -329,8 +380,10 @@ function apiRouter(database) {
             .then(data => {
                 return res.status(200).json(data);
             })
-            .catch(error => {
-                return res.status(500).json(error.message);
+            .catch(err => {
+             log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting roles');
+            return res.status(500).json(err.message);
             });
     });
 
@@ -346,8 +399,8 @@ function apiRouter(database) {
         const user = req.body;
         // console.log(user);
         try {
-            const userid = await database.uuid();
-            user.userId = userid.uuid;
+            // const userid = await database.uuid();
+            user.userId = uuidv4();
             user.password = `${bcrypt.hashSync(user.password, 10)}`
             user.createdUserId = auth.userid;
             user.createdDate = new Date();
@@ -356,8 +409,10 @@ function apiRouter(database) {
             console.log(user);
             const result = await database.createUser(user);
             return res.status(200).json(result);
-        } catch (error) {
-            return res.status(500).json(error.message);
+        } catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error creating user');
+           return res.status(500).json(err.message);
         }
     });
 
@@ -378,32 +433,34 @@ function apiRouter(database) {
             const chgPwdResult = await database.changePassword(userName, oldPassword, encryptedNewPassword);
             // console.log(chgPwdResult);
             return res.status(200).json(chgPwdResult);
-        } catch( error ){
-            console.log(error);
-            return res.status(500).json(error);
+        } catch( err ){
+            // console.log(err);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error changin user password');
+            return res.status(500).json(err);
         }
     });
 
-    router.post('/paypaltransactioncomplete', (req, res) =>{
+    router.post('/paypaltransactioncomplete', async (req, res) =>{
         let orderItems = [];
         let payments = [];
         const paypalTran = req.body;
         const payer = {
             payerId: paypalTran.payer.payer_id,
             emailAddress: paypalTran.payer.email_address,
-            payerSurname: paypalTran.payer.name.surname,
-            payerGivenName: paypalTran.payer.name.given_name,
+            surname: paypalTran.payer.name.surname,
+            givenName: paypalTran.payer.name.given_name,
             countryCode: paypalTran.payer.address.country_code,
-            createDate: paypalTran.create_time,
-            updatedUserid: req.auth.userid,
-            updateDate: paypalTran.update_time
+            createdDate: new Date(paypalTran.create_time),
+            updatedUserId: req.auth.userid,
+            updatedDate: new Date(paypalTran.update_time)
         }
         const order = {
             orderId: paypalTran.id,
             payerId: paypalTran.payer.payer_id,
-            createDate: paypalTran.create_time,
-            updatedUserid: req.auth.userid,
-            updateDate: paypalTran.update_time           
+            createdDate: new Date(paypalTran.create_time),
+            updatedUserId: req.auth.userid,
+            updatedDate: new Date(paypalTran.update_time)
         }
         // setting up payees ,payments
         paypalTran.purchase_units.forEach(purchase => {
@@ -416,31 +473,40 @@ function apiRouter(database) {
                 description: purchase.description,
                 merchantId: purchase.payee.merchant_id,
                 merchantEmailAddress: purchase.payee.email_address,
-                createDate: paypalTran.create_time,
+                createdDate: new Date(paypalTran.create_time),
                 updatedUserId: req.auth.userid,
-                updateDate: paypalTran.update_time
+                updatedDate: new Date(paypalTran.update_time)
             }
             orderItems.push(orderItem);
             // payments setup
             purchase.payments.captures.forEach( capture => {
                 let payment = {
                     paymentId: capture.id,
-                    odrderId: paypalTran.id,
+                    orderId: paypalTran.id,
                     amount: capture.amount.value,
-                    currencyCode: capture.currency_code,
+                    currencyCode: capture.amount.currency_code,
                     paymentStatus: capture.status,
-                    createdDate: capture.create_time,
+                    createdDate: new Date(paypalTran.create_time),
                     updatedUserId: req.auth.userid,
-                    updatedDate: capture.update_time  
-                }
+                    updatedDate: new Date(paypalTran.update_time)
+                        }
                 payments.push(payment);
-            });          
+            });
         });
+        // console.log({"payer": payer,  "order": order, "orderItems": orderItems,"payments":payments});
         // call  database to save transaction data.
-        return res.status(200).json('paypal transaction completed.');
+        try{
+            const result = await database.processPayPal({"payer": payer,  "order": order, "orderItems": orderItems,"payments":payments});
+            return res.status(200).json(result);    
+        }
+        catch(err){
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error insert payal data');
+            return res.status(500).send(err);
+        };
     });
 
     return router;
 }
 
-module.exports = apiRouter;
+module.exports =  apiRouter;
