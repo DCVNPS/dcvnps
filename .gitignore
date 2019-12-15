@@ -7,7 +7,7 @@
 /src/server/public
 #imange directories
 /src/server/galleries/*
-
+/src/server/logs/*
 # env
 .env
 
