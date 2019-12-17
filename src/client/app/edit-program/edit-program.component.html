@@ -1,0 +1,41 @@
+<div class="ui grid" #program>
+  <div class="stretch row">
+    <div class="twelve wide column">
+      <div class="ui form">
+        <div class="field">
+          <h4 class="ui teal ribbon big label">Description</h4>
+          <textarea [(ngModel)]="description"></textarea>
+        </div>
+        <div class="field">
+            <h4 class="ui light blue ribbon big label">prerequisite</h4>
+            <textarea [(ngModel)]="prerequisite" rows="2"></textarea>
+          </div>
+          <div class="field">
+          <h4 class="ui violet ribbon big label">Curriculum</h4>
+          <app-text-editor [(textToEdit)]="curriculum" [controlHeight]="500"></app-text-editor>
+        </div>
+        <div class="field">
+          <h4  class="ui violet ribbon big label">Intructors</h4>
+          <app-text-editor [(textToEdit)]="instructors" [controlHeight]="200"></app-text-editor>
+        </div>
+      </div>
+      <h2>Review</h2>
+      <div class="ui basic segment">
+          <div class="ui teal ribbon big label">Description</div>
+          <div>{{description}}</div>
+        </div>
+        <div class="ui basic segment">
+            <div class="ui light blue ribbon big label">Prerequisite</div>
+            <div>{{prerequisite}}</div>
+          </div>
+          <div class="ui basic segment">
+        <div class="ui violet ribbon big label">Curriculum</div>
+        <div [innerHTML]="curriculum | safeHtml"></div>
+      </div>
+      <div class="ui basic segment">
+        <div class="ui violet ribbon big label">Instructors</div>
+        <div [innerHTML]="instructors | safeHtml"></div>
+      </div>
+    </div>
+  </div>
+</div>

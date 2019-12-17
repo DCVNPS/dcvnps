@@ -56,6 +56,8 @@ import { NewUserComponent } from './users/new-user/new-user.component';
 import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { EditProgramComponent } from './edit-program/edit-program.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { ChangePasswordComponent } from './users/change-password/change-password
     NewUserComponent,
     UserComponent,
     EditUserComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    EditProgramComponent,
+    TextEditorComponent
   ],
   imports: [
     BrowserModule,

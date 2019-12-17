@@ -161,38 +161,38 @@
                     throw err;
                 });
         },
-        getContacts() {
-            return knex('contacts')
-                .select()
-                .then((contacts) => { return contacts })
-                .catch((err) => { throw err })
-        },
-        async insertContacts(contact) {
-            //contact:{name, address, phone, photoUrl, updateUser, createdDate, updatedDate}
-            return knex('contacts').insert(contact)
-                .then(() => {
-                    knex('contacts')
-                        .select()
-                        .where({ name: contact.name, address: contact.address })
-                        .then((c) => { return c; })
-                        .catch((err) => { throw err; });
-                })
-                .catch((err_1) => { throw err_1; })
-        },
-        updateContact(contact) {
-            return knex('contacts')
-                .where({ contactId: contact.contactId })
-                .update({
-                    name: contact.name,
-                    address: contact.address,
-                    phone: contact.phone,
-                    photoUrl: contact.photoUrl,
-                    updateUser: contact.updateUser,
-                    updatedDate: contact.updatedDate
-                })
-                .then(() => { return { "updated": true }; })
-                .catch((err) => { throw err; })
-        },
+        // getContacts() {
+        //     return knex('contacts')
+        //         .select()
+        //         .then((contacts) => { return contacts })
+        //         .catch((err) => { throw err })
+        // },
+        // async insertContacts(contact) {
+        //     //contact:{name, address, phone, photoUrl, updateUser, createdDate, updatedDate}
+        //     return knex('contacts').insert(contact)
+        //         .then(() => {
+        //             knex('contacts')
+        //                 .select()
+        //                 .where({ name: contact.name, address: contact.address })
+        //                 .then((c) => { return c; })
+        //                 .catch((err) => { throw err; });
+        //         })
+        //         .catch((err_1) => { throw err_1; })
+        // },
+        // updateContact(contact) {
+        //     return knex('contacts')
+        //         .where({ contactId: contact.contactId })
+        //         .update({
+        //             name: contact.name,
+        //             address: contact.address,
+        //             phone: contact.phone,
+        //             photoUrl: contact.photoUrl,
+        //             updateUser: contact.updateUser,
+        //             updatedDate: contact.updatedDate
+        //         })
+        //         .then(() => { return { "updated": true }; })
+        //         .catch((err) => { throw err; })
+        // },
         insertGallery({
             gallery,
             profilePhoto,

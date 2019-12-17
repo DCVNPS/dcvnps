@@ -1,3 +1,4 @@
+// Template driven form binding
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Announcement } from '../../models/announcement-model';
 import { AnnouncementActions } from '../../models/dcnpsn-enum';

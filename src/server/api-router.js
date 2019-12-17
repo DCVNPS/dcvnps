@@ -44,14 +44,14 @@ function apiRouter(express, database, logger) {
         }
     });
 
-    router.use((req, res, next) => {
-        this.log = log.child({
-            id: req.id,
-            body: req.body
-        }, true);
-        this.log.debug({src: true, req: req},'request');
-        next();
-    });
+    // router.use((req, res, next) => {
+    //     this.log = log.child({
+    //         id: req.id,
+    //         body: req.body
+    //     }, true);
+    //     this.log.debug({src: true, req: req},'request');
+    //     next();
+    // });
 
     router.use((req, res, next) => {
         logResponse(req.id,res);
