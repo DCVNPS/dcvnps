@@ -1,0 +1,141 @@
+<div class="ui padded grid">
+  <div class="ui huge center aligned blue header">
+    VNPS Photography Programs
+  </div>
+  <p>
+    VNPS offers three photography courses: basic, intermediate, and advance photography. Its program lasts 9 months for
+    a total of 36 three hour sessions. The courses start in February, few weeks after the Vietnamese Tet (the Lunar New
+    Year) and end in Novemver, class session occurs on Sundays at the Willson Center, 6131 Willston Drive, Falls Church,
+    VA 22042.
+  </p>
+  <p>
+    Because each students has different backgrounds and experiences and are from all walks of life, each year the
+    program has been modified to suit individual needs but also fulfill the VNPS requirements for each level. The below
+    are approved programs for 2016.
+  </p>
+  <p>
+    To request information on the program and how to register for VNPS photography course, please send email to
+    info@dcvnps.org
+  </p>
+</div>
+<p></p>
+<div class="ui top  attached tabular menu">
+  <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showClass('level1');">
+    <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
+  </a>
+  <a class="item" #lvl2Anchor [class.active]="showLevel2" (click)="showClass('level2');">
+    <h3 class="ui brown header">Intermediate Photography (Level 2)</h3>
+  </a>
+  <a class="item" #lvl3Anchor [class.active]="showLevel3" (click)="showClass('level3');">
+    <div class="ui brown header">Advance Photography (Level 3)</div>
+  </a>
+</div>
+
+<div class="ui grid" style="padding: 0 20px 0 20px;">
+  <div class="stretched row">
+    <div class="twelve wide column">
+      <div class="ui basic segment" *ngIf="showLevel1">
+        <div class="ui teal ribbon big label">Course Description:</div>
+        <p></p>
+        <p>{{level1Data.description}}</p>
+        <div class="ui blue ribbon big label"> Prerequisite: </div>
+        <p></p>
+        <p> {{level1Data.prerequisite}}</p>
+        <div class="ui violet ribbon big label">
+          Curriculum:
+        </div>
+        <div class="ui list">
+          <div class="item" *ngFor="let c of level1Data.curriculums">
+            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
+            <ul *ngIf="c.subitems">
+              <li *ngFor="let item of c.subitems">{{item}}</li>
+            </ul>
+          </div>
+        </div>
+        <h3 class="ui brown ribbon big label">
+          Instructors:
+        </h3>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level1Data.instructors">
+            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="ui basic segment" *ngIf="showLevel2">
+        <div class="ui teal ribbon big label">Course Description:</div>
+        <p></p>
+        <p>
+          {{level2Data.description}}
+        </p>
+        <div class="ui blue ribbon big label">
+          Prerequisite:
+        </div>
+        <p></p>
+        <p>Completion of Level 1: Basic Photography, or pass and evaluation test</p>
+        <div class="ui violet ribbon big label">
+          Curriculums:
+        </div>
+        <p></p>
+        <div class="ui list">
+          <div class="item" *ngFor="let c of level2Data.curriculums">
+            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
+            <ul *ngIf="c.subitems">
+              <li *ngFor="let item of c.subitems">{{item}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui brown ribbon big label">
+          Instructors:
+        </div>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level2Data.instructors">
+            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="ui basic segment" *ngIf="showLevel3">
+        <div class="ui teal ribbon big label">Course Description:</div>
+        <p></p>
+        <p>{{level3Data.description}}</p>
+        <div class="ui blue ribbon big label">
+          Prerequisite:
+        </div>
+        <p></p>
+        <p>{{level3Data.prerequisite}}</p>
+        <div class="ui violet ribbon big label">
+          Curriculum:
+        </div>
+        <div class="ui list">
+          <div class="item" *ngFor="let c of level3Data.curriculums">
+            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
+            <ul *ngIf="c.subitems">
+              <li *ngFor="let item of c.subitems">{{item}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ui brown ribbon big label">
+          Instructors:
+        </div>
+        <div class="ui list">
+          <div class="item" *ngFor="let instr of level3Data.instructors">
+            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="four wide column">
+      <div class="ui basic segment">
+        <div class="ui card">
+          <div class="content">
+            <h3 class="header">Class Enrollment Payment</h3>
+            <h5 class="description">Enrollment Fee: {{classFee | currency}}</h5>
+            <div class="meta">There is a 5% transaction fee applied</div>
+          </div>
+          <div class="extra content">
+            <app-paypal-button [purchaseAmount]="classFee" [purchaseDescription]="paypalDesc"></app-paypal-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

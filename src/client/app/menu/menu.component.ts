@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
-  public mPrograms: Array<any>;
+  public mClasses: Array<any>;
   public hidden = false;
   constructor(
     private auth: AuthService,
@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
     private router: Router
     ) {
     this.mGalleries = [];
-    this.mPrograms = [
+    this.mClasses = [
       {level: 'level1', ariatext: 'Basic Photography'},
       {level: 'level2', ariatext: 'Mid-Level Photography'},
       {level: 'level3', ariatext: 'Advance Photography'}

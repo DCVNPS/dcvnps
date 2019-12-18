@@ -24,7 +24,7 @@ export class TextEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-
+    this.textToEditChange.emit(this.content);
   }
   onSave(){
     this.textToEditChange.emit(this.content);

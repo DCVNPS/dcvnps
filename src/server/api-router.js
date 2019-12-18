@@ -53,10 +53,10 @@ function apiRouter(express, database, logger) {
     //     next();
     // });
 
-    router.use((req, res, next) => {
-        logResponse(req.id,res);
-        next();
-    });
+    // router.use((req, res, next) => {
+    //     logResponse(req.id,res);
+    //     next();
+    // });
 
     router.get('/uuid', (req, res) => {
         database.uuid().then(data => { return res.json(data) })
@@ -264,6 +264,23 @@ function apiRouter(express, database, logger) {
             rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
             programData.push(JSON.parse(rawData));
             return res.status(200).json(programData);
+            // console.log(programData);
+        } catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting program');
+           res.status(500).json(err);
+        }
+    })
+    router.get('/photoclasses', (req, res) => {
+        let classData = [];
+        try {
+            let rawData = fs.readFileSync(path.join(serverRoot, '/data/level1.json'));
+            classData.push(JSON.parse(rawData));
+            rawData = fs.readFileSync(path.join(serverRoot, '/data/level2.json'));
+            classData.push(JSON.parse(rawData));
+            rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
+            classData.push(JSON.parse(rawData));
+            return res.status(200).json(classData);
             // console.log(programData);
         } catch (err) {
             log.levels('dcvnpslog',logLevel.ERROR)

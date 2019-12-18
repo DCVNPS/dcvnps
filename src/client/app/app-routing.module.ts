@@ -24,6 +24,8 @@ import { RoleResolve } from './resolvers/role-resolve';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { UsersResolve } from './resolvers/users-resolve';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { ClassesResolve } from './resolvers/classes-resolve';
 
 const routes: Routes = [
   {
@@ -116,6 +118,13 @@ const routes: Routes = [
     component: ProgramsComponent,
     resolve: {
       programs: ProgramsResolve
+    }
+  },
+  {
+    path: 'photoclasses/:level',
+    component: PhotoClassesComponent,
+    resolve: {
+      photoclasses: ClassesResolve
     }
   },
   {

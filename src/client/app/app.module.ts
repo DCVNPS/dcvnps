@@ -58,6 +58,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     EditUserComponent,
     ChangePasswordComponent,
     EditProgramComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    PhotoClassesComponent
   ],
   imports: [
     BrowserModule,

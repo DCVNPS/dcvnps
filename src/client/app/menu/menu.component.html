@@ -10,13 +10,13 @@
   </a>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['programs','level1']" aria-label="All Programs">
+      <a class="item" [routerLink]="['photoclasses','level1']" aria-label="All Classes">
         <i class="small book icon"></i>
-        <div class="text">Programs</div>
+        <div class="text">Photography Classes</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <a class="item" *ngFor="let p of mPrograms" [routerLink]="['programs',p.level]">{{p.ariatext}}</a>
+        <a class="item" *ngFor="let c of mClasses" [routerLink]="['photoclasses',c.level]">{{c.ariatext}}</a>
       </div>
     </div>
   </div>

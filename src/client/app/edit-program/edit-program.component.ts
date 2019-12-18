@@ -42,5 +42,7 @@ export class EditProgramComponent implements OnInit {
     })
   }
 
-  onSubmit(){}
+  onSave(){
+    
+  }
 }
