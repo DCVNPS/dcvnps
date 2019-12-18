@@ -56,7 +56,7 @@ import { NewUserComponent } from './users/new-user/new-user.component';
 import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { EditProgramComponent } from './edit-program/edit-program.component';
+import { EditClassComponent } from './edit-class/edit-class.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 
@@ -103,7 +103,7 @@ import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
     UserComponent,
     EditUserComponent,
     ChangePasswordComponent,
-    EditProgramComponent,
+    EditClassComponent,
     TextEditorComponent,
     PhotoClassesComponent
   ],

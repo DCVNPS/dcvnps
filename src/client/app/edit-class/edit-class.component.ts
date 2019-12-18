@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-edit-program',
-  templateUrl: './edit-program.component.html',
-  styleUrls: ['./edit-program.component.scss']
+  selector: 'app-edit-class',
+  templateUrl: './edit-class.component.html',
+  styleUrls: ['./edit-class.component.scss']
 })
-export class EditProgramComponent implements OnInit {
-  private programForm: FormGroup;
-  private description: string;
-  private prerequisite: string;
+export class EditClassComponent implements OnInit {
+  private classForm: FormGroup;
+  private photoClassId: string ='19f27cc9-2153-11ea-812e-08002764505e';
+  private description: string = 'Class description';
+  private prerequisite: string = 'None';
   private curriculum = `<p><span style="font-size: 14pt;"><strong>Introduction to Digital Single Lens Reflex (DSLR ) cameras</strong></span></p>
 <p><span style="font-size: 14pt;"><strong>Triangle Exposure:</strong></span></p>
 <ul>
@@ -28,21 +29,25 @@ export class EditProgramComponent implements OnInit {
 <p><strong><span style="font-size: 14pt;">Introduction to image editing using Photoshop</span></strong></p>`;
   private instructors: string = '<p><strong><span style="font-size: 14pt;">Minh Tan Thai</span></strong></p>';
   constructor( private formBuilder: FormBuilder) {
-    this.initForm();
+    // this.initForm();
   }
 
   ngOnInit() {
   }
 
-  initForm(){
-    this.programForm = this.formBuilder.group({
-      description: new FormControl(null),
-      curriculum: new FormControl(null),
-      instructors: new FormControl(null)
-    })
-  }
+  // initForm(){
+  //   this.classForm = this.formBuilder.group({
+  //     description: new FormControl(null),
+  //     curriculum: new FormControl(null),
+  //     instructors: new FormControl(null)
+  //   })
+  // }
 
   onSave(){
-    
+    const formData = new FormData();
+    formData.append('description', this.description);
+  }
+  onCancel(){
+
   }
 }

@@ -11,7 +11,7 @@ export class ManageSiteComponent implements OnInit {
 
   public isPhotoUpload: boolean;
   public isGallery: boolean;
-  public isPrograms: boolean;
+  public isClasses: boolean;
   public isAnnouncements: boolean;
   private galleries: Array<Gallery> = [];
   constructor(private route: ActivatedRoute) { }
@@ -24,26 +24,26 @@ export class ManageSiteComponent implements OnInit {
   onUploadClick() {
     this.isPhotoUpload = true;
     this.isGallery = false;
-    this.isPrograms = false;
+    this.isClasses = false;
     this.isAnnouncements = false;
   }
   onGalleryClick() {
     this.isPhotoUpload = false;
     this.isGallery = true;
-    this.isPrograms = false;
+    this.isClasses = false;
     this.isAnnouncements = false;
   }
   onAnnouncements() {
     this.isPhotoUpload = false;
     this.isGallery = false;
-    this.isPrograms = false;
+    this.isClasses = false;
     this.isAnnouncements = true;
   }
 
-  onPrograms() {
+  onClasses() {
     this.isPhotoUpload = false;
     this.isGallery = false;
-    this.isPrograms = true;
+    this.isClasses = true;
     this.isAnnouncements = false;
   }
 

@@ -7,8 +7,8 @@
       <a class="item" (click)="onGalleryClick();" [class.active]="isGallery" >
         Gallery Profile
       </a>
-      <a class="item" (click)="onPrograms();" [class.active]="isPrograms">
-        Programs
+      <a class="item" (click)="onClasses();" [class.active]="isClasses">
+        Photo Classes
       </a>
       <a class="item" (click)="onAnnouncements();" [class.active]="isAnnouncements">
         Announcements
@@ -19,6 +19,6 @@
       <app-dropzone  *ngIf="isPhotoUpload"></app-dropzone>
       <app-edit-gallery-profiles *ngIf="isGallery" [galleries]="galleries"></app-edit-gallery-profiles>
       <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
-      <app-edit-program *ngIf="isPrograms"></app-edit-program>
+      <app-edit-class *ngIf="isClasses"></app-edit-class>
   </div>
 </div>
