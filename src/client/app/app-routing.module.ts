@@ -114,18 +114,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'programs/:level',
-    component: ProgramsComponent,
-    resolve: {
-      programs: ProgramsResolve
-    }
-  },
-  {
     path: 'photoclasses/:level',
     component: PhotoClassesComponent,
     resolve: {
-      photoclasses: ClassesResolve
-    }
+      classesData: ClassesResolve
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'announcements',

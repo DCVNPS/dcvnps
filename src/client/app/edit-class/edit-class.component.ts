@@ -7,11 +7,12 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
   styleUrls: ['./edit-class.component.scss']
 })
 export class EditClassComponent implements OnInit {
-  private classForm: FormGroup;
-  private photoClassId: string ='19f27cc9-2153-11ea-812e-08002764505e';
-  private description: string = 'Class description';
-  private prerequisite: string = 'None';
-  private curriculum = `<p><span style="font-size: 14pt;"><strong>Introduction to Digital Single Lens Reflex (DSLR ) cameras</strong></span></p>
+  private class: any;
+  public classForm: FormGroup;
+  public photoClassId: string ='19f27cc9-2153-11ea-812e-08002764505e';
+  public description: string = 'Class description';
+  public prerequisite: string = 'None';
+  public curriculum = `<p><span style="font-size: 14pt;"><strong>Introduction to Digital Single Lens Reflex (DSLR ) cameras</strong></span></p>
 <p><span style="font-size: 14pt;"><strong>Triangle Exposure:</strong></span></p>
 <ul>
 <li><span style="font-size: 14pt;">Aperture</span></li>
@@ -27,21 +28,13 @@ export class EditClassComponent implements OnInit {
 <p><strong><span style="font-size: 14pt;">Montion in Photography</span></strong></p>
 <p><strong><span style="font-size: 14pt;">Introduction to RAW image and modern digital darkroom.</span></strong></p>
 <p><strong><span style="font-size: 14pt;">Introduction to image editing using Photoshop</span></strong></p>`;
-  private instructors: string = '<p><strong><span style="font-size: 14pt;">Minh Tan Thai</span></strong></p>';
+  public instructors: string = '<p><strong><span style="font-size: 14pt;">Minh Tan Thai</span></strong></p>';
   constructor( private formBuilder: FormBuilder) {
     // this.initForm();
   }
 
   ngOnInit() {
   }
-
-  // initForm(){
-  //   this.classForm = this.formBuilder.group({
-  //     description: new FormControl(null),
-  //     curriculum: new FormControl(null),
-  //     instructors: new FormControl(null)
-  //   })
-  // }
 
   onSave(){
     const formData = new FormData();

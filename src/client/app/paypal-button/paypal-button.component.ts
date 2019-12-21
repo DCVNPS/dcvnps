@@ -79,7 +79,7 @@ export class PaypalButtonComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(this.purchaseDescription);
+    // console.log(this.purchaseDescription);
    // This way is used in the react development.
     if (!this.addScript) {
       this.addPaypalScript().then(() => {

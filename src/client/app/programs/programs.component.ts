@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./programs.component.scss']
 })
 export class ProgramsComponent implements OnInit {
-  private programLevel = 'level1';
+  public programLevel = 'level1';
   constructor(private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       // console.log(params);

@@ -523,7 +523,7 @@
                     throw err;
                 })
         },
-        createAnnouncement(ancmnt) {
+        createAnnouncements(ancmnt) {
             // console.log(ancmnt);
             return knex('announcements')
                 .insert({
@@ -549,7 +549,7 @@
                     throw err;
                 })
         },
-        updateAnnouncement(ancmnt) {
+        updateAnnouncements(ancmnt) {
             // console.log(`update announcement ID: ${ancmnt.announcementId}`);
             return knex('announcements')
                 .update({
@@ -588,8 +588,10 @@
                     announcementId: 'a.announcementId',
                     title: 'a.title',
                     content: 'a.content',
+                    postedUserId: 'a.postedUserId',
                     postedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                     postedDate: 'a.createdDate',
+                    updatedUserId: 'a.updatedUserId',
                     updatedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                     updatedDate: 'a.updatedDate'
                 })
@@ -605,6 +607,102 @@
         deleteAnnouncements(ancmntId) {
             return knex('announcements')
                 .whereRaw('announcementId = ?', [ancmntId])
+                .delete()
+                .then(roweffected => {
+                    return roweffected
+                })
+                .catch(err => {
+                    throw err;
+                });
+        },
+        getRoles() {
+            return knex('roles')
+                .select({ roleCode: 'roleCode', roleDescription: 'roleDescription' })
+                .then(data => { return data; })
+                .catch(err => {
+                    throw err;
+                });
+        },
+        createPhotoClasses(photoClass) {
+            // console.log(ancmnt);
+            return knex('photoclasses')
+                .insert({
+                    photoClassId: photoClass.photoClassId,
+                    classLevel: photoClass.classLevelDesc,
+                    classLevelDesc: photoClass.classLevelDesc,
+                    classDescription: photoClass.classDescription,
+                    prerequisite: photoClass.prerequisite,
+                    curriculum: photoClass.curriculum,
+                    instructors: photoClass.instructors,
+                    postedUserId: photoClass.postedUserId,
+                    createdDate: photoClass.postedDate,
+                    updatedUserId: photoClass.updatedUserId,
+                    updatedDate: photoClass.updatedDate
+                })
+                .then(result => {
+                    return this.readAnnouncements(photoClass.photoClassId)
+                        .then(rec => {
+                            // console.log(rec);
+                            return rec;
+                        })
+                        .catch(exp => {
+                            throw exp;
+                        });
+                })
+                .catch(err => {
+                    throw err;
+                })
+        },
+        updatePhotoClasses(photoClass) {
+            // console.log(`update announcement ID: ${ancmnt.announcementId}`);
+            return knex('photoclasses')
+                .update({
+                    classLevel: photoClass.classLevel,
+                    classLevelDesc: photoClass.classLevelDesc,
+                    classDescription: photoClass.classDescription,
+                    prerequisite: photoClass.prerequisite,
+                    curriculum: photoClass.curriculum,
+                    instructors: photoClass.instructors,
+                    updatedUserId: photoClass.updatedUserId,
+                    updatedDate: new Date(photoClass.updatedDate)
+                })
+                .where({ photoClassId: photoClass.photoClassId })
+                .then(result => {
+                    return result;
+                })
+                .catch(err => {
+                    throw err;
+                })
+        },
+        readPhotoClasses(classLevel) {
+            return knex({ a: 'photoclasses' })
+                .select({
+                    photoClassId: 'a.photoClassId',
+                    classLevel: 'a.classLevel',
+                    classLevelDesc: 'a.classLevelDesc',
+                    classDescription: 'a.classDescription',
+                    prerequisite:'a.prerequisite',
+                    curriculum:'a.curriculum',
+                    instructors:'a.instructors',
+                    postedUserId: 'a.postedUserId',
+                    postedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                    postedDate: 'a.createdDate',
+                    updatedUserId: 'a.updatedUserId',
+                    updatedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                    updatedDate: 'a.updatedDate'
+                })
+                .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classLevel])
+                .then(data => {
+                    return data;
+                })
+                .catch(err => {
+                    console.log(err);
+                    throw err;
+                });
+        },
+        deletePhotoClasses(classId) {
+            return knex('photoclasses')
+                .whereRaw('photoClassId = ?', [classId])
                 .delete()
                 .then(roweffected => {
                     return roweffected

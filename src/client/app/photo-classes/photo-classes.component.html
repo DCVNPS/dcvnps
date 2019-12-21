@@ -20,13 +20,13 @@
 </div>
 <p></p>
 <div class="ui top  attached tabular menu">
-  <a class="item" #lvl1Anchor [class.active]="showLevel1" (click)="showClass('level1');">
+  <a class="item" #lvl1Anchor [class.active]="showLevel1" [routerLink]="['../','level1']">
     <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
   </a>
-  <a class="item" #lvl2Anchor [class.active]="showLevel2" (click)="showClass('level2');">
+  <a class="item" #lvl2Anchor [class.active]="showLevel2"  [routerLink]="['../','level2']">
     <h3 class="ui brown header">Intermediate Photography (Level 2)</h3>
   </a>
-  <a class="item" #lvl3Anchor [class.active]="showLevel3" (click)="showClass('level3');">
+  <a class="item" #lvl3Anchor [class.active]="showLevel3"  [routerLink]="['../','level3']">
     <div class="ui brown header">Advance Photography (Level 3)</div>
   </a>
 </div>
@@ -34,92 +34,22 @@
 <div class="ui grid" style="padding: 0 20px 0 20px;">
   <div class="stretched row">
     <div class="twelve wide column">
-      <div class="ui basic segment" *ngIf="showLevel1">
-        <div class="ui teal ribbon big label">Course Description:</div>
-        <p></p>
-        <p>{{level1Data.description}}</p>
-        <div class="ui blue ribbon big label"> Prerequisite: </div>
-        <p></p>
-        <p> {{level1Data.prerequisite}}</p>
-        <div class="ui violet ribbon big label">
-          Curriculum:
+      <div class="ui basic segment">
+        <div class="ui basic segment">
+          <div class="ui teal ribbon big label">Description</div>
+          <div>{{curClass.classDescription}}</div>
         </div>
-        <div class="ui list">
-          <div class="item" *ngFor="let c of level1Data.curriculums">
-            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
-            <ul *ngIf="c.subitems">
-              <li *ngFor="let item of c.subitems">{{item}}</li>
-            </ul>
-          </div>
+        <div class="ui basic segment">
+          <div class="ui light blue ribbon big label">Prerequisite</div>
+          <div>{{curClass.prerequisite}}</div>
         </div>
-        <h3 class="ui brown ribbon big label">
-          Instructors:
-        </h3>
-        <div class="ui list">
-          <div class="item" *ngFor="let instr of level1Data.instructors">
-            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
-          </div>
+        <div class="ui basic segment">
+          <div class="ui violet ribbon big label">Curriculum</div>
+          <div [innerHTML]="curClass.curriculum | safeHtml"></div>
         </div>
-      </div>
-      <div class="ui basic segment" *ngIf="showLevel2">
-        <div class="ui teal ribbon big label">Course Description:</div>
-        <p></p>
-        <p>
-          {{level2Data.description}}
-        </p>
-        <div class="ui blue ribbon big label">
-          Prerequisite:
-        </div>
-        <p></p>
-        <p>Completion of Level 1: Basic Photography, or pass and evaluation test</p>
-        <div class="ui violet ribbon big label">
-          Curriculums:
-        </div>
-        <p></p>
-        <div class="ui list">
-          <div class="item" *ngFor="let c of level2Data.curriculums">
-            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
-            <ul *ngIf="c.subitems">
-              <li *ngFor="let item of c.subitems">{{item}}</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ui brown ribbon big label">
-          Instructors:
-        </div>
-        <div class="ui list">
-          <div class="item" *ngFor="let instr of level2Data.instructors">
-            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
-          </div>
-        </div>
-      </div>
-      <div class="ui basic segment" *ngIf="showLevel3">
-        <div class="ui teal ribbon big label">Course Description:</div>
-        <p></p>
-        <p>{{level3Data.description}}</p>
-        <div class="ui blue ribbon big label">
-          Prerequisite:
-        </div>
-        <p></p>
-        <p>{{level3Data.prerequisite}}</p>
-        <div class="ui violet ribbon big label">
-          Curriculum:
-        </div>
-        <div class="ui list">
-          <div class="item" *ngFor="let c of level3Data.curriculums">
-            <div class="header"><i class="right triangle angle icon"></i>{{c.item}}</div>
-            <ul *ngIf="c.subitems">
-              <li *ngFor="let item of c.subitems">{{item}}</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ui brown ribbon big label">
-          Instructors:
-        </div>
-        <div class="ui list">
-          <div class="item" *ngFor="let instr of level3Data.instructors">
-            <div class="header"><i class="right triangle icon"></i>{{instr}}</div>
-          </div>
+        <div class="ui basic segment">
+          <div class="ui violet ribbon big label">Instructors</div>
+          <div [innerHTML]="curClass.instructors | safeHtml"></div>
         </div>
       </div>
     </div>

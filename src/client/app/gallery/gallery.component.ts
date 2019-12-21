@@ -19,10 +19,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
   photos: Array<Photo>;
   showDialog = false;
   public isAdmin: boolean;
-  public editUrl: string;
-  private galleryData: Array<YearData> = [];
+  private editUrl: string;
+  public galleryData: Array<YearData> = [];
   public authPhotos: Array<AuthorData> = [];
-  public destroyed = new Subject<any>();
+  private destroyed = new Subject<any>();
   /******************************************************************
    *  @route: ActivatedRoute is used to retrieve resolve data
    *  @router: Router is used to retrigger navigation on the same Url

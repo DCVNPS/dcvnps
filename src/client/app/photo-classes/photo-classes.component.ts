@@ -1,78 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
 import { paypalDescription } from '../models/paypal.descriptiont';
+import { PhotoClass } from '../models/photo-class';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-photo-classes',
   templateUrl: './photo-classes.component.html',
   styleUrls: ['./photo-classes.component.scss']
 })
-export class PhotoClassesComponent implements OnInit {
+export class PhotoClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
   public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
-  public showLevel1: boolean;
-  public showLevel2: boolean;
-  public showLevel3: boolean;
-  public level1Data: any;
-  public level2Data: any;
-  public level3Data: any;
+  private data: Array<PhotoClass> = [];
+  public curClass: PhotoClass;
+  public showLevel1: boolean = false;
+  public showLevel2: boolean = false;
+  public showLevel3: boolean = false;
+  private destroyed = new Subject<any>();
 
-  constructor(private route: ActivatedRoute) { 
-    this.showLevel1 = true;
-    this.showLevel2 = false;
-    this.showLevel3 = false;
-    this.route.params.subscribe(params => {
-      // console.log(params);
-      // default the programs to Level1 program
-      this.classLevel = params['level'] || 'level1';
-      this.showClass(this.classLevel);
-    });
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private api: ApiService) {
+      this.initializeData();
   }
 
   ngOnInit() {
-    const data = this.route.snapshot.data['photoclasses'];
-    this.level1Data = data.find(lvl => lvl.title === 'level 1');
-    this.level2Data = data.find(lvl => lvl.title === 'level 2');
-    this.level3Data = data.find(lvl => lvl.title === 'level 3');
-    // console.log(this.level1Data);
-    // console.log(this.level2Data);
-    // console.log(this.level3Data);
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd),
+      takeUntil(this.destroyed)
+    ).subscribe(() => {
+      this.initializeData();
+    });
   }
-  showClass(level: string) {
-    switch (level) {
-      case 'level1': {
-        this.showLevel1Class();
-        break;
-      }
-      case 'level2': {
-        this.showLevel2Class();
-        break;
-      }
-      case 'level3': {
-        this.showLevel3Class();
-        break;
-      }
-      default: {
-        this.showLevel1Class();
-        break;
-      }
-    }
+
+  ngOnDestroy() {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
-  showLevel1Class() {
-    this.showLevel1 = true;
-    this.showLevel2 = false;
-    this.showLevel3 = false;
-  }
-  showLevel2Class() {
-    this.showLevel1 = false;
-    this.showLevel2 = true;
-    this.showLevel3 = false;
-  }
-  showLevel3Class() {
-    this.showLevel1 = false;
-    this.showLevel2 = false;
-    this.showLevel3 = true;
+
+  initializeData() {
+    this.data = this.route.snapshot.data.classesData;
+    this.curClass = this.data[0];
+    // console.log(this.curClass);
+    this.showLevel1 = this.curClass.classLevel === 'level1';
+    this.showLevel2 = this.curClass.classLevel === 'level2';
+    this.showLevel3 = this.curClass.classLevel === 'level3';
   }
 
 }

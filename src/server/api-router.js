@@ -270,24 +270,8 @@ function apiRouter(express, database, logger) {
             log.error({id: req.id, err: err},'Error getting program');
            res.status(500).json(err);
         }
-    })
-    router.get('/photoclasses', (req, res) => {
-        let classData = [];
-        try {
-            let rawData = fs.readFileSync(path.join(serverRoot, '/data/level1.json'));
-            classData.push(JSON.parse(rawData));
-            rawData = fs.readFileSync(path.join(serverRoot, '/data/level2.json'));
-            classData.push(JSON.parse(rawData));
-            rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
-            classData.push(JSON.parse(rawData));
-            return res.status(200).json(classData);
-            // console.log(programData);
-        } catch (err) {
-            log.levels('dcvnpslog',logLevel.ERROR)
-            log.error({id: req.id, err: err},'Error getting program');
-           res.status(500).json(err);
-        }
-    })
+    });
+
     router.delete('/deletephoto', (req, res) => {
         const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
         // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
@@ -344,7 +328,7 @@ function apiRouter(express, database, logger) {
             ancmnt.postedDate = new Date();
             ancmnt.updatedUserId = req.auth.userid;
             ancmnt.updatedDate = new Date();
-            const result = await database.createAnnouncement(ancmnt);
+            const result = await database.createAnnouncements(ancmnt);
             const jData = JSON.parse(result);
             // console.log(jData);
             return res.status(200).json(jData[0]);
@@ -363,7 +347,7 @@ function apiRouter(express, database, logger) {
             ancmnt.updatedUserId = req.auth.userid;
             ancmnt.updatedDate = new Date();
             // console.log(ancmnt);
-            const result = await database.updateAnnouncement(ancmnt);
+            const result = await database.updateAnnouncements(ancmnt);
             return res.status(200).json(ancmnt);
         }
         catch (error) {
@@ -383,6 +367,93 @@ function apiRouter(express, database, logger) {
                 return res.status(200).json(`${result} row(s) deleted.`);
             } else {
                 return res.status(500).json('announceId is not null');
+            }
+        }
+        catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
+        }
+    });
+    // router.get('/photoclasses', (req, res) => {
+    //     let classData = [];
+    //     try {
+    //         let rawData = fs.readFileSync(path.join(serverRoot, '/data/level1.json'));
+    //         classData.push(JSON.parse(rawData));
+    //         rawData = fs.readFileSync(path.join(serverRoot, '/data/level2.json'));
+    //         classData.push(JSON.parse(rawData));
+    //         rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
+    //         classData.push(JSON.parse(rawData));
+    //         return res.status(200).json(classData);
+    //         // console.log(programData);
+    //     } catch (err) {
+    //         log.levels('dcvnpslog',logLevel.ERROR)
+    //         log.error({id: req.id, err: err},'Error getting program');
+    //        res.status(500).json(err);
+    //     }
+    // })
+    router.get('/photoclasses/:classLevel?', (req, res) => {
+        const classLevel = req.params.classLevel || null;
+        // console.log(`classs level ${classLevel? classLevel: 'NULL'}`);
+        return database.readPhotoClasses(classLevel)
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},'Error getting class level');
+                   return res.status(500).json(err.message);
+            })
+    });
+
+    router.post('/photoclasses', async (req, res) => {
+        try {
+            // const ancmntuuid = uuidv4();photoclass
+            let photoclass = req.body;
+            photoclass.photoClassId = uuidv4();
+            photoclass.postedUserId = req.auth.userid;
+            photoclass.postedDate = new Date();
+            photoclass.updatedUserId = req.auth.userid;
+            photoclass.updatedDate = new Date();
+            const result = await database.createPhotoClasses(photoclass);
+            const jData = JSON.parse(result);
+            // console.log(jData);
+            return res.status(200).json(jData[0]);
+        }
+        catch (error) {
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error creating announcement');
+           return res.status(500).json(error.message);
+        }
+    });
+
+    router.put('/photoclasses', async (req, res) => {
+        try {
+            const photoclass = req.body;
+            photoclass.updatedUserId = req.auth.userid;
+            ancmnt.updatedDate = new Date();
+            // photoclass.log(ancmnt);
+            const result = await database.updatePhotoClasses(photoclass);
+            return res.status(200).json(photoclass);
+        }
+        catch (error) {
+            // console.log(error);
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error updating announcement');
+           return res.status(500).json(error.message);
+        }
+    });
+
+    router.delete('/photoclasses/:classid', async (req, res) => {
+        const classid = req.params.classid || null;
+        console.log(`delete announcement with id ${announceId}`);
+        try {
+            if (classid) {
+                const result = await database.deletePhotoClasses(classid);
+                return res.status(200).json(`${result} row(s) deleted.`);
+            } else {
+                return res.status(500).json('classid is not null');
             }
         }
         catch (err) {
