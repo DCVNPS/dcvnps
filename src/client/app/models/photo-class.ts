@@ -3,6 +3,7 @@ export class PhotoClass {
         public photoClassId: string,
         public classLevel: string,
         public classLevelDesc: string,
+        public classOrder: number,
         public classDescription: string,
         public prerequisite: string,
         public curriculum: string,

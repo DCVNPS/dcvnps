@@ -19,21 +19,15 @@
   </p>
 </div>
 <p></p>
-<div class="ui top  attached tabular menu">
-  <a class="item" #lvl1Anchor [class.active]="showLevel1" [routerLink]="['../','level1']">
-    <h3 class="ui brown header">Basic Photograpy (Level 1)</h3>
-  </a>
-  <a class="item" #lvl2Anchor [class.active]="showLevel2"  [routerLink]="['../','level2']">
-    <h3 class="ui brown header">Intermediate Photography (Level 2)</h3>
-  </a>
-  <a class="item" #lvl3Anchor [class.active]="showLevel3"  [routerLink]="['../','level3']">
-    <div class="ui brown header">Advance Photography (Level 3)</div>
-  </a>
-</div>
-
-<div class="ui grid" style="padding: 0 20px 0 20px;">
+<div class="ui padded grid">
   <div class="stretched row">
-    <div class="twelve wide column">
+    <div class="three wide column">
+      <div class="ui vertical fluid tabular menu borderless">
+        <a class="item" *ngFor="let m of classMenus" [routerLink]="['../',m.level]"
+          [routerLinkActive]="['active']">{{m.description}}</a>
+      </div>
+    </div>
+      <div class="nine wide column">
       <div class="ui basic segment">
         <div class="ui basic segment">
           <div class="ui teal ribbon big label">Description</div>

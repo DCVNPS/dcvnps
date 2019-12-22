@@ -623,13 +623,25 @@
                     throw err;
                 });
         },
+        getPhotoClassMenu(){
+            return knex('photoclasses')
+            .select({level: 'classLevel', description: 'classLevelDesc'})
+            .orderBy('classOrder')
+            .then( result => {
+                return result;
+            })
+            .catch( err =>{
+                throw err;
+            })
+        }, 
         createPhotoClasses(photoClass) {
             // console.log(ancmnt);
             return knex('photoclasses')
                 .insert({
                     photoClassId: photoClass.photoClassId,
-                    classLevel: photoClass.classLevelDesc,
+                    classLevel: photoClass.classLevel,
                     classLevelDesc: photoClass.classLevelDesc,
+                    classOrder: photoClass.classOrder,
                     classDescription: photoClass.classDescription,
                     prerequisite: photoClass.prerequisite,
                     curriculum: photoClass.curriculum,
@@ -659,6 +671,7 @@
                 .update({
                     classLevel: photoClass.classLevel,
                     classLevelDesc: photoClass.classLevelDesc,
+                    classOrder: photoClass.classOrder,
                     classDescription: photoClass.classDescription,
                     prerequisite: photoClass.prerequisite,
                     curriculum: photoClass.curriculum,
@@ -680,6 +693,7 @@
                     photoClassId: 'a.photoClassId',
                     classLevel: 'a.classLevel',
                     classLevelDesc: 'a.classLevelDesc',
+                    classOrder: 'a.classOrder',
                     classDescription: 'a.classDescription',
                     prerequisite:'a.prerequisite',
                     curriculum:'a.curriculum',
@@ -692,6 +706,7 @@
                     updatedDate: 'a.updatedDate'
                 })
                 .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classLevel])
+                .orderBy('classOrder')
                 .then(data => {
                     return data;
                 })

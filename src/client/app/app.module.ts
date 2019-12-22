@@ -57,7 +57,6 @@ import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditClassComponent } from './edit-class/edit-class.component';
-import { TextEditorComponent } from './text-editor/text-editor.component';
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 
 @NgModule({
@@ -104,7 +103,6 @@ import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
     EditUserComponent,
     ChangePasswordComponent,
     EditClassComponent,
-    TextEditorComponent,
     PhotoClassesComponent
   ],
   imports: [

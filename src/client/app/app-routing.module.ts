@@ -17,7 +17,6 @@ import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
-import { ProgramsResolve } from './resolvers/programs-resolve';
 import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { RoleResolve } from './resolvers/role-resolve';
@@ -26,6 +25,7 @@ import { UsersResolve } from './resolvers/users-resolve';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 import { ClassesResolve } from './resolvers/classes-resolve';
+import { ClassMenuResolve } from './resolvers/class-menu-resolve';
 
 const routes: Routes = [
   {
@@ -117,7 +117,8 @@ const routes: Routes = [
     path: 'photoclasses/:level',
     component: PhotoClassesComponent,
     resolve: {
-      classesData: ClassesResolve
+      classesData: ClassesResolve,
+      classMenu: ClassMenuResolve
     },
     runGuardsAndResolvers: 'always'
   },

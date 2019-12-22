@@ -375,23 +375,19 @@ function apiRouter(express, database, logger) {
             return res.status(500).json(err.message);
         }
     });
-    // router.get('/photoclasses', (req, res) => {
-    //     let classData = [];
-    //     try {
-    //         let rawData = fs.readFileSync(path.join(serverRoot, '/data/level1.json'));
-    //         classData.push(JSON.parse(rawData));
-    //         rawData = fs.readFileSync(path.join(serverRoot, '/data/level2.json'));
-    //         classData.push(JSON.parse(rawData));
-    //         rawData = fs.readFileSync(path.join(serverRoot, '/data/level3.json'));
-    //         classData.push(JSON.parse(rawData));
-    //         return res.status(200).json(classData);
-    //         // console.log(programData);
-    //     } catch (err) {
-    //         log.levels('dcvnpslog',logLevel.ERROR)
-    //         log.error({id: req.id, err: err},'Error getting program');
-    //        res.status(500).json(err);
-    //     }
-    // })
+    router.get('/photoclassmenu', (req, res) =>{
+        // console.log('calling getPhotoClassMenu');
+        return database.getPhotoClassMenu()
+        .then( data =>{
+            // console.log({'classMenu': data});
+            return res.status(200).json(data);
+        })
+        .catch(err =>{
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
+        })        ;
+    });
     router.get('/photoclasses/:classLevel?', (req, res) => {
         const classLevel = req.params.classLevel || null;
         // console.log(`classs level ${classLevel? classLevel: 'NULL'}`);
@@ -432,12 +428,12 @@ function apiRouter(express, database, logger) {
         try {
             const photoclass = req.body;
             photoclass.updatedUserId = req.auth.userid;
-            ancmnt.updatedDate = new Date();
-            // photoclass.log(ancmnt);
+            photoclass.updatedDate = new Date();
+            // console.log(photoclass);
             const result = await database.updatePhotoClasses(photoclass);
             return res.status(200).json(photoclass);
         }
-        catch (error) {
+        catch (err) {
             // console.log(error);
             log.levels('dcvnpslog',logLevel.ERROR)
             log.error({id: req.id, err: err},'Error updating announcement');

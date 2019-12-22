@@ -18,11 +18,7 @@ export class MenuComponent implements OnInit {
     private router: Router
     ) {
     this.mGalleries = [];
-    this.mClasses = [
-      {level: 'level1', ariatext: 'Basic Photography'},
-      {level: 'level2', ariatext: 'Mid-Level Photography'},
-      {level: 'level3', ariatext: 'Advance Photography'}
-    ];
+    this.mClasses = [];
   }
 
   ngOnInit() {
@@ -36,6 +32,13 @@ export class MenuComponent implements OnInit {
           }
         });
       });
+      this.api.get('photoclassmenu')
+      .subscribe( data => {
+          this.mClasses = data;
+      },
+      err => {
+        console.log(err);
+      })
   }
 
   logout() {

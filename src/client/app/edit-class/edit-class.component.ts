@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { ApiService } from '../services/api.service';
+import { PhotoClass } from '../models/photo-class';
 
 @Component({
   selector: 'app-edit-class',
@@ -8,39 +10,78 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 })
 export class EditClassComponent implements OnInit {
   private class: any;
+  public mClasses: Array<any> =[];
   public classForm: FormGroup;
-  public photoClassId: string ='19f27cc9-2153-11ea-812e-08002764505e';
-  public description: string = 'Class description';
-  public prerequisite: string = 'None';
-  public curriculum = `<p><span style="font-size: 14pt;"><strong>Introduction to Digital Single Lens Reflex (DSLR ) cameras</strong></span></p>
-<p><span style="font-size: 14pt;"><strong>Triangle Exposure:</strong></span></p>
-<ul>
-<li><span style="font-size: 14pt;">Aperture</span></li>
-<li><span style="font-size: 14pt;">Shutter</span></li>
-<li><span style="font-size: 14pt;">ISO</span></li>
-</ul>
-<p><strong><span style="font-size: 14pt;">File/Image management under Windows Operating System</span></strong></p>
-<p><strong><span style="font-size: 14pt;">Introduction to photography composition:</span></strong></p>
-<ul>
-<li><span style="font-size: 14pt;">Line, Shape, Form, and Texture</span></li>
-<li><span style="font-size: 14pt;">Light and Color</span></li>
-</ul>
-<p><strong><span style="font-size: 14pt;">Montion in Photography</span></strong></p>
-<p><strong><span style="font-size: 14pt;">Introduction to RAW image and modern digital darkroom.</span></strong></p>
-<p><strong><span style="font-size: 14pt;">Introduction to image editing using Photoshop</span></strong></p>`;
-  public instructors: string = '<p><strong><span style="font-size: 14pt;">Minh Tan Thai</span></strong></p>';
-  constructor( private formBuilder: FormBuilder) {
+  public selectClass: FormControl;
+  public currentClass: PhotoClass;
+  public showEdit: boolean = false;
+  public description: string;
+  public prerequisite: string;
+  public curriculum:string;
+  public instructors: string;
+  public  tinyCurriculumInit = {
+    plugins: 'fullscreen image media link insertdatetime advlist lists wordcount imagetools',
+    // tslint:disable-next-line: max-line-length
+    toolbar: 'formatselect | bold italic forecolor backcolor permanentpen formatpainter | link image media| alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent',
+    height: 500
+  };
+  public  tinyInstructorsInit = {
+    plugins: 'fullscreen image media link insertdatetime advlist lists wordcount imagetools',
+    // tslint:disable-next-line: max-line-length
+    toolbar: 'formatselect | bold italic forecolor backcolor permanentpen formatpainter | link image media| alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent',
+    height: 200
+  };
+  constructor( private formBuilder: FormBuilder, private api: ApiService) {
+    this.selectClass = new FormControl(null);
+    this.classForm = new FormGroup({selectClass:this.selectClass});
     // this.initForm();
   }
 
   ngOnInit() {
+      this.api.get('photoclassmenu')
+      .subscribe( data => {
+        this.mClasses = data;
+        // console.log(this.mClasses);
+      },
+      err => {
+        console.log(err);
+      });  
+  }
+  onClassChange(event){
+    const apiEnpoint = `photoclasses/${event.level}`;
+    // console.log(apiEnpoint);
+    this.api.get(apiEnpoint)
+    .subscribe( data =>{
+      this.currentClass = data[0];
+      // console.log(this.currentClass);
+      this.description = this.currentClass.classDescription;
+      this.prerequisite = this.currentClass.prerequisite;
+      this.curriculum = this.currentClass.curriculum;
+      this.instructors = this.currentClass.instructors;
+      this.showEdit = true;
+    }, 
+      error =>{
+        console.log(error);
+      });
   }
 
   onSave(){
+    this.currentClass.classDescription = this.description;
+    this.currentClass.prerequisite = this.prerequisite;
+    this.currentClass.curriculum = this.curriculum;
+    this.currentClass.instructors = this.instructors;
+    // console.log(this.currentClass);
     const formData = new FormData();
     formData.append('description', this.description);
+    this.api.put('photoclasses',this.currentClass)
+    .subscribe( success =>{
+      // console.log('update class successful');
+    },
+    error => {
+      console.log(error);
+    })
   }
   onCancel(){
-
+    this.showEdit = false;
   }
 }

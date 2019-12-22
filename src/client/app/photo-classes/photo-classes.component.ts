@@ -16,7 +16,8 @@ export class PhotoClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
   public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
-  private data: Array<PhotoClass> = [];
+  private data: Array<PhotoClass> = []; 
+  public classMenus: Array<any> = [];
   public curClass: PhotoClass;
   public showLevel1: boolean = false;
   public showLevel2: boolean = false;
@@ -45,11 +46,10 @@ export class PhotoClassesComponent implements OnInit, OnDestroy {
 
   initializeData() {
     this.data = this.route.snapshot.data.classesData;
+    this.classMenus = this.route.snapshot.data.classMenu;
+    // console.log(this.data);
     this.curClass = this.data[0];
-    // console.log(this.curClass);
-    this.showLevel1 = this.curClass.classLevel === 'level1';
-    this.showLevel2 = this.curClass.classLevel === 'level2';
-    this.showLevel3 = this.curClass.classLevel === 'level3';
+    // console.log(this.classMenus);
   }
 
 }

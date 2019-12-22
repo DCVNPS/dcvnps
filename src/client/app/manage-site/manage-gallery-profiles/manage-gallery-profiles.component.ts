@@ -15,11 +15,11 @@ export class ManageGalleryProfilesComponent implements OnInit {
   }
   editGallery(index: number) {
     console.log(`Edit gallery at index ${index}`);
-    console.log(this.galleries[index]);
+    // console.log(this.galleries[index]);
   }
 
   deleteGallery(index: number) {
     console.log(`Delete gallery at index ${index}`);
-    console.log(this.galleries[index]);
+    // console.log(this.galleries[index]);
   }
 }
