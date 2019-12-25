@@ -590,6 +590,18 @@ function apiRouter(express, database, logger) {
         };
     });
 
+    router.get('/states', (req, res) =>{
+        return database.getStates()
+        .then( (data) =>{
+            // console.log(JSON.parse(data));
+            return res.status(200).send(JSON.parse(data));
+        })
+        .catch( err =>{
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error get states list');
+            return res.status(500).send(err.message);
+        });
+    });
     return router;
 }
 

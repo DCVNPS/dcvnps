@@ -58,6 +58,8 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditClassComponent } from './edit-class/edit-class.component';
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
+import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
     EditUserComponent,
     ChangePasswordComponent,
     EditClassComponent,
-    PhotoClassesComponent
+    PhotoClassesComponent,
+    CampingRegistrationComponent,
+    ClassRegistrationComponent
   ],
   imports: [
     BrowserModule,

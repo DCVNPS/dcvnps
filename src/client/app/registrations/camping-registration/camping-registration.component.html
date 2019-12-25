@@ -1,0 +1,70 @@
+<div class="ui centered grid">
+  <div class="six wide column">
+    <h2>Camping Registration</h2>
+    <form novalidate [formGroup]="campingForm" (ngSubmit)="onSubmitForm()">
+      <section class="customer-name">
+        <label for="email">Email :</label>
+        <input formControlName="email" type="text" placeholder="email Address">
+        <div class="errors" *ngIf="f.email.errors">
+          <div *ngIf="f.email.errors.required  && ( f.email.dirty || f.email.touched)">Email is Required!</div>
+          <div *ngIf="f.email.errors.email">A valid email address is required!</div>
+        </div>
+        <label for="fullname">Registration Name:</label>
+        <input formControlName="fullname" type="text" placeholder="full name">
+        <div class="errors" *ngIf="f.fullname.errors">
+          <div *ngIf="f.fullname.errors.required && (f.fullname.dirty || f.fullname.touched)">Full Name is required!
+          </div>
+        </div>
+        <label for="address">Address :</label>
+        <input formControlName="address" type="text" placeholder="address">
+        <div class="errors" *ngIf="f.address.errors">
+          <div *ngIf="f.address.errors.required && (f.address.dirty || f.address.touched)">Address is required!</div>
+        </div>
+        <label for="city">City :</label>
+        <input formControlName="city" type="text" placeholder="city">
+        <div class="errors" *ngIf="f.city.errors">
+          <div *ngIf="f.city.errors.required && (f.city.dirty || f.city.touched)">City is required!</div>
+        </div>
+        <div>
+          <label for="state">State :</label>
+          <select formControlName="state">
+            <option *ngFor="let s of states" [ngValue]="s.stateCode">{{s.description}}</option>
+          </select>
+          <div class="errors" *ngIf="f.state.errors">
+            <div *ngIf="f.state.errors.required && (f.state.dirty || f.state.touched)">State is required!</div>
+          </div>
+        </div>
+        <label for="zipcode">Zip Code:</label>
+        <input formControlName="zipcode" type="text" placeholder="zip Code">
+        <div class="errors" *ngIf="f.zipcode.errors">
+          <div *ngIf="f.zipcode.errors.required && (f.zipcode.dirty || f.zipcode.touched)">Zip Code is required!</div>
+        </div>
+        <label for="countrycode">Country Code:</label>
+        <input formControlName="countrycode" type="text" placeholder="country Code">
+        <div class="errors" *ngIf="f.countrycode.errors">
+          <div *ngIf="f.countrycode.errors.required && (f.countrycode.dirty || f.countrycode.touched)">Country is required!
+          </div>
+        </div>
+        <div>
+          <label for="guests">Guests:</label>
+          <select formControlName="guests" (ngModelChange)="adjustGuestsList($event)">
+            <option value="0" selected default>0</option>
+            <option *ngFor="let i of numberofguests" [ngValue]="i">{{i}}</option>
+          </select>
+        </div>
+      </section>
+      <section formArrayName="accompanyNames" class="accompany-names">
+        <h3>Travel Accompany Names:</h3>
+        <ul *ngIf="campingForm.get('guests').value">
+          <li *ngFor="let item of accompanyNameControls.controls; let i = index">
+            <input type="text" formControlName="{{i}}">
+            <button type="button" title="Remove Name" (click)="onRemoveAccompanyName(i);">Remove</button>
+          </li>
+        </ul>
+        <button type="button" (click)="onAddAccompanyName();">Add Accompany Name</button>
+      </section>
+      <button type="submit" [disabled]="!campingForm.valid">Place Order</button>
+      <button type="button" (click)="onResetForm()">Reset</button>
+    </form>
+  </div>
+</div>

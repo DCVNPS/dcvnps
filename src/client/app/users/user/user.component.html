@@ -33,18 +33,6 @@
             <div class="header" *ngIf="password.errors.minlength"> Password minimum length is 8 characters.</div>
           </div>
         </div>
-        <!-- <div class="field"
-          [ngClass]="{'error': confirmPassword.invalid &&( confirmPassword.dirty || confirmPassword.touched)}">
-          <label>Confirm Password</label>
-          <input class="password" type="password" placeholder="Confirm Password" formControlName="confirmPassword"><span
-            *ngIf="confirmPassword.valid"><i class="green check icon"></i></span>
-          <div [style.color]="'red'"
-            *ngIf="confirmPassword.errors && ( confirmPassword.dirty || confirmPassword.touched )">
-            <div class="header" *ngIf="confirmPassword.errors.required"> Confirm Password is required.</div>
-            <div class="header" *ngIf="confirmPassword.errors.minlength"> Confirm Password minimum length is 8
-              characters.</div>
-          </div>
-        </div> -->
         <div class="field" [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
           <label for="roleCode">Role</label>
           <select class="menu" formControlName="roleCode" >

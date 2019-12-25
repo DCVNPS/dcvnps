@@ -26,6 +26,9 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 import { ClassesResolve } from './resolvers/classes-resolve';
 import { ClassMenuResolve } from './resolvers/class-menu-resolve';
+import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
+import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
+import { StatesResolve } from './resolvers/states-resolve';
 
 const routes: Routes = [
   {
@@ -137,6 +140,23 @@ const routes: Routes = [
       photos: GalleryPhotosResolve,
       board: BoardDirectorResolve
     }
+  },
+  {
+    path: 'campingregistration',
+    component: CampingRegistrationComponent
+    , resolve: {
+      states: StatesResolve
+    },
+    runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'classregistration',
+    component: ClassRegistrationComponent
+    , resolve: {
+      states: StatesResolve,
+      classMenu: ClassMenuResolve
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'quicktest',

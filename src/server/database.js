@@ -773,6 +773,18 @@
                 }
              });
         },
+        getStates(){
+            return knex('states')
+            .select('stateCode','description')
+            .orderBy('description')
+            .then((data)=>{
+                // console.log(data);
+                return JSON.stringify(data);
+            })
+            .catch( err =>{
+                throw err;
+            })
+        },
         destroy() {
             knex.destroy();
         }
