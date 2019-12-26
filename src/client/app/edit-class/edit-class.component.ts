@@ -10,78 +10,87 @@ import { PhotoClass } from '../models/photo-class';
 })
 export class EditClassComponent implements OnInit {
   private class: any;
-  public mClasses: Array<any> =[];
+  public mClasses: Array<any> = [];
   public classForm: FormGroup;
-  public selectClass: FormControl;
+  // public selectClass: FormControl;
   public currentClass: PhotoClass;
   public showEdit: boolean = false;
-  public description: string;
-  public prerequisite: string;
-  public curriculum:string;
-  public instructors: string;
-  public  tinyCurriculumInit = {
+  public tinyCurriculumInit = {
     plugins: 'fullscreen image media link insertdatetime advlist lists wordcount imagetools',
     // tslint:disable-next-line: max-line-length
     toolbar: 'formatselect | bold italic forecolor backcolor permanentpen formatpainter | link image media| alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent',
     height: 500
   };
-  public  tinyInstructorsInit = {
+  public tinyInstructorsInit = {
     plugins: 'fullscreen image media link insertdatetime advlist lists wordcount imagetools',
     // tslint:disable-next-line: max-line-length
     toolbar: 'formatselect | bold italic forecolor backcolor permanentpen formatpainter | link image media| alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent',
     height: 200
   };
-  constructor( private formBuilder: FormBuilder, private api: ApiService) {
-    this.selectClass = new FormControl(null);
-    this.classForm = new FormGroup({selectClass:this.selectClass});
-    // this.initForm();
+  constructor(private formBuilder: FormBuilder, private api: ApiService) {
+    this.classForm = this.formBuilder.group({
+      description: this.formBuilder.control(null),
+      prerequisite: this.formBuilder.control(null),
+      curriculum: this.formBuilder.control(null),
+      instructors: this.formBuilder.control(null)
+    });
   }
 
   ngOnInit() {
-      this.api.get('photoclassmenu')
-      .subscribe( data => {
+    this.api.get('photoclassmenu')
+      .subscribe(data => {
         this.mClasses = data;
         // console.log(this.mClasses);
       },
-      err => {
-        console.log(err);
-      });  
+        err => {
+          console.log(err);
+        });
   }
-  onClassChange(event){
+
+  // convenience getter for easy access to form fields. Good for form validation.
+  get f() { return this.classForm.controls; }
+
+  // convenience getter for easy access to form values. Good for submit.
+  get formValue() { return this.classForm.value; }
+
+  patchClassValues(classData) {
+    this.classForm.controls.description.patchValue(classData.classDescription);
+    this.classForm.controls.prerequisite.patchValue(classData.prerequisite);
+    this.classForm.controls.curriculum.patchValue(classData.curriculum);
+    this.classForm.controls.instructors.patchValue(classData.instructors);
+  }
+  onClassChange(event) {
     const apiEnpoint = `photoclasses/${event.level}`;
     // console.log(apiEnpoint);
     this.api.get(apiEnpoint)
-    .subscribe( data =>{
-      this.currentClass = data[0];
-      // console.log(this.currentClass);
-      this.description = this.currentClass.classDescription;
-      this.prerequisite = this.currentClass.prerequisite;
-      this.curriculum = this.currentClass.curriculum;
-      this.instructors = this.currentClass.instructors;
-      this.showEdit = true;
-    }, 
-      error =>{
-        console.log(error);
-      });
+      .subscribe(data => {
+        this.currentClass = data[0];
+        this.patchClassValues(this.currentClass);
+        this.showEdit = true;
+        // console.log(this.formValue);
+      },
+        error => {
+          console.log(error);
+        });
   }
 
-  onSave(){
-    this.currentClass.classDescription = this.description;
-    this.currentClass.prerequisite = this.prerequisite;
-    this.currentClass.curriculum = this.curriculum;
-    this.currentClass.instructors = this.instructors;
-    // console.log(this.currentClass);
-    const formData = new FormData();
-    formData.append('description', this.description);
-    this.api.put('photoclasses',this.currentClass)
-    .subscribe( success =>{
-      // console.log('update class successful');
-    },
-    error => {
-      console.log(error);
-    })
+  onSubmitClass() {
+    this.currentClass.classDescription = this.formValue.description;
+    this.currentClass.prerequisite = this.formValue.prerequisite;
+    this.currentClass.curriculum = this.formValue.curriculum;
+    this.currentClass.instructors = this.formValue.instructors;
+    // console.log(this.formValue);
+    this.api.put('photoclasses', this.currentClass)
+      .subscribe(success => {
+        // console.log('update class successful');
+      },
+        error => {
+          console.log(error);
+        })
   }
-  onCancel(){
+
+  onCancel() {
+    this.classForm.reset();
     this.showEdit = false;
   }
 }

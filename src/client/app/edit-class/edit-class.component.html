@@ -1,55 +1,53 @@
 <div class="ui grid" #program>
   <div class="stretch row">
     <div class="twelve wide column">
-      <form class="ui form" [formGroup]="classForm">
+      <div class="ui form">
         <div class="field">
           <h4 class="ui ribbon big label">Select Class Program to Edit:</h4>
-          <select formControlName="selectClass" (ngModelChange)="onClassChange($event)">
+          <select [(ngModel)]="selectClass" (ngModelChange)="onClassChange($event)">
             <option *ngFor="let m of mClasses" [ngValue]="m">{{m.description}}</option>
           </select>
         </div>
-      </form>
+      </div>
       <div *ngIf="showEdit">
-        <div class="ui form">
+        <form class="ui form" [formGroup]="classForm" (ngSubmit)="onSubmitClass();">
           <div class="field">
             <h4 class="ui teal ribbon big label">Description</h4>
-            <textarea [(ngModel)]="description"></textarea>
+            <textarea formControlName="description"></textarea>
           </div>
           <div class="field">
             <h4 class="ui light blue ribbon big label">prerequisite</h4>
-            <textarea [(ngModel)]="prerequisite" rows="2"></textarea>
+            <textarea formControlName="prerequisite" rows="2"></textarea>
           </div>
           <div class="field">
             <h4 class="ui violet ribbon big label">Curriculum</h4>
-            <!-- <app-text-editor [(textToEdit)]="curriculum" [controlHeight]="500"></app-text-editor> -->
-            <editor [init]="tinyCurriculumInit" [(ngModel)]="curriculum"></editor>
+            <editor [init]="tinyCurriculumInit" formControlName="curriculum"></editor>
           </div>
           <div class="field">
             <h4 class="ui violet ribbon big label">Intructors</h4>
-            <!-- <app-text-editor [(textToEdit)]="instructors" [controlHeight]="200"></app-text-editor> -->
-            <editor [init]="tinyInstructorsInit" [(ngModel)]="instructors"></editor>
+            <editor [init]="tinyInstructorsInit" formControlName="instructors"></editor>
           </div>
-          <button type="submit" class="ui submit large blue button" (click)="onSave()">Save</button>
+          <button type="submit" class="ui submit large blue button">Save</button>
           <button type="submit" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
-        </div>
+        </form>
         <h2>Review</h2>
         <div class="ui basic segment">
           <div class="ui teal ribbon big label">Description</div>
-          <div>{{description}}</div>
+          <div>{{formValue.description}}</div>
         </div>
         <div class="ui basic segment">
           <div class="ui light blue ribbon big label">Prerequisite</div>
-          <div>{{prerequisite}}</div>
+          <div>{{formValue.prerequisite}}</div>
         </div>
         <div class="ui basic segment">
           <div class="ui violet ribbon big label">Curriculum</div>
-          <div [innerHTML]="curriculum | safeHtml"></div>
+          <div [innerHTML]="formValue.curriculum | safeHtml"></div>
         </div>
         <div class="ui basic segment">
           <div class="ui violet ribbon big label">Instructors</div>
-          <div [innerHTML]="instructors | safeHtml"></div>
+          <div [innerHTML]="formValue.instructors | safeHtml"></div>
         </div>
-        <button type="submit" class="ui submit large blue button" (click)="onSave()">Save</button>
+        <button type="submit" class="ui submit large blue button" (click)="onSubmitClass()">Save</button>
         <button type="submit" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
       </div>
     </div>
