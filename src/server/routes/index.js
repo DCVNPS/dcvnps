@@ -1,10 +1,7 @@
-// const express = require('express');
-// const jwt = require('jsonwebtoken');
 const checkJwt = require('express-jwt');
-const uuidv4 = require('uuid/v4');
-const serverRoot = path.normalize(__dirname);
 const userRouter = require('./admin/user')
 const commonRouter = require('./commons');
+const ancmntRouter = require('./announcements');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -46,7 +43,7 @@ module.exports = (express, config) => {
         this.log.levels('dcvnpslog',config.logLevel.ERROR);
         this.log.error('Error');
         if (err.name === 'UnauthorizedError') {
-            return res.status(401).json({ error: err.message });
+            return res.status(err.status).json({ error: err });
         }
     });
 
@@ -66,6 +63,7 @@ module.exports = (express, config) => {
    
     router.use('/admin/user', userRouter(express, config));
     router.use('/commons', commonRouter(express, config));
+    router.use('/announcements', ancmntRouter(express, config));
     // url:/api/
     return router;
 }

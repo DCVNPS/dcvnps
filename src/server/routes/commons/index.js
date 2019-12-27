@@ -1,4 +1,3 @@
-// const express = require('express');
 const uuidv4 = require('uuid/v4');
 const jwt = require('jsonwebtoken');
 const CommonService = require('../../dataAccess/commonService');
@@ -7,15 +6,15 @@ module.exports = (express, config) => {
     if (!config) {
         throw new Error('admin user missing config object');
     }
-    const commonService = CommonService(config.knex);
+    const commonService = CommonService(config);
     const bcrypt = config.bcrypt;
     const log = config.logger;
     const logLevel = config.logLevel;
     const router = express.Router();
 
     router.get('/uuid', (req, res) => {
-        commonService.uuid().then(data => { 
-            return res.status(200).json(data) 
+        commonService.uuid().then(data => {
+            return res.status(200).json(data)
         })
             .catch(err => {
                 log.levels('dcvnpslog', config.logLevel.ERROR)
@@ -28,7 +27,7 @@ module.exports = (express, config) => {
         // console.log(user);
         commonService.authenticate({ username: user.username, password: user.password })
             .then((result) => {
-                if (result.success) {
+                if (result) {
                     const roleCode = result.authuser.roleCode;
                     const admRole = roleCode.match(/ADM$/g);
                     const payload = {
@@ -46,14 +45,12 @@ module.exports = (express, config) => {
                         token: token,
                         role: result.authuser.roleCode
                     });
-                } else {
-                    return res.status(result.status).json({error:result.authmsg});
                 }
             })
-            .catch((err) => { 
-                log.levels('dcvnpslog',logLevel.ERROR)
-                log.error({id: req.id, err: err},'Error authenticate');
-               return res.status(err.status).json({ error: err.message }); 
+            .catch((err) => {
+                log.levels('dcvnpslog', logLevel.ERROR)
+                log.error({ id: req.id, err: err }, 'Error authenticate');
+                return res.status(500).json(err.message);
             })
     });
 

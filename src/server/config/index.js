@@ -45,6 +45,7 @@ module.exports = {
     rootdir: rootdir,
     bcrypt: bcrypt,
     logger: log,
+    mySQL:{},
     logResponse: logResponse,
     logLevel: logLevel,
     // mysql: {

@@ -1,13 +1,16 @@
 //userService.js
 // User service provides functions for operation on user's information
-const bcrypt = require('bcrypt');
 
-module.exports = (knex) => {
-    if (!knex) {
-        throw new Error('Missing Knex client object.')
+module.exports = (config) => {
+
+    if (!config) {
+        throw new Error('userService missing config object.')
     }
+    const bcrypt = config.bcrypt;
+    const mySQL = config.mySQL;
+
     function deleteByName(userName) {
-        return knex('users').where('userName', userName).delete()
+        return mySQL('users').where('userName', userName).delete()
             .then((r) => {
                 console.log(`${r} rows effected. User ${userName} deleted.`);
                 return { recordDelete: true };
@@ -16,14 +19,14 @@ module.exports = (knex) => {
     }
 
     function deleteById(userId) {
-        return knex('users').where('userId', userId).delete()
+        return mySQL('users').where('userId', userId).delete()
             .then(r => { return r; })
             .catch(err => { throw err; });
     }
 
     function createUser(user) {
         console.log(user);
-        return knex('users')
+        return mySQL('users')
             .insert({
                 userId: user.userId,
                 userName: user.userName,
@@ -60,7 +63,7 @@ module.exports = (knex) => {
     }
 
     function selectByName(userName) {
-        return knex('users')
+        return mySQL('users')
             .whereRaw('userName = IFNULL(?, userName)', [userName])
             .select()
             .then((users) => {
@@ -73,7 +76,7 @@ module.exports = (knex) => {
     }
 
     function selectById(userId) {
-        return knex('users')
+        return mySQL('users')
             .whereRaw('userId = IFNULL(?,userId)', [userId])
             .select()
             .then((users) => {

@@ -6,7 +6,7 @@ const envPath = path.normalize(__dirname + '/../../../.env');
 require('dotenv').config({ path: envPath });
 const config = require('../config');
 const DB = require('../dataAccess/database')(config);
-config.knex = DB.knex;
+config.mySQL = DB.knex;
 
 const createExpressApp = require('../app');
 

@@ -1,14 +1,17 @@
-//userService.js
-// User service provides functions for operation on user's information
-const bcrypt = require('bcrypt');
+// commonService.js
+// Common service provides functions for general operations
 
-module.exports = (knex) => {
-    if (!knex) {
-        throw new Error('Missing Knex client object.')
+module.exports = (config) => {
+
+    if (!config) {
+        throw new Error('commonService missing config object.')
     }
+    const bcrypt = config.bcrypt;
+    const mySQL = config.mySQL;
+
     function authenticate({ username, password }) {
         let response = undefined;
-        return knex('users')
+        return mySQL('users')
             .whereRaw('userName=?', [username])
             .first('userId', 'userName', 'password', 'roleCode')
             .then((user) => {
@@ -33,14 +36,9 @@ module.exports = (knex) => {
                             roleCode: user.roleCode
                         }
                     };
-                } else
-                    response = {
-                        success: false,
-                        status: 401,
-                        authmsg: 'Authenticate failed. Invalid username/password.',
-                        authuser: undefined
-                    };
-                return response;
+                } else{
+                    throw new Error('ERROR 1045 (28000): Invalid username/password.')
+                }
             })
             .catch((err) => { throw err; });
     }
@@ -53,7 +51,7 @@ module.exports = (knex) => {
                     // console.log('chagne password authentication success');
                     // console.log(res);
                     const authuser = res.authuser;
-                    return knex('users')
+                    return mySQL('users')
                         .whereRaw("userId=?", [authuser.userId])
                         .update({ password: encryptedNewPassword })
                         .then(() => {
@@ -77,7 +75,7 @@ module.exports = (knex) => {
     return {
         uuid: async () => {
             try {
-                const data = await knex.raw('select uuid() as uuid');
+                const data = await mySQL.raw('select uuid() as uuid');
                 const jsonString = JSON.stringify(data);
                 const jsonValue = JSON.parse(jsonString);
                 return jsonValue[0][0];

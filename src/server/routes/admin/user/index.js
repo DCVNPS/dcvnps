@@ -1,4 +1,3 @@
-// const express = require('express');
 const uuidv4 = require('uuid/v4');
 const UserService = require('../../../dataAccess/userService');
 
@@ -6,20 +5,11 @@ module.exports = (express, config) => {
     if (!config) {
         throw new Error('admin user missing config object');
     }
-    const userService = UserService(config.knex);
+    const userService = UserService(config);
     const log = config.logger;
     const logLevel = config.logLevel;
     const router = express.Router();
 
-    // moved to commons route
-    // router.get('/uuid', (req, res) => {
-    //     userService.uuid().then(data => { return res.json(data) })
-    //         .catch(err => {
-    //             log.levels('dcvnpslog', config.logLevel.ERROR)
-    //             log.error({ id: req.id, err: err }, 'Error getting uuid');
-    //             return res.status(500).json({ error: err.message });
-    //         });
-    // });
     router.get('/byid/:userid?', (req, res) => {
         const userid = req.params.userid || null;
         userService.selectById(userid)
