@@ -10,9 +10,9 @@
     "watch:client": "ng serve --proxy-config proxy.conf.json --open",
     "watch:server": "nodemon src/server/index.js",
     "watch": "run-p watch:*",
-    "sample": "node src/server/data/seed-db.js",
-    "initdata": "node src/server/mysql-knex/seed-mysql.js",
-    "testapi": "node src/server/mysql-knex/test_db.js",
+    "sample": "node devdata/mongodcvnps/seed-db.js",
+    "initdata": "node devdata/seed-mysql.js",
+    "testapi": "node src/server/bin/www.js",
     "test": "ng test",
     "lint": "ng lint"
   },

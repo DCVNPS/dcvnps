@@ -13,6 +13,7 @@ function isAdmin(req) {
     }
     return true;
 }
+
 function apiRouter(express, database, logger) {
     const galleryBaseDir = path.join(serverRoot, "galleries");
     const router = express.Router();
