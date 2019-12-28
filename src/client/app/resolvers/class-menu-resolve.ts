@@ -11,7 +11,7 @@ export class ClassMenuResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve():  Observable<any>|Promise<any>|any {
-        const apiEndpoint = 'photoclassmenu';
+        const apiEndpoint = 'commons/vnpsclassmenu';
         return this.api.get(apiEndpoint);
     }
 }

@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
           }
         });
       });
-      this.api.get('photoclassmenu')
+      this.api.get('commons/vnpsclassmenu')
       .subscribe( data => {
           this.mClasses = data;
           const level1 = this.mClasses.find( c =>c.level ==='level1');

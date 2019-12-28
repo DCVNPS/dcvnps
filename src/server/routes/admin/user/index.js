@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const UserService = require('../../../dataAccess/userService');
 
 module.exports = (express, config) => {
@@ -8,6 +8,7 @@ module.exports = (express, config) => {
     const userService = UserService(config);
     const log = config.logger;
     const logLevel = config.logLevel;
+    const uuidv4 = config.uuidv4;
     const router = express.Router();
 
     router.get('/byid/:userid?', (req, res) => {
@@ -19,7 +20,7 @@ module.exports = (express, config) => {
             .catch(err => {
                 log.levels('dcvnpslog', config.logLevel.ERROR)
                 log.error({ id: req.id, err: err }, `Error getting uuid: ${userid}`);
-                return res.status(500).json({ error: err.message });
+                return res.status(500).json({ err: err.message });
             })
     });
 

@@ -9,6 +9,7 @@ module.exports = (express, config) => {
     const logLevel = config.logLevel;
     const uuidv4 = config.uuidv4;
     const router = express.Router();
+
     router.get('/:classId?', (req, res) => {
         const classId = req.params.classId || null;
         // console.log(`classs level ${classId? classId: 'NULL'}`);
@@ -20,6 +21,34 @@ module.exports = (express, config) => {
                 log.levels('dcvnpslog', logLevel.ERROR)
                 log.error({ id: req.id, err: err }, 'Error getting class level');
                 return res.status(500).json(err.message);
+            })
+    });
+
+    router.get('/bylevel/:classlevel?', (req, res) => {
+        const classlevel = req.params.classlevel || null;
+        // console.log(`classs level: ${classlevel? classlevel: 'NULL'}`);
+        return vnpsClassesService.readClassesByLevel(classlevel)
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},`Error getting class of level ${classlevel}`);
+                   return res.status(500).json(err.message);
+            })
+    });
+
+    router.get('/byid/:classid?', (req, res) => {
+        const classid = req.params.classid || null;
+        // console.log(`classs level ${classid? classid: 'NULL'}`);
+        return vnpsClassesService.readClassesById(classid)
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},`Error getting class with id ${classid}`);
+                   return res.status(500).json(err.message);
             })
     });
 

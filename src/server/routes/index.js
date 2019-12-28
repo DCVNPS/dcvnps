@@ -1,9 +1,11 @@
 const uuidv4 = require('uuid/v4');
 const checkJwt = require('express-jwt');
-const userRouter = require('./admin/user')
+const userRouter = require('./admin/user');
+const boardRouter = require('./admin/boardmembers');
 const commonRouter = require('./commons');
 const ancmntRouter = require('./announcements');
 const vnpsClassesRouter = require('./vnpsclasses');
+const gallriesRouter = require('./galleries');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -64,9 +66,11 @@ module.exports = (express, config) => {
     // });
    
     router.use('/admin/user', userRouter(express, config));
+    router.use('/admin/boardmembers', boardRouter(express, config));
     router.use('/commons', commonRouter(express, config));
     router.use('/announcements', ancmntRouter(express, config));
     router.use('/vnpsclasses',vnpsClassesRouter(express, config));
+    router.use('/galleries', gallriesRouter(express, config));
     // url:/api/
     return router;
 }

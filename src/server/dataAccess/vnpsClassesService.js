@@ -36,7 +36,7 @@ module.exports = (config) => {
                 updatedUserId: aclass.updatedUserId,
                 updatedDate: aclass.updatedDate
             })
-            .then( result => {
+            .then(result => {
                 return this.readVnpsClasses(aclass.classId)
                     .then(data => {
                         // console.log(rec);
@@ -81,9 +81,9 @@ module.exports = (config) => {
                 classLevelDesc: 'a.classLevelDesc',
                 classOrder: 'a.classOrder',
                 classDescription: 'a.classDescription',
-                prerequisite:'a.prerequisite',
-                curriculum:'a.curriculum',
-                instructors:'a.instructors',
+                prerequisite: 'a.prerequisite',
+                curriculum: 'a.curriculum',
+                instructors: 'a.instructors',
                 postedUserId: 'a.postedUserId',
                 postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                 postedDate: 'a.createdDate',
@@ -92,6 +92,62 @@ module.exports = (config) => {
                 updatedDate: 'a.updatedDate'
             })
             .whereRaw('`a`.`classId` = IFNULL(?,`a`.`classId`)', [classId])
+            .orderBy('classOrder')
+            .then(data => {
+                return data;
+            })
+            .catch(err => {
+                console.log(err);
+                throw err;
+            });
+    }
+    function readClassesById(classId) {
+        return mySQL({ a: 'vnpsclasses' })
+            .select({
+                classId: 'a.classId',
+                classLevel: 'a.classLevel',
+                classLevelDesc: 'a.classLevelDesc',
+                classOrder: 'a.classOrder',
+                classDescription: 'a.classDescription',
+                prerequisite: 'a.prerequisite',
+                curriculum: 'a.curriculum',
+                instructors: 'a.instructors',
+                postedUserId: 'a.postedUserId',
+                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                postedDate: 'a.createdDate',
+                updatedUserId: 'a.updatedUserId',
+                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                updatedDate: 'a.updatedDate'
+            })
+            .whereRaw('`a`.`classId` = IFNULL(?,`a`.`classId`)', [classId])
+            .orderBy('classOrder')
+            .then(data => {
+                return data;
+            })
+            .catch(err => {
+                console.log(err);
+                throw err;
+            });
+    }
+    function readClassesByLevel(classlevel) {
+        return mySQL({ a: 'vnpsclasses' })
+            .select({
+                classId: 'a.classId',
+                classLevel: 'a.classLevel',
+                classLevelDesc: 'a.classLevelDesc',
+                classOrder: 'a.classOrder',
+                classDescription: 'a.classDescription',
+                prerequisite: 'a.prerequisite',
+                curriculum: 'a.curriculum',
+                instructors: 'a.instructors',
+                postedUserId: 'a.postedUserId',
+                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                postedDate: 'a.createdDate',
+                updatedUserId: 'a.updatedUserId',
+                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                updatedDate: 'a.updatedDate'
+            })
+            .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classlevel])
             .orderBy('classOrder')
             .then(data => {
                 return data;
@@ -112,10 +168,12 @@ module.exports = (config) => {
                 throw err;
             });
     }
-    return{
+    return {
         createVnpsClasses,
         updateVnpsClasses,
         readVnpsClasses,
+        readClassesById,
+        readClassesByLevel,
         deleteVnpsClasses
     }
 }

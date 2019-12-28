@@ -25,7 +25,7 @@ module.exports = (express, config) => {
     router.get('/states', (req, res) =>{
         commonService.getStates()
         .then( data =>{
-            console.log(data);
+            // console.log(data);
             return res.status(200).json(data);
         })
         .catch(err =>{

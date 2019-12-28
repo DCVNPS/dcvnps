@@ -44,11 +44,11 @@ const routes: Routes = [
       galleries: GalleriesResolve
     }
   },
-  {
-    path: 'contacts',
-    component: ContactListComponent,
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'contacts',
+  //   component: ContactListComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'newuser',
     component: NewUserComponent,
@@ -73,11 +73,11 @@ const routes: Routes = [
     component: ChangePasswordComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'newcontact',
-    component: AddContactComponent,
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'newcontact',
+  //   component: AddContactComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'fileupload',
     component: DropzoneComponent,
