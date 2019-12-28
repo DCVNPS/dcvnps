@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const jwt = require('jsonwebtoken');
 const CommonService = require('../../dataAccess/commonService');
 
@@ -21,6 +21,18 @@ module.exports = (express, config) => {
                 log.error({ id: req.id, err: err }, 'Error getting uuid');
                 return res.status(500).json({ error: err.message });
             });
+    });
+    router.get('/states', (req, res) =>{
+        commonService.getStates()
+        .then( data =>{
+            console.log(data);
+            return res.status(200).json(data);
+        })
+        .catch(err =>{
+            log.levels('dcvnpslog', config.logLevel.ERROR)
+            log.error({ id: req.id, err: err }, 'Error getting uuid');
+            return res.status(500).json({ error: err.message });
+        })
     });
     router.post('/authenticate', (req, res) => {
         const user = req.body;
@@ -69,6 +81,19 @@ module.exports = (express, config) => {
             log.error({ id: req.id, err: err }, 'Error changin user password');
             return res.status(500).json(err);
         }
+    });
+    router.get('/vnpsclassmenu', (req, res) =>{
+        // console.log('calling getPhotoClassMenu');
+        return commonService.getVnpsClassMenu()
+        .then( data =>{
+            // console.log({'classMenu': data});
+            return res.status(200).json(data);
+        })
+        .catch(err =>{
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
+        })        ;
     });
     return router;
 }

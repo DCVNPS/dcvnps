@@ -624,8 +624,8 @@
                 });
         },
         getPhotoClassMenu(){
-            return knex('photoclasses')
-            .select({level: 'classLevel', description: 'classLevelDesc'})
+            return knex('vnpsclasses')
+            .select({id: 'classId', level: 'classLevel', description: 'classLevelDesc'})
             .orderBy('classOrder')
             .then( result => {
                 return result;
@@ -636,9 +636,9 @@
         }, 
         createPhotoClasses(photoClass) {
             // console.log(ancmnt);
-            return knex('photoclasses')
+            return knex('vnpsclasses')
                 .insert({
-                    photoClassId: photoClass.photoClassId,
+                    classId: photoClass.classId,
                     classLevel: photoClass.classLevel,
                     classLevelDesc: photoClass.classLevelDesc,
                     classOrder: photoClass.classOrder,
@@ -652,10 +652,10 @@
                     updatedDate: photoClass.updatedDate
                 })
                 .then(result => {
-                    return this.readAnnouncements(photoClass.photoClassId)
-                        .then(rec => {
+                    return this.readPhotoClasses(photoClass.classId)
+                        .then(data => {
                             // console.log(rec);
-                            return rec;
+                            return data;
                         })
                         .catch(exp => {
                             throw exp;
@@ -667,7 +667,7 @@
         },
         updatePhotoClasses(photoClass) {
             // console.log(`update announcement ID: ${ancmnt.announcementId}`);
-            return knex('photoclasses')
+            return knex('vnpsclasses')
                 .update({
                     classLevel: photoClass.classLevel,
                     classLevelDesc: photoClass.classLevelDesc,
@@ -679,7 +679,7 @@
                     updatedUserId: photoClass.updatedUserId,
                     updatedDate: new Date(photoClass.updatedDate)
                 })
-                .where({ photoClassId: photoClass.photoClassId })
+                .where({ classId: photoClass.classId })
                 .then(result => {
                     return result;
                 })
@@ -687,10 +687,10 @@
                     throw err;
                 })
         },
-        readPhotoClasses(classLevel) {
-            return knex({ a: 'photoclasses' })
+        readPhotoClasses(classId) {
+            return knex({ a: 'vnpsclasses' })
                 .select({
-                    photoClassId: 'a.photoClassId',
+                    classId: 'a.classId',
                     classLevel: 'a.classLevel',
                     classLevelDesc: 'a.classLevelDesc',
                     classOrder: 'a.classOrder',
@@ -705,7 +705,7 @@
                     updatedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                     updatedDate: 'a.updatedDate'
                 })
-                .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classLevel])
+                .whereRaw('`a`.`classId` = IFNULL(?,`a`.`classId`)', [classId])
                 .orderBy('classOrder')
                 .then(data => {
                     return data;
@@ -716,8 +716,8 @@
                 });
         },
         deletePhotoClasses(classId) {
-            return knex('photoclasses')
-                .whereRaw('photoClassId = ?', [classId])
+            return knex('vnpsclasses')
+                .whereRaw('classId = ?', [classId])
                 .delete()
                 .then(roweffected => {
                     return roweffected

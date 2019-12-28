@@ -387,12 +387,12 @@ function apiRouter(express, database, logger) {
             log.levels('dcvnpslog',logLevel.ERROR)
             log.error({id: req.id, err: err},'Error deleting announcement');
             return res.status(500).json(err.message);
-        })        ;
+        }) ;
     });
-    router.get('/photoclasses/:classLevel?', (req, res) => {
-        const classLevel = req.params.classLevel || null;
-        // console.log(`classs level ${classLevel? classLevel: 'NULL'}`);
-        return database.readPhotoClasses(classLevel)
+    router.get('/photoclasses/:classId?', (req, res) => {
+        const classId = req.params.classId || null;
+        // console.log(`classs level ${classId? classId: 'NULL'}`);
+        return database.readPhotoClasses(classId)
             .then(data => {
                 return res.status(200).json(data);
             })

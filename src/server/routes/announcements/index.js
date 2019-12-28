@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const AnnouncementsService = require('../../dataAccess/announcementsService');
 
 module.exports = (express, config) => {
@@ -9,7 +9,9 @@ module.exports = (express, config) => {
     const bcrypt = config.bcrypt;
     const log = config.logger;
     const logLevel = config.logLevel;
+    const uuidv4 = config.uuidv4;
     const router = express.Router();
+
     router.get('/:announceId?', (req, res) => {
         // console.log(req.auth);
         const announceId = req.params.announceId || null;
@@ -29,7 +31,9 @@ module.exports = (express, config) => {
         try {
             // const ancmntuuid = uuidv4();
             let ancmnt = req.body;
-            ancmnt.announcementId = uuidv4();
+            if(!ancmnt.announcementId){
+                ancmnt.announcementId = uuidv4();
+            }
             ancmnt.postedUserId = req.auth.userid;
             ancmnt.postedDate = new Date();
             ancmnt.updatedUserId = req.auth.userid;
@@ -39,7 +43,7 @@ module.exports = (express, config) => {
             // console.log(jData);
             return res.status(200).json(jData[0]);
         }
-        catch (error) {
+        catch (err) {
             // console.log(error);
             log.levels('dcvnpslog', logLevel.ERROR)
             log.error({ id: req.id, err: err }, 'Error creating announcement');
@@ -56,7 +60,7 @@ module.exports = (express, config) => {
             const result = await announcementsService.updateAnnouncements(ancmnt);
             return res.status(200).json(ancmnt);
         }
-        catch (error) {
+        catch (err) {
             // console.log(error);
             log.levels('dcvnpslog', logLevel.ERROR)
             log.error({ id: req.id, err: err }, 'Error updating announcement');

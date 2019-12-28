@@ -1,7 +1,9 @@
+const uuidv4 = require('uuid/v4');
 const checkJwt = require('express-jwt');
 const userRouter = require('./admin/user')
 const commonRouter = require('./commons');
 const ancmntRouter = require('./announcements');
+const vnpsClassesRouter = require('./vnpsclasses');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -18,7 +20,7 @@ module.exports = (express, config) => {
     if(!config){
         throw new Error('Route Handler missing config object');
     }
-
+    config.uuidv4 = uuidv4;
     const log = config.logger;
     const router = express.Router();
 
@@ -64,6 +66,7 @@ module.exports = (express, config) => {
     router.use('/admin/user', userRouter(express, config));
     router.use('/commons', commonRouter(express, config));
     router.use('/announcements', ancmntRouter(express, config));
+    router.use('/vnpsclasses',vnpsClassesRouter(express, config));
     // url:/api/
     return router;
 }

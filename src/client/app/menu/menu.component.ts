@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
+  public level1id: string;
   public mClasses: Array<any>;
   public hidden = false;
   constructor(
@@ -35,6 +36,9 @@ export class MenuComponent implements OnInit {
       this.api.get('photoclassmenu')
       .subscribe( data => {
           this.mClasses = data;
+          const level1 = this.mClasses.find( c =>c.level ==='level1');
+          this.level1id = level1.id;
+          // console.log(this.mClasses);
       },
       err => {
         console.log(err);

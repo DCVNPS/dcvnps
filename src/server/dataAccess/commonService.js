@@ -72,20 +72,46 @@ module.exports = (config) => {
             })
             .catch(error => { throw error; });
     }
+    function getVnpsClassMenu(){
+        return mySQL('vnpsclasses')
+        .select({id:'classId', level: 'classLevel', description: 'classLevelDesc'})
+        .orderBy('classOrder')
+        .then( result => {
+            return result;
+        })
+        .catch( err =>{
+            throw err;
+        })
+    }
+    async function uuid(){
+        try {
+            const data = await mySQL.raw('select uuid() as uuid');
+            const jsonString = JSON.stringify(data);
+            const jsonValue = JSON.parse(jsonString);
+            return jsonValue[0][0];
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        };
+    }
+    function getStates(){
+        return mySQL('states')
+        .select('stateCode','description')
+        .orderBy('description')
+        .then((data)=>{
+            // console.log(data);
+            return data;
+        })
+        .catch( err =>{
+            throw err;
+        })
+    }
     return {
-        uuid: async () => {
-            try {
-                const data = await mySQL.raw('select uuid() as uuid');
-                const jsonString = JSON.stringify(data);
-                const jsonValue = JSON.parse(jsonString);
-                return jsonValue[0][0];
-            }
-            catch (error) {
-                console.log(error);
-                throw error;
-            };
-        },
-        authenticate: authenticate,
-        changePassword: changePassword
+        uuid,
+        getStates,
+        getVnpsClassMenu, 
+        authenticate,
+        changePassword
     }
 }

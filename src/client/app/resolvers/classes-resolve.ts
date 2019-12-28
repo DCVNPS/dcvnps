@@ -13,8 +13,8 @@ export class ClassesResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve(route: ActivatedRouteSnapshot):  Observable<any>|Promise<any>|any {
-        const classLevel = route.paramMap.get('level');
-        this.apiEndpoint = (classLevel)?`photoclasses/${classLevel}`:`photoclases`;
+        const classid = route.paramMap.get('classid');
+        this.apiEndpoint = (classid)?`photoclasses/${classid}`:`photoclasses`;
         // this.apiEndpoint = 'photoclasses';
         return this.api.get(this.apiEndpoint);
     }

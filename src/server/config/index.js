@@ -24,6 +24,7 @@ const log = bunyan.createLogger({
     streams: [
         { stream: process.stdout, level: 'info'},
         {
+            level: 'debug',
             name: 'dcvnpslog',
             path: `${rootdir}/logs/dcvnps_error.log`,
             type: 'rotating-file',
