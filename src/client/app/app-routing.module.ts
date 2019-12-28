@@ -117,7 +117,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'photoclasses/:classid',
+    path: 'photoclasses/:classlevel',
     component: PhotoClassesComponent,
     resolve: {
       classesData: ClassesResolve,

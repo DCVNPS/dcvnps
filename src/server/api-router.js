@@ -389,25 +389,41 @@ function apiRouter(express, database, logger) {
             return res.status(500).json(err.message);
         }) ;
     });
-    router.get('/photoclasses/:classId?', (req, res) => {
-        const classId = req.params.classId || null;
-        // console.log(`classs level ${classId? classId: 'NULL'}`);
-        return database.readPhotoClasses(classId)
+    router.get('/classes/bylevel/:classlevel?', (req, res) => {
+        const classlevel = req.params.classlevel || null;
+        console.log(`classs level ${classlevel? classlevel: 'NULL'}`);
+        return database.readClassesByLevel(classlevel)
             .then(data => {
                 return res.status(200).json(data);
             })
             .catch(err => {
                 log.levels('dcvnpslog',logLevel.ERROR)
-                log.error({id: req.id, err: err},'Error getting class level');
+                log.error({id: req.id, err: err},`Error getting class of level ${classlevel}`);
                    return res.status(500).json(err.message);
             })
     });
 
-    router.post('/photoclasses', async (req, res) => {
+    router.get('/classes/byid/:classid?', (req, res) => {
+        const classid = req.params.classid || null;
+        // console.log(`classs level ${classid? classid: 'NULL'}`);
+        return database.readClassesById(classid)
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog',logLevel.ERROR)
+                log.error({id: req.id, err: err},`Error getting class with id ${classid}`);
+                   return res.status(500).json(err.message);
+            })
+    });
+
+    router.post('/classes', async (req, res) => {
         try {
             // const ancmntuuid = uuidv4();photoclass
             let photoclass = req.body;
-            photoclass.photoClassId = uuidv4();
+            if(!photoclass.photoClassId){
+                photoclass.photoClassId = uuidv4();
+            }
             photoclass.postedUserId = req.auth.userid;
             photoclass.postedDate = new Date();
             photoclass.updatedUserId = req.auth.userid;
@@ -425,7 +441,7 @@ function apiRouter(express, database, logger) {
         }
     });
 
-    router.put('/photoclasses', async (req, res) => {
+    router.put('/classes', async (req, res) => {
         try {
             const photoclass = req.body;
             photoclass.updatedUserId = req.auth.userid;
@@ -442,12 +458,30 @@ function apiRouter(express, database, logger) {
         }
     });
 
-    router.delete('/photoclasses/:classid', async (req, res) => {
+    router.delete('/classes/byid/:classid', async (req, res) => {
         const classid = req.params.classid || null;
         console.log(`delete announcement with id ${announceId}`);
         try {
             if (classid) {
-                const result = await database.deletePhotoClasses(classid);
+                const result = await database.deleteClassesById(classid);
+                return res.status(200).json(`${result} row(s) deleted.`);
+            } else {
+                return res.status(500).json('classid is not null');
+            }
+        }
+        catch (err) {
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting announcement');
+            return res.status(500).json(err.message);
+        }
+    });
+
+    router.delete('/classes/bylevel/:classlevel', async (req, res) => {
+        const classlevel = req.params.classlevel || null;
+        console.log(`delete announcement with id ${classlevel}`);
+        try {
+            if (classid) {
+                const result = await database.deleteClassesByLevel(classlevel);
                 return res.status(200).json(`${result} row(s) deleted.`);
             } else {
                 return res.status(500).json('classid is not null');

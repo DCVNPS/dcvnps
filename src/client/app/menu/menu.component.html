@@ -4,35 +4,43 @@
     <i class="small home icon"></i>
     <p>Home</p>
   </a>
-  <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
-    <i class="small bullhorn icon"></i>
-    <p>Announcements</p>
-  </a>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['photoclasses',level1id]">
+      <a class="item">
         <i class="small book icon"></i>
-        <div class="text">Photography Classes</div>
+        <div class="text">Vnps Classes</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <a class="item" *ngFor="let c of mClasses" [routerLink]="['photoclasses',c.id]">{{c.description}}</a>
+        <a class="item" *ngFor="let c of mClasses" [routerLink]="['photoclasses',c.level]">{{c.description}}</a>
       </div>
     </div>
   </div>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['galleries']">
+      <a class="item">
         <i class="image icon"></i>
         <div class="text">Galleries</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <!-- <a class="item" [routerLink]="['galleries']">All Galleries</a> -->
+        <a class="item" [routerLink]="['galleries']">All Galleries</a>
         <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery',g]">{{g}}</a>
       </div>
     </div>
   </div>
+  <div class="item" [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item" [routerLink]="['announcements']">
+        <i class="small bullhorn icon"></i>
+        <div class="text">Announcements</div>
+      </a>
+    </div>
+  </div>
+  <!-- <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
+    <i class="small bullhorn icon"></i>
+    <p>Announcements</p>
+  </a> -->
   <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
     <i class="small comments icon"></i>
     About Us</a>

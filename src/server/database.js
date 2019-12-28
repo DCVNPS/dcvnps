@@ -687,7 +687,7 @@
                     throw err;
                 })
         },
-        readPhotoClasses(classId) {
+        readClassesById(classId) {
             return knex({ a: 'vnpsclasses' })
                 .select({
                     classId: 'a.classId',
@@ -715,9 +715,48 @@
                     throw err;
                 });
         },
-        deletePhotoClasses(classId) {
+        readClassesByLevel(classlevel) {
+            return knex({ a: 'vnpsclasses' })
+                .select({
+                    classId: 'a.classId',
+                    classLevel: 'a.classLevel',
+                    classLevelDesc: 'a.classLevelDesc',
+                    classOrder: 'a.classOrder',
+                    classDescription: 'a.classDescription',
+                    prerequisite:'a.prerequisite',
+                    curriculum:'a.curriculum',
+                    instructors:'a.instructors',
+                    postedUserId: 'a.postedUserId',
+                    postedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                    postedDate: 'a.createdDate',
+                    updatedUserId: 'a.updatedUserId',
+                    updatedBy: knex.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                    updatedDate: 'a.updatedDate'
+                })
+                .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classlevel])
+                .orderBy('classOrder')
+                .then(data => {
+                    return data;
+                })
+                .catch(err => {
+                    console.log(err);
+                    throw err;
+                });
+        },
+        deleteClassesById(classId) {
             return knex('vnpsclasses')
                 .whereRaw('classId = ?', [classId])
+                .delete()
+                .then(roweffected => {
+                    return roweffected
+                })
+                .catch(err => {
+                    throw err;
+                });
+        },
+        deleteClassesByLevel(classlevel) {
+            return knex('vnpsclasses')
+                .whereRaw('classLevel = ?', [classlevel])
                 .delete()
                 .then(roweffected => {
                     return roweffected

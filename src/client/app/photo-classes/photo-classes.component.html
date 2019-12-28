@@ -23,7 +23,7 @@
   <div class="stretched row">
     <div class="three wide column">
       <div class="ui vertical fluid tabular menu borderless">
-        <a class="item" *ngFor="let m of classMenus" [routerLink]="['../',m.id]"
+        <a class="item" *ngFor="let m of classMenus" [routerLink]="['../',m.level]"
           [routerLinkActive]="['active']">{{m.description}}</a>
       </div>
     </div>
