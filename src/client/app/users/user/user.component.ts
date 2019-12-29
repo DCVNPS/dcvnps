@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators, Form } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { User } from '../../models/user-model';
 
 @Component({
@@ -10,49 +10,37 @@ import { User } from '../../models/user-model';
 export class UserComponent implements OnInit {
   private user: User;
   public userForm: FormGroup;
-  private userName: FormControl;
-  private lastName: FormControl;
-  private firstName: FormControl;
-  private password: FormControl;
+  // private userName: FormControl;
+  // private lastName: FormControl;
+  // private firstName: FormControl;
+  // private password: FormControl;
   // private confirmPassword: FormControl;
-  private roleCode: FormControl;
+  // private roleCode: FormControl;
   public formType:string;
   private roles: Object = {};
   @Input() config: Object = {};
   @Output() newUserCreated: EventEmitter <User> = new EventEmitter<User>();
   @Output() userUpdated: EventEmitter <User> = new EventEmitter<User>();
-  constructor() {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    // console.log(this.config);
     this.roles = this.config['roles'] || null;
-    // console.log(this.roles);
     this.user = this.config['user'] || null;
     this.formType = this.config['formType'] ||  'newUser';
-    console.log(this.formType);
-    this.createControls();
-    this.createForm();
+    this.buildForm();
+    console.log(this.f);
   }
 
-  createForm() {
-    this.userForm = new FormGroup({
-      firstName: this.firstName,
-      lastName: this.lastName,
-      userName: this.userName,
-      password: this.password,
-      // confirmPassword: this.confirmPassword,
-      roleCode: this.roleCode 
-    });
-  }
-
-  createControls() {
-    this.firstName = new FormControl('', Validators.required);
-    this.lastName = new FormControl('', Validators.required);
-    this.userName = new FormControl('', [Validators.required, Validators.email]);
-    this.password = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    // this.confirmPassword = new FormControl('', [Validators.required, Validators.minLength(8)]);
-    this.roleCode = new FormControl('', Validators.required);
+  buildForm(){
+    this.userForm = this.formBuilder.group({
+      firstName: this.formBuilder.control(null, [Validators.required]),
+      lastName: this.formBuilder.control(null,[Validators.required]),
+      email: this.formBuilder.control(null, [Validators.required, Validators.email]),
+      password: this.formBuilder.control(null, [Validators.required, Validators.minLength(8)]),
+      confirmPassword: this.formBuilder.control(null, [Validators.required, Validators.minLength(8)]),
+      roleCode: this.formBuilder.control(null, [Validators.required])
+    })
   }
 
   resetForm() {

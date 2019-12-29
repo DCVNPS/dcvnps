@@ -11,7 +11,7 @@ export class RoleResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve():  Observable<any>|Promise<any>|any {
-        const apiEndpoint = 'roles';
+        const apiEndpoint = 'commons/roles';
         return this.api.get(apiEndpoint);
     }
 }

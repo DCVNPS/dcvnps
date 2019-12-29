@@ -73,7 +73,7 @@ export class ApiService {
         statusText:  jerror.error
       };
       console.log(error);
-      if( error.statusText === "jwt expired"){
+      if( error.statusText.message === "jwt expired"){
         this.auth.logout();
       } else {
         return throwError(error);
@@ -82,7 +82,7 @@ export class ApiService {
   }
 
   upload(imageInfo: ImageInfo): Observable<boolean> {
-    const uploadURL = `${this.baseUrl}/upload/${imageInfo.gallery}/${imageInfo.year}`;
+    const uploadURL = `${this.baseUrl}/galleries/upload/${imageInfo.gallery}/${imageInfo.year}`;
     const formData = new FormData();
     formData.append('file', imageInfo.imgFile);
     formData.append('galleryId', imageInfo.galleryid);

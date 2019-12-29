@@ -22,6 +22,17 @@ module.exports = (express, config) => {
                 return res.status(500).json({ error: err.message });
             });
     });
+    router.get('/roles', (req, res) => {
+        return commonService.getRoles()
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+             log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error getting roles');
+            return res.status(500).json(err.message);
+            });
+    });
     router.get('/states', (req, res) =>{
         commonService.getStates()
         .then( data =>{
@@ -37,7 +48,7 @@ module.exports = (express, config) => {
     router.post('/authenticate', (req, res) => {
         const user = req.body;
         // console.log(user);
-        commonService.authenticate({ username: user.username, password: user.password })
+        commonService.authenticate({ email: user.email, password: user.password })
             .then((result) => {
                 if (result) {
                     const roleCode = result.authuser.roleCode;

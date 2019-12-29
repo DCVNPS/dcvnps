@@ -9,30 +9,31 @@ module.exports = (config) => {
     const bcrypt = config.bcrypt;
     const mySQL = config.mySQL;
 
-    function authenticate({ username, password }) {
+    function authenticate({ email, password }) {
         let response = undefined;
         return mySQL('users')
-            .whereRaw('userName=?', [username])
-            .first('userId', 'userName', 'password', 'roleCode')
+            .whereRaw('email=?', [email])
+            .first('userId', 'email', 'password', 'roleCode')
             .then((user) => {
                 if (!user) {
                     return response = {
                         success: false,
                         status: 401,
-                        authmsg: `User  Not Found -- ${username} .`,
+                        authmsg: `User  Not Found -- ${email} .`,
                         authuser: undefined
                     };
                 }
+                // console.log(user);
                 const pwdMatch = bcrypt.compareSync(password, user.password);
                 // console.log({match: pwdMatch,   userpwd: user.password, inpwd:password});
                 if (pwdMatch) {
-                    response = {
+                    return response = {
                         success: true,
                         status: 200,
                         authmsg: 'Authenticate Success',
                         authuser: {
                             userId: user.userId,
-                            userName: user.userName,
+                            userName: user.email,
                             roleCode: user.roleCode
                         }
                     };
@@ -40,12 +41,15 @@ module.exports = (config) => {
                     throw new Error('ERROR 1045 (28000): Invalid username/password.')
                 }
             })
-            .catch((err) => { throw err; });
+            .catch((err) => {
+                console.log(err);
+                throw err; 
+            });
     }
 
-    function changePassword(userName, oldPassword, encryptedNewPassword) {
+    function changePassword(email, oldPassword, encryptedNewPassword) {
         // console.log(`changePassword DB ${userName}  -- ${oldPassword} -- ${encryptedNewPassword}`);
-        return authenticate({ username: userName, password: oldPassword })
+        return authenticate({ email: email, password: oldPassword })
             .then(res => {
                 if (res.success) {
                     // console.log('chagne password authentication success');
@@ -95,6 +99,14 @@ module.exports = (config) => {
             throw error;
         };
     }
+    function getRoles() {
+        return mySQL('roles')
+            .select({ roleCode: 'roleCode', roleDescription: 'roleDescription' })
+            .then(data => { return data; })
+            .catch(err => {
+                throw err;
+            });
+    }
     function getStates(){
         return mySQL('states')
         .select('stateCode','description')
@@ -109,6 +121,7 @@ module.exports = (config) => {
     }
     return {
         uuid,
+        getRoles,
         getStates,
         getVnpsClassMenu, 
         authenticate,

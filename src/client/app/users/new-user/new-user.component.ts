@@ -20,12 +20,12 @@ export class NewUserComponent implements OnInit {
     this.roles = this.route.snapshot.data['roles'];
     this.user = new User(null, null, null, null, null, null, null, null, null, null);
     this.userConfig = { user: this.user, roles: this.roles, formType: 'newUser' };
-    // console.log(this.userConfig);
+    console.log(this.userConfig);
   }
 
   onNewUserCreated(user: User) {
     console.log(user);
-    const endPoint = "users";
+    const endPoint = "admin/user";
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.api.post(endPoint, user, headers)

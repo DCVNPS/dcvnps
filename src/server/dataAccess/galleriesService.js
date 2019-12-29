@@ -5,6 +5,31 @@ module.exports = (config) => {
     }
     const mySQL = config.mySQL;
 
+    function insertGalleryPhoto(galleryPhotoId, galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate) {
+        var response;
+        return mySQL('galleryphotos').insert({
+            galleryPhotoId,
+            galleryId,
+            photo,
+            portrait,
+            author,
+            year,
+            updateUser,
+            createdDate,
+            updatedDate
+        })
+            .then((result) => {
+                response = {
+                    success: true,
+                    galleryPhotoId: galleryPhotoId
+                };
+                return response;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
+
     function readGalleries(galleryId) {
         return mySQL('galleries')
             .select('galleryId', 'gallery', 'profilePhoto', 'updateUser', 'createdDate', 'updatedDate')
@@ -202,6 +227,7 @@ module.exports = (config) => {
     }
 
     return {
+        insertGalleryPhoto,
         readGalleries,
         getPhotoByGalleryId,
         getPhotoByGalleryName,

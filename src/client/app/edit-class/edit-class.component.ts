@@ -34,7 +34,7 @@ export class EditClassComponent implements OnInit {
   }
 
   buildForm(){
-    this.api.get('photoclassmenu')
+    this.api.get('commons/vnpsclassmenu')
       .subscribe(data => {
         this.mClasses = data;
         // console.log(this.mClasses);
@@ -68,7 +68,7 @@ export class EditClassComponent implements OnInit {
   }
   onClassChange(event) {
     // const apiEnpoint = `classes/bylevel/${event.level}`;
-    const apiEnpoint = `classes/byid/${event.id}`;
+    const apiEnpoint = `vnpsclasses/byid/${event.id}`;
     // console.log(apiEnpoint);
     this.api.get(apiEnpoint)
       .subscribe(data => {

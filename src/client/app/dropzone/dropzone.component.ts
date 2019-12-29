@@ -31,28 +31,22 @@ export class DropzoneComponent implements OnInit {
   public showBackMenu: false;
   public galleries: Array<Gallery> = [];
   private selectedGallery: Gallery;
-  private upldGallery: FormControl;
-  private upldYear: FormControl;
   public uploadForm: FormGroup;
   public years: Array<string>;
   private selectedYear: string;
   private photo: Photo;
   private fileNamePattern = '^[a-z0-9]+\\.[a-z0-9]+\\_.*\\.[a-z]{3}$';
 
-  @Input() private config: any = { 'gallery': undefined, 'year': undefined, 'showBackMenu': false };
+  @Input() config: any = {};
   @Output() photoAdded: EventEmitter<Photo> = new EventEmitter<Photo>();
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
     private regexSrvc: RegexService) {
-    // Get the galleries list from database
-    this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
-    // this.selectedYear = (new Date()).getFullYear().toString();
-    this.upldGallery = new FormControl(this.selectedGallery, Validators.required);
-    this.upldYear = new FormControl(this.selectedYear, Validators.required);
     this.uploadForm = this.formBuilder.group({
-      upldGallery: this.upldGallery,
-      yearPicker: this.upldYear
+      upldGallery: this.formBuilder.control(null, Validators.required),
+      upldYear: this.formBuilder.control(null, Validators.required)
     });
   }
 
@@ -80,24 +74,24 @@ export class DropzoneComponent implements OnInit {
     return gText;
   }
   ngOnInit() {
-    // console.log(this.config);
     const galleryText = this.config.gallery || this.selectedGalleryText();
     this.selectedYear = this.config.year || (new Date()).getFullYear().toString();
-    this.showBackMenu = this.config.showBackMenu;
+    this.showBackMenu = this.config.showBackMenu || false;
+    this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
+    // Get the galleries list from database
     this.api.get('galleries')
-      .subscribe(async (data) => {
-        this.galleries = await Array.from(data);
+      .subscribe((data) => {
+        this.galleries = data;
         this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);
         if (this.selectedGallery) {
-          console.log(this.selectedGallery);
-          this.upldGallery.setValue(this.selectedGallery);
-          this.upldGallery.disable({ onlySelf: true });
-        }
-        this.upldYear.setValue(this.selectedYear);
-        if (this.config.year) {
-          this.upldYear.disable({onlySelf: true})
+          this.uploadForm.controls.upldGallery.patchValue(this.selectedGallery);
+          this.uploadForm.controls.upldGallery.disable({ onlySelf: true });
         }
       });
+    if (this.config.year) {
+      this.uploadForm.controls.upldYear.patchValue(this.config.year);
+      this.uploadForm.controls.upldYear.disable({ onlySelf: true })
+    }
   }
 
   onFileChange(files: Array<File>) {
@@ -197,7 +191,7 @@ export class DropzoneComponent implements OnInit {
     this.validImages = [];
   }
 
-  uploadFile(imageInfo: ImageInfo) {
+  uploadFile(imageInfo: ImageInfo, index: number) {
     // console.log(this.selectedGallery);
     // const imageInfo = this.validImages[index];
     imageInfo.galleryid = this.selectedGallery.galleryId;
@@ -211,7 +205,9 @@ export class DropzoneComponent implements OnInit {
           this.photo = this.uploadResponse['photo'];
           if (this.photo) {
             // console.log(this.photo);
+            // upload succeeded, raise photoAdded event
             this.photoAdded.emit(this.photo);
+            this.validImages[index].uploaded = true;
           }
         },
         (err) => { this.error = err; }
@@ -219,8 +215,15 @@ export class DropzoneComponent implements OnInit {
   }
 
   uploadAllFiles() {
+    let i = 0;
     this.validImages.forEach(img => {
-      this.uploadFile(img);
+      if (!img.uploaded) {
+        this.uploadFile(img, i);
+      }
+      else {
+        console.log(`image ${img.filename} has been uploaded.`);
+      }
+      i++;
     });
   }
 
