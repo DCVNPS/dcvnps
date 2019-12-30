@@ -9,10 +9,10 @@ module.exports = (config) => {
     const bcrypt = config.bcrypt;
     const mySQL = config.mySQL;
 
-    function deleteByName(userName) {
-        return mySQL('users').where('userName', userName).delete()
+    function deleteByEmail(email) {
+        return mySQL('users').where('email', email).delete()
             .then((r) => {
-                console.log(`${r} rows effected. User ${userName} deleted.`);
+                console.log(`${r} rows effected. User ${email} deleted.`);
                 return { recordDelete: true };
             })
             .catch((err) => console.error(err));
@@ -25,11 +25,14 @@ module.exports = (config) => {
     }
 
     function createUser(user) {
-        console.log(user);
+        // console.log(user);
+        if (!user) {
+            throw new Error('createUser: user objec is undefined');
+        }
         return mySQL('users')
             .insert({
                 userId: user.userId,
-                userName: user.userName,
+                userName: user.email,
                 userSurname: user.userSurname,
                 userGivenName: user.userGivenName,
                 password: user.password,
@@ -62,9 +65,34 @@ module.exports = (config) => {
             });
     }
 
-    function selectByName(userName) {
+    function updateUser(user) {
+        if (!user) {
+            throw new Error('updateUser: user object is undefined.')
+        }
         return mySQL('users')
-            .whereRaw('userName = IFNULL(?, userName)', [userName])
+            .where({ userId: user.userId })
+            .update({
+                userName: user.email,
+                userSurname: user.userSurname,
+                userGivenName: user.userGivenName,
+                password: user.password,
+                roleCode: user.roleCode,
+                updatedUserId: user.updatedUserId,
+                updatedDate: user.updatedDate
+            })
+            .then((r) => {
+                console.log(`${r} record(s) updated.`);
+                return {recordUpdated: true};
+            })
+            .catch(err => {
+                console.log(err);
+                throw err;
+            })
+    }
+
+    function selectByEmail(email) {
+        return mySQL('users')
+            .whereRaw('email = IFNULL(?,email)', [email])
             .select()
             .then((users) => {
                 // console.log('Knex log getUserByName', JSON.stringify(users));
@@ -88,10 +116,11 @@ module.exports = (config) => {
             });
     }
     return {
-        deleteByName: deleteByName,
-        deleteById: deleteById,
-        createUser: createUser,
-        selectByName: selectByName,
-        selectById: selectById
+        deleteByEmail,
+        deleteById,
+        createUser,
+        updateUser,
+        selectByEmail,
+        selectById
     }
 }

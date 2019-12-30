@@ -1,7 +1,7 @@
 export class User {
     constructor(
         public userId: string,
-        public userName: string,
+        public email: string,
         public password: string,
         public userSurname: string,
         public userGivenName: string,
@@ -12,7 +12,7 @@ export class User {
         public updatedDate: Date
     ){};
 
-    public  fulName(){
+    public  fullName(){
         return `${this.userGivenName} ${this.userSurname}`;
       }
 }

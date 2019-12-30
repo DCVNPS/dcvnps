@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContactListComponent } from './contact-list/contact-list.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
@@ -29,6 +27,7 @@ import { ClassMenuResolve } from './resolvers/class-menu-resolve';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 import { StatesResolve } from './resolvers/states-resolve';
+import { SetPasswordComponent } from './users/set-password/set-password.component';
 
 const routes: Routes = [
   {
@@ -59,12 +58,11 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-    path: 'editusers',
+    path: 'edituser',
     component: EditUserComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     resolve:{
-      roles: RoleResolve,
-      users: UsersResolve
+      roles: RoleResolve
     },
     runGuardsAndResolvers: 'always'
   },
@@ -72,6 +70,11 @@ const routes: Routes = [
     path: 'changepassword',
     component: ChangePasswordComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'setpassword',
+    component: SetPasswordComponent
+    // canActivate: [AuthGuard]
   },
   // {
   //   path: 'newcontact',

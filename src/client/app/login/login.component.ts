@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit{
   get fromValues(){ return this.loginForm.value;}
 
   onSubmit() {
-    console.log(this.fromValues);
+    // console.log(this.fromValues);
     this.api.post('commons/authenticate', this.fromValues)
       .subscribe((data) => {
         if (data.type === HttpEventType.Response) {
