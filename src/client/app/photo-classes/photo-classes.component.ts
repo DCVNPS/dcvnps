@@ -47,7 +47,7 @@ export class PhotoClassesComponent implements OnInit, OnDestroy {
   initializeData() {
     this.data = this.route.snapshot.data.classesData;
     this.classMenus = this.route.snapshot.data.classMenu;
-    // console.log(this.data);
+    console.log(this.data);
     this.curClass = this.data[0];
     // console.log(this.classMenus);
   }

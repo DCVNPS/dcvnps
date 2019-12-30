@@ -13,7 +13,7 @@
           <option class="item" *ngFor="let g of galleries" [ngValue]="g">{{g.gallery|titlecase}}</option>
         </select>
         <label>Select Year</label>
-        <select formControlName="yearPicker" (ngModelChange) = "onYearSelectChanged($event)" class="menu" required>
+        <select formControlName="upldYear" (ngModelChange) = "onYearSelectChanged($event)" class="menu" required>
           <option class="item" *ngFor="let y of years" [ngValue]="y">{{y}}</option>
         </select>
       </div>
@@ -51,7 +51,7 @@
           </div>
           <div class="three wide column right aligned">
             <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
-            <button class=" mini ui positive basic button" (click)="uploadFile(img)" [disabled]="!uploadForm.valid">Upload</button>
+            <button class=" mini ui positive basic button" (click)="uploadFile(img, i)" [disabled]="!uploadForm.valid || img.uploaded">Upload</button>
           </div>
         </div>
       </div>

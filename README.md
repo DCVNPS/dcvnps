@@ -36,3 +36,4 @@ Different `npm` scripts for your workflow:
       2- run npm install --save @webcomponents/webcomponentsjs
         add to the end of polyfills.ts
         import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
+original start  "start:server": "node src/server/index.js",

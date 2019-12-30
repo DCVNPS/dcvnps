@@ -17,27 +17,30 @@ export class EditGalleryComponent implements OnInit {
   public author: string;
   public photos: Array<Photo> = [];
   private galleryData: Array<YearData> = [];
-  public year: string;
-  public level: string;
+  // public year: string;
+  // public level: string;
+  public dzconfig:any ={};
 
   constructor(
     private route: ActivatedRoute,
-    private api: ApiService) { }
+    private api: ApiService) 
+    { 
+      const parms = this.route.snapshot.params;
+      this.author = parms.author;
+      this.dzconfig={'gallery': parms.gallery, 'year': parms.year};
+      // console.log(this.dzconfig);
+      this.galleryData = this.route.snapshot.data.galleryData;
+      // console.log(this.galleryData);
+      this.photos = this.galleryData[0].authorData[0].photos;
+  
+    }
 
   ngOnInit() {
-    const parms = this.route.snapshot.params;
-    this.author = parms.author;
-    this.level = parms.gallery;
-    this.year = parms.year;
-    // console.log(parms);
-    this.galleryData = this.route.snapshot.data.galleryData;
-    // console.log(this.galleryData);
-    this.photos = this.galleryData[0].authorData[0].photos;
   }
 
   deletePhoto(img: Photo) {
     // console.log(img);
-    this.api.delete('deletephoto', img)
+    this.api.delete('galleries/deletephoto', img)
       .subscribe(res => {
         const delIndx = this.photos.indexOf(img);
         this.photos.splice(delIndx, 1);

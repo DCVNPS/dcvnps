@@ -17,4 +17,5 @@ export class ImageInfo {
   public year: string;
   public size: number;
   public portrait: boolean;
+  public uploaded: boolean = false;
 }

@@ -12,7 +12,7 @@ export class GalleriesResolve implements Resolve<Array<Gallery>> {
     constructor(private api: ApiService) {
     }
     resolve(route: ActivatedRouteSnapshot): Array<Gallery> {
-        const galleryId = route.paramMap.get('galleryId');
+        const galleryId = route.paramMap.get('galleryId') || null;
         return this.getGalleries(galleryId);
     }
     getGalleries(galleryId?): Array<Gallery> {

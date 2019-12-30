@@ -7,11 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
-
 import { MenuComponent } from './menu/menu.component';
-import { ContactListComponent } from './contact-list/contact-list.component';
-import { ContactComponent } from './contact/contact.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
@@ -53,21 +49,18 @@ import { AddAnnounceComponent } from './announcements/add-announcement/add-annou
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
-import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditClassComponent } from './edit-class/edit-class.component';
 import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
+import { SetPasswordComponent } from './users/set-password/set-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    ContactListComponent,
-    ContactComponent,
-    AddContactComponent,
     LoginComponent,
     HomeComponent,
     FooterComponent,
@@ -101,13 +94,13 @@ import { ClassRegistrationComponent } from './registrations/class-registration/c
     AnnouncementComponent,
     EditAnnouncementComponent,
     NewUserComponent,
-    UserComponent,
     EditUserComponent,
     ChangePasswordComponent,
     EditClassComponent,
     PhotoClassesComponent,
     CampingRegistrationComponent,
-    ClassRegistrationComponent
+    ClassRegistrationComponent,
+    SetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -9,10 +9,9 @@ import { PhotoClass } from '../models/photo-class';
   styleUrls: ['./edit-class.component.scss']
 })
 export class EditClassComponent implements OnInit {
-  private class: any;
   public mClasses: Array<any> = [];
   public classForm: FormGroup;
-  // public selectClass: FormControl;
+  public selectForm: FormGroup;
   public currentClass: PhotoClass;
   public showEdit: boolean = false;
   public tinyCurriculumInit = {
@@ -28,16 +27,14 @@ export class EditClassComponent implements OnInit {
     height: 200
   };
   constructor(private formBuilder: FormBuilder, private api: ApiService) {
-    this.classForm = this.formBuilder.group({
-      description: this.formBuilder.control(null),
-      prerequisite: this.formBuilder.control(null),
-      curriculum: this.formBuilder.control(null),
-      instructors: this.formBuilder.control(null)
-    });
+    this.buildForm();
   }
 
   ngOnInit() {
-    this.api.get('photoclassmenu')
+  }
+
+  buildForm(){
+    this.api.get('commons/vnpsclassmenu')
       .subscribe(data => {
         this.mClasses = data;
         // console.log(this.mClasses);
@@ -45,6 +42,15 @@ export class EditClassComponent implements OnInit {
         err => {
           console.log(err);
         });
+        this.classForm = this.formBuilder.group({
+          description: this.formBuilder.control(null),
+          prerequisite: this.formBuilder.control(null),
+          curriculum: this.formBuilder.control(null),
+          instructors: this.formBuilder.control(null)
+        });
+        this.selectForm = this.formBuilder.group({
+          selectClass: this.formBuilder.control(null)
+        });    
   }
 
   // convenience getter for easy access to form fields. Good for form validation.
@@ -53,6 +59,7 @@ export class EditClassComponent implements OnInit {
   // convenience getter for easy access to form values. Good for submit.
   get formValue() { return this.classForm.value; }
 
+  //Nice thing of Angular 6 and above. We can patch control's value.
   patchClassValues(classData) {
     this.classForm.controls.description.patchValue(classData.classDescription);
     this.classForm.controls.prerequisite.patchValue(classData.prerequisite);
@@ -60,7 +67,8 @@ export class EditClassComponent implements OnInit {
     this.classForm.controls.instructors.patchValue(classData.instructors);
   }
   onClassChange(event) {
-    const apiEnpoint = `photoclasses/${event.level}`;
+    // const apiEnpoint = `classes/bylevel/${event.level}`;
+    const apiEnpoint = `vnpsclasses/byid/${event.id}`;
     // console.log(apiEnpoint);
     this.api.get(apiEnpoint)
       .subscribe(data => {
@@ -80,7 +88,7 @@ export class EditClassComponent implements OnInit {
     this.currentClass.curriculum = this.formValue.curriculum;
     this.currentClass.instructors = this.formValue.instructors;
     // console.log(this.formValue);
-    this.api.put('photoclasses', this.currentClass)
+    this.api.put('classes', this.currentClass)
       .subscribe(success => {
         // console.log('update class successful');
       },
