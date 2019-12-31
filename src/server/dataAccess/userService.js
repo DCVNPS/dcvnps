@@ -82,7 +82,28 @@ module.exports = (config) => {
             })
             .then((r) => {
                 console.log(`${r} record(s) updated.`);
-                return {recordUpdated: true};
+                return { recordUpdated: true };
+            })
+            .catch(err => {
+                console.log(err);
+                throw err;
+            })
+    }
+
+    function setPassword(user) {
+        if (!user) {
+            throw new Error('updateUser: user object is undefined.')
+        }
+        return mySQL('users')
+            .where({ userId: user.userId })
+            .update({
+                password: user.password,
+                updatedUserId: user.updatedUserId,
+                updatedDate: user.updatedDate
+            })
+            .then((r) => {
+                console.log(`${r} record(s) updated.`);
+                return { recordUpdated: true };
             })
             .catch(err => {
                 console.log(err);
@@ -120,6 +141,7 @@ module.exports = (config) => {
         deleteById,
         createUser,
         updateUser,
+        setPassword,
         selectByEmail,
         selectById
     }
