@@ -20,18 +20,18 @@ export class EditUserComponent implements OnInit {
   public passwordMatched: boolean = true;
   private mUser: User;
   constructor(private formBuilder: FormBuilder, private api: ApiService, private route: ActivatedRoute) {
-    this.user = new User(
-      "30f16bf0-c98e-11e9-aa81-08002764505e",
-      "nguyen.valery@gmail.com",
-      "$2b$10$NdoqYyu2YWHeWo0RvaPicuMS0Eqo8anskRBbwy4bmhIFcJ4XBJEUu",
-      "nguyen",
-      "valery",
-      "LVL3ADM",
-      "7cb5e812-6eb2-11e9-8849-848f69b86260",
-      new Date("2019-08-28T12:20:16.000Z"),
-      "7cb5e812-6eb2-11e9-8849-848f69b86260",
-      new Date("2019-08-28T12:20:16.000Z")
-    );
+    // this.user = new User(
+    //   "30f16bf0-c98e-11e9-aa81-08002764505e",
+    //   "nguyen.valery@gmail.com",
+    //   "$2b$10$NdoqYyu2YWHeWo0RvaPicuMS0Eqo8anskRBbwy4bmhIFcJ4XBJEUu",
+    //   "nguyen",
+    //   "valery",
+    //   "LVL3ADM",
+    //   "7cb5e812-6eb2-11e9-8849-848f69b86260",
+    //   new Date("2019-08-28T12:20:16.000Z"),
+    //   "7cb5e812-6eb2-11e9-8849-848f69b86260",
+    //   new Date("2019-08-28T12:20:16.000Z")
+    // );
   }
 
   ngOnInit() {

@@ -4,7 +4,7 @@ const bunyan = require('bunyan');
 const appname = 'dcvnps';
 const rootdir = path.normalize(`${__dirname}/../`);
 const bcrypt = require('bcrypt');
-console.log({'rootdir': rootdir});
+// console.log({'rootdir': rootdir});
 
 const logLevel = {
     TRACE: 10,

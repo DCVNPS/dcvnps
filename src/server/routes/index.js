@@ -29,17 +29,6 @@ module.exports = (express, config) => {
     // User expresss json web token check express-jwt to guard the angular routes
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-        //     .unless({
-        //         path:
-        //             [
-        //                 '/api/authenticate',
-        //                 '/api/boardmembers',
-        //                 '/api/programs',
-        //                 { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-        //                 { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-        //                 { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
-        //             ]
-        //     })
     );
 
     router.use((err, req, res, next) => {

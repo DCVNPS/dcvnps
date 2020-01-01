@@ -6,13 +6,13 @@
   </a>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['photoclasses','level1']">
+      <a class="item" [routerLink]="['vnpsclasses','level1']">
         <i class="small book icon"></i>
         <div class="text">Vnps Classes</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <a class="item" *ngFor="let c of mClasses" [routerLink]="['photoclasses',c.level]">{{c.description}}</a>
+        <a class="item" *ngFor="let c of mClasses" [routerLink]="['vnpsclasses',c.level]">{{c.description}}</a>
       </div>
     </div>
   </div>

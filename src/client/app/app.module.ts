@@ -18,7 +18,6 @@ import { ElementDimensionsDirective } from './directives/element-dimensions.dire
 import { ImageRolloverDirective } from './directives/image-rollover.directive';
 import { SiteHeaderComponent } from './site-header/site-header.component';
 import { GalleriesComponent } from './galleries/galleries.component';
-import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -52,11 +51,11 @@ import { NewUserComponent } from './users/new-user/new-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditClassComponent } from './edit-class/edit-class.component';
-import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { VnpsClassesComponent } from './vnps-classes/vnps-classes.component';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 import { SetPasswordComponent } from './users/set-password/set-password.component';
-
+// import { httpInterceptorProviders } from './http-interceptors/index';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +67,6 @@ import { SetPasswordComponent } from './users/set-password/set-password.componen
     ImageRolloverDirective,
     SiteHeaderComponent,
     GalleriesComponent,
-    ProgramsComponent,
     AnnouncementsComponent,
     AboutusComponent,
     QuickTestComponent,
@@ -97,7 +95,7 @@ import { SetPasswordComponent } from './users/set-password/set-password.componen
     EditUserComponent,
     ChangePasswordComponent,
     EditClassComponent,
-    PhotoClassesComponent,
+    VnpsClassesComponent,
     CampingRegistrationComponent,
     ClassRegistrationComponent,
     SetPasswordComponent
@@ -120,7 +118,8 @@ import { SetPasswordComponent } from './users/set-password/set-password.componen
     DomService,
     ModalService,
     GalleryPhotosResolve,
-    GalleriesResolve
+    GalleriesResolve,
+    // httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   entryComponents: []

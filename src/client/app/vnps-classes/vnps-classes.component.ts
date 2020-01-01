@@ -8,11 +8,11 @@ import { PhotoClass } from '../models/photo-class';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-photo-classes',
-  templateUrl: './photo-classes.component.html',
-  styleUrls: ['./photo-classes.component.scss']
+  selector: 'app-vnps-classes',
+  templateUrl: './vnps-classes.component.html',
+  styleUrls: ['./vnps-classes.component.scss']
 })
-export class PhotoClassesComponent implements OnInit, OnDestroy {
+export class VnpsClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
   public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
@@ -47,7 +47,7 @@ export class PhotoClassesComponent implements OnInit, OnDestroy {
   initializeData() {
     this.data = this.route.snapshot.data.classesData;
     this.classMenus = this.route.snapshot.data.classMenu;
-    console.log(this.data);
+    // console.log(this.data);
     this.curClass = this.data[0];
     // console.log(this.classMenus);
   }

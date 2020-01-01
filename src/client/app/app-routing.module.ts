@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { GalleriesComponent } from './galleries/galleries.component';
-import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -19,15 +18,15 @@ import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { RoleResolve } from './resolvers/role-resolve';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { UsersResolve } from './resolvers/users-resolve';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { VnpsClassesComponent } from './vnps-classes/vnps-classes.component';
 import { ClassesResolve } from './resolvers/classes-resolve';
 import { ClassMenuResolve } from './resolvers/class-menu-resolve';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 import { StatesResolve } from './resolvers/states-resolve';
 import { SetPasswordComponent } from './users/set-password/set-password.component';
+import { UsersResolve } from './resolvers/users-resolve';
 
 const routes: Routes = [
   {
@@ -43,11 +42,6 @@ const routes: Routes = [
       galleries: GalleriesResolve
     }
   },
-  // {
-  //   path: 'contacts',
-  //   component: ContactListComponent,
-  //   canActivate: [AuthGuard]
-  // },
   {
     path: 'newuser',
     component: NewUserComponent,
@@ -62,7 +56,8 @@ const routes: Routes = [
     component: EditUserComponent,
     canActivate: [AuthGuard],
     resolve:{
-      roles: RoleResolve
+      roles: RoleResolve,
+      user: UsersResolve
     },
     runGuardsAndResolvers: 'always'
   },
@@ -73,14 +68,9 @@ const routes: Routes = [
   },
   {
     path: 'setpassword',
-    component: SetPasswordComponent
-    // canActivate: [AuthGuard]
+    component: SetPasswordComponent,
+    canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'newcontact',
-  //   component: AddContactComponent,
-  //   canActivate: [AuthGuard]
-  // },
   {
     path: 'fileupload',
     component: DropzoneComponent,
@@ -120,8 +110,8 @@ const routes: Routes = [
     }
   },
   {
-    path: 'photoclasses/:classlevel',
-    component: PhotoClassesComponent,
+    path: 'vnpsclasses/:classlevel',
+    component: VnpsClassesComponent,
     resolve: {
       classesData: ClassesResolve,
       classMenu: ClassMenuResolve

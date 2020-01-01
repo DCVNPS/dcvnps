@@ -7,10 +7,6 @@ require('dotenv').config({ path: envPath });
 const config = require('../config');
 const DB = require('../dataAccess/database')(config);
 config.mySQL = DB.knex;
-// const createExpressApp = require('../app');
-// createExpressApp(config).listen(process.env.PORT, () =>{
-//     console.log(`Listening on port: ${process.env.PORT} ...`);
-// });
 
 const http = require('http');
 const App = require('../app');
@@ -55,8 +51,9 @@ function onError(error) {
     const bind = typeof addr === 'string'
       ? `pipe ${addr}`
       : `port ${addr.port}`;
-  
-    log.info(`${config.applicationName} listening on ${bind}`);
+      const msg = `${config.applicationName} listening on ${bind}`;
+      console.log(msg);
+      log.info(msg);
   }
 /************ End Server events handling *************/
 server.listen(port);

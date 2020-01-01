@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { ApiService } from '../services/api.service';
@@ -7,15 +8,13 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 
-export class ClassesResolve implements Resolve<Observable<any>> {
-    private apiEndpoint: string;
+export class EmailsResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve(route: ActivatedRouteSnapshot):  Observable<any>|Promise<any>|any {
-        const classlevel = route.paramMap.get('classlevel');
-        this.apiEndpoint = (classlevel)?`vnpsclasses/bylevel/${classlevel}`:`vnpsclasses/bylevel`;
-        // console.log(this.apiEndpoint);
-        return this.api.get(this.apiEndpoint);
+        const userid = route.params.userid || null;
+        const apiEndpoint = `admin/user/${userid}`;
+        console.log(apiEndpoint);
+        return this.api.get(apiEndpoint);
     }
-
 }

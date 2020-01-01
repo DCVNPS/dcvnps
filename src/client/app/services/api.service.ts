@@ -3,20 +3,25 @@ import { Http, Headers, Request, RequestOptions, RequestMethod, Response } from 
 import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { throwError, Observable } from 'rxjs';
+import { throwError, Observable, pipe } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ImageInfo } from '../models/image-model';
 import { Gallery } from '../models/gallery.model';
+import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
+  private handleError: HandleError;
   private baseUrl = environment.apiUrl;
   private galleries: Array<Gallery> = [];
 
-  constructor(private http: Http, private httpClient: HttpClient, private auth: AuthService) { }
+  constructor(
+    private http: Http, 
+    private httpClient: HttpClient, 
+    private auth: AuthService) { }
 
   get(url: string, headers?: Headers) {
     return this.request(url, RequestMethod.Get, headers);
@@ -41,7 +46,7 @@ export class ApiService {
       headers = new Headers();
       headers.append('Content-Type', 'application/json');
     }
-    // headers.append('Authorization', `Bearer ${this.auth.getToken()}`);
+    // switch to use auth interceptor
     const authToken = this.auth.getToken() || environment.defaultAuthToken;
     headers.append('Authorization', `Bearer ${authToken}`);
 
