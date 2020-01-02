@@ -18,8 +18,8 @@ module.exports = (config) => {
                 if (!user) {
                     return response = {
                         success: false,
-                        status: 401,
-                        authmsg: `User  Not Found -- ${email} .`,
+                        code: 1329, // no data found
+                        authmsg: 'Invalid username/ password.',
                         authuser: undefined
                     };
                 }
@@ -29,7 +29,7 @@ module.exports = (config) => {
                 if (pwdMatch) {
                     return response = {
                         success: true,
-                        status: 200,
+                        code: 0,
                         authmsg: 'Authenticate Success',
                         authuser: {
                             userId: user.userId,

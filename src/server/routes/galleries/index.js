@@ -16,12 +16,13 @@ module.exports = (express, config) => {
         const galleryId = req.params.galleryId || null;
         galleriesService.readGalleries(galleryId)
             .then((data) => {
-                return res.json(data);
+                // console.log(data);
+                return res.status(200).json(data);
             })
             .catch((err) => {
                 log.levels('dcvnpslog',logLevel.ERROR)
                 log.error({id: req.id, err: err},`Error getting gallery ${galleryId}`);
-                return res.status(500);
+                return res.status(500).json(err.message);
             });
     });
     // Get photo of a gallery by a galleryId
@@ -30,7 +31,7 @@ module.exports = (express, config) => {
         // log.info({id:req.id, galleryId: galleryId},'request');
         galleriesService.getPhotoByGalleryId(galleryId)
             .then((data) => {
-                return res.json(data);
+                return res.status(200).json(data);
             })
             .catch((err) => {
                 log.levels('dcvnpslog',logLevel.ERROR);
@@ -48,7 +49,7 @@ module.exports = (express, config) => {
         // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
         galleriesService.getPhotoByGalleryName(gallery, year, author)
             .then((data) => {
-                return res.json(data);
+                return res.status(200).json(data);
             })
             .catch((err) => {
                 log.levels('dcvnpslog',logLevel.ERROR);

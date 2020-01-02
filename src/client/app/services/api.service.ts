@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Request, RequestOptions, RequestMethod, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable, pipe } from 'rxjs';
@@ -19,71 +18,52 @@ export class ApiService {
   private galleries: Array<Gallery> = [];
 
   constructor(
-    private http: Http, 
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private auth: AuthService) { }
 
-  get(url: string, headers?: Headers) {
-    return this.request(url, RequestMethod.Get, headers);
+  get(url: string, headers?: HttpHeaders): Observable<any> {
+    return this.apiRequest('GET', url, {}, headers);
   }
 
-  post(url: string, body: Object, headers?: Headers) {
-    return this.request(url, RequestMethod.Post, body, headers);
+  post(url: string, body: Object, headers?: HttpHeaders) {
+    return this.apiRequest('POST', url, body, headers);
   }
 
-  put(url: string, body: Object, headers?: Headers) {
-    return this.request(url, RequestMethod.Put, body, headers);
+  put(url: string, body: Object, headers?: HttpHeaders) {
+    return this.apiRequest('PUT', url, body, headers);
   }
 
-  delete(url: string, body?: Object, headers?: Headers) {
-    return this.request(url, RequestMethod.Delete, body, headers);
+  delete(url: string, body?: Object, headers?: HttpHeaders): Observable<any> {
+    return this.apiRequest('DELETE', url, body, headers);
   }
 
-  // this acts as an intercepter
-  request(url: string, method: RequestMethod, body?: Object, reqHeaders?: Headers): Observable<any> {
-    let headers = reqHeaders;
-    if (!headers) {
-      headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-    }
-    // switch to use auth interceptor
-    const authToken = this.auth.getToken() || environment.defaultAuthToken;
-    headers.append('Authorization', `Bearer ${authToken}`);
-
-    const requestOptions = new RequestOptions({
-      url: `${this.baseUrl}/${url}`,
-      method: method,
-      headers: headers
-    });
-
-    if (body) {
-      // console.log(body);
-      requestOptions.body = body;
-    }
-
-    const request = new Request(requestOptions);
-    // console.log(requestOptions);
-    return this.http.request(request)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError((res: Response) => this.onRequestError(res))
-      );
-  }
-
-  onRequestError(res: Response) {
+  onRequestError(res) {
     if (res) {
-      const jerror = res.json();
+      // console.log(res);
+      const jerror = res.error;
       const error = {
         statusCode: res.status,
-        statusText:  jerror.error
+        statusText: jerror.authmsg
       };
-      console.log(error);
-      if( error.statusText.message === "jwt expired"){
+      // console.log(error);
+      if (error.statusText === "jwt expired") {
         this.auth.logout();
       } else {
         return throwError(error);
       }
     }
+  }
+
+  apiRequest(method: string, url: string, body?: Object, headers?: HttpHeaders): Observable<any> {
+    let httpHeaders = headers;
+    if (!httpHeaders) {
+      httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    const options = { body: body, headers: httpHeaders };
+    return this.httpClient.request(method, `${this.baseUrl}/${url}`, options)
+      .pipe(
+        catchError(error => this.onRequestError(error))
+      );
   }
 
   upload(imageInfo: ImageInfo): Observable<boolean> {

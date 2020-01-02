@@ -55,7 +55,7 @@ import { VnpsClassesComponent } from './vnps-classes/vnps-classes.component';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 import { SetPasswordComponent } from './users/set-password/set-password.component';
-// import { httpInterceptorProviders } from './http-interceptors/index';
+import { httpInterceptorProviders } from './http-interceptors/index';
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +119,7 @@ import { SetPasswordComponent } from './users/set-password/set-password.componen
     ModalService,
     GalleryPhotosResolve,
     GalleriesResolve,
-    // httpInterceptorProviders
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   entryComponents: []

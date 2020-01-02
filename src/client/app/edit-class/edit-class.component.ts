@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { PhotoClass } from '../models/photo-class';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-class',
@@ -35,7 +36,12 @@ export class EditClassComponent implements OnInit {
 
   buildForm(){
     this.api.get('commons/vnpsclassmenu')
-      .subscribe(data => {
+    .pipe(
+      map(
+        (data: Array<any>) => data,
+        error => error
+      )
+    ).subscribe(data => {
         this.mClasses = data;
         // console.log(this.mClasses);
       },

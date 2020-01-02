@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { Announcement } from '../models/announcement-model';
 import { ApiService } from '../services/api.service';
 import { AnnouncementActions } from '../models/dcnpsn-enum';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-announcements',
@@ -26,14 +28,21 @@ export class AnnouncementsComponent implements OnInit {
     this.editAncmnts = this.isEdit || false;
     const apiEndPoint = 'announcements';
     this.api.get(apiEndPoint)
-      .subscribe(res => {
-        // console.log(res);
-        res.forEach(ancmnt => {
-          this.announcements.push(ancmnt);
+    .pipe(
+      map(
+        (data: Array<any>) => data,
+        error => error
+      )
+    )
+     .subscribe(
+        data => {
+          // console.log(res);
+          data.forEach(ancmnt => {
+            this.announcements.push(ancmnt);
+          });
+        }, error => {
+          console.log(error);
         });
-      }, error => {
-        console.log(error);
-      });
   }
   siteAdmin() {
     return this.auth.siteAdmin();
@@ -79,7 +88,9 @@ export class AnnouncementsComponent implements OnInit {
       case AnnouncementActions.post:
         console.log('inserting new announcement...');
         this.api.post('announcements', ancmnt)
-          .subscribe(data => {
+        .pipe(
+          map( (data:Announcement) => data, error => error)
+        ).subscribe(data => {
             // console.log(data);
             this.announcements.unshift(data);
             // console.log(this.announcements);
@@ -93,16 +104,18 @@ export class AnnouncementsComponent implements OnInit {
         console.log(`saving announcement ${ancmnt.announcementId}...`);
         if (ancmnt) {
           this.api.put('announcements', ancmnt)
-            .subscribe( result => {
+          .pipe(
+            map( (data:Announcement) => data, error => error)
+          )  .subscribe(result => {
               // console.log(result);
               const curAncmnt = this.announcements.find(a => a.announcementId === result.announcementId);
               const indx = this.announcements.indexOf(curAncmnt);
               this.announcements.splice(indx, 1, result);
               this.editAncmnt = false;
             },
-            error => {
-              console.log(error);
-            });
+              error => {
+                console.log(error);
+              });
         }
         break;
       case AnnouncementActions.delete:

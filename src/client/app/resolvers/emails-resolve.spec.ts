@@ -1,9 +1,8 @@
 import { EmailsResolve } from './emails-resolve';
 import { ApiService } from '../services/api.service';
 
-describe('EmailsResolve', () => {
+describe('EmailsResolve', (api: ApiService) => {
   it('should create an instance', () => {
-    const api = new ApiService();
     expect(new EmailsResolve(api)).toBeTruthy();
   });
 });

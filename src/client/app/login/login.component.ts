@@ -3,14 +3,15 @@ import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpEventType } from '@angular/common/http';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   backUrl: string;
   public formError: string;
   public loginForm: FormGroup;
@@ -37,20 +38,22 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  buildForm(){
+  buildForm() {
     this.loginForm = this.fromBuilder.group({
       email: this.fromBuilder.control(null, [Validators.required, Validators.email]),
-      password: this.fromBuilder.control(null,[Validators.required, Validators.minLength(8)])
+      password: this.fromBuilder.control(null, [Validators.required, Validators.minLength(8)])
     })
   }
-  get f(){ return this.loginForm.controls;}
+  get f() { return this.loginForm.controls; }
 
-  get fromValues(){ return this.loginForm.value;}
+  get fromValues() { return this.loginForm.value; }
 
   onSubmit() {
     // console.log(this.fromValues);
     this.api.post('commons/authenticate', this.fromValues)
-      .subscribe((data) => {
+      .pipe(
+        map((data: any) => data, error => error)
+      ).subscribe((data) => {
         if (data.type === HttpEventType.Response) {
           console.log(data.headers);
         }

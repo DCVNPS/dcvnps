@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
+import { Gallery } from '../models/gallery.model';
 
 @Component({
   selector: 'app-menu',
@@ -17,32 +19,34 @@ export class MenuComponent implements OnInit {
     private auth: AuthService,
     private api: ApiService,
     private router: Router
-    ) {
+  ) {
     this.mGalleries = [];
     this.mClasses = [];
   }
 
   ngOnInit() {
     this.api.get('galleries')
-      .subscribe(data => {
-        data.forEach(item => {
-          if (!this.mGalleries.some(i => i === item.gallery)) {
-            if (item.gallery !== 'home' && item.gallery !== 'aboutus') {
-              this.mGalleries.push(item.gallery);
+      .subscribe(    data => {
+        // console.log(data);
+          data.forEach(item => {
+            if (!this.mGalleries.some(i => i === item.gallery)) {
+              if (item.gallery !== 'home' && item.gallery !== 'aboutus') {
+                this.mGalleries.push(item.gallery);
+              }
             }
-          }
+          })
         });
-      });
-      this.api.get('commons/vnpsclassmenu')
-      .subscribe( data => {
+
+    this.api.get('commons/vnpsclassmenu')
+      .subscribe(
+        data => {
           this.mClasses = data;
-          const level1 = this.mClasses.find( c =>c.level ==='level1');
+          const level1 = this.mClasses.find(c => c.level === 'level1');
           this.level = level1.level;
-          // console.log(this.mClasses);
-      },
-      err => {
-        console.log(err);
-      })
+        },
+        err => {
+          console.log(err);
+        })
   }
 
   logout() {

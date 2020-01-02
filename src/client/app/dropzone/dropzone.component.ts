@@ -13,6 +13,7 @@ import { ImageInfo } from '../models/image-model';
 import { RegexService } from '../services/regex.service';
 import { AuthService } from '../services/auth.service';
 import { Photo } from '../models/photo.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dropzone',
@@ -80,6 +81,9 @@ export class DropzoneComponent implements OnInit {
     this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
     // Get the galleries list from database
     this.api.get('galleries')
+    .pipe(
+      map( (data:Gallery[]) => data, error => error)
+    )
       .subscribe((data) => {
         this.galleries = data;
         this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);

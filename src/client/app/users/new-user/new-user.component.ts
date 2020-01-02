@@ -4,6 +4,7 @@ import {Headers} from '@angular/http';
 import { User } from '../../models/user-model';
 import { ApiService } from '../../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-user',
@@ -49,8 +50,9 @@ public userForm: FormGroup;
   onNewUserCreated(user: User) {
     console.log(user);
     const endPoint = "admin/user";
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    // const headers = new Headers();
+    // headers.append('Content-Type', 'application/json');
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
     this.api.post(endPoint, user, headers)
       .subscribe(
         result => { console.log(result); },

@@ -50,7 +50,7 @@ module.exports = (express, config) => {
         // console.log(user);
         commonService.authenticate({ email: user.email, password: user.password })
             .then((result) => {
-                if (result) {
+                if (result.success) {
                     const roleCode = result.authuser.roleCode;
                     const admRole = roleCode.match(/ADM$/g);
                     const payload = {
@@ -58,22 +58,24 @@ module.exports = (express, config) => {
                         username: result.authuser.userName,
                         userrole: result.authuser.roleCode,
                         admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
-                    };
-
+                    }
                     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
                     // const token = jwt.sign(payload, process.env.JWT_SECRET);
                     // console.log(token);
-                    return res.json({
+                    return res.status(200).json({
                         message: 'successfully authenticated',
                         token: token,
                         role: result.authuser.roleCode
                     });
+                }                   
+                else{
+                    return res.status(401).json(result);
                 }
-            })
+            } )
             .catch((err) => {
                 log.levels('dcvnpslog', logLevel.ERROR)
                 log.error({ id: req.id, err: err }, 'Error authenticate');
-                return res.status(500).json(err.message);
+                return res.status(500).json(err);
             })
     });
 

@@ -36,7 +36,7 @@ module.exports = (express, config) => {
         this.log.levels('dcvnpslog',config.logLevel.ERROR);
         this.log.error('Error');
         if (err.name === 'UnauthorizedError') {
-            return res.status(err.status).json({ error: err });
+            return res.status(err.status).json({code: err.code, authmsg: err.message});
         }
     });
 
