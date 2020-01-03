@@ -2,15 +2,20 @@
   <div class="stretch row">
     <div class="twelve wide column">
       <form [formGroup]="selectForm" class="ui form">
-        <div class="field">
+        <div class="two fields">
+          <div class="field">
           <h4 class="ui ribbon big label">Select Class Program to Edit:</h4>
           <select formControlName="selectClass" (ngModelChange)="onClassChange($event)">
             <option *ngFor="let m of mClasses" [ngValue]="m">{{m.description}}</option>
           </select>
         </div>
+        </div>
       </form>
       <div *ngIf="showEdit">
         <form class="ui form" [formGroup]="classForm" (ngSubmit)="onSubmitClass();">
+          <div class="field">
+            <h4 class="ui dividing header">Edit {{currentClass.classLevelDesc}}</h4>
+          </div>
           <div class="field">
             <h4 class="ui teal ribbon big label">Description</h4>
             <textarea formControlName="description"></textarea>

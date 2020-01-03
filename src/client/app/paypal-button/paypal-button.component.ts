@@ -74,7 +74,6 @@ export class PaypalButtonComponent implements OnInit {
         this.paypalLoad = false;
       });
     }
-    // paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);
   }
   // This way is used in the react development.
   // for the simplicity, add script to the <body> of the index.html is good enough to move forward

@@ -88,9 +88,7 @@ export class AnnouncementsComponent implements OnInit {
       case AnnouncementActions.post:
         console.log('inserting new announcement...');
         this.api.post('announcements', ancmnt)
-        .pipe(
-          map( (data:Announcement) => data, error => error)
-        ).subscribe(data => {
+        .subscribe(data => {
             // console.log(data);
             this.announcements.unshift(data);
             // console.log(this.announcements);
@@ -104,9 +102,7 @@ export class AnnouncementsComponent implements OnInit {
         console.log(`saving announcement ${ancmnt.announcementId}...`);
         if (ancmnt) {
           this.api.put('announcements', ancmnt)
-          .pipe(
-            map( (data:Announcement) => data, error => error)
-          )  .subscribe(result => {
+          .subscribe(result => {
               // console.log(result);
               const curAncmnt = this.announcements.find(a => a.announcementId === result.announcementId);
               const indx = this.announcements.indexOf(curAncmnt);

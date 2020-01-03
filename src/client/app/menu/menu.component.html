@@ -37,13 +37,14 @@
       </a>
     </div>
   </div>
-  <!-- <a class="item" [routerLink]="['/announcements']" [routerLinkActive]="['active']" aria-label="Announcements">
-    <i class="small bullhorn icon"></i>
-    <p>Announcements</p>
-  </a> -->
-  <a class="item" [routerLink]="['/aboutus']" [routerLinkActive]="['active']" aria-label="aboutus">
-    <i class="small comments icon"></i>
-    About Us</a>
+  <div class="item" [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item" [routerLink]="['/aboutus']">
+        <i class="small comments icon"></i>
+        <div class="text">About Us</div>
+      </a>
+    </div>
+  </div>
   <a *ngIf="hidden" class="item" [routerLink]="['/quicktest']" [routerLinkActive]="['active']" aria-label="quicktest">
     <i class="small money icon"></i>Quick Test
   </a>

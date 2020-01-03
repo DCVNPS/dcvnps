@@ -21,7 +21,7 @@ export class GalleriesResolve implements Resolve<Observable<any> >{
         this.api.get(apiEndpoint)
         .subscribe(
             data => {
-                console.log(data);
+                // console.log(data);
                 data.forEach( item =>{
                     const curGallery = this.galleries.find(g => g.gallery === item.gallery);
                     if( !curGallery &&item.gallery !== 'home' && item.gallery !== 'aboutus'){

@@ -78,8 +78,18 @@
                             <img src="/galleries/site/SupportUs_AmzSmile.png" class="ui small image" />
                         </a>
                         <br />
-                        <h4>Donate</h4>
-                        <app-paypal-button></app-paypal-button>
+                        <button type="button" (click)="onDonate();">Donate</button>
+                        <div [hidden]="showDonate">We accept PayPal with 5% transaction fee applied</div>
+                        <div class="ui form" [hidden]="!showDonate">
+                            <div class="inline field">
+                                <label>Amount </label>
+                                <input type="text" [(ngModel)]="donateAmount" digitOnly maxlength="10" inputmode="numeric" pattern="[0-9]*">
+                            </div>
+                            <div class="inline field">
+                                <app-paypal-button [purchaseAmount]="donateAmount"></app-paypal-button>
+                                <button type="button" (click)="onCancelDonate();">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

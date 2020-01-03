@@ -34,29 +34,24 @@ export class EditClassComponent implements OnInit {
   ngOnInit() {
   }
 
-  buildForm(){
+  buildForm() {
     this.api.get('commons/vnpsclassmenu')
-    .pipe(
-      map(
-        (data: Array<any>) => data,
-        error => error
-      )
-    ).subscribe(data => {
+      .subscribe(data => {
         this.mClasses = data;
         // console.log(this.mClasses);
       },
         err => {
           console.log(err);
         });
-        this.classForm = this.formBuilder.group({
-          description: this.formBuilder.control(null),
-          prerequisite: this.formBuilder.control(null),
-          curriculum: this.formBuilder.control(null),
-          instructors: this.formBuilder.control(null)
-        });
-        this.selectForm = this.formBuilder.group({
-          selectClass: this.formBuilder.control(null)
-        });    
+    this.classForm = this.formBuilder.group({
+      description: this.formBuilder.control(null),
+      prerequisite: this.formBuilder.control(null),
+      curriculum: this.formBuilder.control(null),
+      instructors: this.formBuilder.control(null)
+    });
+    this.selectForm = this.formBuilder.group({
+      selectClass: this.formBuilder.control(null)
+    });
   }
 
   // convenience getter for easy access to form fields. Good for form validation.
@@ -105,6 +100,7 @@ export class EditClassComponent implements OnInit {
 
   onCancel() {
     this.classForm.reset();
+    this.selectForm.reset();
     this.showEdit = false;
   }
 }
