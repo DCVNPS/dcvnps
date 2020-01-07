@@ -6,6 +6,7 @@ const commonRouter = require('./commons');
 const ancmntRouter = require('./announcements');
 const vnpsClassesRouter = require('./vnpsclasses');
 const gallriesRouter = require('./galleries');
+const userClassRouter = require('./admin/userclass');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -36,7 +37,7 @@ module.exports = (express, config) => {
         this.log.levels('dcvnpslog',config.logLevel.ERROR);
         this.log.error('Error');
         if (err.name === 'UnauthorizedError') {
-            return res.status(err.status).json({code: err.code, authmsg: err.message});
+            return res.status(500).json(err.message);
         }
     });
 
@@ -60,6 +61,7 @@ module.exports = (express, config) => {
     router.use('/announcements', ancmntRouter(express, config));
     router.use('/vnpsclasses',vnpsClassesRouter(express, config));
     router.use('/galleries', gallriesRouter(express, config));
+    router.use('/admin/userclass',userClassRouter(express, config));
     // url:/api/
     return router;
 }

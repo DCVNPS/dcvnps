@@ -78,12 +78,15 @@
                             <img src="/galleries/site/SupportUs_AmzSmile.png" class="ui small image" />
                         </a>
                         <br />
-                        <button type="button" (click)="onDonate();">Donate</button>
-                        <div [hidden]="showDonate">We accept PayPal with 5% transaction fee applied</div>
+                        <div class="ui card" >
+                            <a class="content" [hidden]="showDonate" (click)="onDonate();"><span class="header">Donation</span></a>
+                        </div>
                         <div class="ui form" [hidden]="!showDonate">
+                            <div>We accept PayPal with 5% transaction fee applied</div>
                             <div class="inline field">
-                                <label>Amount </label>
-                                <input type="text" [(ngModel)]="donateAmount" digitOnly maxlength="10" inputmode="numeric" pattern="[0-9]*">
+                                <label>Donate Amount </label>
+                                <input type="text" [(ngModel)]="donateAmount" digitOnly decimal="true" scale="2"
+                                    maxlength="10" placeholder="0.00" inputmode="numeric" pattern="[0-9]*">
                             </div>
                             <div class="inline field">
                                 <app-paypal-button [purchaseAmount]="donateAmount"></app-paypal-button>

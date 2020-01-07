@@ -57,6 +57,9 @@ import { ClassRegistrationComponent } from './registrations/class-registration/c
 import { SetPasswordComponent } from './users/set-password/set-password.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { ManageUserComponent } from './users/manage-user/manage-user.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,7 +103,9 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
     CampingRegistrationComponent,
     ClassRegistrationComponent,
     SetPasswordComponent,
-    DigitOnlyDirective
+    DigitOnlyDirective,
+    UserListComponent,
+    ManageUserComponent
   ],
   imports: [
     BrowserModule,

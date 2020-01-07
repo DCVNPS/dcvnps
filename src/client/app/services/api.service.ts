@@ -39,11 +39,11 @@ export class ApiService {
 
   onRequestError(res) {
     if (res) {
-      // console.log(res);
-      const jerror = res.error;
+      console.log(res);
+      // const jerror = res.error;
       const error = {
         statusCode: res.status,
-        statusText: jerror.authmsg
+        statusText: res.error
       };
       // console.log(error);
       if (error.statusText === "jwt expired") {

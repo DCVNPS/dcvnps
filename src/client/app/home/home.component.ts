@@ -10,7 +10,7 @@ import { Gallery } from '../models/gallery.model';
 })
 export class HomeComponent implements OnInit {
   public showDonate:boolean = false;
-  public donateAmount:string = '0.00';
+  public donateAmount:string;
   public photos: Array<Photo> = [];
   public galleries: Array<Gallery> = [];
   public carouseConfig: Object = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true };

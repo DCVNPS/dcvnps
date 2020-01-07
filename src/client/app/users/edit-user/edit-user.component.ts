@@ -50,6 +50,7 @@ export class EditUserComponent implements OnInit {
       email: this.formBuilder.control(null, [Validators.required, Validators.email]),
       password: this.formBuilder.control(null),
       confirmPassword: this.formBuilder.control(null),
+      activeInd: this.formBuilder.control(null),
       roleCode: this.formBuilder.control(null, [Validators.required])
     });
     // using reactive java script to capture changes.

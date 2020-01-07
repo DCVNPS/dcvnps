@@ -1,4 +1,7 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { stringify } from 'querystring';
+import { isNullOrUndefined } from 'util';
+import { validateStyleParams } from '@angular/animations/browser/src/util';
 
 /* This directive is from https://github.com/changhuixu/ngx-digit-only/blob/master/projects/uiowa/digit-only/src/lib/digit-only.directive.ts*/
 @Directive({
@@ -21,10 +24,12 @@ export class DigitOnlyDirective {
     'Paste'
   ];
   @Input() decimal?: boolean = false;
+  @Input() scale?: number;
   inputElement: HTMLInputElement;
   constructor(public el: ElementRef) {
     this.inputElement = el.nativeElement;
   }
+
   @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
     if (
       this.navigationKeys.indexOf(e.key) > -1 || // Allow: navigation keys: backspace, delete, arrows etc.
@@ -45,75 +50,65 @@ export class DigitOnlyDirective {
     if (e.key === ' ' || isNaN(Number(e.key))) {
       e.preventDefault();
     }
-  }
-  @HostListener('keyup', ['$event'])
-  onKeyUp(e: KeyboardEvent) {
-    if (!this.decimal) {
-      return;
-    } else {
-      this.decimalCounter = this.el.nativeElement.value.split('.').length - 1;
+    // Ensure there's only a certain digits allows after decimall point
+    if (this.isValidDecimal(this.inputElement.value) && !this.isValidScale(this.inputElement.value)) {
+      e.preventDefault();
     }
   }
 
-  // @HostListener('paste', ['$event'])
-  // onPaste(event: ClipboardEvent) {
-  //   const pastedInput: string = event.clipboardData.getData('text/plain');
-  //   let pasted = false;
-  //   if (!this.decimal) {
-  //     pasted = document.execCommand(
-  //       'insertText',
-  //       false,
-  //       pastedInput.replace(/[^0-9]/g, '')
-  //     );
-  //   } else if (this.isValidDecimal(pastedInput)) {
-  //     pasted = document.execCommand(
-  //       'insertText',
-  //       false,
-  //       pastedInput.replace(/[^0-9.]/g, '')
-  //     );
-  //   }
-  //   if (pasted) {
-  //     event.preventDefault();
-  //   } 
-  //   // else {
-    //   if (navigator.clipboard) {
-    //     navigator.clipboard.writeText(pastedInput);
-    //     document.execCommand('paste');
-    //   }
-    // }
-  // }
+  @HostListener('keyup', ['$event'])  onKeyUp(e: KeyboardEvent) {
+    if (!this.decimal) {
+      return;
+    } else {
+      this.decimalCounter = this.inputElement.value.split('.').length - 1;
+    }
+  }
 
-  // @HostListener('drop', ['$event'])
-  // onDrop(event: DragEvent) {
-  //   const textData = event.dataTransfer.getData('text');
-  //   this.inputElement.focus();
+  @HostListener('paste', ['$event'])
+  onPaste(event: ClipboardEvent) {
+    event.preventDefault();
+    let pastedInput: string = event.clipboardData.getData('text/plain');
+    pastedInput = this.sanitizeInput(pastedInput);
+    const pasted = document.execCommand('insertText', false, pastedInput);
+    if (!pasted) {
+      const { selectionStart: start, selectionEnd: end } = this.inputElement;
+      this.inputElement.setRangeText(pastedInput, start, end, 'end');
+    }
+  }
 
-  //   let pasted = false;
-  //   if (!this.decimal) {
-  //     pasted = document.execCommand(
-  //       'insertText',
-  //       false,
-  //       textData.replace(/[^0-9]/g, '')
-  //     );
-  //   } else if (this.isValidDecimal(textData)) {
-  //     pasted = document.execCommand(
-  //       'insertText',
-  //       false,
-  //       textData.replace(/[^0-9.]/g, '')
-  //     );
-  //   }
-  //   if (pasted) {
-  //     event.preventDefault();
-  //   } 
-    // else {
-    //   if (navigator.clipboard) {
-    //     navigator.clipboard.writeText(textData);
-    //     document.execCommand('paste');
-    //   }
-    // }
-  // }
+  @HostListener('drop', ['$event'])
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    let textData = event.dataTransfer.getData('text');
+    this.inputElement.focus();
+
+    textData = this.sanitizeInput(textData);
+    const pasted = document.execCommand('insertText', false, textData);
+    if (!pasted) {
+      const { selectionStart: start, selectionEnd: end } = this.inputElement;
+      this.inputElement.setRangeText(textData, start, end, 'end');
+    }
+  }
+
+  private sanitizeInput(input: string): string {
+    if (this.decimal && this.isValidDecimal(input)) {
+      return input.replace(/[^0-9.]/g, '');
+    } else {
+      return input.replace(/[^0-9]/g, '');
+    }
+  }
 
   isValidDecimal(string: string): boolean {
     return string.split('.').length <= 2;
+  }
+  isValidScale(valString: string): boolean {
+    if (isNullOrUndefined(this.scale)) {
+      return true;
+    }
+    const scalePart = valString.split('.')[1];
+    if (scalePart) {
+      return scalePart.length < this.scale;
+    }
+    return true;
   }
 }

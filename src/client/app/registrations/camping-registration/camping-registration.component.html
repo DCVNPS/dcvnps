@@ -28,6 +28,7 @@
         <div>
           <label for="state">State :</label>
           <select formControlName="state">
+            <option  [ngValue]="undefined" hidden disabled [selected]="true">Select a State</option>
             <option *ngFor="let s of states" [ngValue]="s.stateCode">{{s.description}}</option>
           </select>
           <div class="errors" *ngIf="f.state.errors">

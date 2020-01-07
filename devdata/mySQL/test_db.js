@@ -1,4 +1,7 @@
-const database = require('../../src/server/mysql-knex/database');
+const path = require('path');
+const config = require('../../src/server/config');
+const DB = require('../../src/server/dataAccess/database')(config);
+const mySQL = DB.knex;
 const jwt = require('jsonwebtoken');
 const user = { "userName": "siteuser", "password": "Testing1", "roleCode": "SITUSR", "updateUser": "testUpdate" };
 
@@ -121,5 +124,25 @@ function genAuthToken({ user, pwd }) {
         .catch(err => { console.error(err); });
 }
 
+function testQuery(year, classId){
+    const query = mySQL({u:'users'})
+    .leftOuterJoin({uc:'userclasses'}, 'u.userId', 'uc.userId')
+    .leftOuterJoin({c:'vnpsclasses'}, 'uc.classId','c.classId')
+    .whereRaw('ifnull(`uc`.`year`,1) = ifnull(?, ifnull(`uc`.`year`,1)) and ifnull(`uc`.`classId`,1) = ifnull(?, ifnull(`uc`.`classId`,1))',[year,classId])
+    .select({
+        userId: 'u.userId',
+        userName: mySQL.raw('concat_ws(" ", u.userGivenName, u.userSurname)'),
+        role: 'roleCode',
+        classId: 'c.classId',
+        userClassId: 'uc.userClassId',
+        year: 'uc.year',
+        level: 'c.classLevel',
+        levelDescription: 'c.classLevelDesc'
+    })
+    .toString();
+    console.log(query);   
+}
+
 // testDatabase(user);
-genAuthToken({});
+// genAuthToken({});
+testQuery(2020,null);

@@ -12,7 +12,7 @@
     "watch": "run-p watch:*",
     "sample": "node devdata/mongodcvnps/seed-db.js",
     "initdata": "node devdata/seed-mysql.js",
-    "testapi": "node src/server/index.js",
+    "testapi": "node src/server/bin/www.js",
     "test": "ng test",
     "lint": "ng lint"
   },

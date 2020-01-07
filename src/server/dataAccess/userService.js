@@ -36,6 +36,7 @@ module.exports = (config) => {
                 userSurname: user.userSurname,
                 userGivenName: user.userGivenName,
                 password: user.password,
+                activeInd: user.activeInd,
                 roleCode: user.roleCode,
                 createdUserId: user.createdUserId,
                 createdDate: user.createdDate,
@@ -77,6 +78,7 @@ module.exports = (config) => {
                 userGivenName: user.userGivenName,
                 password: user.password,
                 roleCode: user.roleCode,
+                activeInd: user.activeInd,
                 updatedUserId: user.updatedUserId,
                 updatedDate: user.updatedDate
             })

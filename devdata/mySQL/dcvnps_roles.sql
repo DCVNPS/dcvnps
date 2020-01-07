@@ -23,7 +23,7 @@ USE `dcvnps`;
 
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+ SET character_set_client = utf8 ;
 CREATE TABLE `roles` (
   `roleId` int(11) NOT NULL AUTO_INCREMENT,
   `roleCode` varchar(45) NOT NULL,

@@ -51,6 +51,13 @@
               </div>
           </div>
           <div [style.color]="read" *ngIf="!passwordMatched">Passwords Not Matched.</div>
+          <div class="field">
+              <label for="activeInd">Active Indicator:</label>
+              <select class="menu" formControlName="activeInd">
+                <option class="item"  [ngValue]="'N'">N</option>
+                <option class="item" [ngValue]="'Y'">Y</option>
+              </select>
+          </div>
           <div class="field" [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
               <label for="roleCode">Role</label>
               <select class="menu" formControlName="roleCode">

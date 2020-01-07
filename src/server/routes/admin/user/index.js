@@ -59,7 +59,8 @@ module.exports = (express, config) => {
         try {
             // const userid = await database.uuid();
             user.userId = uuidv4();
-            user.password = `${bcrypt.hashSync(user.password, 10)}`
+            user.password = `${bcrypt.hashSync(user.password, 10)}`;
+            user.activeInd='Y';
             user.createdUserId = req.auth.userid;
             user.createdDate = new Date();
             user.updatedUserId = auth.userid;

@@ -75,7 +75,7 @@ module.exports = (express, config) => {
             .catch((err) => {
                 log.levels('dcvnpslog', logLevel.ERROR)
                 log.error({ id: req.id, err: err }, 'Error authenticate');
-                return res.status(500).json(err);
+                return res.status(500).json(err.message);
             })
     });
 
