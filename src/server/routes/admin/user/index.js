@@ -102,7 +102,7 @@ module.exports = (express, config) => {
         try {
             user.updatedUserId = req.auth.userid;
             user.updatedDate = new Date();
-            console.log(user);
+            // console.log(user);
             switch(action){
                 case "setpassword":
                     user.password = `${bcrypt.hashSync(user.password, 10)}`

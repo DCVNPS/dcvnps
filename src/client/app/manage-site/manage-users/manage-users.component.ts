@@ -58,5 +58,12 @@ export class ManageUsersComponent implements OnInit {
 
   onDeleteUser(userid:string){
     console.log(userid);
+    this.api.delete(`admin/user/${userid}`)
+    .subscribe(
+      success => { console.log(`user with id ${userid} has been deleted.`)},
+      error => { console.error();}
+      ;
+      )}
+    )
   }
 }

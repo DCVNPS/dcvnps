@@ -149,7 +149,7 @@ export class EditUserComponent implements OnInit {
       this.passwordMatched = true;
       this.passwordInvalid = false;
       this.cnfrmPwdInvalid = false;
-      this.mUser.password = null;
+      // this.mUser.password = null;
     }
     else if (this.formValue.password === this.formValue.confirmPassword &&
       this.userForm.controls.password.value.length > 0 &&
@@ -161,8 +161,19 @@ export class EditUserComponent implements OnInit {
       this.passwordMatched = false;
     }
     console.log(this.mUser);
+    this.api.put('admin/user',this.mUser)
+    .subscribe(
+      data => {
+        console.log(data); 
+        this.resetForm();
+        this.location.back(); // may be better user router navigate
+      },
+      error => { console.log(error); }
+    )
   }
+
   onCacelEdit(){
+    this.setFormValues(this.mUser);
     this.location.back();
   }
 }
