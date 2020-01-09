@@ -32,7 +32,7 @@ module.exports = (config) => {
         return mySQL('users')
             .insert({
                 userId: user.userId,
-                userName: user.email,
+                email: user.email,
                 userSurname: user.userSurname,
                 userGivenName: user.userGivenName,
                 password: user.password,
@@ -73,7 +73,7 @@ module.exports = (config) => {
         return mySQL('users')
             .where({ userId: user.userId })
             .update({
-                userName: user.email,
+                email: user.email,
                 userSurname: user.userSurname,
                 userGivenName: user.userGivenName,
                 password: user.password,
@@ -114,9 +114,22 @@ module.exports = (config) => {
     }
 
     function selectByEmail(email) {
-        return mySQL('users')
-            .whereRaw('email = IFNULL(?,email)', [email])
-            .select()
+        return mySQL({u:'users'})
+            .whereRaw('u.email = IFNULL(?,u.email)', [email])
+            .select({
+                userId: 'u.userId',
+                email: 'u.email',
+                userSurname: 'u.userSurname',
+                userGivenName: 'u.userGivenName',
+                password: 'u.password',
+                activeInd: 'u.activeInd',
+                roleCode: 'u.roleCode',
+                roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
+                createdUserId: 'u.createdUserId',
+                createdDate: 'u.createdDate',
+                updatedUserId: 'u.updatedUserId',
+                updatedDate: 'u.updatedDate'
+            })
             .then((users) => {
                 // console.log('Knex log getUserByName', JSON.stringify(users));
                 return users;
@@ -127,11 +140,49 @@ module.exports = (config) => {
     }
 
     function selectById(userId) {
-        return mySQL('users')
-            .whereRaw('userId = IFNULL(?,userId)', [userId])
-            .select()
+        return mySQL({u:'users'})
+            .whereRaw('u.userId = IFNULL(?,u.userId)', [userId])
+            .select({
+                userId: 'u.userId',
+                email: 'u.email',
+                userSurname: 'u.userSurname',
+                userGivenName: 'u.userGivenName',
+                password: 'u.password',
+                activeInd: 'u.activeInd',
+                roleCode: 'u.roleCode',
+                roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
+                createdUserId: 'u.createdUserId',
+                createdDate: 'u.createdDate',
+                updatedUserId: 'u.updatedUserId',
+                updatedDate: 'u.updatedDate'
+            })
             .then((users) => {
                 // console.log('Knex log getUserById', JSON.stringify(user));
+                return users;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
+
+    function adminUsers(userId){
+        return mySQL({ u: 'users'})
+            .select({
+                userId: 'u.userId',
+                email: 'u.email',
+                userSurname: 'u.userSurname',
+                userGivenName: 'u.userGivenName',
+                password: 'u.password',
+                activeInd: 'u.activeInd',
+                roleCode: 'u.roleCode',
+                roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
+                createdUserId: 'u.createdUserId',
+                createdDate: 'u.createdDate',
+                updatedUserId: 'u.updatedUserId',
+                updatedDate: 'u.updatedDate'
+            })
+            .whereRaw('regexp_like(`u`.`roleCode`,\'adm$\',\'i\') = 1 and `u`.`userId` = IFNULL(?,`u`.`userId`)', [userId])
+            .then((users) => {
                 return users;
             })
             .catch(function (err) {
@@ -145,6 +196,7 @@ module.exports = (config) => {
         updateUser,
         setPassword,
         selectByEmail,
-        selectById
+        selectById,
+        adminUsers
     }
 }

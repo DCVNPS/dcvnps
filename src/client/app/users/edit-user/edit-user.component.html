@@ -51,20 +51,23 @@
               </div>
           </div>
           <div [style.color]="read" *ngIf="!passwordMatched">Passwords Not Matched.</div>
-          <div class="field">
+          <div class="inline fields">
+              <div class="field">
               <label for="activeInd">Active Indicator:</label>
               <select class="menu" formControlName="activeInd">
-                <option class="item"  [ngValue]="'N'">N</option>
-                <option class="item" [ngValue]="'Y'">Y</option>
+                <option class="item"  [ngValue]="'N'" [selected]="mUser.activeInd ==='N'">N</option>
+                <option class="item" [ngValue]="'Y'" [selected]="mUser.activeInd ==='Y'">Y</option>
               </select>
+            </div>
           </div>
-          <div class="field" [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
+          <div class="inline fields" [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
+              <div class="field">
               <label for="roleCode">Role</label>
               <select class="menu" formControlName="roleCode">
-                  <!-- <option class="item" [ngValue]="undefined" hidden disabled [selected]="true">Select a Role
-                  </option> -->
-                  <option class="item" *ngFor="let role of roles" [ngValue]="role.roleCode" [selected]="user.roleCode === role.roleCode">{{role.roleDescription}}</option>
+                  <!-- <option class="item" [ngValue]="undefined" hidden disabled [selected]="true">Select a Role</option> -->
+                  <option class="item" *ngFor="let role of roles" [ngValue]="role.roleCode" [selected]="mUser.roleCode === role.roleCode">{{role.roleDescription}}</option>
               </select>
+            </div>
               <div [style.color]="'red'" *ngIf="f.roleCode.errors && ( f.roleCode.dirty || f.roleCode.touched)">
                   <div class="header" *ngIf="f.roleCode.errors.required"> Please Select a Role.</div>
               </div>
@@ -72,7 +75,7 @@
       </div>
       <div class="ui menu borderless">
           <button type="button" class="ui primary button" [disabled]="userForm.errors || userForm.invalid"  (click)="onSubmitForm();">Submit</button>
-          <button type="button" class="ui button" (click)="resetForm();">Cancel</button>
+          <button type="button" class="ui button" (click)="onCacelEdit();">Cancel</button>
       </div>
   </form>
 </div>

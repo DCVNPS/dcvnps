@@ -16,7 +16,7 @@ public userForm: FormGroup;
   public roles: Object = {};
   private user: User;
   constructor(private formBuilder: FormBuilder, private api: ApiService, private route: ActivatedRoute) { 
-    this.user = new User(null, null, null, null, null, null, null, null, null, null);
+    this.user = new User(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   ngOnInit() {
@@ -33,7 +33,8 @@ public userForm: FormGroup;
       email: this.formBuilder.control(null, [Validators.required, Validators.email]),
       password: this.formBuilder.control(null, [Validators.required, Validators.minLength(8)]),
       confirmPassword: this.formBuilder.control(null, [Validators.required, Validators.minLength(8)]),
-      roleCode: this.formBuilder.control(null, [Validators.required])
+      roleCode: this.formBuilder.control(null, [Validators.required]),
+      activeInd: this.formBuilder.control('N',[Validators.required])
     })
   }
 

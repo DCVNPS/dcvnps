@@ -58,7 +58,7 @@ import { SetPasswordComponent } from './users/set-password/set-password.componen
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { UserListComponent } from './users/user-list/user-list.component';
-import { ManageUserComponent } from './users/manage-user/manage-user.component';
+import { ManageUsersComponent } from './manage-site/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +105,7 @@ import { ManageUserComponent } from './users/manage-user/manage-user.component';
     SetPasswordComponent,
     DigitOnlyDirective,
     UserListComponent,
-    ManageUserComponent
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,

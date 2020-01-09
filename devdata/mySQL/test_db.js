@@ -143,6 +143,27 @@ function testQuery(year, classId){
     console.log(query);   
 }
 
+function testQuery(userId){
+    const query = mySQL({ u: 'users'})
+    .select({
+        userId: 'u.userId',
+        email: 'u.email',
+        userSurname: 'u.userSurname',
+        userGivenName: 'u.userGivenName',
+        password: 'u.password',
+        activeInd: 'u.activeInd',
+        roleCode: 'u.roleCode',
+        roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
+        createdUserId: 'u.createdUserId',
+        createdDate: 'u.createdDate',
+        updatedUserId: 'u.updatedUserId',
+        updatedDate: 'u.updatedDate'
+    })
+    .whereRaw('regexp_like(u.roleCode,\'adm$\',\'i\') = 1 and u.userId = IFNULL(?,u.userId)', [userId])
+    .toString()
+    console.log(query);   
+}
 // testDatabase(user);
 // genAuthToken({});
-testQuery(2020,null);
+// testQuery(2020,null);
+testQuery(null);

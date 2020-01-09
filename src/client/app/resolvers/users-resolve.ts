@@ -13,7 +13,7 @@ export class UsersResolve implements Resolve<Observable<any>> {
     resolve(route: ActivatedRouteSnapshot):  Observable<any>|Promise<any>|any {
         const userid = route.params.userid || null;
         const apiEndpoint = `admin/user/${userid}`;
-        console.log(apiEndpoint);
+        // console.log(apiEndpoint);
         return this.api.get(apiEndpoint);
     }
 }
