@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ManageUsersComponent implements OnInit {
 
-  public adminUsers:Array<User> =[];
-  
+  public adminUsers: Array<User> = [];
+
   constructor(
     private api: ApiService,
     private router: Router) { }
@@ -19,51 +19,49 @@ export class ManageUsersComponent implements OnInit {
   ngOnInit() {
     this.getAdminUsers();
   }
- getAdminUsers(){
+  getAdminUsers() {
     this.api.get('admin/user/adminusers')
-    .subscribe(
-      data => { 
-        data.forEach( au => {
-          const aUser:User = new User(
-            au.userId,
-            au.email,
-            au.password,
-            au.userSurname,
-            au.userGivenName,
-            au.roleCode,
-            au.roleDescription,
-            au.activeInd,
-            au.createdUserId,
-            au.createdDate,
-            au.updatedUserId,
-            au.updatedDate
-          );
-          this.adminUsers.push(aUser);
-        })
-        // console.log(this.adminUsers);
-      },
-      error => { console.log(error); }
-    );
+      .subscribe(
+        data => {
+          data.forEach(au => {
+            const aUser: User = new User(
+              au.userId,
+              au.email,
+              au.password,
+              au.userSurname,
+              au.userGivenName,
+              au.roleCode,
+              au.roleDescription,
+              au.activeInd,
+              au.createdUserId,
+              au.createdDate,
+              au.updatedUserId,
+              au.updatedDate
+            );
+            this.adminUsers.push(aUser);
+          })
+          // console.log(this.adminUsers);
+        },
+        error => { console.log(error); }
+      );
   }
 
-  onAddUser(){
+  onAddUser() {
     this.router.navigateByUrl('newuser');
   }
 
   // base on https://netbasal.com/set-state-object-when-navigating-in-angular-7-2-b87c5b977bb
-  onEditUser(user:User){
+  onEditUser(user: User) {
     // console.log(user);
-    this.router.navigateByUrl('edituser',{state: user});
+    this.router.navigateByUrl('edituser', { state: user });
   }
 
-  onDeleteUser(userid:string){
+  onDeleteUser(userid: string) {
     console.log(userid);
     this.api.delete(`admin/user/${userid}`)
-    .subscribe(
-      success => { console.log(`user with id ${userid} has been deleted.`)},
-      error => { console.error();}
-      ;
-      )}
-    )
+      .subscribe(
+        success => { console.log(`user with id ${userid} has been deleted.`) },
+        error => { console.error(); }
+      )
   }
 }
