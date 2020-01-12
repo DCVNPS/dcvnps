@@ -20,7 +20,7 @@ export class EditUserComponent implements OnInit {
   public cnfrmPwdInvalid: boolean = false;
   public passwordInvalid: boolean = false;
   public passwordMatched: boolean = true;
-  private mUser: User;
+  public mUser: User;
   private sate$: Observable<User>;
   constructor(
     private formBuilder: FormBuilder, 

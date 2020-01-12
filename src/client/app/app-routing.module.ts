@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-import { GalleriesComponent } from './galleries/galleries.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -101,13 +100,6 @@ const routes: Routes = [
       galleries: GalleriesResolve
     },
     runGuardsAndResolvers: 'always'
-  },
-  {
-    path: 'galleries',
-    component: GalleriesComponent,
-    resolve: {
-      galleries: GalleriesResolve
-    }
   },
   {
     path: 'vnpsclasses/:classlevel',

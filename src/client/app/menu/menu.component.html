@@ -1,12 +1,16 @@
 <div class="ui attached inverted stackable menu">
   <div class="header item">DC Vnps</div>
-  <a class="item" [routerLink]="['/home']" [routerLinkActive]="['active']" aria-label="Home">
-    <i class="small home icon"></i>
-    <p>Home</p>
-  </a>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['vnpsclasses','level1']">
+      <a class="item" [routerLink]="['/home']">
+        <i class="small home icon"></i>
+        <div class="text">Home</div>
+      </a>
+    </div>
+  </div>
+  <div class="item" [routerLinkActive]="['active']">
+    <div class="ui simple dropdown">
+      <a class="item">
         <i class="small book icon"></i>
         <div class="text">Vnps Classes</div>
         <i class="dropdown icon"></i>
@@ -18,13 +22,12 @@
   </div>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item"[routerLink]="['galleries']">
+      <a class="item">
         <i class="image icon"></i>
         <div class="text">Galleries</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <a class="item" [routerLink]="['galleries']">All Galleries</a>
         <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery',g]">{{g}}</a>
       </div>
     </div>

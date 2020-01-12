@@ -13,6 +13,7 @@ import { Gallery } from '../models/gallery.model';
 export class MenuComponent implements OnInit {
   public mGalleries: string[];
   public level: string;
+  public username:string;
   public mClasses: Array<any>;
   public hidden = false;
   constructor(

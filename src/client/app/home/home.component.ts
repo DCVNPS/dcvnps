@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   public donateAmount:string;
   public photos: Array<Photo> = [];
   public galleries: Array<Gallery> = [];
-  public carouseConfig: Object = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true };
+  public carouseConfig: Object = { 'delay': 5000, 'showIndicator': true, 'runSlideShow': true };
   private dotCount:number = 0;
   constructor(private route: ActivatedRoute) { }
 

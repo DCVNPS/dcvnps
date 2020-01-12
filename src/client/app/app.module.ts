@@ -17,7 +17,6 @@ import { FooterComponent } from './footer/footer.component';
 import { ElementDimensionsDirective } from './directives/element-dimensions.directive'
 import { ImageRolloverDirective } from './directives/image-rollover.directive';
 import { SiteHeaderComponent } from './site-header/site-header.component';
-import { GalleriesComponent } from './galleries/galleries.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -37,7 +36,6 @@ import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
-import { GalleryListComponent } from './galleries/gallery-list/gallery-list.component';
 import { AuthorPhotoComponent } from './gallery/author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
@@ -70,7 +68,6 @@ import { ManageUsersComponent } from './manage-site/manage-users/manage-users.co
     ElementDimensionsDirective,
     ImageRolloverDirective,
     SiteHeaderComponent,
-    GalleriesComponent,
     AnnouncementsComponent,
     AboutusComponent,
     QuickTestComponent,
@@ -85,7 +82,6 @@ import { ManageUsersComponent } from './manage-site/manage-users/manage-users.co
     SlideImageSizeDirective,
     EditGalleryComponent,
     HvnHoverDirective,
-    GalleryListComponent,
     AuthorPhotoComponent,
     PaypalButtonComponent,
     ManageSiteComponent,

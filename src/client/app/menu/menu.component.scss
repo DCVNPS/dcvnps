@@ -1,5 +1,9 @@
-.ui.inverted.stackable.menu{
+.ui.attached.inverted.stackable.menu{
     border-radius: 0!important;
+    a.item{
+        color:yellow!important;
+        font-weight: bolder!important;
+    }
 }
 
 .item{
@@ -7,4 +11,15 @@
     padding-right: 0.7em !important;
     padding-bottom: 0.5em !important;
     padding-left: 0.7em !important;
+}
+
+div.header,div.item{
+    color: yellow!important;
+    font-size: 1.4em!important;
+}
+
+.ui.simple.dropdown,
+.ui.simple.dropdown>.menu>a.item{
+    background-color: black!important;
+    font-weight: bolder!important;
 }
