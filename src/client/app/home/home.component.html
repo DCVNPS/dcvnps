@@ -1,17 +1,17 @@
 <div class="ui basic segment">
     <div class="ui huge center aligned header">
-        WELCOME TO VIETNAMESE PHOTOGRAPHIC SOCIETY
+        Hội Nhiếp Ảnh Việt Nam Vùng Hoa Thịnh Đốn
     </div>
-    <p class="ui medium center aligned header">
+    <!-- <p class="ui medium center aligned header">
         Of Washington Metropolitan
-    </p>
+    </p> -->
     <p class="ui medium center aligned header">
         Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
     </p>
 </div>
 <div *ngIf="photos.length > 0" class="ui grid">
     <div class="stretched row">
-        <div class="four wide column">
+        <div class="three wide column">
             <div class="ui basic segments">
                 <div class="ui basic segment vnps-header">
                     <div class="ui header">About VNPS</div>
@@ -43,26 +43,36 @@
                 <div class="ui basic segment vnps-header">
                     <a class="ui header" [routerLink]="['/galleries']">Photo Galleries</a>
                 </div>
-                <div class="ui basic segment">
-                    <app-gallery-list [galleries]="galleries"></app-gallery-list>
+                <div class="ui two column grid">
+                    <a class="column" *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
+                        <div class="blurring dimmable image" [appHvnHover]="{'querySelector': '.dimmer'}">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <div class="ui basic label">{{g.gallery}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="ui small image" [src]="g.imgSrc">
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="eight wide column">
+        <div class="ten wide column">
             <hvn-carousel [data]="photos" [config]="carouseConfig"></hvn-carousel>
         </div>
-        <div class="four wide column">
+        <div class="three wide column">
             <div class="ui basic segments">
                 <div class="ui basic segment vnps-header">
                     <div class="ui header">Support Us</div>
                 </div>
-                <div class="ui two column padded grid">
+                <div class="ui two column padded centered grid">
                     <div class="row">
                         <p style="padding: 10px;">
-                            To help VNPS running and serving our community, you can donate to Vietnamese
-                            Photographic
-                            Society,
-                            <br /> a 501(C)(3) organization! by either shopping , or donating directly to VNPS via
+                            To help Vietnamese Photographic Society (VNPS), a 501(C)(3) organization!, running and
+                            serving our community, you can participate by either shopping through our affilcation
+                            partners or donating directly to VNPS via
                             Paypal.
                         </p>
                     </div>
@@ -77,9 +87,24 @@
                         <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
                             <img src="/galleries/site/SupportUs_AmzSmile.png" class="ui small image" />
                         </a>
-                        <br />
-                        <h4>Donate</h4>
-                        <app-paypal-button></app-paypal-button>
+                    </div>
+                    <div class="row">
+                        <div class="ui card borderless">
+                            <a class="content" [hidden]="showDonate" (click)="onDonate();"><span
+                                    class="content">Donation</span></a>
+                        </div>
+                        <div class="ui form" *ngIf="showDonate">
+                            <div>We accept PayPal with 5% transaction fee applied</div>
+                            <div class="inline field">
+                                <label>Donate Amount </label>
+                                <input type="text" [(ngModel)]="donateAmount" digitOnly decimal="true" scale="2"
+                                    maxlength="10" placeholder="0.00" inputmode="numeric" pattern="[0-9]*">
+                            </div>
+                            <div class="inline field">
+                                <app-paypal-button [purchaseAmount]="donateAmount"></app-paypal-button>
+                                <button type="button" (click)="onCancelDonate();">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

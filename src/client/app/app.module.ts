@@ -7,11 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
-
 import { MenuComponent } from './menu/menu.component';
-import { ContactListComponent } from './contact-list/contact-list.component';
-import { ContactComponent } from './contact/contact.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
@@ -21,8 +17,6 @@ import { FooterComponent } from './footer/footer.component';
 import { ElementDimensionsDirective } from './directives/element-dimensions.directive'
 import { ImageRolloverDirective } from './directives/image-rollover.directive';
 import { SiteHeaderComponent } from './site-header/site-header.component';
-import { GalleriesComponent } from './galleries/galleries.component';
-import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -42,7 +36,6 @@ import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
 import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
-import { GalleryListComponent } from './galleries/gallery-list/gallery-list.component';
 import { AuthorPhotoComponent } from './gallery/author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
@@ -53,29 +46,28 @@ import { AddAnnounceComponent } from './announcements/add-announcement/add-annou
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 import { EditAnnouncementComponent } from './announcements/edit-announcement/edit-announcement.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
-import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { EditClassComponent } from './edit-class/edit-class.component';
-import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { VnpsClassesComponent } from './vnps-classes/vnps-classes.component';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
+import { SetPasswordComponent } from './users/set-password/set-password.component';
+import { httpInterceptorProviders } from './http-interceptors/index';
+import { DigitOnlyDirective } from './directives/digit-only.directive';
+import { UserListComponent } from './users/user-list/user-list.component';
+import { ManageUsersComponent } from './manage-site/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    ContactListComponent,
-    ContactComponent,
-    AddContactComponent,
     LoginComponent,
     HomeComponent,
     FooterComponent,
     ElementDimensionsDirective,
     ImageRolloverDirective,
     SiteHeaderComponent,
-    GalleriesComponent,
-    ProgramsComponent,
     AnnouncementsComponent,
     AboutusComponent,
     QuickTestComponent,
@@ -90,7 +82,6 @@ import { ClassRegistrationComponent } from './registrations/class-registration/c
     SlideImageSizeDirective,
     EditGalleryComponent,
     HvnHoverDirective,
-    GalleryListComponent,
     AuthorPhotoComponent,
     PaypalButtonComponent,
     ManageSiteComponent,
@@ -101,13 +92,16 @@ import { ClassRegistrationComponent } from './registrations/class-registration/c
     AnnouncementComponent,
     EditAnnouncementComponent,
     NewUserComponent,
-    UserComponent,
     EditUserComponent,
     ChangePasswordComponent,
     EditClassComponent,
-    PhotoClassesComponent,
+    VnpsClassesComponent,
     CampingRegistrationComponent,
-    ClassRegistrationComponent
+    ClassRegistrationComponent,
+    SetPasswordComponent,
+    DigitOnlyDirective,
+    UserListComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +121,8 @@ import { ClassRegistrationComponent } from './registrations/class-registration/c
     DomService,
     ModalService,
     GalleryPhotosResolve,
-    GalleriesResolve
+    GalleriesResolve,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
   entryComponents: []

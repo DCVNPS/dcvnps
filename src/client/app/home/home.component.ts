@@ -9,9 +9,12 @@ import { Gallery } from '../models/gallery.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  public showDonate:boolean = false;
+  public donateAmount:string;
   public photos: Array<Photo> = [];
   public galleries: Array<Gallery> = [];
-  public carouseConfig: Object = { 'delay': 3000, 'showIndicator': true, 'runSlideShow': true };
+  public carouseConfig: Object = { 'delay': 5000, 'showIndicator': true, 'runSlideShow': true };
+  private dotCount:number = 0;
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -33,5 +36,11 @@ export class HomeComponent implements OnInit {
       })
     });
     // console.log(this.photos);
+  }
+  onDonate(){
+    this.showDonate = true;
+  }
+  onCancelDonate(){
+    this.showDonate = false;
   }
 }

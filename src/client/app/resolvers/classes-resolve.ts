@@ -9,14 +9,13 @@ import { Observable } from 'rxjs';
 
 export class ClassesResolve implements Resolve<Observable<any>> {
     private apiEndpoint: string;
-    private classLevel: string;
     constructor(private api: ApiService) {
     }
     resolve(route: ActivatedRouteSnapshot):  Observable<any>|Promise<any>|any {
-        const classLevel = route.paramMap.get('level');
-        this.apiEndpoint = (classLevel)?`photoclasses/${classLevel}`:`photoclases`;
-        // this.apiEndpoint = 'photoclasses';
+        const classlevel = route.paramMap.get('classlevel');
+        this.apiEndpoint = (classlevel)?`vnpsclasses/bylevel/${classlevel}`:`vnpsclasses/bylevel`;
+        // console.log(this.apiEndpoint);
         return this.api.get(this.apiEndpoint);
     }
- 
+
 }

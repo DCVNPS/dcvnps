@@ -16,7 +16,7 @@
     <div class="four wide column">
       <div class="description">{{img.imgalt}}</div>
     </div>
-    <div class="two wide column">{{year}}</div>
+    <div class="two wide column">{{dzconfig.year}}</div>
     <div class="two wide column">{{author}}</div>
     <div class="two wide column">
       <div class="description">testing</div>
@@ -27,4 +27,4 @@
     </div>
   </div>
 </div>
-<app-dropzone [config]="{'gallery':level, 'year': year}" (photoAdded)="onPhotoAdded($event)"></app-dropzone>
+<app-dropzone [config]="dzconfig" (photoAdded)="onPhotoAdded($event)"></app-dropzone>

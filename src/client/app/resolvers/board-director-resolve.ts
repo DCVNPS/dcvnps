@@ -11,7 +11,7 @@ export class BoardDirectorResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve():  Observable<any>|Promise<any>|any {
-        const apiEndpoint = 'boardmembers';
+        const apiEndpoint = 'admin/boardmembers';
         return this.api.get(apiEndpoint);
     }
 }

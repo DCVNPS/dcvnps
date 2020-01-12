@@ -11,14 +11,24 @@ export class ClassRegistrationComponent implements OnInit {
   classRegForm: FormGroup;
   public classes = [];
   public states = [];
+  public yearLov:Array<number> = [];
+  public curYear = (new Date()).getFullYear();
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
+    this.getYearLov();
     this.classes = route.snapshot.data.classMenu;
-    this.classes.unshift({ level: '', description: 'Select a Class Level' });
+    // this.classes.unshift({ level: '', description: 'Select a Class Level' });
     this.states = route.snapshot.data.states;
-    this.states.unshift({ stateCode: '', description: 'Select a State' });
+    // this.states.unshift({ stateCode: '', description: 'Select a State' });
     this.buildForm();
   }
   ngOnInit() {
+  }
+
+  getYearLov(){
+    for(let i = this.curYear - 10; i < this.curYear + 10; i++){
+      this.yearLov.push(i);
+    }
+    console.log(this.yearLov);
   }
 
   buildForm() {
@@ -32,7 +42,8 @@ export class ClassRegistrationComponent implements OnInit {
       state: this.formBuilder.control(null, [Validators.required]),
       zipcode: this.formBuilder.control(null, [Validators.required]),
       countrycode: this.formBuilder.control(null, Validators.required),
-      classlevel: this.formBuilder.control(null, [Validators.required])
+      classlevel: this.formBuilder.control(null, [Validators.required]),
+      year: this.formBuilder.control(null,[Validators.required])
     });
     this.classRegForm.controls.state.patchValue(this.states[0].stateCode);
     this.classRegForm.controls.classlevel.patchValue(this.classes[0].level);

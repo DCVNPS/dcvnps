@@ -17,19 +17,6 @@ export class PaypalButtonComponent implements OnInit {
   public paidFor = false;
   public paypalLoad = true;
   private SB_CLIENT_ID = 'AdyZCufrFNpgaWEz-y6CvOSLbzmDQNHuoAATdZqgCaNPVGUcxR0EETGv_JyaPQJCngKkWytVdo0j9Ezj'
-  // FAIL_DATA = {
-  //   sender_batch_header: {
-  //     sender_batch_id: '1524086406556',
-  //     email_subject: 'This email is related to simulation'
-  //   },
-  //   purchase_units: [{
-  //     recipient_type: 'EMAIL',
-  //     receiver: 'payouts-simulator-receiver@paypal.com',
-  //     note: 'ERRPYO002',
-  //     sender_item_id: '15240864065560',
-  //     amount: { value: `${this.finalAmount * 1.05}`, currency: 'USD' }
-  //   }]
-  // };
   private paypalConfig = {
     style: {
       color: 'gold',
@@ -87,7 +74,6 @@ export class PaypalButtonComponent implements OnInit {
         this.paypalLoad = false;
       });
     }
-    // paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);
   }
   // This way is used in the react development.
   // for the simplicity, add script to the <body> of the index.html is good enough to move forward

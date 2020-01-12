@@ -1,20 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { HttpEventType } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   backUrl: string;
-  formError: string;
-  
-  constructor(private api: ApiService,
+  public formError: string;
+  public loginForm: FormGroup;
+
+  constructor(private fromBuilder: FormBuilder,
+    private api: ApiService,
     private auth: AuthService,
     private routeStat: ActivatedRoute,
     private router: Router) {
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.buildForm();
     if (this.auth.isLogin()) {
       if (this.backUrl) {
         this.router.navigate([this.backUrl]);
@@ -34,15 +38,22 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  onSubmit(form: NgForm) {
-    const values = form.value;
-    const payload = {
-      username: values.username,
-      password: values.password
-    };
+  buildForm() {
+    this.loginForm = this.fromBuilder.group({
+      email: this.fromBuilder.control(null, [Validators.required, Validators.email]),
+      password: this.fromBuilder.control(null, [Validators.required, Validators.minLength(8)])
+    })
+  }
+  get f() { return this.loginForm.controls; }
 
-    this.api.post('authenticate', payload)
-      .subscribe((data) => {
+  get fromValues() { return this.loginForm.value; }
+
+  onSubmit() {
+    // console.log(this.fromValues);
+    this.api.post('commons/authenticate', this.fromValues)
+      .pipe(
+        map((data: any) => data, error => error)
+      ).subscribe((data) => {
         if (data.type === HttpEventType.Response) {
           console.log(data.headers);
         }
@@ -60,9 +71,4 @@ export class LoginComponent implements OnInit{
         }
       );
   }
-  onKeydown(event) {
-    // for now. Should you reactive form and subscribe and take only 1.
-    this.formError = undefined;
-  }
-
 }

@@ -11,6 +11,6 @@ export class StatesResolve implements Resolve<Observable<any>> {
     constructor(private api: ApiService) {
     }
     resolve():  Observable<any>|Promise<any>|any {
-        return this.api.get('states');
+        return this.api.get('commons/states');
     }
 }

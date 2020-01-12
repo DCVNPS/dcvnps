@@ -1,9 +1,9 @@
-import { Directive, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, HostBinding, HostListener, ElementRef, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appSlideImageSize]'
 })
-export class SlideImageSizeDirective {
+export class SlideImageSizeDirective implements OnInit{
 
   /* 
     @Input config object is contains columnSpan which is the width of the image in term of
@@ -20,12 +20,15 @@ export class SlideImageSizeDirective {
   @HostBinding('style.height') private elementHeight: string;
   @HostBinding('style.margin-left') private leftMargin: string;
   @HostBinding('style.margin-right') private rightMargin: string;
+  
   constructor(private el: ElementRef) {
-    this.columnSpan = this.config['columnSpan'] || 8;
   }
-
+ngOnInit(){
+  this.columnSpan = this.config['columnSpan'] || 8;
+  // console.log(this.config);
+}
   @HostListener('load') elementLoad() {
-    this.clientWidth = Math.round(this.columnSpan * 0.94 * window.innerWidth / 16);
+    this.clientWidth = Math.round(this.columnSpan * window.innerWidth / 16);
     this.clientHeight = Math.round(this.clientWidth * 2 / 3);
     this.naturalWidth = this.el.nativeElement.naturalWidth;
     this.naturalHeight = this.el.nativeElement.naturalHeight;

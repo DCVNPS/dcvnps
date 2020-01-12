@@ -8,10 +8,13 @@
         Gallery Profile
       </a>
       <a class="item" (click)="onClasses();" [class.active]="isClasses">
-        Photo Classes
+        Vnps Classes
       </a>
       <a class="item" (click)="onAnnouncements();" [class.active]="isAnnouncements">
         Announcements
+      </a>
+      <a class="item" (click)="onUsers();" [class.active]="isUsers">
+        Manage Users
       </a>
     </div>
   </div>
@@ -20,5 +23,6 @@
       <app-edit-gallery-profiles *ngIf="isGallery" [galleries]="galleries"></app-edit-gallery-profiles>
       <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
       <app-edit-class *ngIf="isClasses"></app-edit-class>
+      <app-manage-users *ngIf="isUsers"></app-manage-users>
   </div>
 </div>

@@ -15,7 +15,7 @@ public numberofguests: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1
 constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.states= route.snapshot.data.states;
     // add blank decription.
-    this.states.unshift({stateCode:'',description:'Select a State'});
+    // this.states.unshift({stateCode:'',description:'Select a State'});
     this.buildForm();
   }
 
@@ -71,6 +71,5 @@ constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
     }
     onResetForm(){
       this.campingForm.reset();
-      this.campingForm.controls.state.patchValue(this.states[0].stateCode);
     }
 }

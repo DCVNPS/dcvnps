@@ -1,2 +1,82 @@
-<h3 class="ui center aligned header">New DCVNPS User</h3>
-<app-user [config]="userConfig" (newUserCreated) = "onNewUserCreated($event);"></app-user>
+<div class="ui centered grid">
+    <div class="six wide column">
+        <h3 class="ui center aligned header">New DCVNPS User</h3>
+        <form class="ui form" novalidate [formGroup]="userForm" (onSubmit)="onSubmitForm();">
+
+            <div class="field" [ngClass]="{'error': f.firstName.invalid &&( f.firstName.dirty || f.firstName.touched)}">
+                <label>First Name</label>
+                <input type="text" placeholder="First Name" formControlName="firstName">
+                <div [style.color]="'red'" *ngIf="f.firstName.errors && ( f.firstName.dirty || f.firstName.touched )">
+                    <div class="header" *ngIf="f.firstName.errors.required"> First Name is required.</div>
+                </div>
+            </div>
+            <div class="field" [ngClass]="{'error': f.lastName.invalid &&( f.lastName.dirty || f.lastName.touched)}">
+                <label>Last Name</label>
+                <input type="text" placeholder="Last Name" formControlName="lastName">
+                <div [style.color]="'red'" *ngIf="f.lastName.errors && ( f.lastName.dirty || f.lastName.touched )">
+                    <div class="header" *ngIf="f.lastName.errors.required"> Last Name is required.</div>
+                </div>
+            </div>
+            <div class="field" [ngClass]="{'error': f.email.invalid  && ( f.email.dirty || f.email.touched)}">
+                <label>Email</label>
+                <input type="text" placeholder="Email Address" formControlName="email">
+                <div [style.color]="'red'" *ngIf="f.email.errors && ( f.email.dirty || f.email.touched )">
+                    <div class="header" *ngIf="f.email.errors.required"> email is required.</div>
+                    <div class="header" *ngIf="f.email.errors.email"> a valid email address is required.</div>
+                </div>
+            </div>
+            <div class="field" [ngClass]="{'error': f.password.invalid &&( f.password.dirty || f.password.touched)}">
+                <label>password</label>
+                <input class="password" type="password" placeholder="Password" formControlName="password"><span
+                    *ngIf="f.password.valid"><i class="green check icon"></i></span>
+                <div [style.color]="'red'" *ngIf="f.password.errors && ( f.password.dirty || f.password.touched )">
+                    <div class="header" *ngIf="f.password.errors.required"> Password is required.</div>
+                    <div class="header" *ngIf="f.password.errors.minlength"> Password minimum length is 8
+                        characters.</div>
+                </div>
+            </div>
+            <div class="field"
+                [ngClass]="{'error': f.confirmPassword.invalid &&( f.confirmPassword.dirty || f.confirmPassword.touched)}">
+                <label>password</label>
+                <input class="password" type="password" placeholder="Confirm Password"
+                    formControlName="confirmPassword"><span *ngIf="f.confirmPassword.valid"><i
+                        class="green check icon"></i></span>
+                <div [style.color]="'red'"
+                    *ngIf="f.confirmPassword.errors && ( f.confirmPassword.dirty || f.confirmPassword.touched )">
+                    <div class="header" *ngIf="f.confirmPassword.errors.required"> Password is required.</div>
+                    <div class="header" *ngIf="f.confirmPassword.errors.minlength"> Password minimum length is 8
+                        characters.</div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <div class="field">
+                    <label for="activeInd">Active Indicator:</label>
+                    <select class="menu" formControlName="activeInd">
+                        <option class="item" [ngValue]="'N'" [selected]="true">N</option>
+                        <option class="item" [ngValue]="'Y'">Y</option>
+                    </select>
+                </div>
+            </div>
+            <div class="inline fields"
+                [ngClass]="{error: f.roleCode.invalid && ( f.roleCode.dirty || f.roleCode.touched)}">
+                <div class="field">
+                    <label for="roleCode">Role</label>
+                    <select class="menu" formControlName="roleCode">
+                        <option class="item" [ngValue]="undefined" hidden disabled [selected]="true">Select a Role
+                        </option>
+                        <option class="item" *ngFor="let role of roles" [ngValue]="role.roleCode">
+                            {{role.roleDescription}}</option>
+                    </select>
+                </div>
+                <div [style.color]="'red'" *ngIf="f.roleCode.errors && ( f.roleCode.dirty || f.roleCode.touched)">
+                    <div class="header" *ngIf="f.roleCode.errors.required"> Please Select a Role.</div>
+                </div>
+            </div>
+            <div class="ui menu borderless">
+                <button type="button" class="ui primary button" (click)="onSubmitForm();"
+                    [disabled]="userForm.errors || userForm.invalid">Submit</button>
+                <button type="button" class="ui button" (click)="resetForm();">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,7 @@ export class ManageSiteComponent implements OnInit {
   public isGallery: boolean;
   public isClasses: boolean;
   public isAnnouncements: boolean;
+  public isUsers: boolean;
   private galleries: Array<Gallery> = [];
   constructor(private route: ActivatedRoute) { }
 
@@ -26,18 +27,21 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = false;
+    this.isUsers = false;
   }
   onGalleryClick() {
     this.isPhotoUpload = false;
     this.isGallery = true;
     this.isClasses = false;
     this.isAnnouncements = false;
+    this.isUsers = false;
   }
   onAnnouncements() {
     this.isPhotoUpload = false;
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = true;
+    this.isUsers = false;
   }
 
   onClasses() {
@@ -45,6 +49,14 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = false;
     this.isClasses = true;
     this.isAnnouncements = false;
+    this.isUsers = false;
   }
 
+  onUsers() {
+    this.isPhotoUpload = false;
+    this.isGallery = false;
+    this.isClasses = false;
+    this.isAnnouncements = false;
+    this.isUsers = true;
+  }
 }

@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContactListComponent } from './contact-list/contact-list.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-import { GalleriesComponent } from './galleries/galleries.component';
-import { ProgramsComponent } from './programs/programs.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { QuickTestComponent } from './quick-test/quick-test.component';
@@ -21,14 +17,15 @@ import { EditGalleryResolve } from './resolvers/edit-gallery-resolve';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { RoleResolve } from './resolvers/role-resolve';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { UsersResolve } from './resolvers/users-resolve';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { PhotoClassesComponent } from './photo-classes/photo-classes.component';
+import { VnpsClassesComponent } from './vnps-classes/vnps-classes.component';
 import { ClassesResolve } from './resolvers/classes-resolve';
 import { ClassMenuResolve } from './resolvers/class-menu-resolve';
 import { CampingRegistrationComponent } from './registrations/camping-registration/camping-registration.component';
 import { ClassRegistrationComponent } from './registrations/class-registration/class-registration.component';
 import { StatesResolve } from './resolvers/states-resolve';
+import { SetPasswordComponent } from './users/set-password/set-password.component';
+import { UsersResolve } from './resolvers/users-resolve';
 
 const routes: Routes = [
   {
@@ -45,11 +42,6 @@ const routes: Routes = [
     }
   },
   {
-    path: 'contacts',
-    component: ContactListComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'newuser',
     component: NewUserComponent,
     canActivate: [AuthGuard],
@@ -59,12 +51,12 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-    path: 'editusers',
+    path: 'edituser',
     component: EditUserComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     resolve:{
       roles: RoleResolve,
-      users: UsersResolve
+      user: UsersResolve
     },
     runGuardsAndResolvers: 'always'
   },
@@ -74,8 +66,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'newcontact',
-    component: AddContactComponent,
+    path: 'setpassword',
+    component: SetPasswordComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -110,15 +102,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   {
-    path: 'galleries',
-    component: GalleriesComponent,
-    resolve: {
-      galleries: GalleriesResolve
-    }
-  },
-  {
-    path: 'photoclasses/:level',
-    component: PhotoClassesComponent,
+    path: 'vnpsclasses/:classlevel',
+    component: VnpsClassesComponent,
     resolve: {
       classesData: ClassesResolve,
       classMenu: ClassMenuResolve

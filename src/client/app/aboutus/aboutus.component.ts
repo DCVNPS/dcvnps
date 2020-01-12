@@ -21,11 +21,6 @@ export class AboutusComponent implements OnInit {
   public boardMembers: Array<BoardMember> = [];
   constructor(private router: ActivatedRoute) {
     this.showDialog = false;
-    // this.chair = { firstName: 'Dung', lastName: 'Do', middleName: 'Linh', tittle: 'chairman' };
-    // this.viceChair = { firstName: 'Dinh', lastName: 'Tran', middleName: 'Thuy', tittle: 'vice chairman' };
-    // this.generalSec = { lastName: 'Nguyen', firstName: 'Lan', middleName: 'Kieu', tittle: 'general secretary' };
-    // this.treasury = { lastName: 'Hoang', firstName: 'Ly', middleName: 'Truc', tittle: 'treasury' };
-    // this.auditor = { lastName: 'Long', firstName: 'Vuong', middleName: '', tittle: 'auditor' };
   }
 
   ngOnInit() {
