@@ -43,8 +43,19 @@
                 <div class="ui basic segment vnps-header">
                     <a class="ui header" [routerLink]="['/galleries']">Photo Galleries</a>
                 </div>
-                <div class="ui basic segment">
-                    <!-- <app-gallery-list [galleries]="galleries"></app-gallery-list> -->
+                <div class="ui two column grid">
+                    <a class="column" *ngFor="let g of galleries" [routerLink]="['/gallery', g.gallery]">
+                        <div class="blurring dimmable image" [appHvnHover]="{'querySelector': '.dimmer'}">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <div class="ui basic label">{{g.gallery}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="ui small image" [src]="g.imgSrc">
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -90,9 +101,9 @@
                                     maxlength="10" placeholder="0.00" inputmode="numeric" pattern="[0-9]*">
                             </div>
                             <div class="inline field">
-                                    <app-paypal-button [purchaseAmount]="donateAmount"></app-paypal-button>
-                                    <button type="button" (click)="onCancelDonate();">Cancel</button>
-                                </div>
+                                <app-paypal-button [purchaseAmount]="donateAmount"></app-paypal-button>
+                                <button type="button" (click)="onCancelDonate();">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
