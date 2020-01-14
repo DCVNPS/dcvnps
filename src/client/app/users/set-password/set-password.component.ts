@@ -63,8 +63,7 @@ export class SetPasswordComponent implements OnInit {
     this.api.put('admin/user/setpassword',this.user)
     .subscribe( data =>{
       this.successMessage = `Successfully set password for user: ${this.user.email}`;
-      this.hideSearch = false;
-      this.user = undefined; 
+      this.onResetForm(); 
       this.errorMessage = undefined;
     },
     error =>{

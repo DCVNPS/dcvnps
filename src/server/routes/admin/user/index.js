@@ -53,6 +53,22 @@ module.exports = (express, config) => {
         })
     });
 
+    router.get('/siteusers/:userid?', (req, res) => {
+        if (!isAdmin(req)) {
+            return res.status(401).json(`user ${req.auth.username} is not authorized to create new application user`);
+        }
+        const userid = req.params.userid || null;
+        return userService.siteUsers(userid)
+        .then( data =>{
+            return res.status(200).json(data);
+        })
+        .catch( err => {
+            log.levels('dcvnpslog', config.logLevel.ERROR)
+            log.error({ id: req.id, err: err }, `Error getting adminusers uuid`);
+            return res.status(500).json({ err: err.message });
+        })
+    });
+
     router.get('/:userid?', (req, res) => {
         const userid = req.params.userid || null;
         return userService.selectById(userid)

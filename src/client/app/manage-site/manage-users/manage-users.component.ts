@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../models/user-model';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
@@ -10,40 +10,15 @@ import { Router } from '@angular/router';
 })
 export class ManageUsersComponent implements OnInit {
 
-  public adminUsers: Array<User> = [];
+@Input() users: Array<User>;
+  public Users: Array<User> = [];
 
   constructor(
     private api: ApiService,
     private router: Router) { }
 
   ngOnInit() {
-    this.getAdminUsers();
-  }
-  getAdminUsers() {
-    this.api.get('admin/user/adminusers')
-      .subscribe(
-        data => {
-          data.forEach(au => {
-            const aUser: User = new User(
-              au.userId,
-              au.email,
-              au.password,
-              au.userSurname,
-              au.userGivenName,
-              au.roleCode,
-              au.roleDescription,
-              au.activeInd,
-              au.createdUserId,
-              au.createdDate,
-              au.updatedUserId,
-              au.updatedDate
-            );
-            this.adminUsers.push(aUser);
-          })
-          // console.log(this.adminUsers);
-        },
-        error => { console.log(error); }
-      );
+    this.Users = this.users;
   }
 
   onAddUser() {
@@ -60,8 +35,8 @@ export class ManageUsersComponent implements OnInit {
     console.log(userid);
     this.api.delete(`admin/user/${userid}`)
       .subscribe(
-        success => { console.log(`user with id ${userid} has been deleted.`) },
-        error => { console.error(); }
+        () => { console.log(`user with id ${userid} has been deleted.`) },
+        () => { console.error(); }
       )
   }
 }

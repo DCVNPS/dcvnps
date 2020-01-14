@@ -189,6 +189,33 @@ module.exports = (config) => {
                 throw err;
             });
     }
+
+    function siteUsers(userId){
+        return mySQL({ u: 'users'})
+            .select({
+                userId: 'u.userId',
+                email: 'u.email',
+                userSurname: 'u.userSurname',
+                userGivenName: 'u.userGivenName',
+                password: 'u.password',
+                activeInd: 'u.activeInd',
+                roleCode: 'u.roleCode',
+                roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
+                createdUserId: 'u.createdUserId',
+                createdDate: 'u.createdDate',
+                updatedUserId: 'u.updatedUserId',
+                updatedDate: 'u.updatedDate'
+            })
+            .whereRaw('regexp_like(`u`.`roleCode`,\'usr$\',\'i\') = 1 and `u`.`userId` = IFNULL(?,`u`.`userId`)', [userId])
+            .then((users) => {
+                return users;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
+
+    
     return {
         deleteByEmail,
         deleteById,
@@ -197,6 +224,7 @@ module.exports = (config) => {
         setPassword,
         selectByEmail,
         selectById,
-        adminUsers
+        adminUsers,
+        siteUsers
     }
 }
