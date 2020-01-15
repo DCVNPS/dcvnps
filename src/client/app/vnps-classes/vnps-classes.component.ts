@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { paypalDescription } from '../models/paypal.descriptiont';
-import { PhotoClass } from '../models/photo-class';
+import { VnpsClass } from '../models/vnps-class';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -16,9 +16,9 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
   public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
-  private data: Array<PhotoClass> = []; 
+  private data: Array<VnpsClass> = []; 
   public classMenus: Array<any> = [];
-  public curClass: PhotoClass;
+  public curClass: VnpsClass;
   public showLevel1: boolean = false;
   public showLevel2: boolean = false;
   public showLevel3: boolean = false;

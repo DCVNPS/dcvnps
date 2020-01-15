@@ -54,7 +54,7 @@ module.exports = {
     //     username: 'dcvnps',
     //     password: 'vnpsR0cks!',
     //     options: {
-    //         host: '192.168.2.9',
+    //         host: 'localhost',
     //         port: '3306',
     //         dialect: 'mysql',
     //         freezeTableName: true,
@@ -65,7 +65,7 @@ module.exports = {
     MYSQL2: { 
         "client": "mysql2", 
         "connection": { 
-            "host": "192.168.2.9", 
+            "host": "localhost", 
             "port": "3306", 
             "user": "dcvnps", 
             "password": "vnpsR0cks!", 

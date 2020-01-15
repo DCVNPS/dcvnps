@@ -1,7 +1,7 @@
-import { PhotoClass } from './photo-class';
+import { VnpsClass } from './vnps-class';
 
 describe('PhotoClass', () => {
   it('should create an instance', () => {
-    expect(new PhotoClass()).toBeTruthy();
+    expect(new VnpsClass()).toBeTruthy();
   });
 });
