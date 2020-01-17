@@ -87,6 +87,7 @@ export class EditClassComponent implements OnInit {
       // console.log(apiEnpoint);
       this.api.get(apiEnpoint)
         .subscribe(async data => {
+          console.log(data);
           this.currentClass = await data[0];
           if (!this.addClass) {
             this.patchClassValues(this.currentClass);
@@ -110,23 +111,24 @@ export class EditClassComponent implements OnInit {
     this.currentClass.instructors = this.formValue.instructors;
     if (!this.addClass) {
       // console.log(this.formValue);
-      this.api.put('classes', this.currentClass)
+      this.api.put('vnpsclasses', this.currentClass)
         .subscribe(success => {
           // console.log('update class successful');
+          this.onCancel();
         },
           error => {
             console.log(error);
           });
     } else {
-      this.api.post('classes', this.currentClass)
+      this.api.post('vnpsclasses', this.currentClass)
         .subscribe(success => {
           // console.log('update class successful');
+          this.onCancel();
         },
           error => {
             console.log(error);
           });
     }
-    this.onCancel();
   }
 
   onAddClass() {
@@ -136,6 +138,17 @@ export class EditClassComponent implements OnInit {
     this.subHeader = "Add New Class";
     this.selectForm.reset();
     this.classForm.reset();
+  }
+
+  onDelete(){
+    this.api.delete(`vnpsclasses/${this.currentClass.classId}`)
+    .subscribe(
+      success =>{
+        console.log(`class ${this.currentClass.classLevelDesc} deleted`);
+        this.onCancel();
+    },
+      error  => { console.log(error);}
+      );
   }
 
   onCancel() {

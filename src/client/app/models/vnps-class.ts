@@ -1,6 +1,6 @@
 export class VnpsClass {
     constructor(){};
-    public vnpsClassId: string;
+    public classId: string;
     public classLevel: string;
     public classLevelDesc: string;
     public classOrder: number;

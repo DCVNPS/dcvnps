@@ -12,7 +12,7 @@
         </div>
         <button class="ui big primary button" (click)="onAddClass();">Add New Class</button>
       </form>
-      <form class="ui form" [formGroup]="classForm" (ngSubmit)="onSubmitClass();" *ngIf="editClass">
+      <form class="ui form" [formGroup]="classForm"  *ngIf="editClass">
         <div class="field">
           <h2 class="ui dividing header">{{subHeader}}</h2>
         </div>
@@ -40,8 +40,9 @@
           <h4 class="ui violet ribbon big label">Intructors</h4>
           <editor [init]="tinyInstructorsInit" formControlName="instructors"></editor>
         </div>
-        <button type="submit" class="ui submit large blue button">Save</button>
-        <button type="submit" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
+        <button type="button" class="ui submit large blue button" (click)="onSaveClass();">Save</button>
+        <button type="button" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
+        <button type="button" class="ui submit large red button" (click)="onDelete()" *ngIf="editClass">Delete</button>
       </form>
       <div *ngIf="editClass">
         <h2>Review</h2>
