@@ -15,7 +15,7 @@ import { ApiService } from '../services/api.service';
 export class VnpsClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
-  public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
+  public paypalDesc: string = paypalDescription.enrollmentFee;
   private data: Array<VnpsClass> = []; 
   public classMenu: Array<any> = [];
   public curClass: VnpsClass;
@@ -49,7 +49,8 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
     this.classMenu = this.route.snapshot.data.classMenu;
     // console.log(this.data);
     this.curClass = this.data[0];
-    console.log(this.classMenu);
+    this.paypalDesc = `${paypalDescription.enrollmentFee} for ${this.curClass.classLevelDesc}`;
+    console.log(this.paypalDesc);
   }
 
 }
