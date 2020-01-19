@@ -89,9 +89,8 @@
                         </a>
                     </div>
                     <div class="row">
-                        <div class="ui card borderless">
-                            <a class="content" [hidden]="showDonate" (click)="onDonate();"><span
-                                    class="content">Donation</span></a>
+                        <div class="ui yellow button"  *ngIf="!showDonate" (click)="onDonate();" data-content="Donate by Paypal">Donation
+                            <span class="tooltiptext">Safe donation using PayPal</span>
                         </div>
                         <div class="ui form" *ngIf="showDonate">
                             <div>We accept PayPal with 5% transaction fee applied</div>

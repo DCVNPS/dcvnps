@@ -22,4 +22,8 @@ export class ManageGalleryProfilesComponent implements OnInit {
     console.log(`Delete gallery at index ${index}`);
     // console.log(this.galleries[index]);
   }
+
+  onAddNewGallery(){
+    alert("New Gallery Added.");
+  }
 }

@@ -21,8 +21,6 @@ public userForm: FormGroup;
 
   ngOnInit() {
     this.roles = this.route.snapshot.data['roles'];
-    // this.userConfig = { user: this.user, roles: this.roles, formType: 'newUser' };
-    // console.log(this.userConfig);
     this.buildForm();
   }
 

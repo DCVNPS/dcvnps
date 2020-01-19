@@ -15,8 +15,6 @@ export class HvncarouselComponent implements OnInit {
 
   private delay: number;
   public isRunning = true;
-  // public cWidth = 600;
-  // public cHeight = 400;
   public spanConfig={'columnSpan':10};
   private intervalID: any;
   private isPrev = false;

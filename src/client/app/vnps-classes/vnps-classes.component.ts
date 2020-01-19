@@ -17,7 +17,7 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
   classFee = 50;
   public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
   private data: Array<VnpsClass> = []; 
-  public classMenus: Array<any> = [];
+  public classMenu: Array<any> = [];
   public curClass: VnpsClass;
   public showLevel1: boolean = false;
   public showLevel2: boolean = false;
@@ -46,10 +46,10 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
 
   initializeData() {
     this.data = this.route.snapshot.data.classesData;
-    this.classMenus = this.route.snapshot.data.classMenu;
+    this.classMenu = this.route.snapshot.data.classMenu;
     // console.log(this.data);
     this.curClass = this.data[0];
-    // console.log(this.classMenus);
+    console.log(this.classMenu);
   }
 
 }

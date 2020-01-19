@@ -38,9 +38,13 @@ export class EditClassComponent implements OnInit {
   }
 
   buildForm() {
+    this.editClass = false;
+    this.addClass = false;
+    this.currentClass = undefined;
     this.api.get('commons/vnpsclassmenu')
       .subscribe(data => {
         this.mClasses = data;
+        // this.mClasses.unshift({id:"",description:"Select a Class to Edit"});
         // console.log(this.mClasses);
       },
         err => {
@@ -81,9 +85,10 @@ export class EditClassComponent implements OnInit {
     if (event) {
       this.editClass = true;
       this.addClass = false;
-      this.subHeader = `Edit ${event.description}`;
+      const classMenuItem = this.mClasses.find( c => c.id === event);
+      this.subHeader = `Edit ${classMenuItem.description}`;
       // const apiEnpoint = `classes/bylevel/${event.level}`;
-      const apiEnpoint = `vnpsclasses/byid/${event.id}`;
+      const apiEnpoint = `vnpsclasses/byid/${classMenuItem.id}`;
       // console.log(apiEnpoint);
       this.api.get(apiEnpoint)
         .subscribe(async data => {
@@ -123,7 +128,8 @@ export class EditClassComponent implements OnInit {
       this.api.post('vnpsclasses', this.currentClass)
         .subscribe(success => {
           // console.log('update class successful');
-          this.onCancel();
+          // this.mClasses.unshift({'id':this.currentClass.classId, 'description':this.currentClass.classLevelDesc });
+          this.buildForm();
         },
           error => {
             console.log(error);
@@ -145,7 +151,11 @@ export class EditClassComponent implements OnInit {
     .subscribe(
       success =>{
         console.log(`class ${this.currentClass.classLevelDesc} deleted`);
-        this.onCancel();
+        // const classMenuItem = this.mClasses.find( c => c.id === this.currentClass.classId);
+        // const remIndx = this.mClasses.indexOf(classMenuItem);
+        // this.mClasses.splice(remIndx,1);
+        // this.onCancel();
+        this.buildForm();
     },
       error  => { console.log(error);}
       );
@@ -157,5 +167,9 @@ export class EditClassComponent implements OnInit {
     this.editClass = false;
     this.addClass = false;
     this.currentClass = undefined;
+  }
+
+  classFormHasValue(){
+    console.log(this.formValue);
   }
 }

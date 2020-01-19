@@ -6,7 +6,7 @@
           <div class="field">
             <h4 class="ui ribbon big label">Select Class Program to Edit:</h4>
             <select formControlName="selectClass" (ngModelChange)="onClassChange($event)">
-              <option *ngFor="let m of mClasses" [ngValue]="m">{{m.description}}</option>
+              <option *ngFor="let m of mClasses" [ngValue]="m.id" >{{m.description}}</option>
             </select>
           </div>
         </div>
@@ -25,7 +25,7 @@
           <textarea formControlName="levelDesc" rows="2"></textarea>
         </div>
         <div class="field">
-          <h4 class="ui teal ribbon big label">Curriculumn Description</h4>
+          <h4 class="ui teal ribbon big label">Description</h4>
           <textarea formControlName="description"></textarea>
         </div>
         <div class="field">
@@ -42,9 +42,9 @@
         </div>
         <button type="button" class="ui submit large blue button" (click)="onSaveClass();">Save</button>
         <button type="button" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
-        <button type="button" class="ui submit large red button" (click)="onDelete()" *ngIf="editClass">Delete</button>
+        <button type="button" class="ui submit large red button" (click)="onDelete()" *ngIf="editClass && !addClass">Delete</button>
       </form>
-      <div *ngIf="editClass">
+      <div *ngIf="editClass && !classForm.pristine">
         <h2>Review</h2>
         <div class="ui basic segment">
           <div class="ui teal ribbon big label">Description</div>
