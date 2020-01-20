@@ -1,5 +1,5 @@
 <div class="ui grey inverted secondary menu">
-  <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
+  <button class="item" (click)="onFilterYear(year);">{{currentGallery.gallery|uppercase}}</button>
   <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
   <div class="stackable right menu" *ngIf="isAdmin">
     <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
@@ -10,7 +10,7 @@
 
 <div class="ui two column grid">
   <div class="column" *ngFor="let authPhoto of authPhotos">
-    <app-author-photo [authorData]="{'level': level, 'authorPhotos': authPhoto}" (showPopupClicked)="showPopup($event)">
+    <app-author-photo [authorData]="{'level': currentGallery.gallery, 'authorPhotos': authPhoto}" (showPopupClicked)="showPopup($event)">
     </app-author-photo>
   </div>
 </div>

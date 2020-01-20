@@ -34,13 +34,13 @@ import { CardImageSizeDirective } from './directives/card-image-size.directive';
 import { SlideImageSizeDirective } from './directives/slide-image-size.directive';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
-import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
+import { EditPersonalGalleryComponent } from './gallery/edit-personal-gallery/edit-personal-gallery.component';
 import { HvnHoverDirective } from './directives/hvn-hover.directive';
 import { AuthorPhotoComponent } from './gallery/author-photo/author-photo.component';
 import { PaypalButtonComponent } from './paypal-button/paypal-button.component';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
 import { PrettyPrintPipe } from './pipes/pretty-print.pipe';
-import { ManageGalleryProfilesComponent } from './manage-site/manage-gallery-profiles/manage-gallery-profiles.component';
+import { ManageGalleriesComponent } from './manage-site/manage-galleries/manage-galleries.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { AddAnnounceComponent } from './announcements/add-announcement/add-announce.component';
 import { AnnouncementComponent } from './announcements/announcement/announcement.component';
@@ -57,6 +57,7 @@ import { httpInterceptorProviders } from './http-interceptors/index';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { ManageUsersComponent } from './manage-site/manage-users/manage-users.component';
+import { AddGalleryComponent } from './gallery/add-gallery/add-gallery.component';
 
 @NgModule({
   declarations: [
@@ -80,13 +81,13 @@ import { ManageUsersComponent } from './manage-site/manage-users/manage-users.co
     MatchHeightDirective,
     CardImageSizeDirective,
     SlideImageSizeDirective,
-    EditGalleryComponent,
+    EditPersonalGalleryComponent,
     HvnHoverDirective,
     AuthorPhotoComponent,
     PaypalButtonComponent,
     ManageSiteComponent,
     PrettyPrintPipe,
-    ManageGalleryProfilesComponent,
+    ManageGalleriesComponent,
     SafeHtmlPipe,
     AddAnnounceComponent,
     AnnouncementComponent,
@@ -101,7 +102,8 @@ import { ManageUsersComponent } from './manage-site/manage-users/manage-users.co
     SetPasswordComponent,
     DigitOnlyDirective,
     UserListComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    AddGalleryComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,7 @@ export class EditUserComponent implements OnInit {
   public passwordInvalid: boolean = false;
   public passwordMatched: boolean = true;
   public mUser: User;
-  private sate$: Observable<User>;
+  private state$: Observable<User>;
   constructor(
     private formBuilder: FormBuilder, 
     private api: ApiService, 
@@ -31,11 +31,11 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.mUser = this.user || null;
-    this.sate$ = this.route.paramMap.pipe(map(() => window.history.state));
+    this.state$ = this.route.paramMap.pipe(map(() => window.history.state));
     if (!this.mUser) {
-      this.sate$.subscribe(data => {
+      this.state$.subscribe(data => {
         this.mUser = data;
-        console.log(this.mUser);
+        // console.log(this.mUser);
       });
     }
     this.roles = this.route.snapshot.data['roles'];

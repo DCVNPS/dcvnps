@@ -28,6 +28,8 @@ export class HvncarouselComponent implements OnInit {
 
   ngOnInit() {
     this.delay = this.config['delay'] || 3000;
+    // console.log(this.config);
+    // console.log({delay: this.delay});
     this.runSlideShow = this.config['runSlideShow'] || false;
     this.max = this.data.length;
     if (this.runSlideShow) {

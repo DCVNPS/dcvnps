@@ -39,27 +39,4 @@ export class GalleriesResolve implements Resolve<Observable<any> >{
             });
             return this.galleries;
    }
-    // getGalleries(galleryId?): Array<Gallery> {
-    //     const apiEndpoint = (galleryId) ? `galleries/${galleryId}` : `galleries`;
-    //     this.api.get(apiEndpoint)
-    //         .subscribe(data => {
-    //             console.log(data);
-    //             data.forEach(item => {
-    //                 const g = this.galleries.find(i => i.gallery === item.gallery);
-    //                 if (!g && item.gallery !== 'home' && item.gallery !== 'aboutus') {
-    //                     this.galleries.push(new Gallery(
-    //                         item.galleryId,
-    //                         item.gallery,
-    //                         item.profilePhoto,
-    //                         item.createdDate,
-    //                         item.updatedDate))
-    //                 }
-    //             });
-    //             // console.log(this.galleries);
-    //         },
-    //         (error) => {
-    //             console.log(error);
-    //         });
-    //     return this.galleries;
-    // }
 }

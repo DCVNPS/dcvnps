@@ -9,7 +9,7 @@ import { QuickTestComponent } from './quick-test/quick-test.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DropzoneComponent } from './dropzone/dropzone.component';
 import { GalleryPhotosResolve } from './resolvers/gallery-photos-resolve';
-import { EditGalleryComponent } from './edit-gallery/edit-gallery.component';
+import { EditPersonalGalleryComponent } from './gallery/edit-personal-gallery/edit-personal-gallery.component';
 import { GalleriesResolve } from './resolvers/galleries-resolve';
 import { BoardDirectorResolve } from './resolvers/board-director-resolve';
 import { ManageSiteComponent } from './manage-site/manage-site.component';
@@ -76,16 +76,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'gallery/:level',
-    component: GalleryComponent,
-    resolve: {
-      galleryData: GalleryPhotosResolve
-    },
-    runGuardsAndResolvers: 'always'
+    path: 'gallery/level',
+    component: GalleryComponent
   },
-  {
-    path: 'editgallery/:gallery/:year/:author',
-    component: EditGalleryComponent,
+ {
+    path: 'editpersonalgallery/:gallery/:year/:author',
+    component: EditPersonalGalleryComponent,
     canActivate: [AuthGuard],
     resolve: {
       galleryData: EditGalleryResolve

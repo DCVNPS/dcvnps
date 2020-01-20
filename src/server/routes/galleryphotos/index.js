@@ -12,69 +12,74 @@ module.exports = (express, config) => {
     const galleryBaseDir = `${config.rootdir}/galleries`;
     const router = express.Router();
 
-    router.get('/:galleryId?', (req, res) => {
-        const galleryId = req.params.galleryId || null;
-        galleriesService.readGalleries(galleryId)
+    // GET photo of gallery by gallery id.
+    // Called by: GalleriesPhotosResolve, EditGalleryResolve
+    router.get('/galleryid/:gid?/:year?/:author?', (req, res) => {
+        const galleryid = req.params.gid || null;
+        const year = req.params.year || null;
+        const author = req.params.author || null;
+        // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
+        galleriesService.getPhotoByGalleryId(galleryid, year, author)
             .then((data) => {
-                // console.log(data);
                 return res.status(200).json(data);
             })
             .catch((err) => {
-                log.levels('dcvnpslog',logLevel.ERROR)
-                log.error({id: req.id, err: err},`Error getting gallery ${galleryId}`);
-                return res.status(500).json(err.message);
-            });
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'Error get gallery photos by name');
+                return res.status(500).json({ error: err.message });
+            })
     });
 
-    // // GET photo of gallery by gallery name.
-    // // Called by: GalleryPhotosResolve, EditGalleryResolve
-    // router.get('/photosbyname/:gallery/:year?/:author?', (req, res) => {
-    //     const gallery = req.params.gallery;
-    //     const year = req.params.year || null;
-    //     const author = req.params.author || null;
-    //     // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
-    //     galleriesService.getPhotoByGalleryName(gallery, year, author)
-    //         .then((data) => {
-    //             return res.status(200).json(data);
-    //         })
-    //         .catch((err) => {
-    //             log.levels('dcvnpslog',logLevel.ERROR);
-    //             log.error({id:req.id, err: err},'Error get gallery photos by name');
-    //             return res.status(500).json({ error: err.message });
-    //         })
-    // });
+    // GET photo of gallery by gallery name.
+    // Called by: GalleryPhotosResolve, EditGalleryResolve
+    router.get('/galleryname/:gallery?/:year?/:author?', (req, res) => {
+        const gallery = req.params.gallery||null;
+        const year = req.params.year || null;
+        const author = req.params.author || null;
+        // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
+        galleriesService.getPhotoByGalleryName(gallery, year, author)
+            .then((data) => {
+                return res.status(200).json(data);
+            })
+            .catch((err) => {
+                log.levels('dcvnpslog',logLevel.ERROR);
+                log.error({id:req.id, err: err},'Error get gallery photos by name');
+                return res.status(500).json({ error: err.message });
+            })
 
-    // router.delete('/deletephoto', (req, res) => {
-    //     const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
-    //     // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
-    //     const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
-    //     // console.log(`read file ${filePath}`);
-    //     // Save the file content in case delete from database fail
-    //     // we can use that to restore the file. 
-    //     const file = fs.readFileSync(filePath);
-    //     try {
-    //         fs.unlinkSync(filePath);
-    //         // console.log(`file ${filePath} removed.`);
-    //         // Success removing file from server, delete entry in database.
-    //         galleriesService.deletePhoto(photoId)
-    //             .then(resp => {
-    //                 console.log(resp); gallery
-    //                 return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
-    //             })
-    //             .catch(exp => {
-    //                 throw exp;
-    //             });
-    //     }
-    //     catch (err) {
-    //         // console.log(error);
-    //         // console.log(`Resote file ${filePath}`);
-    //         // Failure to remove photo entry in database, restore file.
-    //         log.levels('dcvnpslog',logLevel.ERROR)
-    //         log.error({id: req.id, err: err},'Error deleting photo');
-    //         fs.writeFileSync(filePath, file);
-    //         return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${err.message}`);
-    //     }
-    // });
+    });
+
+    router.delete('/deletephoto', (req, res) => {
+        const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
+        // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
+        const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
+        // console.log(`read file ${filePath}`);
+        // Save the file content in case delete from database fail
+        // we can use that to restore the file. 
+        const file = fs.readFileSync(filePath);
+        try {
+            fs.unlinkSync(filePath);
+            // console.log(`file ${filePath} removed.`);
+            // Success removing file from server, delete entry in database.
+            galleriesService.deletePhoto(photoId)
+                .then(resp => {
+                    console.log(resp); gallery
+                    return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
+                })
+                .catch(exp => {
+                    throw exp;
+                });
+        }
+        catch (err) {
+            // console.log(error);
+            // console.log(`Resote file ${filePath}`);
+            // Failure to remove photo entry in database, restore file.
+            log.levels('dcvnpslog',logLevel.ERROR)
+            log.error({id: req.id, err: err},'Error deleting photo');
+            fs.writeFileSync(filePath, file);
+            return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${err.message}`);
+        }
+    });
     
     // Upload a photo to a gallery
     router.post('/upload/:gallery/:year', async (req, res) => {

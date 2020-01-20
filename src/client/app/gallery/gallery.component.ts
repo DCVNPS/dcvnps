@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, RouterEvent, NavigationEnd, RouterState } from '@angular/router';
 import { Photo } from '../models/photo.model';
 import { YearData } from '../models/year.data';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { filter, takeUntil, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { AuthorData } from '../models/author.data.model';
+import { Gallery } from '../models/gallery.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-gallery',
@@ -13,14 +15,16 @@ import { AuthorData } from '../models/author.data.model';
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit, OnDestroy {
-  level: string;
+  // level: string;
   year: string;
   years: Array<string>;
   photos: Array<Photo>;
   showDialog = false;
+  private state$: Observable<Gallery>;
+  private currentGallery: Gallery;
   public isAdmin: boolean;
   private editUrl: string;
-  public galleryData: Array<YearData> = [];
+  public galleryData: Array<AuthorData> = [];
   public authPhotos: Array<AuthorData> = [];
   private destroyed = new Subject<any>();
   /******************************************************************
@@ -29,7 +33,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   *******************************************************************/
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private api: ApiService) {
     this.initializeData();
   }
 
@@ -52,34 +57,25 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.photos = [];
     this.galleryData = [];
     this.authPhotos = [];
-    // get the gallery name/ level from the route parameter
-    this.level = this.route.snapshot.paramMap.get('level');
-    this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
-    this.galleryData = this.route.snapshot.data.galleryData;
-    this.galleryData.forEach( yearData => {
-      this.years.push(yearData.year);
-      yearData.authorData.forEach( authData => {
-        this.authPhotos.push(authData);
-      });
-    });
-    // console.log(this.authPhotos);
+    // get the galleryid value from the route parameter
+    this.state$ = this.route.paramMap.pipe(map(() => window.history.state));
+    this.state$.subscribe( data => { this.currentGallery = data; });
+    this.isAdmin = this.auth.isAdmin(this.currentGallery.gallery) || this.auth.siteAdmin();
+    this.getGalleryData(this.currentGallery.galleryId);
   }
 
   onFilterYear(year: string) {
-    this.galleryData = [];
     this.authPhotos = [];
-    const data = this.route.snapshot.data.galleryData;
+    // console.log({'current Data': this.galleryData});
     if (year) {
-      this.galleryData.push(data.find(y => y.year === year));
+      this.galleryData.forEach( gd =>{
+        if( gd.year === year){
+          this.authPhotos.push(gd);
+        }
+      })
     } else {
-      this.galleryData = data;
+      this.authPhotos = this.galleryData;
     }
-    this.galleryData.forEach( yearData => {
-      yearData.authorData.forEach( authData => {
-        this.authPhotos.push(authData);
-        // console.log(this.authPhotos);
-      });
-    });
     // console.log(this.authPhotos);
   }
 
@@ -88,4 +84,19 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.showDialog = true;
   }
 
+  getGalleryData(galleryid: string) {
+    const apiEnpoint: string = `galleryphotos/galleryid/${galleryid}`;
+    this.api.get(apiEnpoint).subscribe(
+      data => {
+        // console.log(data);
+        data.forEach(yearData => {
+          this.years.push(yearData.year);
+          yearData.authorData.forEach(authData => {
+            this.authPhotos.push(authData);
+          })
+        });
+        this.galleryData = this.authPhotos;
+        // console.log(this.authPhotos);
+      })
+  }
 }

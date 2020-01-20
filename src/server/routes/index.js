@@ -7,6 +7,7 @@ const ancmntRouter = require('./announcements');
 const vnpsClassesRouter = require('./vnpsclasses');
 const gallriesRouter = require('./galleries');
 const userClassRouter = require('./admin/userclass');
+const galleryPhotosRouter = require('./galleryphotos');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -62,6 +63,7 @@ module.exports = (express, config) => {
     router.use('/vnpsclasses',vnpsClassesRouter(express, config));
     router.use('/galleries', gallriesRouter(express, config));
     router.use('/admin/userclass',userClassRouter(express, config));
+    router.use('/galleryphotos', galleryPhotosRouter(express, config));
     // url:/api/
     return router;
 }

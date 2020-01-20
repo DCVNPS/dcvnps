@@ -11,9 +11,10 @@ import { Gallery } from '../models/gallery.model';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  public mGalleries: string[];
+  // public mGalleries: string[];
+  public mGalleries: Array<Gallery> = [];
   public level: string;
-  public username:string;
+  public username: string;
   public mClasses: Array<any>;
   public hidden = false;
   constructor(
@@ -27,17 +28,16 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.api.get('galleries')
-      .subscribe(    data => {
-        // console.log(data);
-          data.forEach(item => {
-            if (!this.mGalleries.some(i => i === item.gallery)) {
-              if (item.gallery !== 'home' && item.gallery !== 'aboutus') {
-                this.mGalleries.push(item.gallery);
-              }
+      .subscribe(data => {
+        data.forEach(item => {
+          if (!this.mGalleries.some(i => i.gallery === item.gallery)) {
+            if (item.gallery !== 'home' && item.gallery !== 'aboutus') {
+              this.mGalleries.push(item);
             }
-          })
-        });
-
+          }
+        })
+      });
+    // console.log(this.mGalleries);
     this.api.get('commons/vnpsclassmenu')
       .subscribe(
         data => {
@@ -62,4 +62,7 @@ export class MenuComponent implements OnInit {
   isAdmin(): boolean {
     return this.auth.siteAdmin();
   }
+  // navigateGallery(gallery: Gallery) {
+  //   this.router.navigateByUrl('gallery/level', {state: gallery});
+  // }
 }

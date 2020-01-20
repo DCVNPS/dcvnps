@@ -42,7 +42,7 @@ module.exports = (config) => {
                 throw err;
             });
     }
-    function getPhotoByGalleryId(galleryId) {
+    function getPhotoByGalleryId(galleryId, year, author) {
         return mySQL({ gp: 'galleryphotos', g: 'galleries' })
             .select({
                 galleryPhotoId: 'gp.galleryPhotoId',
@@ -56,7 +56,7 @@ module.exports = (config) => {
             })
             .orderBy([{ column: 'year', order: 'desc' }, 'author'])
             .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
-            .whereRaw('?? = ?', ['g.galleryId', galleryId])
+            .whereRaw('?? = IFNULL(?, ??) and ?? = IFNULL(?, ??) and ?? = IFNULL(?, ??)', ['g.galleryId', galleryId, 'g.galleryId', 'gp.year', year, 'gp.year', 'gp.author', author, 'gp.author'])
             .then((data) => {
                 let result = [];
                 data.forEach((item) => {
@@ -112,7 +112,7 @@ module.exports = (config) => {
             })
             .catch((error) => { console.log(error); throw error; });
     }
-    function getPhotoByGalleryName(gallery, year, author, photoId) {
+    function getPhotoByGalleryName(gallery, year, author) {
         return mySQL({ gp: 'galleryphotos', g: 'galleries' })
             .select(
                 {
@@ -128,10 +128,9 @@ module.exports = (config) => {
             )
             .orderBy([{ column: 'year', order: 'desc' }, 'author'])
             .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
-            .whereRaw('?? = ?', ['g.gallery', gallery])
+            .whereRaw('?? = IFNULL(?, ??)', ['g.gallery', gallery, 'g.gallery'])
             .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
             .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
-            // .whereRaw('gp.galleryPhotoId = IFNULL(?,gp.galleryPhotoId)',[photoId])
             .then((data) => {
                 let result = [];
                 data.forEach((item) => {

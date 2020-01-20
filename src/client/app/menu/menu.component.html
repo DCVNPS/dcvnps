@@ -22,13 +22,15 @@
   </div>
   <div class="item" [routerLinkActive]="['active']">
     <div class="ui simple dropdown">
-      <a class="item" [routerLink]="['gallery','level1']">
+      <a class="item" [routerLink]="['gallery/level']" [state]="mGalleries[0]">
+      <!-- <a class="item" (click)="navigateGallery(mGalleries[0]);"> -->
         <i class="image icon"></i>
         <div class="text">Galleries</div>
         <i class="dropdown icon"></i>
       </a>
       <div class="menu">
-        <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery',g]">{{g}}</a>
+        <a class="item" *ngFor="let g of mGalleries" [routerLink]="['gallery/level']" [state]="g">{{g.gallery}}</a>
+        <!-- <a class="item" *ngFor="let g of mGalleries" (click)="navigateGallery(g);">{{g.gallery}}</a> -->
       </div>
     </div>
   </div>

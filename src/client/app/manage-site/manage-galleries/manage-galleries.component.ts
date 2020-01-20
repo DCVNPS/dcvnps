@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Gallery } from '../../models/gallery.model';
 @Component({
-  selector: 'app-edit-gallery-profiles',
-  templateUrl: './manage-gallery-profiles.component.html',
-  styleUrls: ['./manage-gallery-profiles.component.scss']
+  selector: 'app-manage-galleries',
+  templateUrl: './manage-galleries.component.html',
+  styleUrls: ['./manage-galleries.component.scss']
 })
-export class ManageGalleryProfilesComponent implements OnInit {
-
+export class ManageGalleriesComponent implements OnInit {
+  public isAddGallery: boolean = false;
   @Input() public galleries: Array<Gallery>;
   constructor() { }
 
@@ -24,6 +24,10 @@ export class ManageGalleryProfilesComponent implements OnInit {
   }
 
   onAddNewGallery(){
-    alert("New Gallery Added.");
+    this.isAddGallery = true;
+  }
+
+  onGalleryAdded(event){
+    this.isAddGallery = !event;
   }
 }

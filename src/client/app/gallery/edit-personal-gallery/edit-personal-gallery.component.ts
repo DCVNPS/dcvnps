@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Photo } from '../models/photo.model';
-import { AuthorData } from '../models/author.data.model';
-import { ApiService } from '../services/api.service';
+import { Photo } from '../../models/photo.model';
+import { AuthorData } from '../../models/author.data.model';
+import { ApiService } from '../../services/api.service';
 import { ActivatedRoute } from '@angular/router';
-import { YearData } from '../models/year.data';
+import { YearData } from '../../models/year.data';
 
 @Component({
-  selector: 'app-edit-gallery',
-  templateUrl: './edit-gallery.component.html',
-  styleUrls: ['./edit-gallery.component.scss']
+  selector: 'app-edit-personal-gallery',
+  templateUrl: './edit-personal-gallery.component.html',
+  styleUrls: ['./edit-personal-gallery.component.scss']
 })
-export class EditGalleryComponent implements OnInit {
+export class EditPersonalGalleryComponent implements OnInit {
 
   public authorData: AuthorData;
   public isAdmin: boolean;
