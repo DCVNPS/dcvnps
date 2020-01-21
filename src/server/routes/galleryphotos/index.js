@@ -49,7 +49,7 @@ module.exports = (express, config) => {
 
     });
 
-    router.delete('/deletephoto', (req, res) => {
+    router.delete('/', (req, res) => {
         const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
         // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
         const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
@@ -91,12 +91,13 @@ module.exports = (express, config) => {
         }
         // console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
         const file = req.files.file;
-        const updateUser = 'Temporary';
+        const updatedUserId = req.auth.userid;
         const createdDate = new Date();
         const updatedDate = new Date();
         const gUuid = uuidv4();
         const destFileName = `${gUuid}_${fileName}`;
         const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
+        fs.mkdirSync(path.join(galleryBaseDir, `${upldGallery}/${upldYear}`),{recursive: true});
         // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {
@@ -105,7 +106,7 @@ module.exports = (express, config) => {
                 log.error({id: req.id, err: err},'Error photoupload-Move files');
                return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            galleriesService.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author.toLowerCase(), upldYear, updateUser, createdDate, updatedDate)
+            galleriesService.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author.toLowerCase(), upldYear, updatedUserId, createdDate, updatedDate)
                 .then(result => {
                     const photo = {
                         photoId: gUuid,
@@ -121,11 +122,11 @@ module.exports = (express, config) => {
                     return res.status(200).json(result);
                 })
                 .catch(err => {
-                    // console.log(`insert gallery error: ${err}\nRemove file from server `);
+                    // console.log(`insert galleryPhotos error: ${err}\nRemove file from server `);
                     log.levels('dcvnpslog',logLevel.ERROR)
                     log.error({id: req.id, err: err},'Error Insertting GalleryPhotos');
-                    fs.unlink(destFile);
-                    return res.status(err.status).json(err.message);
+                    fs.unlinkSync(destFile);
+                    return res.status(500).json(err.message);
                 });
         });
     });

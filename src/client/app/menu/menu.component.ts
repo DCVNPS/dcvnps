@@ -42,8 +42,8 @@ export class MenuComponent implements OnInit {
       .subscribe(
         data => {
           this.mClasses = data;
-          const level1 = this.mClasses.find(c => c.level === 'level1');
-          this.level = level1.level;
+          if(this.mClasses)
+            this.level = this.mClasses[0].level;
         },
         err => {
           console.log(err);

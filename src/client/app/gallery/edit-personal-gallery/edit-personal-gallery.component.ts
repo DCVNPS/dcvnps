@@ -40,7 +40,7 @@ export class EditPersonalGalleryComponent implements OnInit {
 
   deletePhoto(img: Photo) {
     // console.log(img);
-    this.api.delete('galleries/deletephoto', img)
+    this.api.delete('galleryphotos', img)
       .subscribe(res => {
         const delIndx = this.photos.indexOf(img);
         this.photos.splice(delIndx, 1);

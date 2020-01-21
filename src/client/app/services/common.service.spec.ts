@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DcvnpsDataService } from './dcvnps-data.service';
+import { CommonService } from './common.service';
 
-describe('DcvnpsDataService', () => {
+describe('CommonService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DcvnpsDataService = TestBed.get(DcvnpsDataService);
+    const service: CommonService = TestBed.get(CommonService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,4 +1,6 @@
 const fs = require('fs');
+const Path = require('path');
+
 const GalleriesService = require('../../dataAccess/galleriesService');
 module.exports = (express, config) => {
     if (!config) {
@@ -14,115 +16,119 @@ module.exports = (express, config) => {
 
     router.get('/:galleryId?', (req, res) => {
         const galleryId = req.params.galleryId || null;
-        galleriesService.readGalleries(galleryId)
+        galleriesService.readGalleries(galleryId, null)
             .then((data) => {
                 // console.log(data);
                 return res.status(200).json(data);
             })
             .catch((err) => {
-                log.levels('dcvnpslog',logLevel.ERROR)
-                log.error({id: req.id, err: err},`Error getting gallery ${galleryId}`);
+                log.levels('dcvnpslog', logLevel.ERROR)
+                log.error({ id: req.id, err: err }, `Error getting gallery ${galleryId}`);
                 return res.status(500).json(err.message);
             });
     });
 
-    // // GET photo of gallery by gallery name.
-    // // Called by: GalleryPhotosResolve, EditGalleryResolve
-    // router.get('/photosbyname/:gallery/:year?/:author?', (req, res) => {
-    //     const gallery = req.params.gallery;
-    //     const year = req.params.year || null;
-    //     const author = req.params.author || null;
-    //     // log.info({id:req.id, gallery: gallery, year:year, author:author},'request');
-    //     galleriesService.getPhotoByGalleryName(gallery, year, author)
-    //         .then((data) => {
-    //             return res.status(200).json(data);
-    //         })
-    //         .catch((err) => {
-    //             log.levels('dcvnpslog',logLevel.ERROR);
-    //             log.error({id:req.id, err: err},'Error get gallery photos by name');
-    //             return res.status(500).json({ error: err.message });
-    //         })
-    // });
-
-    // router.delete('/deletephoto', (req, res) => {
-    //     const { photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden } = req.body;
-    //     // console.log({ photoId, galleryId, gallery, imgalt, imgsrc, portrait, hidden });
-    //     const filePath = path.join(galleryBaseDir, imgsrc.replace('/galleries', ''));
-    //     // console.log(`read file ${filePath}`);
-    //     // Save the file content in case delete from database fail
-    //     // we can use that to restore the file. 
-    //     const file = fs.readFileSync(filePath);
-    //     try {
-    //         fs.unlinkSync(filePath);
-    //         // console.log(`file ${filePath} removed.`);
-    //         // Success removing file from server, delete entry in database.
-    //         galleriesService.deletePhoto(photoId)
-    //             .then(resp => {
-    //                 console.log(resp); gallery
-    //                 return res.status(200).json(`Photo ${imgsrc} has been deleted.`);
-    //             })
-    //             .catch(exp => {
-    //                 throw exp;
-    //             });
-    //     }
-    //     catch (err) {
-    //         // console.log(error);
-    //         // console.log(`Resote file ${filePath}`);
-    //         // Failure to remove photo entry in database, restore file.
-    //         log.levels('dcvnpslog',logLevel.ERROR)
-    //         log.error({id: req.id, err: err},'Error deleting photo');
-    //         fs.writeFileSync(filePath, file);
-    //         return res.status(500).json(`Error verifying delete file ${imgsrc} ---- ${err.message}`);
-    //     }
-    // });
-    
     // Upload a photo to a gallery
-    router.post('/upload/:gallery/:year', async (req, res) => {
-        const upldGallery = req.params['gallery'];
-        const upldYear = req.params['year'];
-        const { galleryId, fileName, author, size, portrait } = req.body;
+    router.post('/upload/:gallery', async (req, res) => {
+        const galDirPart = req.params['gallery'];
+        const upldGallery = req.body;
         if (!req.files) {
             return res.status(400).send('No file uploaded');
         }
-        // console.log({ "galleryId": galleryId, "gallery": upldGallery, "year": upldYear, "portrait": portrait, "author": author, "fileName": fileName });
+
         const file = req.files.file;
-        const updateUser = 'Temporary';
-        const createdDate = new Date();
-        const updatedDate = new Date();
-        const gUuid = uuidv4();
-        const destFileName = `${gUuid}_${fileName}`;
-        const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
-        // console.log(`${destFileName} -- ${fileName}`);
+        upldGallery.updatedUserId = req.auth.userid;
+        upldGallery.galleryId = uuidv4();
+        upldGallery.profilePhoto = file.name;
+        upldGallery.updatedUserid = req.auth.userid;
+        upldGallery.createdDate = new Date();
+        upldGallery.updatedDate = new Date();
+        console.log(upldGallery);
+        galleryProfileDir = path.join(galleryBaseDir, `${galDirPart}/profile`);
+        console.log(destFile);
+        try {
+            fs.mkdirSync(galleryProfileDir, { recursive: true });
+            const destFile = path.join(galleryProfileDir, upldGallery.profilePhoto);
+            fs.unlinkSync(destFile);
+        }
+        catch (error) {
+            console.log(error.message); // let it goes if there's no destination file.
+        }
         file.mv(destFile, err => {
             if (err) {
-                // console.log('photoupload-Move file', err.message)
-                log.levels('dcvnpslog',logLevel.ERROR)
-                log.error({id: req.id, err: err},'Error photoupload-Move files');
-               return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
+                console.log('photoupload-Move file', err.message)
+                log.levels('dcvnpslog', logLevel.ERROR)
+                log.error({ id: req.id, err: err }, 'Error photoupload-Move files');
+                return res.status(500).send(`Failed Upload Image ${file.name} --\n ${err.message}`);
             }
-            galleriesService.insertGalleryPhoto(gUuid, galleryId, fileName, JSON.parse(portrait), author.toLowerCase(), upldYear, updateUser, createdDate, updatedDate)
+            galleriesService.insertGalleries(upldGallery)
                 .then(result => {
-                    const photo = {
-                        photoId: gUuid,
-                        galleryId: galleryId,
-                        gallery: upldGallery,
-                        imgalt: fileName,
-                        imgsrc: `/galleries/${upldGallery}/${upldYear}/${destFileName}`,
-                        portrait: portrait,
-                        hidden: 'false'
-                    }
-                    result.photo = photo;
-                    // console.log(result);
+                    result.gallery = gallery;
+                    console.log(result);
                     return res.status(200).json(result);
                 })
                 .catch(err => {
-                    // console.log(`insert gallery error: ${err}\nRemove file from server `);
-                    log.levels('dcvnpslog',logLevel.ERROR)
-                    log.error({id: req.id, err: err},'Error Insertting GalleryPhotos');
-                    fs.unlink(destFile);
-                    return res.status(err.status).json(err.message);
+                    // console.log(`insert galleries error: ${err}\nRemove file from server `);
+                    log.levels('dcvnpslog', logLevel.ERROR)
+                    log.error({ id: req.id, err: err }, 'Error Insertting Galleries');
+                    if (err.code === "ER_DUP_ENTRY") {
+                        return res.status(200).json({ success: true, gallery: upldGallery });
+                    }
+                    if (fs.existsSync(destFile)) {
+                        fs.unlinkSync(destFile);
+                    }
+                    return res.status(500).json(err.message);
                 });
         });
+    });
+
+    router.delete('/', async (req, res) => {
+        const { galleryId, galDirPart } = req.body;
+        console.log({ 'gallery': galleryId, 'galDirPart': galDirPart });
+        const galleryDirPath = path.join(galleryBaseDir, galDirPart);
+        //// function to remove NOEMPTY directory recursively
+        const rmDirRecursive = function(dirPath) {
+            if (fs.existsSync(dirPath)) {
+                fs.readdirSync(dirPath).forEach((item, index) => {
+                    const curPath = Path.join(dirPath, item);
+                    if (fs.lstatSync(curPath).isDirectory()) {
+                        rmDirRecursive(curPath);
+                    }
+                    else {
+                        fs.unlinkSync(curPath);
+                    }
+                })
+            }
+            fs.rmdirSync(dirPath, { maxRetries: 3, recursive: true });
+        }
+        try {
+            // Save the gallery record in case delete from database fail
+            // we can use that to restore the gallery.
+            const bkGallery = await galleriesService.readGalleries(galleryId, null);
+            if (bkGallery) {
+                try{
+                    rmDirRecursive(galleryDirPath);
+                }
+                catch(err){
+                    if(!err.code === "ENOENT"){
+                        // squalow directory does not exists;
+                        throw err;
+                    }
+                }
+                const resp = await galleriesService.deleteGalleries(galleryId);
+            }
+            else {
+                throw new Error("NO_DATA_FOUND");
+            }
+            // console.log(bkGallery);
+            return res.status(200).json({ success: true });
+        }
+        catch (err) {
+            // Failure to remove photo entry in database, restore file.
+            log.levels('dcvnpslog', logLevel.ERROR)
+            log.error({ id: req.id, err: err }, 'Error deleting gallery');
+            return res.status(500).json(`Error Deleting Gallery ${galDirPart.replace('_', ' ')} ---- ${err.message}`);
+        }
     });
 
     return router;

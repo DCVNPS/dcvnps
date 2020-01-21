@@ -21,7 +21,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   photos: Array<Photo>;
   showDialog = false;
   private state$: Observable<Gallery>;
-  private currentGallery: Gallery;
+  public currentGallery: Gallery;
   public isAdmin: boolean;
   private editUrl: string;
   public galleryData: Array<AuthorData> = [];

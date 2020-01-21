@@ -32,6 +32,7 @@
       <button class=" mini ui negative basic button" (click)="deleteGallery(i)">Delete</button>
     </div>
   </div>
+  <div class="row" [style.color]="red" *ngIf="errorMsg">{{errorMsg}}</div>
   <div class="four column row" *ngIf="!isAddGallery">
     <div class="ui left floated column">
       <div class="ui primary button" (click)="onAddNewGallery();">Add New Gallery</div>
@@ -39,7 +40,7 @@
   </div>
   <div class="one column row" *ngIf="isAddGallery">
     <div class="ui left floated column">
-      <app-add-gallery (galleryAdded)="onGalleryAdded($event)"></app-add-gallery>
+      <app-add-gallery (finishWork)="onGalleryAdded($event)"></app-add-gallery>
     </div>
   </div>
 </div>

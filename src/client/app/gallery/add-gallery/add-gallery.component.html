@@ -7,12 +7,17 @@
   <div [style.color]="'red'" *ngIf="f.galleryName.errors && ( f.galleryName.dirty || f.galleryName.touched )">
     <div class="header" *ngIf="f.galleryName.errors.required">Gallery Name is required.</div>
   </div>
-  <div class="inline field" [ngClass]="{'error': f.galleryPhoto.invalid && (f.galleryPhoto.dirty || f.galleryPhoto.touched)}">
-    <label>Gallery Photo: </label>
-    <input type="file" formControlName="galleryPhoto" placeholder=" select photo file to upload...">
+  <div class="inline field" [ngClass]="{'error': errorMsg || (f.galleryPhoto.errors && ( f.galleryPhoto.dirty || f.galleryPhoto.touched ))}">
+    <label for="galleryPhoto">Gallery Photo: </label>
+    <input type="file" #file formControlName="galleryPhoto" accept="image/*" (change)="updateImageDisplay(file.files);">
+    <div class="ui tiny image" #priview *ngIf="imgUrl">
+      <img [src]="imgUrl">
+    </div>  
   </div>
+  <div class="header" *ngIf="errorMsg">{{errorMsg}}</div>
   <div [style.color]="'red'" *ngIf="f.galleryPhoto.errors && ( f.galleryPhoto.dirty || f.galleryPhoto.touched )">
     <div class="header" *ngIf="f.galleryPhoto.errors.required">Gallery Photo is required.</div>
   </div>
   <button type="submit" class="ui primary button float left floated" [disabled]="!galleryForm.valid">Submit</button>
+  <button type="button" class="ui secondary button float left floated" (click)="onCancel();">Cancel</button>
 </form>

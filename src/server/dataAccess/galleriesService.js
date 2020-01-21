@@ -5,7 +5,52 @@ module.exports = (config) => {
     }
     const mySQL = config.mySQL;
 
-    function insertGalleryPhoto(galleryPhotoId, galleryId, photo, portrait, author, year, updateUser, createdDate, updatedDate) {
+    async function insertGalleries(galleryData ) {
+        var response;
+        return mySQL('galleries').insert({
+            galleryId: galleryData.galleryId,
+            gallery: galleryData.gallery,
+            profilePhoto: galleryData.profilePhoto,
+            activeInd: galleryData.activeInd,
+            updatedUserId: galleryData.updatedUserId,
+            createdDate: galleryData.createdDate,
+            updatedDate: galleryData.updatedDate
+        })
+            .then((result) => {
+                response = {
+                    success: true
+                };
+                return response;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
+
+    async function readGalleries(galleryId, activeInd) {
+        return mySQL('galleries')
+            .select('galleryId', 'gallery', 'profilePhoto', 'updatedUserId', 'createdDate', 'updatedDate')
+            .whereRaw('`galleryId` = IFNULL(?,`galleryId`) and `activeInd` = IFNULL(?,`activeInd`)', [galleryId,activeInd])
+            .orderBy('createdDate')
+            .then((data) => {
+                return data;
+            })
+            .catch(function (err) {
+                throw err;
+            });
+    }
+
+    async function deleteGalleries(galleryid){
+        try{
+            const resp = await mySQL('galleries').where({galleryId: galleryid}).delete();
+            return resp;
+        }
+        catch( error ){
+            throw error;
+        }
+    }
+
+    async function insertGalleryPhoto(galleryPhotoId, galleryId, photo, portrait, author, year, updatedUserId, createdDate, updatedDate) {
         var response;
         return mySQL('galleryphotos').insert({
             galleryPhotoId,
@@ -14,7 +59,7 @@ module.exports = (config) => {
             portrait,
             author,
             year,
-            updateUser,
+            updatedUserId,
             createdDate,
             updatedDate
         })
@@ -30,19 +75,7 @@ module.exports = (config) => {
             });
     }
 
-    function readGalleries(galleryId) {
-        return mySQL('galleries')
-            .select('galleryId', 'gallery', 'profilePhoto', 'updateUser', 'createdDate', 'updatedDate')
-            .whereRaw('galleryId = IFNULL(?,galleryId)', [galleryId])
-            .orderBy('createdDate')
-            .then((data) => {
-                return data;
-            })
-            .catch(function (err) {
-                throw err;
-            });
-    }
-    function getPhotoByGalleryId(galleryId, year, author) {
+    async function getPhotoByGalleryId(galleryId, year, author) {
         return mySQL({ gp: 'galleryphotos', g: 'galleries' })
             .select({
                 galleryPhotoId: 'gp.galleryPhotoId',
@@ -226,6 +259,8 @@ module.exports = (config) => {
     }
 
     return {
+        insertGalleries,
+        deleteGalleries,
         insertGalleryPhoto,
         readGalleries,
         getPhotoByGalleryId,

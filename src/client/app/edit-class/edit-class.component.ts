@@ -92,7 +92,7 @@ export class EditClassComponent implements OnInit {
       // console.log(apiEnpoint);
       this.api.get(apiEnpoint)
         .subscribe(async data => {
-          console.log(data);
+          // console.log(data);
           this.currentClass = await data[0];
           if (!this.addClass) {
             this.patchClassValues(this.currentClass);

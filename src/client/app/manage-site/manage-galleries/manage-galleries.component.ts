@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Gallery } from '../../models/gallery.model';
+import { ApiService } from '../../services/api.service';
 @Component({
   selector: 'app-manage-galleries',
   templateUrl: './manage-galleries.component.html',
@@ -7,8 +8,9 @@ import { Gallery } from '../../models/gallery.model';
 })
 export class ManageGalleriesComponent implements OnInit {
   public isAddGallery: boolean = false;
+  public errorMsg: string;
   @Input() public galleries: Array<Gallery>;
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     // console.log(this.galleries);
@@ -20,7 +22,16 @@ export class ManageGalleriesComponent implements OnInit {
 
   deleteGallery(index: number) {
     console.log(`Delete gallery at index ${index}`);
-    // console.log(this.galleries[index]);
+    console.log(this.galleries[index]);
+    this.api.delete('galleries', {galleryId:this.galleries[index].galleryId, galDirPart:this.galleries[index].gallery.replace(' ','_')})
+    .subscribe(
+      (success) => { 
+        console.log({message: 'Delete success', gallery: this.galleries[index]});
+        this.galleries.splice(index,1);
+        // this.galleries.splice(index,1);
+      },
+      error => { console.log(error);}
+    );
   }
 
   onAddNewGallery(){
@@ -28,6 +39,11 @@ export class ManageGalleriesComponent implements OnInit {
   }
 
   onGalleryAdded(event){
-    this.isAddGallery = !event;
+    const {finish, gallery, errorMsg } = event;
+    this.isAddGallery = !finish;
+    this.errorMsg = errorMsg;
+    if(gallery){
+      this.galleries.push(gallery);
+    }
   }
 }

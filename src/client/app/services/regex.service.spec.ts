@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RegexService } from ./regex.servicee';
+import { RegexService } from './regex.service';
 
 describe('RegexService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
