@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `dcvnps` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+CREATE DATABASE  IF NOT EXISTS `dcvnps` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `dcvnps`;
--- MySQL dump 10.13  Distrib 8.0.12, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for Linux (x86_64)
 --
--- Host: localhost    Database: dcvnps
+-- Host: 127.0.0.1    Database: dcvnps
 -- ------------------------------------------------------
--- Server version	8.0.12
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,29 +18,34 @@ USE `dcvnps`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `galleryphotos`
+-- Table structure for table `galleries`
 --
 
-DROP TABLE IF EXISTS `galleryphotos`;
+DROP TABLE IF EXISTS `galleries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `galleryphotos` (
-  `galleryPhotoId` varchar(36) NOT NULL,
+CREATE TABLE `galleries` (
   `galleryId` varchar(36) NOT NULL,
-  `photo` varchar(100) NOT NULL,
-  `portrait` int(11) NOT NULL DEFAULT '0',
-  `author` varchar(100) DEFAULT 'dcvnps',
-  `year` varchar(4) NOT NULL,
-  `updateUser` varchar(45) NOT NULL DEFAULT 'dcvnps',
+  `gallery` varchar(100) NOT NULL,
+  `profilePhoto` varchar(100) DEFAULT NULL,
+  `activeInd` varchar(1) NOT NULL DEFAULT 'Y',
+  `updatedUserId` varchar(45) NOT NULL,
   `createdDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedDate` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`galleryPhotoId`),
-  UNIQUE KEY `uidx_gallery_photo` (`galleryId`,`photo`),
-  KEY `idx_gallery_id` (`galleryId`),
-  KEY `idx_author` (`author`),
-  CONSTRAINT `fk_gallery_id` FOREIGN KEY (`galleryId`) REFERENCES `galleries` (`galleryid`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`galleryId`),
+  UNIQUE KEY `gallery_UNIQUE` (`gallery`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `galleries`
+--
+
+LOCK TABLES `galleries` WRITE;
+/*!40000 ALTER TABLE `galleries` DISABLE KEYS */;
+INSERT INTO `galleries` (`galleryId`, `gallery`, `profilePhoto`, `activeInd`, `updatedUserId`, `createdDate`, `updatedDate`) VALUES ('d63a6b38-6dfe-11e9-8849-848f69b86260','home',NULL,'Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('e8104b61-6dfe-11e9-8849-848f69b86260','members','member-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('eac81e4c-6dfe-11e9-8849-848f69b86260','level3','level3-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('ecdee564-6dfe-11e9-8849-848f69b86260','level2','level2-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('eedc7f28-6dfe-11e9-8849-848f69b86260','level1','level1-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('f10448dd-6dfe-11e9-8849-848f69b86260','aboutus',NULL,'Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41');
+/*!40000 ALTER TABLE `galleries` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -50,11 +55,11 @@ CREATE TABLE `galleryphotos` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`dcvnps`@`%`*/ /*!50003 TRIGGER `bir_galleryphotos` BEFORE INSERT ON `galleryphotos` FOR EACH ROW begin
-IF new.galleryPhotoId is null then
-	set new.galleryPhotoId = uuid();
+/*!50003 CREATE*/ /*!50017 DEFINER=`dcvnps`@`%`*/ /*!50003 TRIGGER `bir_galleries` BEFORE INSERT ON `galleries` FOR EACH ROW BEGIN
+IF new.galleryId is null then
+	set new.galleryId = uuid();
 end if;
-end */;;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -70,4 +75,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-26 20:15:07
+-- Dump completed on 2020-01-22 22:14:45
