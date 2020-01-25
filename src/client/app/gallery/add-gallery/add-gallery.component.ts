@@ -86,7 +86,7 @@ export class AddGalleryComponent implements OnInit{
           if (gallery) {
             // console.log(this.photo);
             // upload succeeded, raise photoAdded event
-            this.finishWork.emit({finish:true, gallery: gallery});           
+            this.finishWork.emit({finish:true, addedGallery: gallery});           
           }
         },
         (err) => { 

@@ -45,10 +45,10 @@ module.exports = (express, config) => {
         upldGallery.updatedDate = new Date();
         console.log(upldGallery);
         galleryProfileDir = path.join(galleryBaseDir, `${galDirPart}/profile`);
+        const destFile = path.join(galleryProfileDir, upldGallery.profilePhoto);
         console.log(destFile);
         try {
             fs.mkdirSync(galleryProfileDir, { recursive: true });
-            const destFile = path.join(galleryProfileDir, upldGallery.profilePhoto);
             fs.unlinkSync(destFile);
         }
         catch (error) {
@@ -63,7 +63,7 @@ module.exports = (express, config) => {
             }
             galleriesService.insertGalleries(upldGallery)
                 .then(result => {
-                    result.gallery = gallery;
+                    result.gallery = upldGallery;
                     console.log(result);
                     return res.status(200).json(result);
                 })

@@ -82,7 +82,7 @@ module.exports = (config) => {
                 galleryId: 'gp.galleryId',
                 gallery: 'g.gallery',
                 imgalt: 'gp.photo',
-                imgsrc: mySQL.raw('concat_ws(\'/\',\'/galleries\', g.gallery, gp.year, concat_ws(\'_\',gp.galleryPhotoId, gp.photo))'),
+                imgsrc: mySQL.raw('concat_ws(\'/\',\'/galleries\', replace(g.gallery,\' \',\'_\'), gp.year, concat_ws(\'_\',gp.galleryPhotoId, gp.photo))'),
                 author: 'gp.author',
                 year: 'gp.year',
                 portrait: 'gp.portrait'
@@ -143,7 +143,9 @@ module.exports = (config) => {
                 return result;
                 // return data;
             })
-            .catch((error) => { console.log(error); throw error; });
+            .catch((error) => { 
+                console.log(error); 
+                throw error; });
     }
     function getPhotoByGalleryName(gallery, year, author) {
         return mySQL({ gp: 'galleryphotos', g: 'galleries' })

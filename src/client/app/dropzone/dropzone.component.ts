@@ -201,7 +201,7 @@ export class DropzoneComponent implements OnInit {
     // console.log(this.selectedGallery);
     // const imageInfo = this.validImages[index];
     imageInfo.galleryid = this.selectedGallery.galleryId;
-    imageInfo.gallery = this.selectedGallery.gallery;
+    imageInfo.gallery = this.selectedGallery.gallery.replace(' ','_');
     imageInfo.year = this.selectedYear.toString();
     // console.log(imageInfo);
     this.api.galleryPhotoUpload(imageInfo)

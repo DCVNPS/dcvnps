@@ -97,7 +97,12 @@ module.exports = (express, config) => {
         const gUuid = uuidv4();
         const destFileName = `${gUuid}_${fileName}`;
         const destFile = path.join(galleryBaseDir, `${upldGallery}/${upldYear}/${destFileName}`);
-        fs.mkdirSync(path.join(galleryBaseDir, `${upldGallery}/${upldYear}`),{recursive: true});
+        try{
+            fs.mkdirSync(path.join(galleryBaseDir, `${upldGallery}/${upldYear}`),{recursive: true});
+        }
+        catch(err){
+            console.log(err.message);
+        }
         // console.log(`${destFileName} -- ${fileName}`);
         file.mv(destFile, err => {
             if (err) {

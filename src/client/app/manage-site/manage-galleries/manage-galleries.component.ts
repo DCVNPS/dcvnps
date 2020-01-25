@@ -39,11 +39,12 @@ export class ManageGalleriesComponent implements OnInit {
   }
 
   onGalleryAdded(event){
-    const {finish, gallery, errorMsg } = event;
+    const {finish, addedGallery, errorMsg } = event;
     this.isAddGallery = !finish;
     this.errorMsg = errorMsg;
-    if(gallery){
-      this.galleries.push(gallery);
+    if(addedGallery){
+      const g:Gallery = new Gallery(addedGallery.galleryId, addedGallery.gallery, addedGallery.profilePhoto, addedGallery.activeInd, addedGallery.updatedUser, addedGallery.createdDate, addedGallery.updatedDate);
+      this.galleries.push(g);
     }
   }
 }

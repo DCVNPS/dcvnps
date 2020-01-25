@@ -50,7 +50,7 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
     // console.log(this.data);
     this.curClass = this.data[0];
     this.paypalDesc = `${paypalDescription.enrollmentFee} for ${this.curClass.classLevelDesc}`;
-    console.log(this.paypalDesc);
+    // console.log(this.paypalDesc);
   }
 
 }

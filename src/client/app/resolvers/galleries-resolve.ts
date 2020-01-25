@@ -29,6 +29,7 @@ export class GalleriesResolve implements Resolve<Observable<any> >{
                             item.galleryId,
                             item.gallery,
                             item.profilePhoto,
+                            item.activeInd,
                             item.updatedUser,
                             item.createdDate,
                             item.updatedDate))

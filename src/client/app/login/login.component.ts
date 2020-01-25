@@ -60,9 +60,9 @@ export class LoginComponent implements OnInit {
         this.auth.removeToken();
         this.auth.setToken({ token: data.token, role: data.role });
         if (this.backUrl) {
-          this.router.navigate([this.backUrl]);
+          this.router.navigateByUrl(this.backUrl);
         } else {
-          this.router.navigate(['/home']);
+          this.router.navigateByUrl('/home');
         }
       },
         (error) => {
