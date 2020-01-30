@@ -18,14 +18,17 @@ export class ManageSiteComponent implements OnInit {
   public isSiteUsers: boolean;
   public isAdminUsers: boolean;
   // private userType: string = 'siteuser';
-  public users: Array<User> = [];
+  public adminUsers: Array<User> = [];
+  public siteUsers: Array<User> = [];
   private galleries: Array<Gallery> = [];
   private apiEndpoint: string;
-  constructor( private api: ApiService, private route: ActivatedRoute) { }
+  constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.isPhotoUpload = true;
     this.galleries = this.route.snapshot.data['galleries'];
+    this.adminUsers = this.getUsers('adminuser');
+    this.siteUsers = this.getUsers('siteuser');
   }
 
   onUploadClick() {
@@ -34,7 +37,7 @@ export class ManageSiteComponent implements OnInit {
     this.isClasses = false;
     this.isAnnouncements = false;
     this.isSiteUsers = false;
-    this.isAdminUsers=false;
+    this.isAdminUsers = false;
   }
   onGalleryClick() {
     this.isPhotoUpload = false;
@@ -42,7 +45,7 @@ export class ManageSiteComponent implements OnInit {
     this.isClasses = false;
     this.isAnnouncements = false;
     this.isSiteUsers = false;
-    this.isAdminUsers=false;
+    this.isAdminUsers = false;
   }
   onAnnouncements() {
     this.isPhotoUpload = false;
@@ -50,7 +53,7 @@ export class ManageSiteComponent implements OnInit {
     this.isClasses = false;
     this.isAnnouncements = true;
     this.isSiteUsers = false;
-    this.isAdminUsers=false;
+    this.isAdminUsers = false;
   }
 
   onClasses() {
@@ -59,22 +62,20 @@ export class ManageSiteComponent implements OnInit {
     this.isClasses = true;
     this.isAnnouncements = false;
     this.isSiteUsers = false;
-    this.isAdminUsers=false;
+    this.isAdminUsers = false;
   }
 
-  onUsers(userType:string) {
+  onUsers(userType: string) {
     this.isPhotoUpload = false;
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = false;
-    this.isSiteUsers = (userType==='siteuser');
-    this.isAdminUsers =  (userType==='adminuser');
-    // console.log({'isSiteUser': this.isSiteUsers, 'isAdminUsers':this.isAdminUsers});
-    this.getUsers(userType);
+    this.isSiteUsers = (userType === 'siteuser');
+    this.isAdminUsers = (userType === 'adminuser');
   }
 
   getUsers(userType: string) {
-    switch(userType){
+    switch (userType) {
       case 'adminuser':
         this.apiEndpoint = 'admin/user/adminusers';
         break;
@@ -83,7 +84,7 @@ export class ManageSiteComponent implements OnInit {
         break;
     }
     // console.log(this.apiEndpoint);
-    this.users = []; // reset users array
+    const users: Array<User> = []; // reset users array
     this.api.get(this.apiEndpoint)
       .subscribe(
         data => {
@@ -102,12 +103,13 @@ export class ManageSiteComponent implements OnInit {
               au.updatedUserId,
               au.updatedDate
             );
-            this.users.push(aUser);
+            users.push(aUser);
           });
           // console.log(this.users);
         },
         error => { console.log(error); }
       );
+      return users;
   }
 
 }

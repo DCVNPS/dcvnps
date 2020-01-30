@@ -34,8 +34,6 @@ export class AddGalleryComponent implements OnInit{
   }
 
   onSubmitForm(){
-    // console.log(this.formValue);
-    // console.log(this.upldFile);
     this.addGallery();
   }
 
@@ -75,16 +73,13 @@ export class AddGalleryComponent implements OnInit{
     formData.append('profilePhoto', this.upldFile.name);
     formData.append('activeInd', 'Y');
     formData.append('updatedUserid', null);
-    console.log(uploadURL);
-    // console.log(formData.get('file'));
-    // console.log(formData.get('gallery'));
+
     this.api.galleriesUpload(uploadURL, formData)
       .subscribe(
         (res) => {
           this.uploadResponse = res;
           let gallery = this.uploadResponse['gallery'];
           if (gallery) {
-            // console.log(this.photo);
             // upload succeeded, raise photoAdded event
             this.finishWork.emit({finish:true, addedGallery: gallery});           
           }

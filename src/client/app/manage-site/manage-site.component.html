@@ -26,7 +26,7 @@
       <app-manage-galleries *ngIf="isGallery" [galleries]="galleries"></app-manage-galleries>
       <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
       <app-edit-class *ngIf="isClasses"></app-edit-class>
-      <app-manage-users  [users]="users" *ngIf="isAdminUsers"></app-manage-users>
-      <app-manage-users  [users]="users" *ngIf="isSiteUsers"></app-manage-users>
+      <app-manage-users  [users]="adminUsers"  *ngIf="isAdminUsers" ></app-manage-users>
+      <app-manage-users  [users]="siteUsers"   *ngIf="isSiteUsers"></app-manage-users>
   </div>
 </div>

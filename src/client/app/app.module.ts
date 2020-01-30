@@ -58,6 +58,8 @@ import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { ManageUsersComponent } from './manage-site/manage-users/manage-users.component';
 import { AddGalleryComponent } from './gallery/add-gallery/add-gallery.component';
+import { ConfirmationDialogComponent } from './commons/confirmation-dialog/confirmation-dialog.component';
+import { ModalComponent } from './commons/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { AddGalleryComponent } from './gallery/add-gallery/add-gallery.component
     DigitOnlyDirective,
     UserListComponent,
     ManageUsersComponent,
-    AddGalleryComponent
+    AddGalleryComponent,
+    ConfirmationDialogComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

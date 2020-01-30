@@ -80,6 +80,7 @@ export class DropzoneComponent implements OnInit {
   }
   ngOnInit() {
     const galleryText = this.config.gallery || this.selectedGalleryText();
+    const galleryId = this.config.galleryId || undefined;
     this.selectedYear = this.config.year || (new Date()).getFullYear().toString();
     this.showBackMenu = this.config.showBackMenu || false;
     this.years = this.comSrv.getYearLov(parseInt(this.selectedYear));
@@ -88,7 +89,7 @@ export class DropzoneComponent implements OnInit {
     this.api.get('galleries')
       .subscribe((data) => {
         this.galleries = data;
-        this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);
+        this.selectedGallery = this.galleries.find(g => g.galleryId === galleryId);
         if (this.selectedGallery) {
           this.uploadForm.controls.upldGallery.patchValue(this.selectedGallery);
           this.uploadForm.controls.upldGallery.disable({ onlySelf: true });

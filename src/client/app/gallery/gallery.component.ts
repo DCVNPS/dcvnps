@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd, RouterState } from '@angular/router';
 import { Photo } from '../models/photo.model';
-import { YearData } from '../models/year.data';
 import { Subject, Observable } from 'rxjs';
 import { filter, takeUntil, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
@@ -23,7 +22,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   private state$: Observable<Gallery>;
   public currentGallery: Gallery;
   public isAdmin: boolean;
-  private editUrl: string;
+  public isUpload: boolean = false;
+  public dzconfig:Object ={};
   public galleryData: Array<AuthorData> = [];
   public authPhotos: Array<AuthorData> = [];
   private destroyed = new Subject<any>();
@@ -59,7 +59,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.authPhotos = [];
     // get the galleryid value from the route parameter
     this.state$ = this.route.paramMap.pipe(map(() => window.history.state));
-    this.state$.subscribe( data => { this.currentGallery = data; });
+    this.state$.subscribe( data => { 
+      this.currentGallery = data; 
+      this.dzconfig = {'galleryId':this.currentGallery.galleryId};
+      // console.log(this.dzconfig);
+    });
     this.isAdmin = this.auth.isAdmin(this.currentGallery.gallery) || this.auth.siteAdmin();
     this.getGalleryData(this.currentGallery.galleryId);
   }
@@ -98,5 +102,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.galleryData = this.authPhotos;
         // console.log(this.authPhotos);
       })
+  }
+  toggleUpload(){
+    this.isUpload = !this.isUpload;
   }
 }
