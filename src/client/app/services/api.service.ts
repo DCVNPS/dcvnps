@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable, pipe } from 'rxjs';
@@ -114,5 +114,4 @@ export class ApiService {
     })
     );
   }
-
 }

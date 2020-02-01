@@ -60,6 +60,8 @@ import { ManageUsersComponent } from './manage-site/manage-users/manage-users.co
 import { AddGalleryComponent } from './gallery/add-gallery/add-gallery.component';
 import { ConfirmationDialogComponent } from './commons/confirmation-dialog/confirmation-dialog.component';
 import { ModalComponent } from './commons/modal/modal.component';
+import { MessageService } from './services/message.service';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +109,8 @@ import { ModalComponent } from './commons/modal/modal.component';
     ManageUsersComponent,
     AddGalleryComponent,
     ConfirmationDialogComponent,
-    ModalComponent
+    ModalComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -128,6 +131,7 @@ import { ModalComponent } from './commons/modal/modal.component';
     ModalService,
     GalleryPhotosResolve,
     GalleriesResolve,
+    MessageService,
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent],
