@@ -54,8 +54,8 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`dcvnps`@`%`*/ /*!50003 TRIGGER `bir_roles` BEFORE INSERT ON `roles` FOR EACH ROW BEGIN
-IF new.newRoleId is null then
-	set new.newRoleId = uuid();
+IF new.RoleId is null then
+	set new.RoleId = uuid();
 end if;
 END */;;
 DELIMITER ;
