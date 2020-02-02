@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `dcvnps` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `dcvnps`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: dcvnps
@@ -44,6 +42,7 @@ CREATE TABLE `orderItems` (
 --
 -- Dumping data for table `orderItems`
 --
+-- ORDER BY:  `orderItemId`
 
 LOCK TABLES `orderItems` WRITE;
 /*!40000 ALTER TABLE `orderItems` DISABLE KEYS */;
@@ -60,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-22 22:14:45
+-- Dump completed on 2020-02-02  7:29:29

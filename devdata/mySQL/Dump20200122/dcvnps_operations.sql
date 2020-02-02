@@ -16,34 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `galleries`
+-- Table structure for table `operations`
 --
 
-DROP TABLE IF EXISTS `galleries`;
+DROP TABLE IF EXISTS `operations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `galleries` (
-  `galleryId` varchar(36) NOT NULL,
-  `gallery` varchar(100) NOT NULL,
-  `profilePhoto` varchar(100) DEFAULT NULL,
-  `activeInd` varchar(1) NOT NULL DEFAULT 'Y',
-  `updatedUserId` varchar(45) NOT NULL,
-  `createdDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `operations` (
+  `operationId` varchar(36) NOT NULL,
+  `operationType` varchar(45) NOT NULL,
+  `operationCode` varchar(30) NOT NULL,
+  `operationDesc` varchar(200) NOT NULL,
+  `updatedUserId` varchar(36) NOT NULL,
+  `createdDate` datetime DEFAULT CURRENT_TIMESTAMP,
   `updatedDate` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`galleryId`),
-  UNIQUE KEY `gallery_UNIQUE` (`gallery`)
+  PRIMARY KEY (`operationId`),
+  UNIQUE KEY `uk_operation_type_code` (`operationType`,`operationCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `galleries`
+-- Dumping data for table `operations`
 --
--- ORDER BY:  `galleryId`
+-- ORDER BY:  `operationId`
 
-LOCK TABLES `galleries` WRITE;
-/*!40000 ALTER TABLE `galleries` DISABLE KEYS */;
-INSERT INTO `galleries` (`galleryId`, `gallery`, `profilePhoto`, `activeInd`, `updatedUserId`, `createdDate`, `updatedDate`) VALUES ('cc9bc0f3-47a0-45e4-b220-2f6c777f99eb','green team','quynhmai.vu_level103.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 19:33:59','2020-01-26 19:33:59'),('d63a6b38-6dfe-11e9-8849-848f69b86260','home',NULL,'Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('e8104b61-6dfe-11e9-8849-848f69b86260','members','member-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('eac81e4c-6dfe-11e9-8849-848f69b86260','level3','level3-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('ecdee564-6dfe-11e9-8849-848f69b86260','level2','level2-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('eedc7f28-6dfe-11e9-8849-848f69b86260','level1','level1-2018.jpg','Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41'),('f10448dd-6dfe-11e9-8849-848f69b86260','aboutus',NULL,'Y','7cb5e812-6eb2-11e9-8849-848f69b86260','2019-06-26 21:07:41','2019-06-26 21:07:41');
-/*!40000 ALTER TABLE `galleries` ENABLE KEYS */;
+LOCK TABLES `operations` WRITE;
+/*!40000 ALTER TABLE `operations` DISABLE KEYS */;
+INSERT INTO `operations` (`operationId`, `operationType`, `operationCode`, `operationDesc`, `updatedUserId`, `createdDate`, `updatedDate`) VALUES ('1cfed262-40a8-11ea-8030-08002764505e','upload','UPLDLVL3','Upload Photo to Level3 Gallery','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 20:55:37','2020-01-26 20:55:37'),('70830490-40a8-11ea-8030-08002764505e','upload','UPLDMBMR','Upload Photo to Member Gallery','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 20:57:57','2020-01-26 20:57:57'),('718339f9-40a8-11ea-8030-08002764505e','upload','UPLDLVL1','Upload Photo to Level3 Gallery','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 20:57:59','2020-01-26 20:57:59'),('725208a7-40a8-11ea-8030-08002764505e','upload','UPLDLVL2','Upload Photo to Level2 Gallery','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 20:58:00','2020-01-26 20:58:00'),('c69c3fce-40a9-11ea-8030-08002764505e','upload','UPLDALL','Upload Photo to All Gallery','7cb5e812-6eb2-11e9-8849-848f69b86260','2020-01-26 21:07:31','2020-01-26 21:07:31');
+/*!40000 ALTER TABLE `operations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -54,10 +54,10 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`dcvnps`@`%`*/ /*!50003 TRIGGER `bir_galleries` BEFORE INSERT ON `galleries` FOR EACH ROW BEGIN
-IF new.galleryId is null then
-	set new.galleryId = uuid();
-end if;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`%`*/ /*!50003 TRIGGER `bir_operations` BEFORE INSERT ON `operations` FOR EACH ROW BEGIN
+	IF new.operationId is null then
+		set new.operationId = uuid();
+    END IF;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
