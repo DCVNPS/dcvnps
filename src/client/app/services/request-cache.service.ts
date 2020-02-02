@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from './message.service';
+import { environment } from '../../environments/environment';
 
 export interface RequestCacheEntry {
   url: string;
@@ -13,8 +14,6 @@ export abstract class RequestCache{
   abstract put(req: HttpRequest<any>, response: HttpResponse<any>): void;
 }
 
-const MaxAge: number = 30000; // maximum cache age (ms);
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +21,8 @@ export class RequestCacheService implements RequestCache {
   
   cache = new Map<string, RequestCacheEntry>();
 
-  // constructor(private messenger: MessageService) { }
-  constructor() { }
+  constructor(private messenger: MessageService) { }
+  // constructor() { }
 
   // get cached reponse if exists, return undefined otherwise.
   get(req: HttpRequest<any>): HttpResponse<any> | undefined{
@@ -33,26 +32,26 @@ export class RequestCacheService implements RequestCache {
       return undefined;
     }
     // check if cached data is expired or not.
-    const isExpired = cached.lastRead < Date.now() - MaxAge;
+    const isExpired = cached.lastRead < Date.now() - environment.cacheExpiration;
     const expired = isExpired ? 'expired' : '';
-    // this.messenger.add(`Found ${expired} response for ${url}.`);
+    this.messenger.add(`Found ${expired} response for ${url}.`);
     return isExpired ? undefined : cached.response;
 
   }
 
   put(req: HttpRequest<any>, response: HttpResponse<any>):void{
     const url = req.urlWithParams;
-    // this.messenger.add(`Caching reponse from "${url}".`);
+    this.messenger.add(`Caching reponse from "${url}".`);
     const cacheEntry = {url, response, lastRead: Date.now()};
     this.cache.set(url, cacheEntry);
     // Remove expired cached entries
-    const expired = Date.now() - MaxAge;
+    const expired = Date.now() - environment.cacheExpiration;
     this.cache.forEach( entry => {
       if(entry.lastRead < expired){
         this.cache.delete(entry.url);
       }
     });
-    // this.messenger.add(`Request cache size: ${this.cache.size}.`);
+    this.messenger.add(`Request cache size: ${this.cache.size}.`);
   }
 
 }

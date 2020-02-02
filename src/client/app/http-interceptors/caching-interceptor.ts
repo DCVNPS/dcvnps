@@ -7,9 +7,9 @@ import {
 import { Observable, of } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 
-import { RequestCacheService } from '../services/request-cache.service';
+import { RequestCache,  RequestCacheService } from '../services/request-cache.service';
 
-const galleryUrls: Array<string> = ['galleryphotos/galleryid'];
+const galleryUrls: Array<string> = ['galleryphotos/galleryid','commons/vnpsclassmenu','galleries'];
 
 /**
  * If request is cachable (e.g., galleries request) and
@@ -32,14 +32,14 @@ export class CachingInterceptor implements HttpInterceptor {
         const cachedResponse = this.cache.get(req);
         // cache-then-refresh
         if (req.headers.get('x-refresh')) {
-            const results$ = sendRequest(req, next, this.cache);
+            const results$ = sendRequest({ req, next, cache: this.cache });
             return cachedResponse ?
                 results$.pipe(startWith(cachedResponse)) :
                 results$;
         }
         // cache-or-fetch
         return cachedResponse ?
-            of(cachedResponse) : sendRequest(req, next, this.cache);
+            of(cachedResponse) : sendRequest({ req, next, cache: this.cache });
     }
 }
 
@@ -57,9 +57,7 @@ function isCachable(req: HttpRequest<any>) {
  * Will add the response to the cache on the way out.
  */
 function sendRequest(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-    cache: RequestCacheService): Observable<HttpEvent<any>> {
+{ req, next, cache }: { req: HttpRequest<any>; next: HttpHandler; cache: RequestCache; }): Observable<HttpEvent<any>> {
 
     return next.handle(req).pipe(
         tap(event => {

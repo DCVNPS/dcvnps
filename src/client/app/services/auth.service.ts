@@ -17,12 +17,13 @@ export class AuthService {
   constructor(private router: Router) { }
 
   setToken(authToken: AuthToken) {
-    localStorage.setItem(this.storageKey, authToken.token);
-    localStorage.setItem(this.roleKey, authToken.role);
+    localStorage.setItem(this.storageKey, JSON.stringify(authToken));
+    // localStorage.setItem(this.roleKey, authToken.role);
   }
 
   getToken() {
-    return localStorage.getItem(this.storageKey);
+      const auth =  JSON.parse(localStorage.getItem(this.storageKey));
+      return auth ? auth.token : null;
   }
 
   isLogin() {
@@ -31,12 +32,16 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem(this.storageKey);
-    localStorage.removeItem(this.roleKey);
   }
 
+  lastRead(){
+    const auth =  JSON.parse(localStorage.getItem(this.storageKey));
+    return auth ? auth.lastRead : null;
+  }
   getRole() {
     if (this.isLogin()) {
-      return localStorage.getItem(this.roleKey);
+      const auth =  JSON.parse(localStorage.getItem(this.storageKey));
+      return auth.role;
     }
     return null;
   }
@@ -72,4 +77,5 @@ export class AuthService {
 export class AuthToken {
   public token: string;
   public role: string;
+  public lastRead: number;
 }

@@ -42,20 +42,6 @@ module.exports = (express, config) => {
         }
     });
 
-    // router.use((req, res, next) => {
-    //     this.log = log.child({
-    //         id: req.id,
-    //         body: req.body
-    //     }, true);
-    //     this.log.debug({src: true, req: req},'request');
-    //     next();
-    // });
-
-    // router.use((req, res, next) => {
-    //     logResponse(req.id,res);
-    //     next();
-    // });
-   
     router.use('/admin/user', userRouter(express, config));
     router.use('/admin/boardmembers', boardRouter(express, config));
     router.use('/commons', commonRouter(express, config));
