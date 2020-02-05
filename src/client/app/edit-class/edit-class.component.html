@@ -1,7 +1,7 @@
 <div class="ui padded grid" #program>
   <div class="stretch row">
     <div class="twelve wide column">
-      <form [formGroup]="selectForm" class="ui form">
+      <!-- <form [formGroup]="selectForm" class="ui form">
         <div class="two fields">
           <div class="field">
             <h4 class="ui ribbon big label">Select Class Program to Edit:</h4>
@@ -11,7 +11,31 @@
           </div>
         </div>
         <button class="ui big primary button" (click)="onAddClass();">Add New Class</button>
-      </form>
+      </form> -->
+      <table class="ui slectable striped celled table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Class Level</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of mClasses">
+            <td>{{c.id}}</td>
+            <td>{{c.description}}</td>
+            <td>
+              <button class="ui primary button" (click)="onEditClass(c);">Edit</button>
+              <button class="ui red button" (click)="onDeleteClass(c.id);">Delete</button>      
+            </td>
+          </tr>
+          <tr>
+            <td> 
+              <button class="ui big primary button" (click)="onAddClass();">Add New Class</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <form class="ui form" [formGroup]="classForm"  *ngIf="editClass">
         <div class="field">
           <h2 class="ui dividing header">{{subHeader}}</h2>
@@ -42,7 +66,6 @@
         </div>
         <button type="button" class="ui submit large blue button" (click)="onSaveClass();">Save</button>
         <button type="button" class="ui submit large grey button" (click)="onCancel()">Cancel</button>
-        <button type="button" class="ui submit large red button" (click)="onDelete()" *ngIf="editClass && !addClass">Delete</button>
       </form>
       <div *ngIf="editClass && !classForm.pristine">
         <h2>Review</h2>

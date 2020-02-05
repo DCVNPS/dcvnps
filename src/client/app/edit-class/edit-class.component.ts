@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { VnpsClass } from '../models/vnps-class';
-import { map } from 'rxjs/operators';
-import { IfStmt } from '@angular/compiler';
+
+export interface vnpsClass {
+  id: string;
+  level: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-edit-class',
@@ -11,7 +15,7 @@ import { IfStmt } from '@angular/compiler';
   styleUrls: ['./edit-class.component.scss']
 })
 export class EditClassComponent implements OnInit {
-  public mClasses: Array<any> = [];
+  public mClasses: Array<vnpsClass> = [];
   public classForm: FormGroup;
   public selectForm: FormGroup;
   public currentClass: VnpsClass;
@@ -45,7 +49,7 @@ export class EditClassComponent implements OnInit {
       .subscribe(data => {
         this.mClasses = data;
         // this.mClasses.unshift({id:"",description:"Select a Class to Edit"});
-        // console.log(this.mClasses);
+        console.log(this.mClasses);
       },
         err => {
           console.log(err);
@@ -81,28 +85,48 @@ export class EditClassComponent implements OnInit {
     this.classForm.controls.instructors.patchValue(classData.instructors);
   }
 
-  onClassChange(event) {
-    if (event) {
-      this.editClass = true;
-      this.addClass = false;
-      const classMenuItem = this.mClasses.find( c => c.id === event);
-      this.subHeader = `Edit ${classMenuItem.description}`;
-      // const apiEnpoint = `classes/bylevel/${event.level}`;
-      const apiEnpoint = `vnpsclasses/byid/${classMenuItem.id}`;
-      // console.log(apiEnpoint);
-      this.api.get(apiEnpoint)
-        .subscribe(async data => {
-          // console.log(data);
-          this.currentClass = await data[0];
-          if (!this.addClass) {
-            this.patchClassValues(this.currentClass);
-          }
-          // console.log(this.formValue);
-        },
-          error => {
-            console.log(error);
-          });
-    }
+  // onClassChange(event) {
+  //   if (event) {
+  //     this.editClass = true;
+  //     this.addClass = false;
+  //     const classMenuItem = this.mClasses.find(c => c.id === event);
+  //     this.subHeader = `Edit ${classMenuItem.description}`;
+  //     // const apiEnpoint = `classes/bylevel/${event.level}`;
+  //     const apiEnpoint = `vnpsclasses/byid/${classMenuItem.id}`;
+  //     // console.log(apiEnpoint);
+  //     this.api.get(apiEnpoint)
+  //       .subscribe(async data => {
+  //         // console.log(data);
+  //         this.currentClass = await data[0];
+  //         if (!this.addClass) {
+  //           this.patchClassValues(this.currentClass);
+  //         }
+  //         // console.log(this.formValue);
+  //       },
+  //         error => {
+  //           console.log(error);
+  //         });
+  //   }
+  // }
+
+  onEditClass(vnpsclass) {
+    this.editClass = true;
+    this.addClass = false;
+    this.subHeader = `Edit ${vnpsclass.description}`;
+    const apiEnpoint = `vnpsclasses/byid/${vnpsclass.id}`;
+    // console.log(apiEnpoint);
+    this.api.get(apiEnpoint)
+      .subscribe(async data => {
+        // console.log(data);
+        this.currentClass = await data[0];
+        if (!this.addClass) {
+          this.patchClassValues(this.currentClass);
+        }
+        // console.log(this.formValue);
+      },
+        error => {
+          console.log(error);
+        });
   }
 
   onSaveClass() {
@@ -146,18 +170,18 @@ export class EditClassComponent implements OnInit {
     this.classForm.reset();
   }
 
-  onDelete(){
-    this.api.delete(`vnpsclasses/${this.currentClass.classId}`)
-    .subscribe(
-      success =>{
-        console.log(`class ${this.currentClass.classLevelDesc} deleted`);
-        // const classMenuItem = this.mClasses.find( c => c.id === this.currentClass.classId);
-        // const remIndx = this.mClasses.indexOf(classMenuItem);
-        // this.mClasses.splice(remIndx,1);
-        // this.onCancel();
-        this.buildForm();
-    },
-      error  => { console.log(error);}
+  onDeleteClass(classId) {
+    this.api.delete(`vnpsclasses/${classId}`)
+      .subscribe(
+        success => {
+          console.log(`class ${classId} deleted`);
+          // const classMenuItem = this.mClasses.find( c => c.id === this.currentClass.classId);
+          // const remIndx = this.mClasses.indexOf(classMenuItem);
+          // this.mClasses.splice(remIndx,1);
+          // this.onCancel();
+          this.buildForm();
+        },
+        error => { console.log(error); }
       );
   }
 
@@ -169,7 +193,7 @@ export class EditClassComponent implements OnInit {
     this.currentClass = undefined;
   }
 
-  classFormHasValue(){
+  classFormHasValue() {
     console.log(this.formValue);
   }
 }

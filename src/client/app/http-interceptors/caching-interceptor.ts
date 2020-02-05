@@ -9,7 +9,7 @@ import { startWith, tap } from 'rxjs/operators';
 
 import { RequestCache,  RequestCacheService } from '../services/request-cache.service';
 
-const galleryUrls: Array<string> = ['galleryphotos/galleryid','commons/vnpsclassmenu','galleries'];
+const galleryUrls: Array<string> = ['galleryphotos/galleryid','galleries'];
 
 /**
  * If request is cachable (e.g., galleries request) and
