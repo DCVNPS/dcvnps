@@ -15,7 +15,7 @@ export interface paginationConfig {
   styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit {
-  private initPage: number = 1;
+  public initPage: number = 1;
   private itemPerPage: number = 2;
   private totalItems: number ;
   public Pages: Array<number> =[];

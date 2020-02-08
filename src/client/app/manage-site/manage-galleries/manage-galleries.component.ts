@@ -13,13 +13,14 @@ export class ManageGalleriesComponent implements OnInit {
 
   public isAddGallery: boolean = false;
   public errorMsg: string;
-
+  public deletedGallery:Gallery;
   private deletedIndex: number = undefined;
 
   constructor(private api: ApiService, private renderer: Renderer) { }
 
   ngOnInit() {
     // console.log(this.galleries);
+    this.deletedGallery = undefined;
   }
   editGallery(index: number) {
     console.log(`Edit gallery at index ${index}`);
@@ -28,6 +29,7 @@ export class ManageGalleriesComponent implements OnInit {
 
   deleteGallery(index: number) {
     this.deletedIndex = index;
+    this.deletedGallery = this.galleries[this.deletedIndex];
     this.renderer.setElementClass(this.confirmDialog.nativeElement, 'active', true);
   }
 
