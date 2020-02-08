@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable, pipe } from 'rxjs';
@@ -39,13 +39,10 @@ export class ApiService {
 
   onRequestError(res) {
     if (res) {
-      console.log(res);
-      // const jerror = res.error;
       const error = {
         statusCode: res.status,
-        statusText: res.error
-      };
-      // console.log(error);
+        statusText: (typeof res.error === 'string')? res.error:  res.error.message 
+       };
       if (error.statusText === "jwt expired") {
         this.auth.logout();
       } else {
@@ -60,14 +57,15 @@ export class ApiService {
       httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     }
     const options = { body: body, headers: httpHeaders };
-    return this.httpClient.request(method, `${this.baseUrl}/${url}`, options)
+    const apiEnpoint: string = `${this.baseUrl}/${url}`;
+    return this.httpClient.request(method, apiEnpoint, options)
       .pipe(
         catchError(error => this.onRequestError(error))
       );
   }
 
-  upload(imageInfo: ImageInfo): Observable<boolean> {
-    const uploadURL = `${this.baseUrl}/galleries/upload/${imageInfo.gallery}/${imageInfo.year}`;
+  galleryPhotoUpload(imageInfo: ImageInfo): Observable<boolean> {
+    const uploadURL = `${this.baseUrl}/galleryphotos/upload/${imageInfo.gallery}/${imageInfo.year}`;
     const formData = new FormData();
     formData.append('file', imageInfo.imgFile);
     formData.append('galleryId', imageInfo.galleryid);
@@ -77,8 +75,29 @@ export class ApiService {
     formData.append('portrait', imageInfo.portrait.toString());
     return this.httpClient.post<any>(uploadURL, formData, {
       headers: new HttpHeaders({
-        'enctype': 'multipart/form-data',
-        'Authorization': `Bearer ${this.auth.getToken()}`
+        'enctype': 'multipart/form-data'
+      }),
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(map((event) => {
+      switch (event.type) {
+        case HttpEventType.UploadProgress:
+          const progress = Math.round(100 * event.loaded / event.total);
+          return { status: 'progress', message: progress };
+        case HttpEventType.Response:
+          return event.body;
+        default:
+          return `Unhandled event: ${event.type}`;
+      }
+    })
+    );
+  }
+
+  galleriesUpload(url: string, formData: FormData): Observable<boolean> {
+    console.log(`${this.baseUrl}/${url}`);
+    return this.httpClient.post<any>(`${this.baseUrl}/${url}`, formData, {
+      headers: new HttpHeaders({
+        'enctype': 'multipart/form-data'
       }),
       reportProgress: true,
       observe: 'events'

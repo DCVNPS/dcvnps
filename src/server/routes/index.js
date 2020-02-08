@@ -7,6 +7,7 @@ const ancmntRouter = require('./announcements');
 const vnpsClassesRouter = require('./vnpsclasses');
 const gallriesRouter = require('./galleries');
 const userClassRouter = require('./admin/userclass');
+const galleryPhotosRouter = require('./galleryphotos');
 
 function isAdmin(req) {
     const auth = req.auth;
@@ -41,20 +42,6 @@ module.exports = (express, config) => {
         }
     });
 
-    // router.use((req, res, next) => {
-    //     this.log = log.child({
-    //         id: req.id,
-    //         body: req.body
-    //     }, true);
-    //     this.log.debug({src: true, req: req},'request');
-    //     next();
-    // });
-
-    // router.use((req, res, next) => {
-    //     logResponse(req.id,res);
-    //     next();
-    // });
-   
     router.use('/admin/user', userRouter(express, config));
     router.use('/admin/boardmembers', boardRouter(express, config));
     router.use('/commons', commonRouter(express, config));
@@ -62,6 +49,7 @@ module.exports = (express, config) => {
     router.use('/vnpsclasses',vnpsClassesRouter(express, config));
     router.use('/galleries', gallriesRouter(express, config));
     router.use('/admin/userclass',userClassRouter(express, config));
+    router.use('/galleryphotos', galleryPhotosRouter(express, config));
     // url:/api/
     return router;
 }

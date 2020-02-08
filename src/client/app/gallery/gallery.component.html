@@ -1,16 +1,19 @@
 <div class="ui grey inverted secondary menu">
-  <button class="item" (click)="onFilterYear(year);">{{level|uppercase}}</button>
+  <button class="item" (click)="onFilterYear(year);">{{currentGallery.gallery|uppercase}}</button>
   <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
   <div class="stackable right menu" *ngIf="isAdmin">
-    <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+    <!-- <a class="item" [routerLink]="['/fileupload']" [routerLinkActive]="['active']" aria-label="Upload Image">
+      <span>Upload Image</span><i class="large upload icon"></i>
+    </a> -->
+    <a class="item" (click)="toggleUpload();" [routerLinkActive]="['active']" aria-label="Upload Image">
       <span>Upload Image</span><i class="large upload icon"></i>
     </a>
   </div>
 </div>
-
+<app-dropzone [config]="dzconfig" (photoAdded)="onPhotoAdded($event)" *ngIf="isUpload"></app-dropzone>
 <div class="ui two column grid">
   <div class="column" *ngFor="let authPhoto of authPhotos">
-    <app-author-photo [authorData]="{'level': level, 'authorPhotos': authPhoto}" (showPopupClicked)="showPopup($event)">
+    <app-author-photo [authorData]="{'level': currentGallery.gallery, 'authorPhotos': authPhoto}" (showPopupClicked)="showPopup($event)">
     </app-author-photo>
   </div>
 </div>

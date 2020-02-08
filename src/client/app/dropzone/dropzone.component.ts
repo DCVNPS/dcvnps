@@ -13,7 +13,7 @@ import { ImageInfo } from '../models/image-model';
 import { RegexService } from '../services/regex.service';
 import { AuthService } from '../services/auth.service';
 import { Photo } from '../models/photo.model';
-import { map } from 'rxjs/operators';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-dropzone',
@@ -40,17 +40,21 @@ export class DropzoneComponent implements OnInit {
 
   @Input() config: any = {};
   @Output() photoAdded: EventEmitter<Photo> = new EventEmitter<Photo>();
+  
   constructor(
     private formBuilder: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
+    private comSrv: CommonService,
     private regexSrvc: RegexService) {
+  }
+
+  builForm(){
     this.uploadForm = this.formBuilder.group({
       upldGallery: this.formBuilder.control(null, Validators.required),
       upldYear: this.formBuilder.control(null, Validators.required)
     });
   }
-
   selectedGalleryText() {
     const role = this.auth.getRole();
     let gText = 'All';
@@ -76,14 +80,16 @@ export class DropzoneComponent implements OnInit {
   }
   ngOnInit() {
     const galleryText = this.config.gallery || this.selectedGalleryText();
+    const galleryId = this.config.galleryId || undefined;
     this.selectedYear = this.config.year || (new Date()).getFullYear().toString();
     this.showBackMenu = this.config.showBackMenu || false;
-    this.years = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'];
+    this.years = this.comSrv.getYearLov(parseInt(this.selectedYear));
+    this.builForm();
     // Get the galleries list from database
     this.api.get('galleries')
-    .subscribe((data) => {
+      .subscribe((data) => {
         this.galleries = data;
-        this.selectedGallery = this.galleries.find(g => g.gallery === galleryText);
+        this.selectedGallery = this.galleries.find(g => g.galleryId === galleryId);
         if (this.selectedGallery) {
           this.uploadForm.controls.upldGallery.patchValue(this.selectedGallery);
           this.uploadForm.controls.upldGallery.disable({ onlySelf: true });
@@ -196,10 +202,10 @@ export class DropzoneComponent implements OnInit {
     // console.log(this.selectedGallery);
     // const imageInfo = this.validImages[index];
     imageInfo.galleryid = this.selectedGallery.galleryId;
-    imageInfo.gallery = this.selectedGallery.gallery;
+    imageInfo.gallery = this.selectedGallery.gallery.replace(' ','_');
     imageInfo.year = this.selectedYear.toString();
     // console.log(imageInfo);
-    this.api.upload(imageInfo)
+    this.api.galleryPhotoUpload(imageInfo)
       .subscribe(
         (res) => {
           this.uploadResponse = res;

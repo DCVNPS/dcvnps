@@ -23,7 +23,7 @@
   <div class="stretched row">
     <div class="three wide column">
       <div class="ui vertical fluid tabular menu borderless">
-        <a class="item" *ngFor="let m of classMenus" [routerLink]="['../',m.level]"
+        <a class="item" *ngFor="let m of classMenu" [routerLink]="['../',m.level]"
           [routerLinkActive]="['active']">{{m.description}}</a>
       </div>
     </div>
@@ -51,15 +51,18 @@
     <div class="four wide column">
       <div class="ui basic segment">
         <div class="ui card">
-          <div class="extra content">
+          <!-- <div class="extra content">
             <a class="header" [routerLink]="['../../classregistration']">Enrollment For Class</a>
-          </div>
+          </div> -->
           <div class="content">
             <h3 class="header">Class Enrollment Payment</h3>
             <h5 class="description">Enrollment Fee: {{classFee | currency}}</h5>
             <div class="meta">There is a 5% transaction fee applied</div>
           </div>
           <div class="extra content">
+            <!-- <select >
+              <option *ngFor="let c of classMenu" [ngValue]="c.description">{{c.description | titlecase}}</option>
+            </select> -->
             <app-paypal-button [purchaseAmount]="classFee" [purchaseDescription]="paypalDesc"></app-paypal-button>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { paypalDescription } from '../models/paypal.descriptiont';
-import { PhotoClass } from '../models/photo-class';
+import { VnpsClass } from '../models/vnps-class';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -15,10 +15,10 @@ import { ApiService } from '../services/api.service';
 export class VnpsClassesComponent implements OnInit, OnDestroy {
   private classLevel: string = 'level1';
   classFee = 50;
-  public paypalDesc: paypalDescription = paypalDescription.enrollmentFee;
-  private data: Array<PhotoClass> = []; 
-  public classMenus: Array<any> = [];
-  public curClass: PhotoClass;
+  public paypalDesc: string = paypalDescription.enrollmentFee;
+  private data: Array<VnpsClass> = []; 
+  public classMenu: Array<any> = [];
+  public curClass: VnpsClass;
   public showLevel1: boolean = false;
   public showLevel2: boolean = false;
   public showLevel3: boolean = false;
@@ -46,10 +46,11 @@ export class VnpsClassesComponent implements OnInit, OnDestroy {
 
   initializeData() {
     this.data = this.route.snapshot.data.classesData;
-    this.classMenus = this.route.snapshot.data.classMenu;
+    this.classMenu = this.route.snapshot.data.classMenu;
     // console.log(this.data);
     this.curClass = this.data[0];
-    // console.log(this.classMenus);
+    this.paypalDesc = `${paypalDescription.enrollmentFee} for ${this.curClass.classLevelDesc}`;
+    // console.log(this.paypalDesc);
   }
 
 }

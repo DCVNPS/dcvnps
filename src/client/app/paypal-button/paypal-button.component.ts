@@ -10,7 +10,7 @@ declare let paypal;
 })
 export class PaypalButtonComponent implements OnInit {
   @Input() private purchaseAmount = 50.00;
-  @Input() private purchaseDescription = paypalDescription.donation;
+  @Input() private purchaseDescription:string = paypalDescription.donation;
   @ViewChild('paypal') paypalElement: ElementRef;
   private authToken: any;
   private addScript = false;

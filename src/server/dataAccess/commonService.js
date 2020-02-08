@@ -16,12 +16,7 @@ module.exports = (config) => {
             .first('userId', 'email', 'password', 'roleCode')
             .then((user) => {
                 if (!user) {
-                    return response = {
-                        success: false,
-                        code: 1329, // no data found
-                        authmsg: 'Invalid username/ password.',
-                        authuser: undefined
-                    };
+                    throw new Error('ERROR 1045 (28000): Invalid username/password.');
                 }
                 // console.log(user);
                 const pwdMatch = bcrypt.compareSync(password, user.password);
@@ -30,7 +25,7 @@ module.exports = (config) => {
                     return response = {
                         success: true,
                         code: 0,
-                        authmsg: 'Authenticate Success',
+                        message: 'Authenticate Success',
                         authuser: {
                             userId: user.userId,
                             userName: user.email,

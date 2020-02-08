@@ -58,11 +58,11 @@ export class LoginComponent implements OnInit {
           console.log(data.headers);
         }
         this.auth.removeToken();
-        this.auth.setToken({ token: data.token, role: data.role });
+        this.auth.setToken({ token: data.token, role: data.role, lastRead: data.lastRead });
         if (this.backUrl) {
-          this.router.navigate([this.backUrl]);
+          this.router.navigateByUrl(this.backUrl);
         } else {
-          this.router.navigate(['/home']);
+          this.router.navigateByUrl('/home');
         }
       },
         (error) => {

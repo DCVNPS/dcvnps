@@ -12,7 +12,7 @@ export class EditGalleryResolve implements Resolve<Observable<any>> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
         const { gallery, year, author } = route.params;
         // console.log({gallery, year, author});
-        let apiEndpoint = `galleries/photosbyname/${gallery}`;
+        let apiEndpoint = `galleryphotos/galleryname/${gallery}`;
         apiEndpoint += year ? `/${year}` : null;
         apiEndpoint += author ? `/${author}` : null;
         // console.log(`EditGalleryResolve ${apiEndpoint}`);

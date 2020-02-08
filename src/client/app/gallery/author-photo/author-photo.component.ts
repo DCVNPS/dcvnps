@@ -41,7 +41,7 @@ export class AuthorPhotoComponent implements OnInit {
   editPhotos() {
     // this.galleryDataService.updateData(this.authorData);
     // Need to join the author's name parts together. js will automatically join with ',' as default.
-    const editUrl = `/editgallery/${this.level}/${this.year}/${this.author.join('.')}`;
+    const editUrl = `/editpersonalgallery/${this.level}/${this.year}/${this.author.join('.')}`;
     // console.log(`Edit Photos ${editUrl}`);
     this.router.navigateByUrl(editUrl);
   }

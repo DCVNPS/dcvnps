@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Gallery } from '../models/gallery.model';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../models/user-model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-manage-site',
@@ -13,13 +15,20 @@ export class ManageSiteComponent implements OnInit {
   public isGallery: boolean;
   public isClasses: boolean;
   public isAnnouncements: boolean;
-  public isUsers: boolean;
+  public isSiteUsers: boolean;
+  public isAdminUsers: boolean;
+  // private userType: string = 'siteuser';
+  public adminUsers: Array<User> = [];
+  public siteUsers: Array<User> = [];
   private galleries: Array<Gallery> = [];
-  constructor(private route: ActivatedRoute) { }
+  private apiEndpoint: string;
+  constructor(private api: ApiService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.isPhotoUpload = true;
     this.galleries = this.route.snapshot.data['galleries'];
+    this.adminUsers = this.getUsers('adminuser');
+    this.siteUsers = this.getUsers('siteuser');
   }
 
   onUploadClick() {
@@ -27,21 +36,24 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = false;
-    this.isUsers = false;
+    this.isSiteUsers = false;
+    this.isAdminUsers = false;
   }
   onGalleryClick() {
     this.isPhotoUpload = false;
     this.isGallery = true;
     this.isClasses = false;
     this.isAnnouncements = false;
-    this.isUsers = false;
+    this.isSiteUsers = false;
+    this.isAdminUsers = false;
   }
   onAnnouncements() {
     this.isPhotoUpload = false;
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = true;
-    this.isUsers = false;
+    this.isSiteUsers = false;
+    this.isAdminUsers = false;
   }
 
   onClasses() {
@@ -49,14 +61,55 @@ export class ManageSiteComponent implements OnInit {
     this.isGallery = false;
     this.isClasses = true;
     this.isAnnouncements = false;
-    this.isUsers = false;
+    this.isSiteUsers = false;
+    this.isAdminUsers = false;
   }
 
-  onUsers() {
+  onUsers(userType: string) {
     this.isPhotoUpload = false;
     this.isGallery = false;
     this.isClasses = false;
     this.isAnnouncements = false;
-    this.isUsers = true;
+    this.isSiteUsers = (userType === 'siteuser');
+    this.isAdminUsers = (userType === 'adminuser');
   }
+
+  getUsers(userType: string) {
+    switch (userType) {
+      case 'adminuser':
+        this.apiEndpoint = 'admin/user/adminusers';
+        break;
+      default:
+        this.apiEndpoint = 'admin/user/siteusers';
+        break;
+    }
+    // console.log(this.apiEndpoint);
+    const users: Array<User> = []; // reset users array
+    this.api.get(this.apiEndpoint)
+      .subscribe(
+        data => {
+          data.forEach(au => {
+            const aUser: User = new User(
+              au.userId,
+              au.email,
+              au.password,
+              au.userSurname,
+              au.userGivenName,
+              au.roleCode,
+              au.roleDescription,
+              au.activeInd,
+              au.createdUserId,
+              au.createdDate,
+              au.updatedUserId,
+              au.updatedDate
+            );
+            users.push(aUser);
+          });
+          // console.log(this.users);
+        },
+        error => { console.log(error); }
+      );
+      return users;
+  }
+
 }

@@ -15,8 +15,6 @@ export class HvncarouselComponent implements OnInit {
 
   private delay: number;
   public isRunning = true;
-  // public cWidth = 600;
-  // public cHeight = 400;
   public spanConfig={'columnSpan':10};
   private intervalID: any;
   private isPrev = false;
@@ -30,6 +28,8 @@ export class HvncarouselComponent implements OnInit {
 
   ngOnInit() {
     this.delay = this.config['delay'] || 3000;
+    // console.log(this.config);
+    // console.log({delay: this.delay});
     this.runSlideShow = this.config['runSlideShow'] || false;
     this.max = this.data.length;
     if (this.runSlideShow) {

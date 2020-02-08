@@ -5,7 +5,7 @@
         Upload Photos
       </a>
       <a class="item" (click)="onGalleryClick();" [class.active]="isGallery" >
-        Gallery Profile
+        Galleries
       </a>
       <a class="item" (click)="onClasses();" [class.active]="isClasses">
         Vnps Classes
@@ -13,16 +13,20 @@
       <a class="item" (click)="onAnnouncements();" [class.active]="isAnnouncements">
         Announcements
       </a>
-      <a class="item" (click)="onUsers();" [class.active]="isUsers">
-        Manage Users
+      <a class="item" (click)="onUsers('adminuser');" [class.active]="isAdminUsers">
+        Admin Users
+      </a>
+      <a class="item" (click)="onUsers('siteuser');" [class.active]="isSiteUsers">
+       Site Users
       </a>
     </div>
   </div>
   <div class="twelve wide stretched column">
       <app-dropzone  *ngIf="isPhotoUpload"></app-dropzone>
-      <app-edit-gallery-profiles *ngIf="isGallery" [galleries]="galleries"></app-edit-gallery-profiles>
+      <app-manage-galleries *ngIf="isGallery" [galleries]="galleries"></app-manage-galleries>
       <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
       <app-edit-class *ngIf="isClasses"></app-edit-class>
-      <app-manage-users *ngIf="isUsers"></app-manage-users>
+      <app-manage-users  [users]="adminUsers"  *ngIf="isAdminUsers" ></app-manage-users>
+      <app-manage-users  [users]="siteUsers"   *ngIf="isSiteUsers"></app-manage-users>
   </div>
 </div>
