@@ -237,8 +237,6 @@ module.exports = (config) => {
             )
             .orderBy([{ column: 'year', order: 'desc' }, 'author'])
             .whereRaw('?? = ??', ['gp.galleryId', 'g.galleryId'])
-            .whereRaw('gp.year = IFNULL(?,gp.year)', [year])
-            .whereRaw('gp.author = IFNULL(?,gp.author)', [author])
             .whereRaw('gp.galleryPhotoId = ?', [photoId])
             .then((data) => {
                 console.log(data);
