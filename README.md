@@ -25,7 +25,7 @@ Different `npm` scripts for your workflow:
   * Angluar CLI v7.3.4
   * Node v10.7.0
   * Express v4.x
-  * MongoDB
+  * MySQL Database
   * JSON Web Tokens
 ## Issues
   * popup component give error
