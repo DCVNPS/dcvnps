@@ -2,7 +2,7 @@
 
 ## Base on Exercise files for Lynda.com course: Angular API Communication and Authentication
 
-#Repsitory: https://dcvnps.visualstudio.com/dcvnps/_git/dcvnps
+#Repsitory: https://github.com/DCVNPS/dcvnps
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.4.
 
