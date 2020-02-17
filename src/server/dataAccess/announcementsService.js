@@ -51,31 +51,16 @@ module.exports = (config) => {
                 })
         },
         readAnnouncements(ancmntId) {
-            // console.log(`readAnnouncement ${ancmntId}`);
-            // const sqlstm = mySQL({ a: 'announcements' })
-            // .select({
-            //     announcementId: 'a.announcementId',
-            //     title: 'a.title',
-            //     content: 'a.content',
-            //     userId: 'a.userId',
-            //     postedBy: mySQL.raw('(select `u`.`username` from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`userId`)'),
-            //     postedDate: 'a.createdDate',
-            //     updatedDate: 'a.updatedDate'
-            // })
-            // .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])
-            // .toQuery();
-            // console.log(sqlstm);
-            // console.log(`Read announcement Id: ${ancmntId}`);
             return mySQL({ a: 'announcements' })
                 .select({
                     announcementId: 'a.announcementId',
                     title: 'a.title',
                     content: 'a.content',
                     postedUserId: 'a.postedUserId',
-                    postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                    postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                     postedDate: 'a.createdDate',
                     updatedUserId: 'a.updatedUserId',
-                    updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                    updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                     updatedDate: 'a.updatedDate'
                 })
                 .whereRaw('`a`.`announcementId` = IFNULL(?,`a`.`announcementId`)', [ancmntId])

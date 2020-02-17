@@ -85,10 +85,10 @@ module.exports = (config) => {
                 curriculum: 'a.curriculum',
                 instructors: 'a.instructors',
                 postedUserId: 'a.postedUserId',
-                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                 postedDate: 'a.createdDate',
                 updatedUserId: 'a.updatedUserId',
-                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                 updatedDate: 'a.updatedDate'
             })
             .whereRaw('`a`.`classId` = IFNULL(?,`a`.`classId`)', [classId])
@@ -113,10 +113,10 @@ module.exports = (config) => {
                 curriculum: 'a.curriculum',
                 instructors: 'a.instructors',
                 postedUserId: 'a.postedUserId',
-                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                 postedDate: 'a.createdDate',
                 updatedUserId: 'a.updatedUserId',
-                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                 updatedDate: 'a.updatedDate'
             })
             .whereRaw('`a`.`classId` = IFNULL(?,`a`.`classId`)', [classId])
@@ -141,10 +141,10 @@ module.exports = (config) => {
                 curriculum: 'a.curriculum',
                 instructors: 'a.instructors',
                 postedUserId: 'a.postedUserId',
-                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
+                postedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`postedUserId`)'),
                 postedDate: 'a.createdDate',
                 updatedUserId: 'a.updatedUserId',
-                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `dcvnps`.`users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
+                updatedBy: mySQL.raw('(select concat_ws(\' \',`u`.`userGivenName`,`u`.`userSurname`) from `users` as `u` where `u`.`userId` = `a`.`updatedUserId`)'),
                 updatedDate: 'a.updatedDate'
             })
             .whereRaw('`a`.`classLevel` = IFNULL(?,`a`.`classLevel`)', [classlevel])

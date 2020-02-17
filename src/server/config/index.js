@@ -4,7 +4,7 @@ const bunyan = require('bunyan');
 const appname = 'dcvnps';
 const rootdir = path.normalize(`${__dirname}/../`);
 const bcrypt = require('bcrypt');
-// console.log({'rootdir': rootdir});
+console.log({'rootdir': rootdir});
 
 const logLevel = {
     TRACE: 10,
@@ -49,27 +49,14 @@ module.exports = {
     mySQL:{},
     logResponse: logResponse,
     logLevel: logLevel,
-    // mysql: {
-    //     database: 'vnps',
-    //     username: 'dcvnps',
-    //     password: 'vnpsR0cks!',
-    //     options: {
-    //         host: 'localhost',
-    //         port: '3306',
-    //         dialect: 'mysql',
-    //         freezeTableName: true,
-    //         operatorsAliases: false,
-    //         underscored: true,
-    //     },
-    // },
     MYSQL2: { 
         "client": "mysql2", 
         "connection": { 
             "host": "localhost", 
             "port": "3306", 
             "user": "dcvnps", 
-            "password": "vnpsR0cks!", 
-            "database": "dcvnps" },
+            "password": "vnpsR0cks!23", 
+            "database": "dcvnpsor_dcvnps" },
             fetchAsString:['clob']
         }
 };
