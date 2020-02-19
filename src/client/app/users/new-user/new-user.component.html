@@ -1,7 +1,7 @@
 <div class="ui centered grid">
     <div class="six wide column">
         <h3 class="ui center aligned header">New DCVNPS User</h3>
-        <form class="ui form" novalidate [formGroup]="userForm" (onSubmit)="onSubmitForm();">
+        <form class="ui form" novalidate [formGroup]="userForm">
 
             <div class="field" [ngClass]="{'error': f.firstName.invalid &&( f.firstName.dirty || f.firstName.touched)}">
                 <label>First Name</label>

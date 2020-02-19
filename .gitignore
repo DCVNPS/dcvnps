@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /src/server/public
+/src/server/config/
 #imange directories
 /src/server/galleries/*
 /src/server/logs/*

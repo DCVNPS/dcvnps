@@ -59,6 +59,6 @@ public userForm: FormGroup;
       );
   }
   onSubmitForm(){
-
+    console.log(this.formValue);
   }
 }

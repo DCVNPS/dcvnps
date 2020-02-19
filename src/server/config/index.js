@@ -54,7 +54,7 @@ module.exports = {
         "connection": { 
             "host": "localhost", 
             "port": "3306", 
-            "user": "dcvnps", 
+            "user": "dcvnpsor_dcvnps", 
             "password": "vnpsR0cks!23", 
             "database": "dcvnpsor_dcvnps" },
             fetchAsString:['clob']

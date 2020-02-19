@@ -45,18 +45,10 @@ module.exports = (config) => {
             })
             .then(async () => {
                 try {
-                    const nUser = await getUserById(user.userId);
-                    const response = {
-                        'success': true,
-                        'authmsg': 'Register Success',
-                        'authuser': {
-                            'userId': nUser.userId,
-                            'userName': nUser.userName,
-                            'roleCode': nUser.roleCode
-                        }
-                    }
-                    return response;
-                } catch (error) {
+                    const nUser = await selectById(user.userId);
+                    return nUser;
+                } 
+                catch (error) {
                     throw error;
                 }
             })
@@ -157,32 +149,6 @@ module.exports = (config) => {
                 updatedDate: 'u.updatedDate'
             })
             .then((users) => {
-                // console.log('Knex log getUserById', JSON.stringify(user));
-                return users;
-            })
-            .catch(function (err) {
-                throw err;
-            });
-    }
-
-    function adminUsers(userId){
-        return mySQL({ u: 'users'})
-            .select({
-                userId: 'u.userId',
-                email: 'u.email',
-                userSurname: 'u.userSurname',
-                userGivenName: 'u.userGivenName',
-                password: 'u.password',
-                activeInd: 'u.activeInd',
-                roleCode: 'u.roleCode',
-                roleDescription: mySQL.raw('(select `r`.`roleDescription` from `roles` as  `r` where `r`.`roleCode` = `u`.`roleCode`)') ,
-                createdUserId: 'u.createdUserId',
-                createdDate: 'u.createdDate',
-                updatedUserId: 'u.updatedUserId',
-                updatedDate: 'u.updatedDate'
-            })
-            .whereRaw('regexp_like(`u`.`roleCode`,\'adm$\',\'i\') = 1 and `u`.`userId` = IFNULL(?,`u`.`userId`)', [userId])
-            .then((users) => {
                 return users;
             })
             .catch(function (err) {
@@ -206,7 +172,7 @@ module.exports = (config) => {
                 updatedUserId: 'u.updatedUserId',
                 updatedDate: 'u.updatedDate'
             })
-            .whereRaw('regexp_like(`u`.`roleCode`,\'usr$\',\'i\') = 1 and `u`.`userId` = IFNULL(?,`u`.`userId`)', [userId])
+            .whereRaw('`u`.`userId` = IFNULL(?,`u`.`userId`)', [userId])
             .then((users) => {
                 return users;
             })
@@ -224,7 +190,6 @@ module.exports = (config) => {
         setPassword,
         selectByEmail,
         selectById,
-        adminUsers,
         siteUsers
     }
 }

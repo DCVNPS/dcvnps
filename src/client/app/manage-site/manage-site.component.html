@@ -13,9 +13,6 @@
       <a class="item" (click)="onAnnouncements();" [class.active]="isAnnouncements">
         Announcements
       </a>
-      <a class="item" (click)="onUsers('adminuser');" [class.active]="isAdminUsers">
-        Admin Users
-      </a>
       <a class="item" (click)="onUsers('siteuser');" [class.active]="isSiteUsers">
        Site Users
       </a>
@@ -26,7 +23,6 @@
       <app-manage-galleries *ngIf="isGallery" [galleries]="galleries"></app-manage-galleries>
       <app-announcements [isEdit]="true" *ngIf="isAnnouncements"></app-announcements>
       <app-edit-class *ngIf="isClasses"></app-edit-class>
-      <app-manage-users  [users]="adminUsers"  *ngIf="isAdminUsers" ></app-manage-users>
-      <app-manage-users  [users]="siteUsers"   *ngIf="isSiteUsers"></app-manage-users>
+      <app-manage-users  [users]="siteUsers"   [roles]="roles" *ngIf="isSiteUsers"></app-manage-users>
   </div>
 </div>

@@ -1,4 +1,3 @@
-// const checkJwt = require('express-jwt');
 const UserService = require('../../../dataAccess/userService');
 
 module.exports = (express, config) => {
@@ -19,10 +18,6 @@ module.exports = (express, config) => {
         }
         return true;
     }
-    // // User expresss json web token check express-jwt to guard the angular routes
-    // router.use(
-    //     checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
-    // );
 
     router.get('/byemail/:email?', (req, res) => {
         const email = req.params.email || null;
@@ -95,7 +90,7 @@ module.exports = (express, config) => {
             user.activeInd='Y';
             user.createdUserId = req.auth.userid;
             user.createdDate = new Date();
-            user.updatedUserId = auth.userid;
+            user.updatedUserId = req.auth.userid;
             user.updatedDate = new Date();
             console.log(user);
             const result = await userService.createUser(user);

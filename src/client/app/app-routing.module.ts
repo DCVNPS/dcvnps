@@ -41,15 +41,15 @@ const routes: Routes = [
       galleries: GalleriesResolve
     }
   },
-  {
-    path: 'newuser',
-    component: NewUserComponent,
-    canActivate: [AuthGuard],
-    resolve: {
-      roles: RoleResolve
-    },
-    runGuardsAndResolvers: 'always'
-  },
+  // {
+  //   path: 'newuser',
+  //   component: NewUserComponent,
+  //   canActivate: [AuthGuard],
+  //   resolve: {
+  //     roles: RoleResolve
+  //   },
+  //   runGuardsAndResolvers: 'always'
+  // },
   {
     path: 'edituser',
     component: EditUserComponent,
@@ -93,7 +93,8 @@ const routes: Routes = [
     component: ManageSiteComponent,
     canActivate: [AuthGuard],
     resolve: {
-      galleries: GalleriesResolve
+      galleries: GalleriesResolve,
+      roles: RoleResolve
     },
     runGuardsAndResolvers: 'always'
   },
