@@ -67,11 +67,15 @@ export class ManageUsersComponent implements OnInit {
     this.router.navigateByUrl('edituser', { state: user });
   }
 
-  onDeleteUser(userid: string) {
-    console.log(userid);
-    this.api.delete(`admin/user/${userid}`)
+  onDeleteUser(user: User) {
+    console.log(user.userId);
+    this.api.delete(`admin/user/${user.userId}`)
       .subscribe(
-        () => { console.log(`user with id ${userid} has been deleted.`) },
+        () => { 
+          console.log(`user with id ${user.userId} has been deleted.`) ;
+          const deleteIndex = this.showUsers.indexOf(user);
+          this.showUsers.splice(deleteIndex);
+        },
         () => { console.error(); }
       )
   }
@@ -149,9 +153,24 @@ export class ManageUsersComponent implements OnInit {
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
     this.api.post(endPoint, this.user, headers)
       .subscribe(
-        result => { 
+        async result => { 
           // console.log(result); 
-          this.showUsers.push(result);
+          const aUser: User = await new User(
+            result.userId,
+            result.email,
+            result.password,
+            result.userSurname,
+            result.userGivenName,
+            result.roleCode,
+            result.roleDescription,
+            result.activeInd,
+            result.createdUserId,
+            result.createdDate,
+            result.updatedUserId,
+            result.updatedDate
+          );
+          this.showUsers.push(aUser);
+          this.users.push(aUser);
           this.resetForm();
           this.renderer.setElementClass(this.addUserDialog.nativeElement, 'active', false);
         },

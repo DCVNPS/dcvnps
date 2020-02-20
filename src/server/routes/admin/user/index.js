@@ -14,7 +14,7 @@ module.exports = (express, config) => {
     function isAdmin(req) {
         const auth = req.auth;
         if (auth.userrole !== "SITEADM") {
-           return false;
+            return false;
         }
         return true;
     }
@@ -22,7 +22,8 @@ module.exports = (express, config) => {
     router.get('/byemail/:email?', (req, res) => {
         const email = req.params.email || null;
         return userService.selectByEmail(email)
-            .then(data => {email
+            .then(data => {
+                email
                 return res.status(200).json(data);
             })
             .catch(err => {
@@ -38,14 +39,14 @@ module.exports = (express, config) => {
         }
         const userid = req.params.userid || null;
         return userService.adminUsers(userid)
-        .then( data =>{
-            return res.status(200).json(data);
-        })
-        .catch( err => {
-            log.levels('dcvnpslog', config.logLevel.ERROR)
-            log.error({ id: req.id, err: err }, `Error getting adminusers uuid`);
-            return res.status(500).json({ err: err.message });
-        })
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog', config.logLevel.ERROR)
+                log.error({ id: req.id, err: err }, `Error getting adminusers uuid`);
+                return res.status(500).json({ err: err.message });
+            })
     });
 
     router.get('/siteusers/:userid?', (req, res) => {
@@ -54,14 +55,14 @@ module.exports = (express, config) => {
         }
         const userid = req.params.userid || null;
         return userService.siteUsers(userid)
-        .then( data =>{
-            return res.status(200).json(data);
-        })
-        .catch( err => {
-            log.levels('dcvnpslog', config.logLevel.ERROR)
-            log.error({ id: req.id, err: err }, `Error getting adminusers uuid`);
-            return res.status(500).json({ err: err.message });
-        })
+            .then(data => {
+                return res.status(200).json(data);
+            })
+            .catch(err => {
+                log.levels('dcvnpslog', config.logLevel.ERROR)
+                log.error({ id: req.id, err: err }, `Error getting adminusers uuid`);
+                return res.status(500).json({ err: err.message });
+            })
     });
 
     router.get('/:userid?', (req, res) => {
@@ -87,7 +88,7 @@ module.exports = (express, config) => {
             // const userid = await database.uuid();
             user.userId = uuidv4();
             user.password = `${bcrypt.hashSync(user.password, 10)}`;
-            user.activeInd='Y';
+            user.activeInd = 'Y';
             user.createdUserId = req.auth.userid;
             user.createdDate = new Date();
             user.updatedUserId = req.auth.userid;
@@ -114,7 +115,7 @@ module.exports = (express, config) => {
             user.updatedUserId = req.auth.userid;
             user.updatedDate = new Date();
             // console.log(user);
-            switch(action){
+            switch (action) {
                 case "setpassword":
                     user.password = `${bcrypt.hashSync(user.password, 10)}`
                     result = await userService.setPassword(user);
@@ -131,5 +132,24 @@ module.exports = (express, config) => {
         }
     });
 
+    router.delete('/:userid', (req, res) => {
+        if (!isAdmin(req)) {
+            return res.status(401).json(`user ${req.auth.username} is not authorized to update application user`);
+        }
+        const userid = req.params.userid;
+        if (userid) {
+            userService.deleteById(userid)
+                .then(() => {
+                    return res.status(200).json(`User with ${userid} has been deleted.`);
+                })
+                .catch(err => {
+                    return res.status(500).json(err.message);
+                });
+        }
+        else{
+            return res.status(400).json(`request is missing userid ${userid}`);
+
+        }
+    })
     return router;
 }
