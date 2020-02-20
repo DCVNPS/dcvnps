@@ -95,6 +95,7 @@ module.exports = (express, config) => {
             user.updatedDate = new Date();
             console.log(user);
             const result = await userService.createUser(user);
+            // console.log(result);
             return res.status(200).json(result);
         } catch (err) {
             log.levels('dcvnpslog', logLevel.ERROR)

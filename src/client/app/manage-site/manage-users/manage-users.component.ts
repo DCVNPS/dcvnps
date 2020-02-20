@@ -154,23 +154,23 @@ export class ManageUsersComponent implements OnInit {
     this.api.post(endPoint, this.user, headers)
       .subscribe(
         async result => { 
-          // console.log(result); 
-          const aUser: User = await new User(
-            result.userId,
-            result.email,
-            result.password,
-            result.userSurname,
-            result.userGivenName,
-            result.roleCode,
-            result.roleDescription,
-            result.activeInd,
-            result.createdUserId,
-            result.createdDate,
-            result.updatedUserId,
-            result.updatedDate
+          const user = await result[0];
+          const aUser: User = new User(
+            user.userId,
+            user.email,
+            user.password,
+            user.userSurname,
+            user.userGivenName,
+            user.roleCode,
+            user.roleDescription,
+            user.activeInd,
+            user.createdUserId,
+            user.createdDate,
+            user.updatedUserId,
+            user.updatedDate
           );
-          this.showUsers.push(aUser);
-          this.users.push(aUser);
+          this.showUsers.unshift(aUser);
+          this.users.unshift(aUser);
           this.resetForm();
           this.renderer.setElementClass(this.addUserDialog.nativeElement, 'active', false);
         },
