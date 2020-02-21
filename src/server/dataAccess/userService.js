@@ -43,14 +43,8 @@ module.exports = (config) => {
                 updatedUserId: user.updatedUserId,
                 updatedDate: user.updatedDate
             })
-            .then(async () => {
-                try {
-                    const nUser = await selectById(user.userId);
-                    return nUser;
-                } 
-                catch (error) {
-                    throw error;
-                }
+            .then( () => {
+                return selectById(user.userId);
             })
             .catch(err => {
                 console.log(err);

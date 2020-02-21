@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../models/user-model';
 import { ApiService } from '../../services/api.service';
@@ -15,13 +15,15 @@ import { Observable } from 'rxjs';
 })
 export class EditUserComponent implements OnInit {
   @Input() user: User;
+  @Input() roles: Array<any>;
+  @Output() userEdited: EventEmitter<User> = new EventEmitter<User>();
+  @Output() cancelEditUser: EventEmitter<void> = new EventEmitter<void>();
+
   public userForm: FormGroup;
-  public roles: Object = {};
   public cnfrmPwdInvalid: boolean = false;
   public passwordInvalid: boolean = false;
   public passwordMatched: boolean = true;
   public mUser: User;
-  private state$: Observable<User>;
   constructor(
     private formBuilder: FormBuilder, 
     private api: ApiService, 
@@ -30,36 +32,10 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mUser = this.user || null;
-    this.state$ = this.route.paramMap.pipe(map(() => window.history.state));
-    if (!this.mUser) {
-      this.state$.subscribe(data => {
-        this.mUser = data;
-        // console.log(this.mUser);
-      });
-    }
-    this.roles = this.route.snapshot.data['roles'];
+    // this.mUser = this.user;
+    console.log({user: this.user, roles: this.roles});
     this.buildForm();
-    // for development testing. need to remove when deploying.
-    if (!this.mUser) {
-      this.mUser = new User(
-        "30f16bf0-c98e-11e9-aa81-08002764505e",
-        "nguyen.valery@gmail.com",
-        "$2b$10$NdoqYyu2YWHeWo0RvaPicuMS0Eqo8anskRBbwy4bmhIFcJ4XBJEUu",
-        "nguyen",
-        "valery",
-        "LVL3ADM",
-        "level 3 admin",
-        'Y',
-        "7cb5e812-6eb2-11e9-8849-848f69b86260",
-        new Date("2019-08-28T12:20:16.000Z"),
-        "7cb5e812-6eb2-11e9-8849-848f69b86260",
-        new Date("2019-08-28T12:20:16.000Z")
-      );
-    }
-    if (this.mUser) {
-      this.setFormValues(this.mUser);
-    }
+    this.setFormValues(this.user);
   }
 
   buildForm() {
@@ -160,20 +136,22 @@ export class EditUserComponent implements OnInit {
     else {
       this.passwordMatched = false;
     }
-    console.log(this.mUser);
-    this.api.put('admin/user',this.mUser)
-    .subscribe(
-      data => {
-        console.log(data); 
-        this.resetForm();
-        this.location.back(); // may be better user router navigate
-      },
-      error => { console.log(error); }
-    )
+    this.userEdited.emit(this.mUser);
+    // console.log(this.mUser);
+    // this.api.put('admin/user',this.mUser)
+    // .subscribe(
+    //   data => {
+    //     console.log(data); 
+    //     this.resetForm();
+    //     this.location.back(); // may be better user router navigate
+    //   },
+    //   error => { console.log(error); }
+    // )
   }
 
-  onCacelEdit(){
-    this.setFormValues(this.mUser);
-    this.location.back();
+  onCancelEdit(){
+    // this.setFormValues(this.mUser);
+    // this.location.back();
+    this.cancelEditUser.emit();
   }
 }

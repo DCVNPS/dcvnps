@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Headers} from '@angular/http';
 import { User } from '../../models/user-model';
 import { ApiService } from '../../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-user',
@@ -12,15 +10,14 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
-public userForm: FormGroup;
-  public roles: Object = {};
-  private user: User;
+  @Input() roles: Array<any> = [];
+  @Output() userAdded: EventEmitter<User> = new EventEmitter<User>();
+  @Output() cancelNewUser: EventEmitter<any> = new EventEmitter();
+  public userForm: FormGroup;
   constructor(private formBuilder: FormBuilder, private api: ApiService, private route: ActivatedRoute) { 
-    this.user = new User(null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   ngOnInit() {
-    this.roles = this.route.snapshot.data['roles'];
     this.buildForm();
   }
 
@@ -46,19 +43,26 @@ public userForm: FormGroup;
   // convenience getter for easy access to form values. Good for submit.
   get formValue() { return this.userForm.value;}
 
-  onNewUserCreated(user: User) {
-    console.log(user);
-    const endPoint = "admin/user";
-    // const headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    this.api.post(endPoint, user, headers)
-      .subscribe(
-        result => { console.log(result); },
-        error => { console.error(error) }
-      );
+  onCreateUser(){
+    const newUser: User = new User(
+       null,  //userid
+       this.formValue.email,
+       this.formValue.password,
+       this.formValue.lastName,
+       this.formValue.firstName,
+       this.formValue.roleCode,
+      null, //role desc
+      this.formValue.activeInd,
+      null,
+      null,
+      null,
+      null
+    );
+    this.userAdded.emit(newUser);
+    this.resetForm();
   }
-  onSubmitForm(){
-    console.log(this.formValue);
+
+  onCancel(){
+    this.cancelNewUser.emit();
   }
 }

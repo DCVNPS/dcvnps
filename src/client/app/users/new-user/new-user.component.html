@@ -73,9 +73,10 @@
                 </div>
             </div>
             <div class="ui menu borderless">
-                <button type="button" class="ui primary button" (click)="onSubmitForm();"
+                <button type="button" class="ui primary button" (click)="onCreateUser();"
                     [disabled]="userForm.errors || userForm.invalid">Submit</button>
-                <button type="button" class="ui button" (click)="resetForm();">Reset</button>
+                <button type="reset" class="ui teal button" (click)="resetForm();">Reset</button>
+                <button type="button" class="ui black button" (click)="onCancel();">Cancel</button>
             </div>
         </form>
     </div>
