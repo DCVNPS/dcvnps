@@ -62,6 +62,7 @@ import { ConfirmationDialogComponent } from './commons/confirmation-dialog/confi
 import { ModalComponent } from './commons/modal/modal.component';
 import { MessageService } from './services/message.service';
 import { MessagesComponent } from './messages/messages.component';
+import { HttpErrorHandler } from './services/http-error-handler.service';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { MessagesComponent } from './messages/messages.component';
     GalleryPhotosResolve,
     GalleriesResolve,
     MessageService,
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    HttpErrorHandler
   ],
   bootstrap: [AppComponent],
   entryComponents: []

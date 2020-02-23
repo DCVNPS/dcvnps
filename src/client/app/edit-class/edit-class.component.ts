@@ -144,20 +144,22 @@ export class EditClassComponent implements OnInit {
         .subscribe(success => {
           // console.log('update class successful');
           this.onCancel();
-        },
-          error => {
-            console.log(error);
-          });
+        }
+        // , error => {
+        //     console.log(error);
+        //   }
+      );
     } else {
       this.api.post('vnpsclasses', this.currentClass)
         .subscribe(success => {
           // console.log('update class successful');
           // this.mClasses.unshift({'id':this.currentClass.classId, 'description':this.currentClass.classLevelDesc });
           this.buildForm();
-        },
-          error => {
-            console.log(error);
-          });
+        }
+          // , error => {
+          //     console.log(error);
+          //   }
+        );
     }
   }
 
@@ -180,8 +182,8 @@ export class EditClassComponent implements OnInit {
           // this.mClasses.splice(remIndx,1);
           // this.onCancel();
           this.buildForm();
-        },
-        error => { console.log(error); }
+        }
+        // ,error => { console.log(error); }
       );
   }
 

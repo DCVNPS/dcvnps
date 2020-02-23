@@ -59,7 +59,7 @@ module.exports = (express, config) => {
                         userrole: result.authuser.roleCode,
                         admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
                     }
-                    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: Math.floor(Date.now()/1000) +(15*60) }); /// expired in 15minutes
+                    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 900 }); /// expired in 15minutes
                     // const token = jwt.sign(payload, process.env.JWT_SECRET);
                     // console.log(token);
                     return res.status(200).json({

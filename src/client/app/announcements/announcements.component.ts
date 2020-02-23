@@ -30,8 +30,8 @@ export class AnnouncementsComponent implements OnInit {
     this.api.get(apiEndPoint)
     .pipe(
       map(
-        (data: Array<any>) => data,
-        error => error
+        (data: Array<any>) => data
+        // error => error
       )
     )
      .subscribe(
@@ -40,9 +40,11 @@ export class AnnouncementsComponent implements OnInit {
           data.forEach(ancmnt => {
             this.announcements.push(ancmnt);
           });
-        }, error => {
-          console.log(error);
-        });
+        }
+        // , error => {
+        //   console.log(error);
+        // }
+        );
   }
   siteAdmin() {
     return this.auth.siteAdmin();
@@ -93,10 +95,11 @@ export class AnnouncementsComponent implements OnInit {
             this.announcements.unshift(data);
             // console.log(this.announcements);
             this.addAncmnt = false;
-          },
-            error => {
-              console.log(error);
-            });
+          }
+          // , error => {
+          //     console.log(error);
+          //   }
+          );
         break;
       case AnnouncementActions.put:
         console.log(`saving announcement ${ancmnt.announcementId}...`);
@@ -108,10 +111,11 @@ export class AnnouncementsComponent implements OnInit {
               const indx = this.announcements.indexOf(curAncmnt);
               this.announcements.splice(indx, 1, result);
               this.editAncmnt = false;
-            },
-              error => {
-                console.log(error);
-              });
+            }
+            // , error => {
+            //     console.log(error);
+            //   }
+          );
         }
         break;
       case AnnouncementActions.delete:
@@ -122,10 +126,11 @@ export class AnnouncementsComponent implements OnInit {
             console.log(`Announcement ${ancmnt.announcementId} deleted.`);
             const indx = this.announcements.indexOf(ancmnt);
             this.announcements.splice(indx, 1);
-          },
-            error => {
-              console.log(error);
-            });
+          }
+          // , error => {
+          //     console.log(error);
+          //   }
+        );
         break;
       default:
         break;

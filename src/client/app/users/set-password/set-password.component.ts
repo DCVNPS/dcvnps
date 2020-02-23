@@ -67,7 +67,7 @@ export class SetPasswordComponent implements OnInit {
       this.errorMessage = undefined;
     },
     error =>{
-      console.log(error);
+      // console.log(error);
       this.hideSearch = false;
       this.successMessage = undefined;
       this.errorMessage = `update user's password failed -- ${error.message}`;

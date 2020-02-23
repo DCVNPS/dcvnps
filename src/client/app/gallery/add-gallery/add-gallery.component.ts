@@ -83,11 +83,11 @@ export class AddGalleryComponent implements OnInit{
             // upload succeeded, raise photoAdded event
             this.finishWork.emit({finish:true, addedGallery: gallery});           
           }
-        },
-        (err) => { 
-          this.errorMsg = err.message; 
-          this.finishWork.emit({finish:true, errorMsg: this.errorMsg});
         }
+        // ,(err) => { 
+        //   this.errorMsg = err.message; 
+        //   this.finishWork.emit({finish:true, errorMsg: this.errorMsg});
+        // }
       );
   }
 }

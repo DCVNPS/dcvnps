@@ -44,10 +44,11 @@ export class MenuComponent implements OnInit {
           this.mClasses = data;
           if(this.mClasses)
             this.level = this.mClasses[0].level;
-        },
-        err => {
-          console.log(err);
-        })
+        }
+        // ,err => {
+        //   console.log(err);
+        // }
+      )
   }
 
   logout() {
@@ -62,7 +63,4 @@ export class MenuComponent implements OnInit {
   isAdmin(): boolean {
     return this.auth.siteAdmin();
   }
-  // navigateGallery(gallery: Gallery) {
-  //   this.router.navigateByUrl('gallery/level', {state: gallery});
-  // }
 }

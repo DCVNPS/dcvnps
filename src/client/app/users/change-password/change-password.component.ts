@@ -58,14 +58,10 @@ export class ChangePasswordComponent implements OnInit {
       .subscribe(
         result => {
           console.log(result); 
-          // if (result.success) {
-          //   this.auth.logout();
-          //   this.router.navigate(['/login']);
-          // }
             this.auth.logout();
             this.router.navigate(['/login']);
-        },
-        error => { console.log(error); }
+        }
+        // ,        error => { console.log(error); }
       )
   }
   cancelEdit() { }

@@ -43,8 +43,8 @@ export class ManageGalleriesComponent implements OnInit {
         (success) => { 
           // console.log({message: 'Delete success', gallery: this.galleries[this.deletedIndex]});
           this.galleries.splice(this.deletedIndex,1);
-        },
-        error => { console.log(error);}
+        }
+        // ,        error => { console.log(error);}
       );
     }
     else {

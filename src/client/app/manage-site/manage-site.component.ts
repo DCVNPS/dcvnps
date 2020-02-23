@@ -93,8 +93,8 @@ export class ManageSiteComponent implements OnInit {
             users.push(aUser);
           });
           // console.log(this.users);
-        },
-        error => { console.log(error); }
+        }
+        // ,        error => { console.log(error); }
       );
       return users;
   }

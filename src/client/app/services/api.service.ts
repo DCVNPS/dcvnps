@@ -19,22 +19,37 @@ export class ApiService {
 
   constructor(
     private httpClient: HttpClient,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private httpErrorHandler: HttpErrorHandler) {
+      this.handleError = httpErrorHandler.createHandleError();
+     }
 
   get(url: string, headers?: HttpHeaders): Observable<any> {
-    return this.apiRequest('GET', url, {}, headers);
+    return this.apiRequest('GET', url, {}, headers)
+    .pipe(
+      catchError(this.handleError(url,'GET'))
+    );
   }
 
   post(url: string, body: Object, headers?: HttpHeaders) {
-    return this.apiRequest('POST', url, body, headers);
+    return this.apiRequest('POST', url, body, headers)
+    .pipe(
+      catchError(this.handleError(url,'CREATE'))
+    );
   }
 
   put(url: string, body: Object, headers?: HttpHeaders) {
-    return this.apiRequest('PUT', url, body, headers);
+    return this.apiRequest('PUT', url, body, headers)
+    .pipe(
+      catchError(this.handleError(url,'UPDATE'))
+    );
   }
 
   delete(url: string, body?: Object, headers?: HttpHeaders): Observable<any> {
-    return this.apiRequest('DELETE', url, body, headers);
+    return this.apiRequest('DELETE', url, body, headers)
+    .pipe(
+      catchError(this.handleError(url,'DELETE'))
+    );
   }
 
   onRequestError(res) {
@@ -59,9 +74,9 @@ export class ApiService {
     const options = { body: body, headers: httpHeaders };
     const apiEnpoint: string = `${this.baseUrl}/${url}`;
     return this.httpClient.request(method, apiEnpoint, options)
-      .pipe(
-        catchError(error => this.onRequestError(error))
-      );
+      // .pipe(
+      //   catchError(error => this.onRequestError(error))
+      // );
   }
 
   galleryPhotoUpload(imageInfo: ImageInfo): Observable<boolean> {

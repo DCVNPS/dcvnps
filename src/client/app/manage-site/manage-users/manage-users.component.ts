@@ -220,8 +220,8 @@ export class ManageUsersComponent implements OnInit {
           this.users.unshift(aUser);
           this.resetForm();
           this.renderer.setElementClass(this.addUserDialog.nativeElement, 'active', false);
-        },
-        error => { console.error(error) }
+        }
+        // ,        error => { console.error(error) }
       );
   }
   onCancelNewUser(event) {

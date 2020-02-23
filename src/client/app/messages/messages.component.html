@@ -1,8 +1,13 @@
-<div *ngIf="messageService.messages.length">
-  <h3>Messages</h3>
-  <button class="clear" (click)="messageService.clear()">clear</button>
-  <br>
-  <ol>
-    <li *ngFor='let message of messageService.messages'> {{message}} </li>
-  </ol>
+<div class="ui modal" [ngClass]="{'active': messageService.messages.length > 0}">
+  <div class="header">Error Message</div>
+  <div class="content">
+    <div class="description">
+    </div>
+    <ol>
+      <li *ngFor='let message of messageService.messages'> {{message}} </li>
+    </ol>
+  </div>
+  <div class="actions">
+    <div class="ui accept button" (click)="messageService.clear();">OK <span><i class="checkmark icon"></i></span></div>
+  </div>
 </div>

@@ -46,10 +46,12 @@ export class PaypalButtonComponent implements OnInit {
       this.api.post('paypaltransactioncomplete',order)
       .subscribe(result =>{
         console.log(result);
-      },
-      error =>{
-        console.log(error);
-      });
+      }
+      // ,
+      // error =>{
+      //   console.log(error);
+      // }
+      );
     },
     onCancel: (data) => {
       if (data) {

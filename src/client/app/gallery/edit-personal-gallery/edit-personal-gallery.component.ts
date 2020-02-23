@@ -44,14 +44,13 @@ export class EditPersonalGalleryComponent implements OnInit {
       .subscribe(res => {
         const delIndx = this.photos.indexOf(img);
         this.photos.splice(delIndx, 1);
-      },
-      error => {
-        console.log(`Delete photo Id: ${img.photoId}_${img.imgalt}`);
-        // Should log into a database table for later analys
-        console.log(error);
-      });
-      // console.log(this.galleryData);
-      // console.log(this.photos);
+      }
+      // ,error => {
+      //   console.log(`Delete photo Id: ${img.photoId}_${img.imgalt}`);
+      //   // Should log into a database table for later analys
+      //   console.log(error);
+      // }
+      );
   }
   onPhotoAdded(event) {
     // console.log(event);

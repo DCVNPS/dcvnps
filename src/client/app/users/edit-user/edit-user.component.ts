@@ -137,21 +137,9 @@ export class EditUserComponent implements OnInit {
       this.passwordMatched = false;
     }
     this.userEdited.emit(this.mUser);
-    // console.log(this.mUser);
-    // this.api.put('admin/user',this.mUser)
-    // .subscribe(
-    //   data => {
-    //     console.log(data); 
-    //     this.resetForm();
-    //     this.location.back(); // may be better user router navigate
-    //   },
-    //   error => { console.log(error); }
-    // )
   }
 
   onCancelEdit(){
-    // this.setFormValues(this.mUser);
-    // this.location.back();
     this.cancelEditUser.emit();
   }
 }

@@ -34,14 +34,14 @@ export class RequestCacheService implements RequestCache {
     // check if cached data is expired or not.
     const isExpired = cached.lastRead < Date.now() - environment.cacheExpiration;
     const expired = isExpired ? 'expired' : '';
-    this.messenger.add(`Found ${expired} response for ${url}.`);
+    // this.messenger.add(`Found ${expired} response for ${url}.`);
     return isExpired ? undefined : cached.response;
 
   }
 
   put(req: HttpRequest<any>, response: HttpResponse<any>):void{
     const url = req.urlWithParams;
-    this.messenger.add(`Caching reponse from "${url}".`);
+    // this.messenger.add(`Caching reponse from "${url}".`);
     const cacheEntry = {url, response, lastRead: Date.now()};
     this.cache.set(url, cacheEntry);
     // Remove expired cached entries
@@ -51,7 +51,7 @@ export class RequestCacheService implements RequestCache {
         this.cache.delete(entry.url);
       }
     });
-    this.messenger.add(`Request cache size: ${this.cache.size}.`);
+    // this.messenger.add(`Request cache size: ${this.cache.size}.`);
   }
 
 }
