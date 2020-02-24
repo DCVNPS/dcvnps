@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../models/user-model';
 import { ApiService } from '../../services/api.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
@@ -122,7 +122,7 @@ export class ManageUsersComponent implements OnInit {
       email: this.formBuilder.control(null, [Validators.required, Validators.email]),
       password: this.formBuilder.control(null),
       confirmPassword: this.formBuilder.control(null),
-      activeInd: this.formBuilder.control(null),
+      activeInd: this.formBuilder.control(null, [Validators.required]),
       roleCode: this.formBuilder.control(null, [Validators.required])
     });
     // using reactive java script to capture changes.
@@ -136,13 +136,16 @@ export class ManageUsersComponent implements OnInit {
         if (data) {
           if (data.length < 8) {
             this.cnfrmPwdInvalid = true;
-            console.log('password must be minimum 8 characters.');
+            // console.log('password must be minimum 8 characters.');
             if (this.formValue.password !== data) {
               this.passwordMatched = true;
             }
-            else {
+            else if(data.length === 0){
               this.passwordMatched = false;
             }
+            else {
+              this.passwordInvalid = false;
+            }    
           }
           else if (data.length === 0) {
             this.cnfrmPwdInvalid = true;
@@ -163,10 +166,13 @@ export class ManageUsersComponent implements OnInit {
         if (data) {
           if (data.length < 8) {
             this.passwordInvalid = true;
-            console.log('password must be minimum 8 characters.');
+            // console.log('password must be minimum 8 characters.');
           }
           else if (data.length === 0) {
             this.passwordInvalid = true;
+          }
+          else {// data length > 8
+            this.passwordInvalid = false;
           }
         }
         else {
@@ -229,6 +235,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onUserEdited(){
+    let apiUrl:string ='admin/user';
     const usersReplaceIndex = this.users.indexOf(this.user);
     const showReplaceIndex = this.showUsers.indexOf(this.user);
     this.user.activeInd = this.formValue.activeInd;
@@ -236,10 +243,11 @@ export class ManageUsersComponent implements OnInit {
     this.user.userSurname = this.formValue.lastName;
     this.user.userGivenName = this.formValue.firstName;
     this.user.email = this.formValue.email;
-    if( (this.f.password && this.f.confirmPassword) ){
+    if( (this.formValue.password && this.formValue.confirmPassword) ){
       this.user.password = this.formValue.password;
+      apiUrl ='admin/user/updatepassword';
     }
-    this.api.put('admin/user',this.user)
+    this.api.put(apiUrl,this.user)
     .subscribe(
       data => {
         console.log(data); 

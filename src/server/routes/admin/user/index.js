@@ -118,10 +118,13 @@ module.exports = (express, config) => {
             // console.log(user);
             switch (action) {
                 case "setpassword":
-                    user.password = `${bcrypt.hashSync(user.password, 10)}`
+                    user.password = `${bcrypt.hashSync(user.password, 10)}`;
                     result = await userService.setPassword(user);
                     break;
                 default:
+                    if(action ==='updatepassword'){
+                        user.password = `${bcrypt.hashSync(user.password, 10)}`;
+                    }
                     result = await userService.updateUser(user);
                     break;
             }

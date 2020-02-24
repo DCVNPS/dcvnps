@@ -49,7 +49,7 @@ export class EditClassComponent implements OnInit {
       .subscribe(data => {
         this.mClasses = data;
         // this.mClasses.unshift({id:"",description:"Select a Class to Edit"});
-        console.log(this.mClasses);
+        // console.log(this.mClasses);
       },
         err => {
           console.log(err);

@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { IfStmt } from '@angular/compiler';
+import { AnimationGroupPlayer } from '@angular/animations/src/players/animation_group_player';
 
 @Component({
   selector: 'app-login',
@@ -51,23 +53,21 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     // console.log(this.fromValues);
     this.api.post('commons/authenticate', this.fromValues)
-      .pipe(
-        map((data: any) => data, error => error)
-      ).subscribe((data) => {
-        if (data.type === HttpEventType.Response) {
-          console.log(data.headers);
+      .subscribe((data) => {
+        const authData = JSON.parse(JSON.stringify(data));
+        if (Object.keys(authData).length > 0)  {
+          if (data.type === HttpEventType.Response) {
+            console.log(data.headers);
+          }
+          this.auth.removeToken();
+          this.auth.setToken({ token: authData.token, role: authData.role, lastRead: authData.lastRead });
+          if (this.backUrl) {
+            this.router.navigateByUrl(this.backUrl);
+          } else {
+            this.router.navigateByUrl('/home');
+          }
         }
-        this.auth.removeToken();
-        this.auth.setToken({ token: data.token, role: data.role, lastRead: data.lastRead });
-        if (this.backUrl) {
-          this.router.navigateByUrl(this.backUrl);
-        } else {
-          this.router.navigateByUrl('/home');
-        }
-      },
-      (error) => {
-          this.formError = error.statusText;
-        }
+      }
       );
   }
 }

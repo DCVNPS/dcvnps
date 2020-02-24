@@ -27,28 +27,28 @@ export class ApiService {
   get(url: string, headers?: HttpHeaders): Observable<any> {
     return this.apiRequest('GET', url, {}, headers)
     .pipe(
-      catchError(this.handleError(url,'GET'))
+      catchError(this.handleError())
     );
   }
 
   post(url: string, body: Object, headers?: HttpHeaders) {
     return this.apiRequest('POST', url, body, headers)
     .pipe(
-      catchError(this.handleError(url,'CREATE'))
+      catchError(this.handleError())
     );
   }
 
   put(url: string, body: Object, headers?: HttpHeaders) {
     return this.apiRequest('PUT', url, body, headers)
     .pipe(
-      catchError(this.handleError(url,'UPDATE'))
+      catchError(this.handleError())
     );
   }
 
   delete(url: string, body?: Object, headers?: HttpHeaders): Observable<any> {
     return this.apiRequest('DELETE', url, body, headers)
     .pipe(
-      catchError(this.handleError(url,'DELETE'))
+      catchError(this.handleError())
     );
   }
 
