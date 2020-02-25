@@ -70,7 +70,7 @@ export class AuthService {
 
   logout() {
     this.removeToken();
-    this.router.navigate(['/home']);
+    this.router.navigateByUrl('/home');
   }
 }
 

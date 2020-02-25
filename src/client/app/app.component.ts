@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -12,5 +12,6 @@ export class AppComponent implements OnDestroy {
   constructor(private auth: AuthService) { }
 
   ngOnDestroy() {
+    this.auth.logout();
   }
 }

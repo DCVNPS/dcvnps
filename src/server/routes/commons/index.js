@@ -7,6 +7,7 @@ module.exports = (express, config) => {
         throw new Error('admin user missing config object');
     }
     const commonService = CommonService(config);
+    const uuidv4 = config.uuidv4;
     const bcrypt = config.bcrypt;
     const log = config.logger;
     const logLevel = config.logLevel;
@@ -57,7 +58,8 @@ module.exports = (express, config) => {
                         userid: result.authuser.userId,
                         username: result.authuser.userName,
                         userrole: result.authuser.roleCode,
-                        admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
+                        admin: `${(!admRole) ? false : admRole[0] === "ADM"}`,
+                        refresh_token: uuidv4()
                     }
                     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 900 }); /// expired in 15minutes
                     // const token = jwt.sign(payload, process.env.JWT_SECRET);
