@@ -38,6 +38,7 @@ export class AuthService {
     const auth =  JSON.parse(localStorage.getItem(this.storageKey));
     return auth ? auth.lastRead : null;
   }
+  
   getRole() {
     if (this.isLogin()) {
       const auth =  JSON.parse(localStorage.getItem(this.storageKey));
@@ -70,7 +71,7 @@ export class AuthService {
 
   logout() {
     this.removeToken();
-    this.router.navigateByUrl('/home');
+    // this.router.navigateByUrl('/home');
   }
 }
 
@@ -78,4 +79,5 @@ export class AuthToken {
   public token: string;
   public role: string;
   public lastRead: number;
+  public refreshToken:string;
 }

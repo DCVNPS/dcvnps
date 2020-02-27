@@ -58,16 +58,22 @@ module.exports = (express, config) => {
                         userid: result.authuser.userId,
                         username: result.authuser.userName,
                         userrole: result.authuser.roleCode,
-                        admin: `${(!admRole) ? false : admRole[0] === "ADM"}`,
-                        refresh_token: uuidv4()
+                        admin: `${(!admRole) ? false : admRole[0] === "ADM"}`
                     }
                     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 900 }); /// expired in 15minutes
                     // const token = jwt.sign(payload, process.env.JWT_SECRET);
                     // console.log(token);
-                    return res.status(200).json({
+                    // return res.status(200).json({
+                    //     token: token,
+                    //     role: result.authuser.roleCode,
+                    //     lastRead: Date.now(),
+                    //     refresh_token: uuidv4()
+                    // });
+                    res.status(200).send({
                         token: token,
                         role: result.authuser.roleCode,
-                        lastRead: Date.now()
+                        lastRead: Date.now(),
+                        refreshToken: uuidv4()
                     });
                 }             
                 else{
@@ -79,6 +85,11 @@ module.exports = (express, config) => {
                 log.error({ id: req.id, err: err }, 'Error authenticate');
                 return res.status(500).json(err.message);
             })
+    });
+
+    router.post('/token', (req, res) =>{
+        
+        throw new Error('Not implemented yet.');
     });
 
     //  Need to use Async to make sure the authentication and change password is  completed.
