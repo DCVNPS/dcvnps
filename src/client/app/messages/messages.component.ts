@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -9,13 +10,22 @@ import { AuthService } from '../services/auth.service';
 })
 export class MessagesComponent implements OnInit {
 
-  constructor(public messageService: MessageService, private auth: AuthService) { }
+  constructor(
+    public messageService: MessageService, 
+    private auth: AuthService,
+    private activatedRoute:ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   onMessageOK(){
+    if(this.messageService.messages[0].indexOf("code 401") > -1){
+      this.auth.logout();
+      const curUrl:string = this.activatedRoute['_routerState'].snapshot.url;
+      this.router.navigateByUrl(curUrl);  
+    }
     this.messageService.clear();
-    this.auth.logout();
   }
 }

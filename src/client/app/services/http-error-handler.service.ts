@@ -33,7 +33,7 @@ export class HttpErrorHandler {
 
       const message = (error.error instanceof ErrorEvent) ?
         error.error.message:
-       `server returned code ${error.status} with body "${error.error}"`;
+       `server returned code ${error.status} with: "${error.error}"`;
       // Clear all existing message before adding new.
        this.messageService.clear();
       // TODO: better job of transforming error for user consumption

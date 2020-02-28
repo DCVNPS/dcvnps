@@ -1,8 +1,7 @@
 <div class="ui modal" [ngClass]="{'active': messageService.messages.length > 0}">
-  <div class="header">Error Message</div>
+  <div class="header">Error</div>
   <div class="content">
-    <div class="description">
-    </div>
+    <div class="description">Message</div>
     <ol>
       <li *ngFor='let message of messageService.messages'> {{message}} </li>
     </ol>
