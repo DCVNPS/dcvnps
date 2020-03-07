@@ -93,7 +93,7 @@ module.exports = (express, config) => {
             user.createdDate = new Date();
             user.updatedUserId = req.auth.userid;
             user.updatedDate = new Date();
-            console.log(user);
+            // console.log(user);
             const result = await userService.createUser(user);
             // console.log(result);
             return res.status(200).json(result);

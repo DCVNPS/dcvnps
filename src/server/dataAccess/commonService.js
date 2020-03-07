@@ -114,12 +114,24 @@ module.exports = (config) => {
             throw err;
         })
     }
+    function getAdminLevel(){
+        return mySQL('vnpslookup')
+        .where({lookupType:'AdminLevel'})
+        .select({role: 'lookupCode', level:'lookupValue'})
+        .then( data =>{
+            return data;
+        })
+        .catch(err =>{
+            throw err;
+        });
+    }
     return {
         uuid,
         getRoles,
         getStates,
         getVnpsClassMenu, 
         authenticate,
-        changePassword
+        changePassword,
+        getAdminLevel
     }
 }

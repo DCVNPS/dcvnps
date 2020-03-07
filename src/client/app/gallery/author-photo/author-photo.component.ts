@@ -28,7 +28,7 @@ export class AuthorPhotoComponent implements OnInit {
     this.year = this.authorData['authorPhotos'].year;
     this.author = this.authorData['authorPhotos'].author.split('.');
     this.photos = this.authorData['authorPhotos'].photos;
-    this.isAdmin = this.auth.isAdmin(this.level) || this.auth.siteAdmin();
+    this.isAdmin = this.auth.isAdmin() || this.auth.siteAdmin();
   }
   imageClicked(i: number) {
     // hide all photo except the one that is clicked

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
@@ -42,25 +41,25 @@ export class MenuComponent implements OnInit {
       .subscribe(
         data => {
           this.mClasses = data;
-          if(this.mClasses)
+          if (this.mClasses)
             this.level = this.mClasses[0].level;
-        }
-        // ,err => {
-        //   console.log(err);
-        // }
-      )
+        });
   }
 
   logout() {
-    this.auth.logout();
-    this.router.navigate(['/home']);
+    this.auth.logout()
+    .subscribe( success =>{
+      if(success){
+        this.router.navigateByUrl('/home');
+      }
+    });
   }
 
   isLogin(): boolean {
     return this.auth.isLogin();
   }
 
-  isAdmin(): boolean {
+  isSiteAdmin(): boolean {
     return this.auth.siteAdmin();
   }
 }

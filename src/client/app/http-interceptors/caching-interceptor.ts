@@ -9,7 +9,7 @@ import { startWith, tap } from 'rxjs/operators';
 
 import { RequestCache,  RequestCacheService } from '../services/request-cache.service';
 
-const galleryUrls: Array<string> = ['galleryphotos/galleryid','galleries'];
+const cacheableUrls: Array<string> = [ 'galleryphotos/galleryid', 'galleries', 'commons/adminlevel'];
 
 /**
  * If request is cachable (e.g., galleries request) and
@@ -46,10 +46,10 @@ export class CachingInterceptor implements HttpInterceptor {
 
 /** Is this request cachable? */
 function isCachable(req: HttpRequest<any>) {
-    // Only galleries request is cachable in this app
-    const galUrl = galleryUrls.find(gUrl => req.url.indexOf(gUrl) > -1);
+    // Only galleries, lookup request is cachable in this app
+    const cacheUrl = cacheableUrls.find(cUrl => req.url.indexOf(cUrl) > -1);
     // Only GET requests are cachable
-    return req.method === 'GET' && galUrl;
+    return req.method === 'GET' && cacheUrl;
 }
 
 /**

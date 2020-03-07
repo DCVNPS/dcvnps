@@ -21,10 +21,16 @@ export class MessagesComponent implements OnInit {
   }
 
   onMessageOK(){
-    if(this.messageService.messages[0].indexOf("code 401") > -1){
-      this.auth.logout();
-      const curUrl:string = this.activatedRoute['_routerState'].snapshot.url;
-      this.router.navigateByUrl(curUrl);  
+    if(this.messageService.messages && this.messageService.messages[0].indexOf("code 401") > -1){
+      this.auth.logout().subscribe(
+        success => {
+          if(success){
+            this.messageService.clear();
+            const curUrl:string = this.activatedRoute['_routerState'].snapshot.url;
+            this.router.navigateByUrl(curUrl);        
+          }
+        }
+      )      
     }
     this.messageService.clear();
   }

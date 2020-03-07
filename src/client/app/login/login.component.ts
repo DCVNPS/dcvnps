@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(private fromBuilder: FormBuilder,
-    private api: ApiService,
+    // private api: ApiService,
     private auth: AuthService,
     private routeStat: ActivatedRoute,
     private router: Router) {
@@ -47,24 +47,23 @@ export class LoginComponent implements OnInit {
 
   get fromValues() { return this.loginForm.value; }
 
+  onEnterKey(){
+    if(this.loginForm.valid){
+      this.onSubmit();
+    }
+  }
   onSubmit() {
     // console.log(this.fromValues);
-    this.api.post('commons/authenticate', this.fromValues)
-      .subscribe((data) => {
-        const authData = JSON.parse(JSON.stringify(data));
-        if (Object.keys(authData).length > 0) {
-          if (data.type === HttpEventType.Response) {
-            console.log(data.headers);
-          }
-          this.auth.removeToken();
-          this.auth.setToken({ token: authData.token, role: authData.role, lastRead: authData.lastRead, refreshToken: authData.refreshToken });
-          if (this.backUrl) {
-            this.router.navigateByUrl(this.backUrl);
-          } else {
-            this.router.navigateByUrl('/home');
-          }
+    this.auth.login(this.fromValues)
+    .subscribe( success =>{
+      if(success){
+        if(this.backUrl){
+          this.router.navigateByUrl(this.backUrl);
+        }
+        else{
+          this.router.navigateByUrl('/home');
         }
       }
-      );
+    });
   }
 }

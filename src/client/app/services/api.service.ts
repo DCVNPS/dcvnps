@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpEventType, HttpRequest } from '@angular/co
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { throwError, Observable, pipe } from 'rxjs';
-import { AuthService } from './auth.service';
+// import { AuthService } from './auth.service';
 import { ImageInfo } from '../models/image-model';
 import { Gallery } from '../models/gallery.model';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
@@ -17,10 +17,7 @@ export class ApiService {
   private baseUrl = environment.apiUrl;
   private galleries: Array<Gallery> = [];
 
-  constructor(
-    private httpClient: HttpClient,
-    private auth: AuthService,
-    private httpErrorHandler: HttpErrorHandler) {
+  constructor( private httpClient: HttpClient,    private httpErrorHandler: HttpErrorHandler ) {
       this.handleError = httpErrorHandler.createHandleError();
      }
 
@@ -52,19 +49,19 @@ export class ApiService {
     );
   }
 
-  onRequestError(res) {
-    if (res) {
-      const error = {
-        statusCode: res.status,
-        statusText: (typeof res.error === 'string')? res.error:  res.error.message 
-       };
-      if (error.statusText === "jwt expired") {
-        this.auth.logout();
-      } else {
-        return throwError(error);
-      }
-    }
-  }
+  // onRequestError(res) {
+  //   if (res) {
+  //     const error = {
+  //       statusCode: res.status,
+  //       statusText: (typeof res.error === 'string')? res.error:  res.error.message 
+  //      };
+  //     if (error.statusText === "jwt expired") {
+  //       this.auth.logout();
+  //     } else {
+  //       return throwError(error);
+  //     }
+  //   }
+  // }
 
   apiRequest(method: string, url: string, body?: Object, headers?: HttpHeaders): Observable<any> {
     let httpHeaders = headers;

@@ -17,6 +17,8 @@ function isAdmin(req) {
     return true;
 }
 
+// global.refreshTokens = {};
+
 module.exports = (express, config) => {
     if (!express) {
         throw new Error('Route Handler missing express object');
@@ -27,19 +29,16 @@ module.exports = (express, config) => {
     config.uuidv4 = uuidv4;
     const log = config.logger;
     const router = express.Router();
-
     // User expresss json web token check express-jwt to guard the angular routes
     router.use(
         checkJwt({ secret: process.env.JWT_SECRET, requestProperty: 'auth' })
             .unless({
                 path:
                     [
+                        '/api/commons/renewtoken',
                         '/api/commons/vnpsclassmenu',
                         '/api/boardmembers',
-                        '/api/programs',
-                        { url: /^\/api\/galleries.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyid\/.*/i, methods: ['GET'] },
-                        { url: /^\/api\/galleryphotosbyname\/.*/i, methods: ['GET'] }
+                        { url: /^\/api\/galleries.*/i, methods: ['GET'] }         
                     ]
             })
     );
@@ -48,7 +47,7 @@ module.exports = (express, config) => {
         this.log = log.child({ src: true, id: req.id, err: err }, true);
         this.log.levels('dcvnpslog', config.logLevel.ERROR);
         this.log.error('Error');
-        if (err.name === 'UnauthorizedError') {
+        if (err.status === 401 && err.message === 'jwt expired') {
             return res.status(err.status).json(err.message);
         }
         next();

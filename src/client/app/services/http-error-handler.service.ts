@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpRequest, HttpHandler } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
@@ -30,7 +30,7 @@ export class HttpErrorHandler {
     return (error: HttpErrorResponse): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead
-
+      
       const message = (error.error instanceof ErrorEvent) ?
         error.error.message:
        `server returned code ${error.status} with: "${error.error}"`;

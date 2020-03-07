@@ -11,7 +11,7 @@ module.exports = (express, config) => {
     const log = config.logger;
     const logLevel = config.logLevel;
     const uuidv4 = config.uuidv4;
-    const galleryBaseDir = `${config.rootdir}/galleries`;
+    const galleryBaseDir = Path.join(config.rootdir,'../galleries');
     const router = express.Router();
 
     router.get('/:galleryId?', (req, res) => {
