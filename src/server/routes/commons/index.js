@@ -13,7 +13,8 @@ module.exports = (express, config) => {
     const log = config.logger;
     const logLevel = config.logLevel;
     const router = express.Router();
-
+    const pwdexp = parseInt(process.env.pwdexpirein);
+    const pwdgrc = parseInt(process.env.pwdgracetime);
     router.get('/uuid', (req, res) => {
         commonService.uuid().then(data => {
             return res.status(200).json(data)
@@ -61,7 +62,7 @@ module.exports = (express, config) => {
                         username: result.authuser.userName,
                         userrole: result.authuser.roleCode
                     }
-                    const authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 }); /// expired in 2minutes
+                    const authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: pwdexp}); /// expired in 2minutes
                     if (Object.keys(refreshTokens).length > 0) {
                         // console.log(Object.keys(refreshTokens));
                         Object.keys(refreshTokens).forEach(key => {
@@ -106,13 +107,13 @@ module.exports = (express, config) => {
     });
 
     router.post('/renewtoken', (req, res) => {
-        // console.log(req.headers);
+        const authorization = req.headers.authorization;
+        const auth = jwt.verify(authorization.split(' ')[1],process.env.JWT_SECRET,{ignoreExpiration: true});
+        // console.log(auth);
+        const refreshAble = (auth.exp + pwdgrc) > Date.now();
         let refreshToken = req.body.refreshToken;
         // if (username && username === auth.username) {
-        if(refreshToken in refreshTokens){
-            const authorization = req.headers.authorization;
-            let auth = jwt.verify(authorization.split(' ')[1],process.env.JWT_SECRET,{ignoreExpiration: true});
-            // console.log(auth);
+        if((refreshToken in refreshTokens) && refreshAble){
             const username = refreshTokens[refreshToken];
             if(username === auth.username){
                 const payload = {
@@ -120,9 +121,9 @@ module.exports = (express, config) => {
                     username: auth.username,
                     userrole: auth.userrole
                 }
-                authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 900 }); /// expired in 15minutes
+                authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: pwdexp }); /// expired in 15minutes
                 // console.log(`refreshToken: ${refreshTokens[refreshToken]} exists.`);
-                delete refreshTokens[refreshTokens];
+                delete refreshTokens[refreshToken];
                 refreshToken = uuidv4();
                 refreshTokens[refreshToken] = auth.username;
                 // console.log(`New refreshToken: ${refreshTokens[refreshToken]}.`);

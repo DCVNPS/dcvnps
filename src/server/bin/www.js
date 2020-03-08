@@ -8,8 +8,6 @@ const config = require('../config');
 const DB = require('../dataAccess/database')(config);
 config.mySQL = DB.knex;
 
-// console.log({'evnPath':envPath, 'jwt-secret': process.env.JWT_SECRET});
-
 const http = require('http');
 const App = require('../app');
 
@@ -20,6 +18,7 @@ const log = config.logger;
 /* Logic to start the application */
 const app = App(config);
 const port = process.env.PORT || 0;
+// console.log({'pwdexpirein': process.env.pwdexpirein, 'port': port});
 app.set('port', port);
 // Create http server object
 const server = http.createServer(app);
