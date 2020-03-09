@@ -21,7 +21,7 @@ export class MessagesComponent implements OnInit {
   }
 
   onMessageOK(){
-    if(this.messageService.messages && this.messageService.messages[0].indexOf("code 401") > -1){
+    if(this.messageService.messages && (this.messageService.messages[0].indexOf("code 401") > -1 || this.messageService.messages[0].indexOf('ERROR 1045') > -1)){
       this.auth.logout().subscribe(
         success => {
           if(success){

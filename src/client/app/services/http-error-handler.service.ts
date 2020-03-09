@@ -37,7 +37,7 @@ export class HttpErrorHandler {
       // Clear all existing message before adding new.
        this.messageService.clear();
       // TODO: better job of transforming error for user consumption
-      this.messageService.add(`${serviceName}: ${operation} failed: ${message}`);
+      this.messageService.add(message);
 
       // Let the app keep running by returning a safe result.
       return of( result );

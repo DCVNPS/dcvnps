@@ -62,7 +62,7 @@ module.exports = (express, config) => {
                         username: result.authuser.userName,
                         userrole: result.authuser.roleCode
                     }
-                    const authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: pwdexp}); /// expired in 2minutes
+                    const authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: pwdexp}); /// expired in 15minutes
                     if (Object.keys(refreshTokens).length > 0) {
                         // console.log(Object.keys(refreshTokens));
                         Object.keys(refreshTokens).forEach(key => {
@@ -136,7 +136,7 @@ module.exports = (express, config) => {
             }
             else{
                 delete refreshTokens[refreshToken];
-                res.sendStatus(401);
+                res.status(401).json('Your session has been expired.');
             }
         }
         else{

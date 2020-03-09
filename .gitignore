@@ -11,7 +11,7 @@
 /src/server/galleries/**/*
 /src/server/logs/*
 # env
-.env
+# .env
 
 # dependencies
 /node_modules
