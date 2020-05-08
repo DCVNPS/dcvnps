@@ -1,0 +1,13 @@
+<div class="ui modal" [ngClass]="{'active': active}">
+  <div class="header">Error</div>
+  <div class="content">
+    <div class="description">Message</div>
+    <!-- <ol>
+        <li *ngFor='let message of messageService.messages'> {{message}} </li>
+      </ol> -->
+    <p *ngFor='let message of Messages'>{{message}}</p>
+  </div>
+  <div class="actions">
+    <div class="ui accept button" (click)=" onMessageOK();">OK <span><i class="checkmark icon"></i></span></div>
+  </div>
+</div>

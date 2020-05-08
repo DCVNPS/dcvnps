@@ -1,54 +1,105 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "version": 1, 
   "newProjectRoot": "projects",
   "projects": {
-    "ng-dcvnps": {
-      "root": "src",
-      "sourceRoot": "src/client",
+    "vnps-angular": {
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "projects/vnps-angular",
+      "sourceRoot": "projects/vnps-angular/src",
+      "prefix": "vnps",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "./src/server/public",
-            "index": "src/client/index.html",
-            "main": "src/client/main.ts",
-            "tsConfig": "src/client/tsconfig.app.json",
-            "polyfills": "src/client/polyfills.ts",
+            "outputPath": "dist/server/public",
+            "index": "projects/vnps-angular/src/index.html",
+            "main": "projects/vnps-angular/src/main.ts",
+            "polyfills": "projects/vnps-angular/src/polyfills.ts",
+            "tsConfig": "projects/vnps-angular/tsconfig.app.json",
+            "aot": true,
             "assets": [
-              "src/client/assets",
-              "src/client/favicon.ico",
-              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" }
+              "projects/vnps-angular/src/assets",
+              "projects/vnps-angular/src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/skins",
+                "output": "/skins/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/themes",
+                "output": "/themes/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/plugins",
+                "output": "/plugins/"
+              }
             ],
             "styles": [
-              "src/client/styles.scss",
-              "src/client/assets/semantic.min.css",
-              "src/client/assets/semantic.grid.min.css"
+              "projects/vnps-angular/src/styles.css",
+              "projects/vnps-angular/src/assets/semantic.min.css",
+              "projects/vnps-angular/src/assets/semantic.grid.min.css"
             ],
             "scripts": [
-              "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js",
-              "node_modules/tinymce/tinymce.min.js"
+              "node_modules/tinymce/tinymce.min.js",
+              "projects/vnps-angular/src/assets/jquery-3.1.1.min.js",
+              "projects/vnps-angular/src/assets/semantic.min.js"
             ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/vnps-angular/src/environments/environment.ts",
+                  "with": "projects/vnps-angular/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
+              "budgets": [
                 {
-                  "replace": "src/client/environments/environment.ts",
-                  "with": "src/client/environments/environment.prod.ts"
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -57,43 +108,55 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-dcvnps:build"
+            "browserTarget": "vnps-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-dcvnps:build:production"
+              "browserTarget": "vnps-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-dcvnps:build"
+            "browserTarget": "vnps-angular:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/client/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/client/polyfills.ts",
-            "tsConfig": "src/client/tsconfig.spec.json",
+            "main": "projects/vnps-angular/src/test.ts",
+            "polyfills": "projects/vnps-angular/src/polyfills.ts",
+            "tsConfig": "projects/vnps-angular/tsconfig.spec.json",
+            "karmaConfig": "projects/vnps-angular/karma.conf.js",
             "assets": [
-              "src/client/assets",
-              "src/client/favicon.ico",
-              { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
-              { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" } 
+              "projects/vnps-angular/src/assets",
+              "projects/vnps-angular/src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/skins",
+                "output": "/skins/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/themes",
+                "output": "/themes/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/plugins",
+                "output": "/plugins/"
+              }
             ],
             "styles": [
-              "src/client/styles.scss",
-              "src/client/assets/semantic.min.css",
-              "src/client/assets/semantic.grid.min.css"
+              "projects/vnps-angular/src/styles.css",
+              "projects/vnps-angular/src/assets/semantic.min.css",
+              "projects/vnps-angular/src/assets/semantic.grid.min.css"
             ],
             "scripts": [
-              "src/client/assets/jquery-3.1.1.min.js",
-              "src/client/assets/semantic.min.js",
-              "node_modules/tinymce/tinymce.min.js"
+              "node_modules/tinymce/tinymce.min.js",
+              "projects/vnps-angular/src/assets/jquery-3.1.1.min.js",
+              "projects/vnps-angular/src/assets/semantic.min.js"
             ]
           }
         },
@@ -101,46 +164,28 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "projects/vnps-angular/tsconfig.app.json",
+              "projects/vnps-angular/tsconfig.spec.json",
+              "projects/vnps-angular/e2e/tsconfig.json"
             ],
-            "exclude": []
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
-        }
-      }
-    },
-    "ng-dcvnps-e2e": {
-      "root": "src/e2e",
-      "sourceRoot": "src/e2e",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ng-dcvnps:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": []
+            "protractorConfig": "projects/vnps-angular/e2e/protractor.conf.js",
+            "devServerTarget": "vnps-angular:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "vnps-angular:serve:production"
+            }
           }
         }
       }
-    }
-  },
-  "defaultProject": "ng-dcvnps",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+    }},
+  "defaultProject": "vnps-angular"
 }

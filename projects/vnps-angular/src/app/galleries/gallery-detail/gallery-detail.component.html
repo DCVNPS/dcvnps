@@ -1,0 +1,10 @@
+<div class="ui grey inverted secondary menu">
+    <button class="item" (click)="onFilterYear(year);">{{galleryName | uppercase}}</button>
+    <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
+</div>
+<div class="ui three column grid">
+    <div class="column" *ngFor="let authPhoto of authPhotos">
+        <vnps-author-photo [authorData]="authPhoto" [enablePopup]="enablePopup">
+        </vnps-author-photo>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="dropzone">
+    <button class="ui red right floated animated button" (click)="onClose();">
+        <div class="visible content">X</div>
+        <div class="hidden content">Close</div>
+    </button>
+    <div><span class="ui blue large header">{{gallery?.gallery | titlecase}}:</span> Upload Photo</div>
+    <vnps-dropzone [config]="dzconfig"></vnps-dropzone>
+</div>

@@ -1,0 +1,61 @@
+<h2>Manage Announcements</h2>
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>Announcement Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="siteAdmin || isAdmin">
+        <tr *ngFor="let a of announcements">
+            <td>
+                <a class="item" [routerLink]="['/admin/announcements',a.announcementId,'edit']">{{a.title}}</a>
+            </td>
+            <td class="right aligned collapsing">
+                <button class="ui basic mini blue button"
+                    [routerLink]="['/admin/announcements',a.announcementId,'edit']">Edit</button>
+                <button class="ui basic mini red button"
+                    (click)="onDeleteAnnouncement(a.announcementId);">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui primary labeled icon button" type="button"
+                    [routerLink]="['/admin/announcements/add']">
+                    <i class="small plus icon"></i>Add Announcement
+                </button>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+
+<vnps-modal [id]="'deleteconfirmation'" [(showDialog)]="showDialog">
+    <div class="actions">
+        <button type="button" class="ui basic red tiny button" (click)="onAcceptDenyDelete(false);">
+            <i class="close icon"></i>
+        </button>
+    </div>
+    <div class="header">
+        Delete Class: {{deletedAnnouncement.title | titlecase}}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header">This will remove Announcement &lt;{{deletedAnnouncement.title | titlecase}}&gt; from
+                claccess
+                list.</div>
+            <p>Do you want to continue?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" (click)="onAcceptDenyDelete(false);">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button" (click)="onAcceptDenyDelete(true)">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+
+</vnps-modal>

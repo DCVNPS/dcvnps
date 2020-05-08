@@ -1,0 +1,13 @@
+.ui.vertical.tabular.menu .active.item{
+    color: mediumspringgreen !important;
+    font-weight: bold !important;
+    font-size: 1.2em !important;
+    background-color: rgb(35, 161, 41) !important;
+}
+
+.ui.vertical.tabular.menu .item{
+    color: ghostwhite !important;
+    font-weight: bold !important;
+    font-size: 1.2em !important;
+    background-color: rgb(117, 92, 58) !important;
+}

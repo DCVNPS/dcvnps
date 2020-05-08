@@ -1,0 +1,112 @@
+<div class="ui basic segment">
+    <div class="ui huge center aligned header">
+        Hội Nhiếp Ảnh Việt Nam Vùng Hoa Thịnh Đốn
+    </div>
+    <!-- <p class="ui medium center aligned header">
+        Of Washington Metropolitan
+    </p> -->
+    <p class="ui medium center aligned header">
+        Enrich your life from exploring, learning, sharing, and promoting the Arts and Science of Photography
+    </p>
+</div>
+<div class="ui grid">
+    <div class="stretched row">
+        <div class="three wide column">
+            <div class="ui basic segments">
+                <div class="ui basic segment vnps-header">
+                    <div class="ui header">About VNPS</div>
+                </div>
+                <div class="ui basic segment">
+                    <p>
+                        The Vietnamese Photographic Society (VNPS) is a 501(c)(3) serving the passionate
+                        Vietnamese
+                        photographers community, conserving
+                        the Vietnamese photography art & culture, and promoting the arts and science of
+                        photography.
+                    </p>
+                    <p>It is supported by membership and donation.</p>
+                </div>
+            </div>
+            <div class="ui basic segments">
+                <div class="ui basic segment vnps-header">
+                    <div class="ui header">Connect with Us</div>
+                </div>
+                <div class="ui basic segment">
+                    <div>
+                        <a href="https://sites.google.com/a/dcvnps.org/vnps-dev/contact-us" target="_blank">
+                            <img src="/galleries/site/vnpsicon.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui basic padded segments">
+                <div class="ui basic segment vnps-header">
+                    <a class="ui header" [routerLink]="['/galleries']">Photo Galleries</a>
+                </div>
+                <div class="ui two column grid">
+                    <a class="column" *ngFor="let g of galleries" [routerLink]="['/galleries',g.gallery]">
+                        <div class="blurring dimmable image" [hvnHover]="{'querySelector': '.dimmer'}">
+                            <div class="ui dimmer">
+                                <div class="content">
+                                    <div class="center">
+                                        <div class="ui basic label">{{g.gallery}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <img class="ui small image" [src]="galleryImageSource(g)">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ten wide column">
+            <hvn-carousel [data]="photos" [config]="carouseConfig"></hvn-carousel>
+        </div>
+        <div class="three wide column">
+            <div class="ui basic segments">
+                <div class="ui basic segment vnps-header">
+                    <div class="ui header">Support Us</div>
+                </div>
+                <div class="ui two column padded centered grid">
+                    <div class="row">
+                        <p style="padding: 10px;">
+                            To help Vietnamese Photographic Society (VNPS), a 501(C)(3) organization!, running and
+                            serving our community, you can participate by either shopping through our affilcation
+                            partners or donating directly to VNPS via
+                            Paypal.
+                        </p>
+                    </div>
+                    <div class="column">
+                        <a href="http://www.bhphotovideo.com/bnh/controller/home?KW=&amp;img=bh_145x300-TGCOLOR.gif&amp;BI=7627&amp;KBID=8145"
+                            target="_blank">
+                            <img src="http://www.bhphotovideo.com/images/affiliateimages/bh_145x300-TGCOLOR.gif"
+                                class="ui small image" />
+                        </a>
+                    </div>
+                    <div class="column">
+                        <a href="https://smile.amazon.com/ch/20-4619259" target="_blank">
+                            <img src="/galleries/site/SupportUs_AmzSmile.png" class="ui small image" />
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="ui yellow button"  *ngIf="!showDonate" (click)="onDonate();" data-content="Donate by Paypal">Donation
+                            <span class="tooltiptext">Safe donation using PayPal</span>
+                        </div>
+                        <div class="ui form" *ngIf="showDonate">
+                            <div>We accept PayPal with 5% transaction fee applied</div>
+                            <div class="inline field">
+                                <label>Donate Amount </label>
+                                <input type="text" [(ngModel)]="donateAmount" digitOnly decimal="true" scale="2"
+                                    maxlength="10" placeholder="0.00" inputmode="numeric" pattern="[0-9]*">
+                            </div>
+                            <div class="inline field">
+                                <vnps-paypal-button [purchaseAmount]="donateAmount"></vnps-paypal-button>
+                                <button type="button" (click)="onCancelDonate();">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

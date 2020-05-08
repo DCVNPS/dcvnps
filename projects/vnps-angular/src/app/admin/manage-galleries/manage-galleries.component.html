@@ -1,0 +1,73 @@
+<h2>Manage Galleries</h2>
+<table class="ui striped celled table">
+    <thead class="full-width">
+        <tr>
+            <th id="profile" #profile>Profile Photo</th>
+            <th>Gallery</th>
+            <th>Active</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let g of galleries">
+            <td class="collapsing">
+                <a class="item" [routerLink]="['/admin/galleries',g.galleryId,'edit']">
+                    <img class="ui tiny image" [src]="galleryImageSource(g)">
+                </a>
+            </td>
+            <td>
+                <a class="item" [routerLink]="['/admin/galleries',g.galleryId,'edit']">
+                    {{g.gallery}}
+                </a>
+            </td>
+            <td>
+                {{g.activeInd}}
+            </td>
+            <td class="collapsing">{{g.createdDate | date:'medium'}}</td>
+            <td class="collapsing">{{g.updatedDate | date:'medium'}}</td>
+            <td class="right aligned collapsing">
+                <button class="ui basic mini blue button"
+                [routerLink]="['/admin/galleries',g.galleryId,'edit']">Edit</button>
+                <button class="ui basic mini red button"
+                    (click)="onDeleteGallery(g);">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr *ngIf="siteAdmin()">
+            <td class="four wide">
+                <button class="ui primary labeled icon button" type="button" [routerLink]="['/admin/galleries/add']">
+                    <i class="small plus icon"></i>Add Gallery
+                </button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<vnps-modal [id]="'deleteConfirmDialog'" [(showDialog)]="showDeleteConfirmDialog">
+    <div class="actions">
+        <button type="button" class="ui basic red tiny button" (click)="onAcceptDenyDelete(false);">
+            <i class="close icon"></i>
+        </button>
+    </div>
+    <div class="header">
+        Delete Gallery: {{this.forDelGallery.gallery | titlecase}}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui red header">This will remove gallery: <span class="gallery-emphasis"> {{this.forDelGallery.gallery  | titlecase}}</span> from gallery list and all associated photos int the gallery.</div>
+            <p>Do you want to continue?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" (click)="onAcceptDenyDelete(false);">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button" (click)="onAcceptDenyDelete(true)">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</vnps-modal>

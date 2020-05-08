@@ -1,0 +1,58 @@
+<h2>Manage Classes</h2>
+<table class="ui striped celled table">
+    <thead>
+        <tr>
+            <th>Announcement Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of vnpsClasses">
+            <td >
+                <a class="item" [routerLink]="['/admin/classes',c.classId,'edit']">{{c.classLevelDesc}}</a>
+            </td>
+            <td class="right aligned collapsing">
+                <button type="button" class="ui basic mini blue button"
+                    [routerLink]="['/admin/classes',c.classId,'edit']" >Edit</button>
+                <button type="submit" class="ui basic mini red button"
+                    (click)="onDeleteClass(c.classId);" [disabled]="!siteAdmin">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui primary labeled icon button" type="button" [routerLink]="['/admin/classes/add']" [disabled]="!siteAdmin">
+                    <i class="small plus icon"></i>Add Class
+                </button>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+
+<vnps-modal [id]="'deleteConfirmDialog'" [(showDialog)]="showDialog">
+    <div class="actions">
+        <button type="button" class="ui basic red tiny button" (click)="onAcceptDenyDelete(false);">
+            <i class="close icon"></i>
+        </button>
+    </div>
+    <div class="header">
+        Delete Class: {{deletedClass.classLevelDesc | titlecase}}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header">This will remove class {{deletedClass.classLevelDesc | titlecase}} from claccess
+                list.</div>
+            <p>Do you want to continue?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" (click)="onAcceptDenyDelete(false);">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button" (click)="onAcceptDenyDelete(true)">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</vnps-modal>

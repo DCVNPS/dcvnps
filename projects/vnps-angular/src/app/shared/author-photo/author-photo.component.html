@@ -1,0 +1,25 @@
+<div class="ui basic segment">
+    <div class="ui blue inverted secondary menu">
+        <div class="header item">{{author | titlecase}}</div>
+        <div class="right menu">
+            <div class="item">{{year}}</div>
+            <!-- <a class="item" (click)="editPhotos()" aria-label="Edit" *ngIf="isAdmin">
+                <span><i class="big edit icon"></i></span>Edit
+            </a> -->
+        </div>
+    </div>
+    <div class="ui three basic stackable cards">
+        <div class="card" *ngFor="let photo of photos; let i = index">
+            <div class="image" (click)="imageClicked(i);">
+                <img [src]="photo.imgsrc" alt="photo.imgalt" vnpsCardImageSize [noCards]="3" >
+            </div>
+            <button class="ui red bottom attached animated button" (click)="onDeletePhoto(photo);" *ngIf="enableDelete">
+                <div class="visible content"><i class="minus small icon"></i></div>
+                <div class="hidden content">Remove</div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Popup slide show -->
+<vnps-photo-popup [(visible)]="showDialog" [data]="photos"></vnps-photo-popup>

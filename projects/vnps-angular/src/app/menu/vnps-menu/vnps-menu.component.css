@@ -1,0 +1,26 @@
+.ui.menu .item{
+    color: yellow !important;
+    padding: 0.5em 0.7em !important;
+    font-size: 1.2em !important;
+}
+
+.ui.dropdown .menu>.item{
+    padding: 0.5em 0.7em !important;
+    color: yellow !important;
+    background-color: black !important;
+}
+
+.item.active{
+    background-color: rgb(235, 135, 42) !important;
+}
+
+.ui.simple.dropdown{
+    background-color: black !important;
+}
+.ui.simple.dropdown>.menu>a.item.active{
+    background-color: rgb(235, 135, 42) !important;
+}
+
+#usermenu {
+    font-size: 0.7em !important;
+}

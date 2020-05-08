@@ -1,0 +1,16 @@
+<div class="ui grey inverted secondary menu">
+    <button class="item" (click)="onFilterYear(year);">{{gallery?.gallery | uppercase}}</button>
+    <a class="item" *ngFor="let year of years" (click)="onFilterYear(year);">{{year}}</a>
+    <div class="stackable right menu" *ngIf="isAdmin">
+        <a class="item" [routerLink]="['/admin/galleries', galleryId,'edit','upload']" [routerLinkActive]="['active']" aria-label="Upload Photo">
+            <span>Upload Photo</span><i class="large upload icon"></i>
+        </a>
+    </div>
+</div>
+<div class="ui three column grid">
+    <div class="column" *ngFor="let authPhoto of authorPhotos">
+        <vnps-author-photo [authorData]="authPhoto" [enablePopup]="enablePopup" [enableDelete]="true"
+            (photoDeleted)="onDeletePhoto($event);">
+        </vnps-author-photo>
+    </div>
+</div>

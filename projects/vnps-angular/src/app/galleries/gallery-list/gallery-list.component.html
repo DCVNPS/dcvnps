@@ -1,0 +1,17 @@
+<div class="ui basic padded segments">
+    <h1 class="vnps-header">Gallery List</h1>
+    <div class="ui five column grid">
+        <a class="column" *ngFor="let g of galleries" [routerLink]="['/galleries',g.gallery]">
+            <div class="blurring dimmable image" [hvnHover]="{'querySelector': '.dimmer'}">
+                <div class="ui dimmer">
+                    <div class="content">
+                        <div class="center">
+                            <div class="ui basic label">{{g.gallery}}</div>
+                        </div>
+                    </div>
+                </div>
+                <img class="ui big image" [src]="galleryImageSource(g)">
+            </div>
+        </a>
+    </div>
+</div>

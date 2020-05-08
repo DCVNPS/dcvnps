@@ -1,0 +1,96 @@
+<div class="ui top attached inverted stackable menu">
+    <div class="header item">DC Vnps</div>
+    <div class="item" [routerLinkActive]="['active']">
+        <div class="ui simple dropdown">
+            <a class="item" [routerLink]="['/home']">
+                <i class="small home icon"></i>Home
+            </a>
+        </div>
+    </div>
+    <div class="item" [routerLinkActive]="['active']">
+        <div class="ui simple dropdown">
+            <a class="item" [routerLink]="['/vnpsclasses','level1']">
+                <i class="small book icon"></i>Vnps Classes
+                <i class="dropdown icon"></i>
+            </a>
+            <div class="menu">
+                <a class="item" *ngFor="let c of mClasses" [routerLink]="['/vnpsclasses',c.level]"
+                    [routerLinkActive]="['active']">{{c.description}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="item" [routerLinkActive]="['active']">
+        <div class="ui simple dropdown">
+            <a class="item" [routerLink]="['/galleries']">
+                <!-- <a class="item"> -->
+                <i class="small image icon"></i>Galleries
+                <i class="dropdown icon"></i>
+            </a>
+            <div class="menu" *ngIf="mGalleries">
+                <a class="item" [routerLinkActive]="['active']" *ngFor="let g of mGalleries"
+                    [routerLink]="['/galleries',g.gallery]" [state]="g">{{g.gallery}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="item" [routerLinkActive]="['active']">
+        <div class="ui simple dropdown">
+            <a class="item" [routerLink]="['/announcements']">
+                <i class="small bullhorn icon"></i>Announcements
+            </a>
+        </div>
+    </div>
+    <div class="item" [routerLinkActive]="['active']">
+        <div class="ui simple dropdown">
+            <a class="item" [routerLink]="['/aboutus']">
+                <i class="small comments icon"></i>About Us
+            </a>
+        </div>
+    </div>
+
+    <div class="right menu">
+        <div class="item" [routerLinkActive]="['active']" *ngIf="!isAdmin && !isLoggedIn">
+            <div class="ui simple dropdown">
+                <a class="item" [routerLink]="['/admin']">
+                    <i class="small list icon"></i>
+                </a>
+            </div>
+        </div>
+        <div class="item" [routerLinkActive]="['active']" *ngIf='isAdmin'>
+            <div class="ui simple dropdown">
+                <a class="item" [routerLink]="['/admin']">
+                    <i class="small list icon"></i>Manage
+                </a>
+                <div class="menu">
+                    <a class="item" [routerLink]="['/admin/users']" [routerLinkActive]="['active']">
+                        <i class="user icon"></i>Manage Users
+                    </a>
+                    <a class="item" [routerLink]="['/admin/classes']" [routerLinkActive]="['active']">
+                        <i class="book icon"></i>Manage Classes
+                    </a>
+                    <a class="item" [routerLink]="['/admin/galleries']" [routerLinkActive]="['active']">
+                        <i class="image icon"></i>Mangage Galleries
+                    </a>
+                    <a class="item" [routerLink]="['/admin/announcements']" [routerLinkActive]="['active']">
+                        <i class="user icon"></i>Manage Announcements
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="item" *ngIf="isLoggedIn">
+            <div class="ui simple dropdown">
+                <a class="item">
+                    <i class="user icon"></i>
+                    {{UserName | titlecase}}
+                </a>
+                <div id="usermenu" #usermenu class="menu">
+                    <a class="item" (click)="logout();">
+                        Sign Out <i class="small sign out icon"></i>
+                    </a>
+                    <a class="item" [routerLink]="['/changepassword']">
+                        Change Passowrd
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

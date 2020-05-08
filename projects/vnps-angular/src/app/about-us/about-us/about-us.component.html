@@ -1,0 +1,158 @@
+<div class="ui grid" #pagebody>
+    <div class="eight wide column">
+      <div class="ui segment">
+        <img src="galleries/aboutus/about_timeline.jpg" alt="timeline" class="ui image">
+      </div>
+      <div class="ui center aligned segment vnps-header">
+          <h1 class="ui header">First VNPS Members</h1>
+      </div>
+      <div class="ui center aligned segment">
+          <div class="ui four stackable cards">
+            <a class="card" *ngFor="let photo of photos; let i = index" (click)="showPopup(i);">
+              <div class="image">
+                <img [src]="photo.imgsrc"  vnpsCardImageSize [noCards]="4" >
+              </div>
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="eight wide column">
+      <div class="ui segments">
+        <div class="ui center aligned segment vnps-header">
+          <h1 class="header">Vietnamese Photographic Society</h1>
+        </div>
+        <div class="ui left aligned segment">
+          <p>
+            &nbsp;&nbsp;&nbsp;Vietnamese Art Photographers Association was founded in 1992 by Mr. Dzung L. Do. Mr. Do was
+            a prisoner of the Vietnam War
+            who immigrated to the United States in 1992, under the Humanitarian Operation (H.O.) program that permits
+            resettlement
+            of political and prisoners of the Vietnam War. Mr. Do was a well-known photographer in Vietnam during the 80s,
+            under the alias name Mai Uyen (his daughter’s name). He had won many international exhibitions during the 80s.
+            Having known his passion for photography, his family and friends encouraged him to have a photo exhibition
+            (his
+            first photo exhibition outside Vietnam) at the Eden Center in Falls Church, a popular shopping center where
+            local
+            Vietnamese gathers on weekends. The exhibition caught the attention of a local magazine and a group of elite
+            professionals (reporters, poets, medical doctors), among them was Mr. Dinh T. Tran, also a new immigrant and
+            a photographer who had won international exhibitions in the 80's before immigrating to the U.S. Mr. Dinh
+            proposed
+            to Mr. Dung to form a local camera club so that the members can share their mutual photography interest. The
+            Vietnamese Art Photographers Association was founded in 1992 by a group of 15 elites, led by Mr Do. Initially,
+            the Association’s main activities focused on photographing local events, or field trip on weekends leading to
+            several photo exhibitions. Their activities caught the local magazine’s attention with several positive
+            reports.
+            Many Vietnamese immigrants began to inquire the Association for membership. They expressed their desire to
+            join
+            the group and learn from the masters. Thus in 1993, Messrs. Do and Tran decided to change the group’s mission
+            to serving the Vietnamese community by offering free photography lessons to the public. The new mission
+            necessitates
+            the name change from Vietnamese Art Photographers Association to Vietnamese Photographic Society. And the
+            Vietnamese
+            Photographic Society was born in 1993 with the main mission of serving the Vietnamese community. The
+            membership
+            immediately grew to 44 members. Naturally, the alias name VNPS becomes the official branding trademark of the
+            Vietnamese Photographic Society. The local mentions about the Society using the alias name VNPS rather than
+            its
+            registered English name or even the equivalent Vietnamese name, Hội Nhiếp Ảnh Việt Nam vùng Hoa Thịnh Đốn.
+            Later,
+            when VNPS applied for FIAP affiliation, the name was extended to Vietnamese Photographic Society of Washington
+            Metropolitan to indicate the geographical location of its headquarter.
+          </p>
+          <p>&nbsp;&nbsp;&nbsp;Since 1992, VNPS has always focused on serving the Vietnamese photographers community. the
+            missions that the founders
+            visioned in 1992 are unchanged:</p>
+          <ul>
+            <li>Promote photographic activities, more specifically by offering photography classes, free of charge, to the
+              community</li>
+            <li>Encourage interest in photography for individuals who wish to have a further understanding of the Art</li>
+            <li>Participate in photographic activities with other photographic organizations in the US and the world</li>
+          </ul>
+        </div>
+        <div class="ui left aligned segment vnps-header">
+          <h4 class="header">Footnotes:</h4>
+        </div>
+        <div class="ui left aligned segment">
+          <ol>
+            <li>Do, Linh-Dung (Founder)</li>
+            <li>Tran, Thuy-Dinh</li>
+            <li>Ha, Binh-Trung</li>
+            <li>Nguyen, Ngoc-Dung M.D. (deceased)</li>
+            <li>Thai, Thuy-Vy (Poets, deceased)</li>
+            <li>Nghieu, Minh (Poets)</li>
+            <li>Nguyen, Huu-Dien (reporter)</li>
+            <li>Pham, Ba-Vinh (reporter)</li>
+            <li>Bui, Duong-Liem</li>
+            <li>Phuong, Lan</li>
+            <li>Nguyen, Phuong</li>
+            <li>Xuan Nghia</li>
+            <li>Duc Ha (San Jose, California)</li>
+            <li>Hung Ha (Houston, Texas)</li>
+            <li>Tran, Buu-Khanh (War Reporter)</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui five column grid">
+    <div class="centered row">
+      <div class="ui raise card">
+        <div class="content">
+        <h2 class="header">Board of Directors</h2>
+        <div class="meta"></div>
+      </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui raised card">
+        <div class="content">
+          <div class="header">
+            {{chair.firstName| titlecase}} {{chair.lastName|titlecase}}{{chair.middleName|titlecase}}
+          </div>
+          <div class="meta">{{chair.tittle| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui raised card">
+        <div class="content">
+          <div class="header">
+            {{viceChair.lastName|titlecase}}, {{viceChair.middleName|titlecase}}-{{viceChair.firstName| titlecase}}
+          </div>
+          <div class="meta">{{viceChair.tittle| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui raised card">
+        <div class="content">
+          <div class="header">
+            {{generalSec.lastName|titlecase}}, {{generalSec.middleName|titlecase}}-{{generalSec.firstName| titlecase}}
+          </div>
+          <div class="meta">{{generalSec.tittle| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui raised card">
+        <div class="content">
+          <div class="header">
+            {{treasury.lastName|titlecase}}, {{treasury.middleName|titlecase}}-{{treasury.firstName| titlecase}}
+          </div>
+          <div class="meta">{{treasury.tittle| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui raised card">
+        <div class="content">
+          <div class="header">
+            {{auditor.lastName | titlecase}}, {{auditor.middleName|titlecase}}-{{auditor.firstName| titlecase}}
+          </div>
+          <div class="meta">{{auditor.tittle| titlecase}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Popup slide show -->
+  <vnps-photo-popup [(visible)]="showDialog" [data]="photos"></vnps-photo-popup>

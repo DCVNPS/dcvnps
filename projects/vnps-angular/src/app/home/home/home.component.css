@@ -1,0 +1,34 @@
+.inline.field input{
+    width: 100px!important;
+}
+
+.paypal-button{
+    width: 60%!important;
+}
+
+.ui.huge.center.aligned.header{
+    font-size: 48px!important;
+    text-shadow: 4px 4px 4px #aaaaaa!important;
+}
+
+.ui.yellow.button{
+    border-radius: 30px!important;
+}
+
+.ui.yellow.button .tooltiptext{
+    visibility: hidden!important;
+    background-color: springgreen;
+    padding: 5px 5px 5px 5px!important;
+    border-radius: 6px!important;
+
+    position: absolute!important;
+    z-index: 1!important;
+    top: 100%!important;
+    left: 50%!important;
+    margin-left: -25%!important;
+}
+
+div.ui.yellow.button:hover .tooltiptext{
+    color: red!important;
+    visibility: visible!important;
+}

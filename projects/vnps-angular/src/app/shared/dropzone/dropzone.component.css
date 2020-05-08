@@ -1,0 +1,29 @@
+.dropzone {
+      margin-top: 20px;
+      min-height: 120px;
+      min-width: 200px;
+      display: table;
+      width: 100%;
+      background-color: #eee;
+      border: dotted 1px #aaa;
+    }
+    
+    .text-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    
+    .centered {
+      font-family: sans-serif;
+      /* font-size: 1.3em; */
+      font-weight: bold;
+      text-align:center;
+    }
+.bar {
+  transition-duration: 300ms !important;
+}
+
+tr{
+  font-size: 0.95em !important;
+  font-weight: normal !important;
+}

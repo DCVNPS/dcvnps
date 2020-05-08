@@ -1,8 +1,0 @@
-<!-- overlay the whole screen -->
-<div *ngIf="visible" class="overlay" (click)="close()"></div>
-<!-- dialog layer -->
-<div [@popup] *ngIf="visible" class="dialog">
-  <i class="close icon"></i>
-  <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog-close-btn">X</button>
-   <!-- <hvn-carousel [data]="data" [config] = "{'delay':3000,'showIndicator':false}" ></hvn-carousel>   -->
-</div>

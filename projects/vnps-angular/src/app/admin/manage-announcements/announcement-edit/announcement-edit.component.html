@@ -1,0 +1,43 @@
+
+<p>edit Account "{{announcement.title}}"!</p>
+<div class="ui grid container">
+    <form class="ui form" [formGroup]="ancmtForm" (ngSubmit)="saveAnnouncement()">
+        <div class="inline field">
+            <label>Announcment Title</label>
+            <input class="announcementtitle" formControlName="title">
+        </div>
+        <div class="field">
+            <label>Announcement Content</label>
+            <editor [init]="tinyEditAncmntInit" formControlName="content"></editor>
+        </div>
+        <button class="ui primary large button" type="submit" [disabled]="ancmtForm.errors || ancmtForm.invalid">Save</button>
+        <button type="button" class="ui red large button" (click)="onDelAnnouncement();">Delete</button>
+        <button class="ui secondary large button" type="button" (click)="onCancelEdit()">Cancel</button>
+    </form>
+</div>
+
+<vnps-modal [id]="'deleteconfirmation'" [(showDialog)]="showDialog">
+    <div class="actions">
+        <button type="button" class="ui basic red tiny button" (click)="onAcceptDenyDelete(false);">
+            <i class="close icon"></i>
+        </button>
+    </div>
+    <div class="header">
+        Delete Class: {{announcement.title | titlecase}}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header">This will remove Announcement &lt;{{announcement.title | titlecase}}&gt; from announcement list.</div>
+            <p>Do you want to continue?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" (click)="onAcceptDenyDelete(false);">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button" (click)="onAcceptDenyDelete(true)">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</vnps-modal>

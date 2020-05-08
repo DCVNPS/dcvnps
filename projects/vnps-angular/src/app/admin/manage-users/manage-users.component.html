@@ -1,0 +1,69 @@
+<h2>Manage Users</h2>
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>E-mail address</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of showUsers">
+            <td>{{userService.userFullName(u)| titlecase}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.roleDescription}}</td>
+            <td class="right aligned collapsing">
+                <button type="button" class="ui basic mini blue button" [routerLink]="['/admin/users',u.userId,'edit']" [disabled]="!siteAdmin">Edit</button>
+                <button type="button" class="ui basic mini purple button" [routerLink]="['/admin/users',u.userId, 'setpassword']"  [disabled]="!siteAdmin">Set Password</button>
+                <button type="button" class="ui basic mini red button" (click)="onDeleteUser(u.userId);"  [disabled]="!siteAdmin">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                <button type="button" class="ui primary labeled icon button" [routerLink]="['/admin/users/add']"  [disabled]="!siteAdmin">
+                    <i class="user icon"></i>Add User
+                </button>
+            </th>
+            <th colspan="3">
+                <div class="ui right floated pagination menu">
+                    <a class="icon item" (click)="previousPage();" [ngClass]="{disabled:initPage === 1}"><i
+                            class="left chevron icon"></i></a>
+                    <a class="item" *ngFor="let p of pages" (click)="showPage(p);"
+                        [class.active]="initPage ===p">{{p}}</a>
+                    <a class="icon item" (click)="nextPage();" [ngClass]="{disabled:initPage === pages.length}"><i
+                            class="right chevron icon"></i></a>
+                </div>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+
+<vnps-modal [id]="'mangeUserDeleteConfirmation'" [(showDialog)]="showDialog">
+    <div class="actions">
+        <button type="button" class="ui right floated basic button" (click)="onAcceptDenyDelete(false);">
+            <i class="close icon"></i>
+        </button>
+    </div>
+    <div class="ui devider"></div>
+    <div class="header">
+        Delete User: {{userService.userFullName(forDelUser) | titlecase}}
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header">This will remove user {{userService.userFullName(forDelUser) | titlecase}} from access list.</div>
+            <p>Do you want to continue?</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button" (click)="onAcceptDenyDelete(false);">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button" (click)="onAcceptDenyDelete(true)">
+            Yes
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</vnps-modal>

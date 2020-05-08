@@ -1,0 +1,94 @@
+<!-- /*
+  This nice dropzone based on Luis Moncaris's Tutorial title
+  How to create a Drag and Drop file directive in angular2 with angular-cli
+  URL: https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-1
+    https://scotch.io/@minrock/how-to-create-a-drag-and-drop-file-directive-in-angular2-with-angular-cli-part-2
+*/ -->
+<div class="ui centered grid">
+  <div class="ten wide column">
+    <form [formGroup]="uploadForm" class="ui form">
+      <div class="inline field">
+        <label>Select Gallery to Upload</label>
+        <select formControlName="upldGallery" (ngModelChange)="onGallerySelectChanged($event)" class="menu" required>
+          <option class="item" *ngFor="let g of galleries" [ngValue]="g">{{g.gallery|titlecase}}</option>
+        </select>
+        <label>Select Year</label>
+        <select formControlName="upldYear" (ngModelChange)="onYearSelectChanged($event)" class="menu" required>
+          <option class="item" *ngFor="let y of years" [ngValue]="y">{{y}}</option>
+        </select>
+      </div>
+    </form>
+    <div class="dropzone" vnpsDnd [allowedExtensions]="allowedExt" (filesChangeEmitter)="onFileChange($event)"
+      (filesInvalidEmitter)="onInvalidFileChange($event)">
+      <div class="text-wrapper">
+        <div class="centered">Drop your file here!</div>
+      </div>
+    </div>
+    <div *ngIf="ValidImages.length > 0">
+      <div class="ui teal big header">Valid Files</div>
+      <table class="ui striped table">
+        <thead class="full-width">
+          <tr>
+            <th>Image</th>
+            <th>File Name</th>
+            <th>Author</th>
+            <th>Size(KB)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let img of ValidImages; let i=index">
+            <td class="collapsing">
+              <img class="ui tiny image" [src]="img.reviewUrl">
+              <div *ngIf="img.uploaded"><i class="ui check icon"></i></div>
+              <div class="ui bottom attached progress" [attr.data-percent]="progress" *ngIf="progress > 0">
+                <div class="bar" [style.width.%]="progress"></div>
+              </div>
+            </td>
+            <td>{{img.filename}}</td>
+            <td class="collapsing">{{img.author}}</td>
+            <td class="collapsing">{{img.size/1024|number:'.2-2'}}</td>
+            <td class="collapsing">
+              <button class=" mini ui negative basic button" (click)="removeFile(i)">Remove</button>
+              <button type="submit" class=" mini ui positive basic button" (click)="uploadFile(i)"
+                [disabled]="!uploadForm.valid || img.uploaded">Upload</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="InvalidImages.length > 0">
+      <div class="ui teal big header">Invalid Files</div>
+      <table class="ui striped table">
+        <thead class="full-width">
+          <tr>
+            <th>Image</th>
+            <th>File Name</th>
+            <th>Author</th>
+            <th>Size(KB)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let img of InvalidImages; let i=index">
+            <td class="collapsing">
+              <img class="ui tiny image" [src]="img.reviewUrl">
+            </td>
+            <td class="ui red tiny header">{{img.filename}}</td>
+            <td class="collapsing">{{img.author}}</td>
+            <td class="collapsing">{{img.size/1024|number:'.2-2'}}</td>
+            <td class="collapsing">
+              <button class=" mini ui negative basic button" (click)="removeInvalidFile(i)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ui hidden devider"></div>
+    <div class="ui padded grid" *ngIf="( ValidImages?.length > 0 || InvalidImages?.length > 0)">
+        <button class="large ui negative button" (click)="removeAllFiles()">Remove All</button>
+        <button type="submit" class="large ui positive button" (click)="uploadAllFiles()"
+          [disabled]="!uploadForm.valid">Upload All</button>
+    </div>
+  </div>
+</div>

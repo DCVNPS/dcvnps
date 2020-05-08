@@ -1,0 +1,22 @@
+<div class="ui raised centered grid">
+    <div #vnpscarousel class="ui basic segment">
+      <div *ngFor="let s of data" (click)="toggleSlideshow();">
+        <img [src]="s.imgsrc" alt="s.imgalt" [hidden]="s.hidden" vnpsSlideImageSize [columnSpan]="columnSpan">
+      </div>
+      <div class="ui secondary menu carousel-arrows">
+        <div class="left menu">
+          <a (click)="PrevSlide();">
+            <i class="big chevron left icon"></i>
+          </a>
+        </div>
+        <div class="right menu">
+          <a (click)="NextSlide();">
+            <i class="big chevron right icon"></i>
+          </a>
+        </div>
+      </div>
+      <div class="centered row carousel-indicators" [hidden]="!config['showIndicator']">
+        <a *ngFor="let s of data" class="item" [class.active]="!s.hidden"><i class="blue outline circle icon"></i></a>
+      </div>
+    </div>
+  </div>

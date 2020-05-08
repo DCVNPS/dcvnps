@@ -1,0 +1,10 @@
+<div class="ui container">
+  <div class="ui blue centered align large header">VNPS Admin</div>
+  <a class="ui primary button" [routerLink]="['./users']" [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="['{ exact: true }']">Manage Users</a>
+  <a class="ui purple button" [routerLink]="['./classes']" [routerLinkActive]="['active']">Manage Classes</a>
+  <a class="ui violet button" [routerLink]="['./galleries']" [routerLinkActive]="['active']">Manage Galleries</a>
+  <a class="ui brown button" [routerLink]="['./announcements']" [routerLinkActive]="['active']">Manage
+    Announcements</a>
+  <router-outlet></router-outlet>
+</div>

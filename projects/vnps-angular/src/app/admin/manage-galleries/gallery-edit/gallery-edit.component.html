@@ -1,0 +1,6 @@
+<h1 class="ui blue header">Gallery: {{gallery.gallery | titlecase}} Edit {{editType}}</h1>
+<div class="ui labeled button" tabindex="0">
+    <a class="ui right pointing teal label" (click)="editInfo()" [routerLinkActive]="'active'">Gallery Info</a>
+    <a class="ui blue button" (click)="editPhoto()" [routerLinkActive]="'active'">Gallery Photos</a>
+</div>
+<router-outlet></router-outlet>

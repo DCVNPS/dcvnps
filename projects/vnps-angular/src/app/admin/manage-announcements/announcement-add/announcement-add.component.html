@@ -1,0 +1,18 @@
+<div class="ui grid container">
+    <div class="twelve wide column">
+        <form class="ui form" [formGroup]="ancmtForm" (ngSubmit)="saveAnnouncement();">
+            <div class="inline field">
+                <label>Announcement Title</label>
+                <!-- <input class="announcementtitle" type="text" placeholder="Announcement Title" [(ngModel)]="title"> -->
+                <input class="announcementtitle" type="text" placeholder="Announcement Title" formControlName="title">
+            </div>
+            <div class="field">
+                <label>Announcement Content:</label>
+                <editor [init]="tinyInit" formControlName="content"></editor>
+            </div>
+            <button type="submit" class="ui submit large blue button"  [disabled]="ancmtForm.errors || ancmtForm.invalid">Save</button>
+            <button type="button" class="ui submit large grey button"
+                (click)="onCancelAdd()">Cancel</button>
+        </form>
+    </div>
+</div>
